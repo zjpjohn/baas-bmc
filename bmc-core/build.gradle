@@ -1,0 +1,24 @@
+dependencies {
+    compile project(":bmc-api")
+
+    compile 'org.mybatis:mybatis:3.3.0'
+    compile 'org.mybatis:mybatis-spring:1.2.3'
+    compile 'mysql:mysql-connector-java:5.1.36'
+    compile 'org.springframework:spring-tx:4.1.7.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.1.7.RELEASE'
+    
+ 	compile 'org.jboss.resteasy:resteasy-jaxrs:3.0.11.Final'
+    compile 'org.jboss.resteasy:resteasy-client:3.0.11.Final'
+    compile 'org.jboss.resteasy:resteasy-jackson-provider:3.0.11.Final'
+    compile 'org.mortbay.jetty:jetty:6.1.26'
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    
+    compile 'com.ai.opt.sdk:opt-sdk:1.0-SNAPSHOT'
+    
+    
+    testCompile(
+            "org.springframework:spring-test:4.1.7.RELEASE",
+            "junit:junit:4.12"
+    )
+}
