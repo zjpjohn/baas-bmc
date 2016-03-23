@@ -131,6 +131,14 @@ public class MyHbaseUtil {
                 return null;
             }
         }
+        public static CellTemp inst(String colum,String data) {
+            try {
+                return inst(colum.getBytes("UTF-8"), colum.getBytes("UTF-8"), data.getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
 
         public byte[] getFamily() {
             return family;
