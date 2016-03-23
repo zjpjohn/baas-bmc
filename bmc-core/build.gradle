@@ -15,7 +15,12 @@ dependencies {
     compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
     
     compile 'com.ai.opt.sdk:opt-sdk:1.0-SNAPSHOT'
+
+    compile 'org.apache.hadoop:hadoop-common:2.5.1'
+    compile 'org.apache.hbase:hbase-common:1.0.1.1'
+    compile 'org.apache.hbase:hbase-client:1.0.1.1'
     
+    compile 'com.ai.runner.center.dshm:dshmprocess:1.0.1-SNAPSHOT'
     
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",
