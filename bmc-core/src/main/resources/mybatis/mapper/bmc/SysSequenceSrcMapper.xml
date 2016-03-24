@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.SysSequenceSrcMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.SysSequenceSrc" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="SEQUENCE_ID" property="sequenceId" jdbcType="VARCHAR" />
+    <result column="SEQUENCE_NAME" property="sequenceName" jdbcType="VARCHAR" />
+    <result column="MIN_VALUE" property="minValue" jdbcType="BIGINT" />
+    <result column="MAX_VALUE" property="maxValue" jdbcType="BIGINT" />
+    <result column="CURRENT_VALUE" property="currentValue" jdbcType="BIGINT" />
+    <result column="CYCLABLE" property="cyclable" jdbcType="VARCHAR" />
+    <result column="COMMENTS" property="comments" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, SEQUENCE_ID, SEQUENCE_NAME, MIN_VALUE, MAX_VALUE, CURRENT_VALUE, CYCLABLE, COMMENTS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.SysSequenceSrcCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_sequence_src
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_sequence_src
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Long" >
+    delete from sys_sequence_src
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.SysSequenceSrcCriteria" >
+    delete from sys_sequence_src
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.SysSequenceSrc" >
+    insert into sys_sequence_src (ID, SEQUENCE_ID, SEQUENCE_NAME, 
+      MIN_VALUE, MAX_VALUE, CURRENT_VALUE, 
+      CYCLABLE, COMMENTS)
+    values (#{id,jdbcType=BIGINT}, #{sequenceId,jdbcType=VARCHAR}, #{sequenceName,jdbcType=VARCHAR}, 
+      #{minValue,jdbcType=BIGINT}, #{maxValue,jdbcType=BIGINT}, #{currentValue,jdbcType=BIGINT}, 
+      #{cyclable,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.SysSequenceSrc" >
+    insert into sys_sequence_src
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="sequenceId != null" >
+        SEQUENCE_ID,
+      </if>
+      <if test="sequenceName != null" >
+        SEQUENCE_NAME,
+      </if>
+      <if test="minValue != null" >
+        MIN_VALUE,
+      </if>
+      <if test="maxValue != null" >
+        MAX_VALUE,
+      </if>
+      <if test="currentValue != null" >
+        CURRENT_VALUE,
+      </if>
+      <if test="cyclable != null" >
+        CYCLABLE,
+      </if>
+      <if test="comments != null" >
+        COMMENTS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sequenceId != null" >
+        #{sequenceId,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceName != null" >
+        #{sequenceName,jdbcType=VARCHAR},
+      </if>
+      <if test="minValue != null" >
+        #{minValue,jdbcType=BIGINT},
+      </if>
+      <if test="maxValue != null" >
+        #{maxValue,jdbcType=BIGINT},
+      </if>
+      <if test="currentValue != null" >
+        #{currentValue,jdbcType=BIGINT},
+      </if>
+      <if test="cyclable != null" >
+        #{cyclable,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.SysSequenceSrcCriteria" resultType="java.lang.Integer" >
+    select count(*) from sys_sequence_src
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_sequence_src
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.sequenceId != null" >
+        SEQUENCE_ID = #{record.sequenceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequenceName != null" >
+        SEQUENCE_NAME = #{record.sequenceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minValue != null" >
+        MIN_VALUE = #{record.minValue,jdbcType=BIGINT},
+      </if>
+      <if test="record.maxValue != null" >
+        MAX_VALUE = #{record.maxValue,jdbcType=BIGINT},
+      </if>
+      <if test="record.currentValue != null" >
+        CURRENT_VALUE = #{record.currentValue,jdbcType=BIGINT},
+      </if>
+      <if test="record.cyclable != null" >
+        CYCLABLE = #{record.cyclable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comments != null" >
+        COMMENTS = #{record.comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_sequence_src
+    set ID = #{record.id,jdbcType=BIGINT},
+      SEQUENCE_ID = #{record.sequenceId,jdbcType=VARCHAR},
+      SEQUENCE_NAME = #{record.sequenceName,jdbcType=VARCHAR},
+      MIN_VALUE = #{record.minValue,jdbcType=BIGINT},
+      MAX_VALUE = #{record.maxValue,jdbcType=BIGINT},
+      CURRENT_VALUE = #{record.currentValue,jdbcType=BIGINT},
+      CYCLABLE = #{record.cyclable,jdbcType=VARCHAR},
+      COMMENTS = #{record.comments,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.SysSequenceSrc" >
+    update sys_sequence_src
+    <set >
+      <if test="sequenceId != null" >
+        SEQUENCE_ID = #{sequenceId,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceName != null" >
+        SEQUENCE_NAME = #{sequenceName,jdbcType=VARCHAR},
+      </if>
+      <if test="minValue != null" >
+        MIN_VALUE = #{minValue,jdbcType=BIGINT},
+      </if>
+      <if test="maxValue != null" >
+        MAX_VALUE = #{maxValue,jdbcType=BIGINT},
+      </if>
+      <if test="currentValue != null" >
+        CURRENT_VALUE = #{currentValue,jdbcType=BIGINT},
+      </if>
+      <if test="cyclable != null" >
+        CYCLABLE = #{cyclable,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.SysSequenceSrc" >
+    update sys_sequence_src
+    set SEQUENCE_ID = #{sequenceId,jdbcType=VARCHAR},
+      SEQUENCE_NAME = #{sequenceName,jdbcType=VARCHAR},
+      MIN_VALUE = #{minValue,jdbcType=BIGINT},
+      MAX_VALUE = #{maxValue,jdbcType=BIGINT},
+      CURRENT_VALUE = #{currentValue,jdbcType=BIGINT},
+      CYCLABLE = #{cyclable,jdbcType=VARCHAR},
+      COMMENTS = #{comments,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -21,6 +21,7 @@ dependencies {
     compile 'org.apache.hbase:hbase-client:1.0.1.1'
     
     compile 'com.ai.runner.center.dshm:dshmprocess:1.0.1-SNAPSHOT'
+    compile 'com.ai.runner.center.dshm:dshmservice:1.0.1-SNAPSHOT'
     
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",
