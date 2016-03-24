@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.ai.baas.bmc.context.Constants;
+import com.ai.opt.sdk.util.DubboConsumerFactory;
+import com.ai.runner.center.dshm.api.dshmprocess.interfaces.IdshmSV;
 import com.ai.runner.center.dshm.api.dshmservice.interfaces.IdshmreadSV;
 
 public class DshmUtil {
@@ -29,5 +31,9 @@ public class DshmUtil {
             LoggerUtil.log.error(e);
         }
         return dshmread;
+    }
+    
+    public static IdshmSV getIdshmSV(){
+        return DubboConsumerFactory.getService("IdshmSV", IdshmSV.class);
     }
 }

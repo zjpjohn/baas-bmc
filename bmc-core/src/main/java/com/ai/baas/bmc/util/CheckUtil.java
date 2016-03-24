@@ -39,6 +39,9 @@ public class CheckUtil {
      * 校验时间格式
      */
     public static boolean check(String time ,String pattern){
+        if(time == null || "".equals(time)){
+            return true;
+        }
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         try {
             System.out.println(sdf.parse(time));

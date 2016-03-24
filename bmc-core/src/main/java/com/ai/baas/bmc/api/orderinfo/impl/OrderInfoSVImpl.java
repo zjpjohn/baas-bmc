@@ -15,6 +15,7 @@ import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.util.CheckUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.baas.bmc.util.MyJsonUtil;
+import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.DateUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
@@ -189,7 +190,13 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
             return e.getMessage();
         }
         //写入mysql表中
-        business.writeData(record);
+        try {
+            business.writeData(record);
+        } catch (BusinessException e) {
+            return e.getErrorCode() + e.getErrorMessage();
+        } catch (Exception e1){
+            return "writeData发生错误："+e1.getMessage();
+        }
         
         return ErrorCode.SUCCESS;
     }

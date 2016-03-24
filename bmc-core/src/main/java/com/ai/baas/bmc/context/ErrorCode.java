@@ -14,17 +14,17 @@ public final class ErrorCode {
     /**
      * 参数为空
      */
-    public static final String NULL = "BaaS-000001:";
+    public static final String NULL = "BaaS-000001";
     /**
      * 参数超长
      */
-    public static final String OVER_LENTH = "BaaS-000001:";
+    public static final String OVER_LENTH = "BaaS-000001";
     /**
      * 不识别字符
      */
-    public static final String UNKNOWN = "BaaS-000001:";
+    public static final String UNKNOWN = "BaaS-000001";
     /**
      * 格式转换错误
      */
-    public static final String UNFORMATE = "BaaS-000001:";
+    public static final String UNFORMATE = "BaaS-000001";
 }
