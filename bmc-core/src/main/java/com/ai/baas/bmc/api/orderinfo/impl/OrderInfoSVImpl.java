@@ -13,6 +13,9 @@ import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
 import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiness;
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.util.CheckUtil;
+import com.ai.baas.bmc.util.LoggerUtil;
+import com.ai.baas.bmc.util.MyJsonUtil;
+import com.ai.opt.sdk.util.DateUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service
@@ -24,6 +27,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
     @Override
     public String orderInfo(OrderInfoParams record) {
         //入参检验
+        LoggerUtil.log.debug("入参："+MyJsonUtil.toJson(record));
         if (record == null) {
             return ErrorCode.NULL + "入参不能为空";
         }
@@ -61,6 +65,8 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         resultCode = CheckUtil.check(record.getOrderTime(), "orderTime", true, 14);
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
             return resultCode;
+        } else if(!CheckUtil.check(record.getOrderTime(), DateUtil.YYYYMMDDHHMMSS)){
+            return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
         }
 
         resultCode = CheckUtil.check(record.getProvinceCode(), "provinceCode", true, 6);
@@ -86,11 +92,15 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         resultCode = CheckUtil.check(record.getActiveTime(), "activeTime", false, 14);
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
             return resultCode;
+        } else if(!CheckUtil.check(record.getActiveTime(), DateUtil.YYYYMMDDHHMMSS)){
+            return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
         }
 
         resultCode = CheckUtil.check(record.getInactiveTime(), "inactiveTime", false, 14);
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
             return resultCode;
+        }else if(!CheckUtil.check(record.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS)){
+            return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
         }
 
         if (record.getOrderExtInfo() != null) {
@@ -137,11 +147,15 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 resultCode = CheckUtil.check(p.getActiveTime(), "activeTime", false, 14);
                 if (!ErrorCode.SUCCESS.equals(resultCode)) {
                     return resultCode;
+                }else if(!CheckUtil.check(p.getActiveTime(), DateUtil.YYYYMMDDHHMMSS)){
+                    return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
                 }
                 
                 resultCode = CheckUtil.check(p.getInactiveTime(), "inactiveTime", false, 14);
                 if (!ErrorCode.SUCCESS.equals(resultCode)) {
                     return resultCode;
+                }else if(!CheckUtil.check(p.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS)){
+                    return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
                 }
                 
                 if (p.getProductExtInfoList() != null) {
@@ -164,16 +178,18 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 }
             }
         }
-        
+        LoggerUtil.log.debug("校验成功！");
         //幂等性判断（判重）
         try {
-            if(business.hasSeq(record.getTradeSeq())){
+            if(business.hasSeq(record)){
                 return "tradeSeq已使用";
             }
-            
         } catch (IOException e) {
+            LoggerUtil.log.error(e.getStackTrace());
             return e.getMessage();
         }
+        //写入mysql表中
+        business.writeData(record);
         
         return ErrorCode.SUCCESS;
     }

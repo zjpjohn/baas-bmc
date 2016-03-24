@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.util;
 
+import java.text.SimpleDateFormat;
+
 import com.ai.baas.bmc.context.ErrorCode;
 
 public class CheckUtil {
@@ -32,5 +34,17 @@ public class CheckUtil {
             result += e + ",";
         }
         return result;
+    }
+    /**
+     * 校验时间格式
+     */
+    public static boolean check(String time ,String pattern){
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        try {
+            System.out.println(sdf.parse(time));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

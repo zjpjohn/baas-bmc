@@ -20,7 +20,11 @@ public final class ErrorCode {
      */
     public static final String OVER_LENTH = "BaaS-000001:";
     /**
-     * 参数超长
+     * 不识别字符
      */
     public static final String UNKNOWN = "BaaS-000001:";
+    /**
+     * 格式转换错误
+     */
+    public static final String UNFORMATE = "BaaS-000001:";
 }
