@@ -21,6 +21,6 @@
 		address="${center.dubbo.registry.address}" file="${dubbo.registry.file}" />
 		
 	<dubbo:reference id="IdshmSV" 
-		interface="com.ai.runner.center.dshm.api.dshmprocess.interfaces.IdshmSV"/>
+		interface="com.ai.runner.center.dshm.api.dshmprocess.interfaces.IdshmSV" check="false"/>
 
 </beans>

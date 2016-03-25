@@ -87,5 +87,4 @@
     <context:annotation-config/>
     <!-- 设定注解扫描基础包 -->
     <context:component-scan base-package="com.ai.baas.bmc"/>
-
 </beans>

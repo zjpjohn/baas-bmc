@@ -23,7 +23,6 @@ import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.DateUtil;
-import com.ai.runner.center.dshm.api.dshmservice.interfaces.IdshmreadSV;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service
@@ -35,10 +34,10 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
     @Override
     public String orderInfo(OrderInfoParams record) {
         //入参检验
-        LoggerUtil.log.debug("入参："+MyJsonUtil.toJson(record));
         if (record == null) {
             return ErrorCode.NULL + "入参不能为空";
         }
+        LoggerUtil.log.debug("入参："+MyJsonUtil.toJson(record));
 
         String resultCode = CheckUtil.check(record.getTradeSeq(), "tradeSeq", false, 32);
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
@@ -188,10 +187,9 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         }
         
         // 通过共享内存获得内部的custId
-        IdshmreadSV dshmread = DshmUtil.getDshmread();
         Map<String, String> params = new TreeMap<String, String>();
         params.put(ConBlCustinfo.EXT_CUST_ID, record.getExtCustId());
-        List<Map<String, String>> result = dshmread.list(TableCon.BL_CUSTINFO).where(params)
+        List<Map<String, String>> result =  DshmUtil.getDshmread().list(TableCon.BL_CUSTINFO).where(params)
                 .executeQuery();
         // 获得对应的内部的custId
         if (result == null || result.isEmpty()) {
@@ -200,6 +198,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         }
         String custIds[] = result.get(0).get(ConBlCustinfo.CUST_ID).split("#");
         String custId = custIds[custIds.length - 1];
+//        String custId = "11";
         LoggerUtil.log.debug("校验成功！");
         //幂等性判断（判重）
         try {
