@@ -22,7 +22,7 @@ dependencies {
     
     compile 'com.ai.runner.center.dshm:dshmprocess:1.0.1-SNAPSHOT'
     compile 'com.ai.runner.center.dshm:dshmservice:1.0.1-SNAPSHOT'
-    
+    compile 'org.hibernate:hibernate-validator:4.2.0.Final'
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",
             "junit:junit:4.12"

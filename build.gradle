@@ -19,7 +19,7 @@ allprojects {
     sourceCompatibility = 1.7
 
     configurations.all { resolutionStrategy.cacheChangingModulesFor 0, 'seconds' }
-    group="com.ai.opt.bmc"
+    group="com.ai.baas.bmc"
 }
 
 subprojects {
@@ -63,7 +63,7 @@ subprojects {
 project("bmc-api") {
     project.ext {
         appName = "bmc-api"
-        apiDir =  "src/main/java/com/ai/opt/bmc/api/"
+        apiDir =  "src/main/java/com/ai/baas/bmc/api/"
     }
 
     jar {

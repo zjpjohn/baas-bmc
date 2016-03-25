@@ -33,6 +33,7 @@ public class BaseInfoTest {
 	    	query.setParamType("UNIT");
 	    	query.setTenantId("BYD");
 	    	query.setTradeSeq("BYD160323090000130123456789");
+	    	System.out.println(JSON.toJSON(query));
 	    	BaseCodeInfo bi=iBaseInfoSV.getBaseInfo(query);
 	    	System.out.println(JSON.toJSON(bi));
 	    }

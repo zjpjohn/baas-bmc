@@ -18,7 +18,7 @@
 	<dubbo:application name="consumer-of-${dubbo.appname}" />
 	
 	<dubbo:registry protocol="${dubbo.registry.protocol}"
-		address="${center.dubbo.registry.address}" file="${dubbo.registry.file}" />
+		address="${dubbo.registry.address}" file="${dubbo.registry.file}" />
 		
 	<dubbo:reference id="IdshmSV" 
 		interface="com.ai.runner.center.dshm.api.dshmprocess.interfaces.IdshmSV" check="false"/>

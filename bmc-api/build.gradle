@@ -58,7 +58,7 @@ for(Map<String,String> apiMap:apiList){
         baseName apiArtifactId
         from sourceSets.main.output
         destinationDir file("$buildDir/api-libs")
-        include 'com/ai/opt/bmc/api/'+apiName+'/**'
+        include 'com/ai/baas/bmc/api/'+apiName+'/**'
         manifest {
             attributes 'artifactId': apiArtifactId, 'Built-By': builtBy,'Built-date': new Date().format('yyyy-MM-dd HH:mm:ss'),'Manifest-Version':apiVersion
         }
@@ -68,7 +68,7 @@ for(Map<String,String> apiMap:apiList){
     def apidocTask=task("${apiArtifactId}APIDoc",type:com.ai.runner.gradle.plugin.APICollectorTask){
     	dependsOn apiJarProcessTask
         esconfig = "[{ip:10.1.234.160, port:14999}]"
-        source = fileTree(dir: 'src/main/java', include: 'com/ai/opt/bmc/api/'+apiName+'/**/*.java')+fileTree(dir:"$buildDir/opt-base", include:"**/*.java")
+        source = fileTree(dir: 'src/main/java', include: 'com/ai/baas/bmc/api/'+apiName+'/**/*.java')+fileTree(dir:"$buildDir/opt-base", include:"**/*.java")
         docletpath = configurations.jaxDoclet.files.asType(List)
         //指定-doclet 的生成你格式
         docletClass = 'com.ai.runner.apicollector.doclet.APIDoclet'
@@ -77,7 +77,7 @@ for(Map<String,String> apiMap:apiList){
         belong='opt-baas'
         ownerType='baas'
         owner = 'baas-bmc'
-        groupId = 'com.ai.opt.bmc'
+        groupId = 'com.ai.baas.bmc'
         artifactId = apiArtifactId
         version = apiVersion
     }

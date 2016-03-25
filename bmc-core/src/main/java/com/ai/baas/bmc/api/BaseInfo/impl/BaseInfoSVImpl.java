@@ -9,7 +9,7 @@ import com.ai.baas.bmc.api.baseInfo.params.QueryInfoParams;
 import com.ai.baas.bmc.business.interfaces.IBaseInfoBussiness;
 import com.alibaba.dubbo.config.annotation.Service;
 
-@Service
+@Service(validation="true")
 @Component
 public class BaseInfoSVImpl implements IBaseInfoSV {
 
