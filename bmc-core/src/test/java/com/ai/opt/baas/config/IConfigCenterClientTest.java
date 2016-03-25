@@ -1,4 +1,4 @@
-package com.ai.opt.baas.config.test;
+package com.ai.opt.baas.config;
 
 import static org.junit.Assert.assertEquals;
 
