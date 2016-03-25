@@ -82,7 +82,7 @@ project("bmc-core") {
     jar {
         baseName appName
         version moduleVersion
-        include "com/ai/opt/bmc/*/**"
+        include "com/ai/baas/bmc/*/**"
         manifest {
             attributes 'packageName': appName, 'Built-By': builtBy, 'create-date': new Date().format('yyyy-MM-dd HH:mm:ss')
         }
