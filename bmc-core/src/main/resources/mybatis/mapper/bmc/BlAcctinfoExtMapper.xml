@@ -73,6 +73,7 @@
     <if test="distinct" >
       distinct
     </if>
+    'false' as QUERYID,
     <include refid="Base_Column_List" />
     from bl_acctinfo_ext
     <if test="_parameter != null" >
