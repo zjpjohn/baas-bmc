@@ -8,6 +8,10 @@ package com.ai.baas.bmc.context;
  */
 public final class Context {
     /**
+     * hbase的rowkey分割符
+     */
+    public static final String SPLIT = ";";
+    /**
      * orderinfo的接口编号
      */
     public static final String ORDER_INFO_CODE = "BaaS-0002";

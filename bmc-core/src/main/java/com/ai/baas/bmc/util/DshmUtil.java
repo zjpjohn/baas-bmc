@@ -14,12 +14,24 @@ public class DshmUtil {
 
     private static Properties prop;
 
-    private static IdshmSV aIdshmSV = null;
+    private static DshmUtil instance;
 
-    private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-            "dubbo/consumer/dubbo-consumer.xml");
+    private IdshmSV aIdshmSV;
 
-    static {
+    private ClassPathXmlApplicationContext context;
+
+    private DshmUtil() {
+        context = new ClassPathXmlApplicationContext("dubbo/consumer/dubbo-consumer.xml");
+        context.registerShutdownHook();
+        context.start();
+        aIdshmSV = context.getBean(IdshmSV.class);
+    }
+
+    private static DshmUtil getInstance() {
+        if (instance == null) {
+            return new DshmUtil();
+        }
+        return instance;
     }
 
     public synchronized static IdshmreadSV getDshmread() {
@@ -44,12 +56,6 @@ public class DshmUtil {
     }
 
     public static IdshmSV getIdshmSV() {
-        // ClassPathXmlApplicationContext context = new
-        // ClassPathXmlApplicationContext("dubbo/consumer/dubbo-consumer.xml");
-        // context.registerShutdownHook();
-        // context.start();
-        // IdshmSV aIdshmSV = context.getBean(IdshmSV.class);
-        // IdshmSV aIdshmSV = DubboConsumerFactory.getService("IdshmSV", IdshmSV.class);
-        return aIdshmSV;
+        return getInstance().aIdshmSV;
     }
 }
