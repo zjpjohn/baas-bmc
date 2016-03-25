@@ -1,43 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ai.baas.bmc.dao.interfaces.BlUserinfoMapper">
-  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
-    <id column="TENANT_ID" jdbcType="VARCHAR" property="tenantId" />
-    <id column="SUBS_ID" jdbcType="VARCHAR" property="subsId" />
-    <id column="ACTIVE_TIME" jdbcType="TIMESTAMP" property="activeTime" />
-    <result column="CUST_ID" jdbcType="VARCHAR" property="custId" />
-    <result column="ACCT_ID" jdbcType="VARCHAR" property="acctId" />
-    <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId" />
-    <result column="DEAL_TIME" jdbcType="TIMESTAMP" property="dealTime" />
-    <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode" />
-    <result column="CITY_CODE" jdbcType="VARCHAR" property="cityCode" />
-    <result column="CHL_ID" jdbcType="VARCHAR" property="chlId" />
-    <result column="DEV_ID" jdbcType="VARCHAR" property="devId" />
-    <result column="INACTIVE_TIME" jdbcType="TIMESTAMP" property="inactiveTime" />
-    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
-    <result column="SERV_TYPE" jdbcType="VARCHAR" property="servType" />
-    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
-    <result column="USER_STATE" jdbcType="VARCHAR" property="userState" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.BlUserinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
+    <id column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <id column="SUBS_ID" property="subsId" jdbcType="VARCHAR" />
+    <id column="ACTIVE_TIME" property="activeTime" jdbcType="TIMESTAMP" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="ACCT_ID" property="acctId" jdbcType="VARCHAR" />
+    <result column="SERVICE_ID" property="serviceId" jdbcType="VARCHAR" />
+    <result column="DEAL_TIME" property="dealTime" jdbcType="TIMESTAMP" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CHL_ID" property="chlId" jdbcType="VARCHAR" />
+    <result column="DEV_ID" property="devId" jdbcType="VARCHAR" />
+    <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="SERV_TYPE" property="servType" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+    <result column="USER_STATE" property="userState" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -48,25 +48,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -77,28 +77,28 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     TENANT_ID, SUBS_ID, ACTIVE_TIME, CUST_ID, ACCT_ID, SERVICE_ID, DEAL_TIME, PROVINCE_CODE, 
     CITY_CODE, CHL_ID, DEV_ID, INACTIVE_TIME, REMARK, SERV_TYPE, USER_TYPE, USER_STATE
   </sql>
-  <select id="selectByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from bl_userinfo
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    <if test="limitStart != null and limitStart&gt;=0">
+    <if test="limitStart != null and limitStart>=0" >
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoKey" >
     select 
     <include refid="Base_Column_List" />
     from bl_userinfo
@@ -106,19 +106,19 @@
       and SUBS_ID = #{subsId,jdbcType=VARCHAR}
       and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoKey">
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoKey" >
     delete from bl_userinfo
     where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
       and SUBS_ID = #{subsId,jdbcType=VARCHAR}
       and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria">
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" >
     delete from bl_userinfo
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
     insert into bl_userinfo (TENANT_ID, SUBS_ID, ACTIVE_TIME, 
       CUST_ID, ACCT_ID, SERVICE_ID, 
       DEAL_TIME, PROVINCE_CODE, CITY_CODE, 
@@ -132,172 +132,172 @@
       #{remark,jdbcType=VARCHAR}, #{servType,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
       #{userState,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
     insert into bl_userinfo
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="tenantId != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tenantId != null" >
         TENANT_ID,
       </if>
-      <if test="subsId != null">
+      <if test="subsId != null" >
         SUBS_ID,
       </if>
-      <if test="activeTime != null">
+      <if test="activeTime != null" >
         ACTIVE_TIME,
       </if>
-      <if test="custId != null">
+      <if test="custId != null" >
         CUST_ID,
       </if>
-      <if test="acctId != null">
+      <if test="acctId != null" >
         ACCT_ID,
       </if>
-      <if test="serviceId != null">
+      <if test="serviceId != null" >
         SERVICE_ID,
       </if>
-      <if test="dealTime != null">
+      <if test="dealTime != null" >
         DEAL_TIME,
       </if>
-      <if test="provinceCode != null">
+      <if test="provinceCode != null" >
         PROVINCE_CODE,
       </if>
-      <if test="cityCode != null">
+      <if test="cityCode != null" >
         CITY_CODE,
       </if>
-      <if test="chlId != null">
+      <if test="chlId != null" >
         CHL_ID,
       </if>
-      <if test="devId != null">
+      <if test="devId != null" >
         DEV_ID,
       </if>
-      <if test="inactiveTime != null">
+      <if test="inactiveTime != null" >
         INACTIVE_TIME,
       </if>
-      <if test="remark != null">
+      <if test="remark != null" >
         REMARK,
       </if>
-      <if test="servType != null">
+      <if test="servType != null" >
         SERV_TYPE,
       </if>
-      <if test="userType != null">
+      <if test="userType != null" >
         USER_TYPE,
       </if>
-      <if test="userState != null">
+      <if test="userState != null" >
         USER_STATE,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="tenantId != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tenantId != null" >
         #{tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="subsId != null">
+      <if test="subsId != null" >
         #{subsId,jdbcType=VARCHAR},
       </if>
-      <if test="activeTime != null">
+      <if test="activeTime != null" >
         #{activeTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="custId != null">
+      <if test="custId != null" >
         #{custId,jdbcType=VARCHAR},
       </if>
-      <if test="acctId != null">
+      <if test="acctId != null" >
         #{acctId,jdbcType=VARCHAR},
       </if>
-      <if test="serviceId != null">
+      <if test="serviceId != null" >
         #{serviceId,jdbcType=VARCHAR},
       </if>
-      <if test="dealTime != null">
+      <if test="dealTime != null" >
         #{dealTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="provinceCode != null">
+      <if test="provinceCode != null" >
         #{provinceCode,jdbcType=VARCHAR},
       </if>
-      <if test="cityCode != null">
+      <if test="cityCode != null" >
         #{cityCode,jdbcType=VARCHAR},
       </if>
-      <if test="chlId != null">
+      <if test="chlId != null" >
         #{chlId,jdbcType=VARCHAR},
       </if>
-      <if test="devId != null">
+      <if test="devId != null" >
         #{devId,jdbcType=VARCHAR},
       </if>
-      <if test="inactiveTime != null">
+      <if test="inactiveTime != null" >
         #{inactiveTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="remark != null">
+      <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="servType != null">
+      <if test="servType != null" >
         #{servType,jdbcType=VARCHAR},
       </if>
-      <if test="userType != null">
+      <if test="userType != null" >
         #{userType,jdbcType=VARCHAR},
       </if>
-      <if test="userState != null">
+      <if test="userState != null" >
         #{userState,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" resultType="java.lang.Integer" >
     select count(*) from bl_userinfo
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update bl_userinfo
-    <set>
-      <if test="record.tenantId != null">
+    <set >
+      <if test="record.tenantId != null" >
         TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="record.subsId != null">
+      <if test="record.subsId != null" >
         SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
       </if>
-      <if test="record.activeTime != null">
+      <if test="record.activeTime != null" >
         ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.custId != null">
+      <if test="record.custId != null" >
         CUST_ID = #{record.custId,jdbcType=VARCHAR},
       </if>
-      <if test="record.acctId != null">
+      <if test="record.acctId != null" >
         ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
       </if>
-      <if test="record.serviceId != null">
+      <if test="record.serviceId != null" >
         SERVICE_ID = #{record.serviceId,jdbcType=VARCHAR},
       </if>
-      <if test="record.dealTime != null">
+      <if test="record.dealTime != null" >
         DEAL_TIME = #{record.dealTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.provinceCode != null">
+      <if test="record.provinceCode != null" >
         PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.cityCode != null">
+      <if test="record.cityCode != null" >
         CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.chlId != null">
+      <if test="record.chlId != null" >
         CHL_ID = #{record.chlId,jdbcType=VARCHAR},
       </if>
-      <if test="record.devId != null">
+      <if test="record.devId != null" >
         DEV_ID = #{record.devId,jdbcType=VARCHAR},
       </if>
-      <if test="record.inactiveTime != null">
+      <if test="record.inactiveTime != null" >
         INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.remark != null">
+      <if test="record.remark != null" >
         REMARK = #{record.remark,jdbcType=VARCHAR},
       </if>
-      <if test="record.servType != null">
+      <if test="record.servType != null" >
         SERV_TYPE = #{record.servType,jdbcType=VARCHAR},
       </if>
-      <if test="record.userType != null">
+      <if test="record.userType != null" >
         USER_TYPE = #{record.userType,jdbcType=VARCHAR},
       </if>
-      <if test="record.userState != null">
+      <if test="record.userState != null" >
         USER_STATE = #{record.userState,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update bl_userinfo
     set TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
       SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
@@ -315,50 +315,50 @@
       SERV_TYPE = #{record.servType,jdbcType=VARCHAR},
       USER_TYPE = #{record.userType,jdbcType=VARCHAR},
       USER_STATE = #{record.userState,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
     update bl_userinfo
-    <set>
-      <if test="custId != null">
+    <set >
+      <if test="custId != null" >
         CUST_ID = #{custId,jdbcType=VARCHAR},
       </if>
-      <if test="acctId != null">
+      <if test="acctId != null" >
         ACCT_ID = #{acctId,jdbcType=VARCHAR},
       </if>
-      <if test="serviceId != null">
+      <if test="serviceId != null" >
         SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
       </if>
-      <if test="dealTime != null">
+      <if test="dealTime != null" >
         DEAL_TIME = #{dealTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="provinceCode != null">
+      <if test="provinceCode != null" >
         PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
       </if>
-      <if test="cityCode != null">
+      <if test="cityCode != null" >
         CITY_CODE = #{cityCode,jdbcType=VARCHAR},
       </if>
-      <if test="chlId != null">
+      <if test="chlId != null" >
         CHL_ID = #{chlId,jdbcType=VARCHAR},
       </if>
-      <if test="devId != null">
+      <if test="devId != null" >
         DEV_ID = #{devId,jdbcType=VARCHAR},
       </if>
-      <if test="inactiveTime != null">
+      <if test="inactiveTime != null" >
         INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="remark != null">
+      <if test="remark != null" >
         REMARK = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="servType != null">
+      <if test="servType != null" >
         SERV_TYPE = #{servType,jdbcType=VARCHAR},
       </if>
-      <if test="userType != null">
+      <if test="userType != null" >
         USER_TYPE = #{userType,jdbcType=VARCHAR},
       </if>
-      <if test="userState != null">
+      <if test="userState != null" >
         USER_STATE = #{userState,jdbcType=VARCHAR},
       </if>
     </set>
@@ -366,7 +366,7 @@
       and SUBS_ID = #{subsId,jdbcType=VARCHAR}
       and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
     update bl_userinfo
     set CUST_ID = #{custId,jdbcType=VARCHAR},
       ACCT_ID = #{acctId,jdbcType=VARCHAR},
@@ -384,803 +384,5 @@
     where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
       and SUBS_ID = #{subsId,jdbcType=VARCHAR}
       and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
-  </update>
-  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
-    <result column="CUST_ID" jdbcType="VARCHAR" property="custId" />
-    <result column="SUBS_ID" jdbcType="VARCHAR" property="subsId" />
-    <result column="ACCT_ID" jdbcType="VARCHAR" property="acctId" />
-    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
-    <result column="SERV_TYPE" jdbcType="VARCHAR" property="servType" />
-    <result column="USER_STATE" jdbcType="VARCHAR" property="userState" />
-    <result column="SERVICE_NUM" jdbcType="VARCHAR" property="serviceNum" />
-    <result column="IMSI1" jdbcType="VARCHAR" property="imsi1" />
-    <result column="IMSI2" jdbcType="VARCHAR" property="imsi2" />
-    <result column="IMSI3" jdbcType="VARCHAR" property="imsi3" />
-    <result column="SIM_TYPE" jdbcType="VARCHAR" property="simType" />
-    <result column="SIM" jdbcType="VARCHAR" property="sim" />
-    <result column="BASIC_ORG_ID" jdbcType="VARCHAR" property="basicOrgId" />
-    <result column="JOIN_TIME" jdbcType="TIMESTAMP" property="joinTime" />
-    <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode" />
-    <result column="CITY_CODE" jdbcType="VARCHAR" property="cityCode" />
-    <result column="CHL_ID" jdbcType="VARCHAR" property="chlId" />
-    <result column="DEV_ID" jdbcType="VARCHAR" property="devId" />
-    <result column="ACTIVE_TIME" jdbcType="TIMESTAMP" property="activeTime" />
-    <result column="INACTIVE_TIME" jdbcType="TIMESTAMP" property="inactiveTime" />
-    <result column="TENANT_ID" jdbcType="VARCHAR" property="tenantId" />
-    <result column="SYSTEM_ID" jdbcType="VARCHAR" property="systemId" />
-    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
-    <result column="FACTOR_CODE" jdbcType="VARCHAR" property="factorCode" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    CUST_ID, SUBS_ID, ACCT_ID, USER_TYPE, SERV_TYPE, USER_STATE, SERVICE_NUM, IMSI1, 
-    IMSI2, IMSI3, SIM_TYPE, SIM, BASIC_ORG_ID, JOIN_TIME, PROVINCE_CODE, CITY_CODE, CHL_ID, 
-    DEV_ID, ACTIVE_TIME, INACTIVE_TIME, TENANT_ID, SYSTEM_ID, REMARK, FACTOR_CODE
-  </sql>
-  <select id="selectByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from bl_userinfo
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="limitStart != null and limitStart&gt;=0">
-      limit #{limitStart} , #{limitEnd}
-    </if>
-  </select>
-  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria">
-    delete from bl_userinfo
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
-    insert into bl_userinfo (CUST_ID, SUBS_ID, ACCT_ID, 
-      USER_TYPE, SERV_TYPE, USER_STATE, 
-      SERVICE_NUM, IMSI1, IMSI2, 
-      IMSI3, SIM_TYPE, SIM, 
-      BASIC_ORG_ID, JOIN_TIME, PROVINCE_CODE, 
-      CITY_CODE, CHL_ID, DEV_ID, 
-      ACTIVE_TIME, INACTIVE_TIME, TENANT_ID, 
-      SYSTEM_ID, REMARK, FACTOR_CODE
-      )
-    values (#{custId,jdbcType=VARCHAR}, #{subsId,jdbcType=VARCHAR}, #{acctId,jdbcType=VARCHAR}, 
-      #{userType,jdbcType=VARCHAR}, #{servType,jdbcType=VARCHAR}, #{userState,jdbcType=VARCHAR}, 
-      #{serviceNum,jdbcType=VARCHAR}, #{imsi1,jdbcType=VARCHAR}, #{imsi2,jdbcType=VARCHAR}, 
-      #{imsi3,jdbcType=VARCHAR}, #{simType,jdbcType=VARCHAR}, #{sim,jdbcType=VARCHAR}, 
-      #{basicOrgId,jdbcType=VARCHAR}, #{joinTime,jdbcType=TIMESTAMP}, #{provinceCode,jdbcType=VARCHAR}, 
-      #{cityCode,jdbcType=VARCHAR}, #{chlId,jdbcType=VARCHAR}, #{devId,jdbcType=VARCHAR}, 
-      #{activeTime,jdbcType=TIMESTAMP}, #{inactiveTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=VARCHAR}, 
-      #{systemId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{factorCode,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
-    insert into bl_userinfo
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="custId != null">
-        CUST_ID,
-      </if>
-      <if test="subsId != null">
-        SUBS_ID,
-      </if>
-      <if test="acctId != null">
-        ACCT_ID,
-      </if>
-      <if test="userType != null">
-        USER_TYPE,
-      </if>
-      <if test="servType != null">
-        SERV_TYPE,
-      </if>
-      <if test="userState != null">
-        USER_STATE,
-      </if>
-      <if test="serviceNum != null">
-        SERVICE_NUM,
-      </if>
-      <if test="imsi1 != null">
-        IMSI1,
-      </if>
-      <if test="imsi2 != null">
-        IMSI2,
-      </if>
-      <if test="imsi3 != null">
-        IMSI3,
-      </if>
-      <if test="simType != null">
-        SIM_TYPE,
-      </if>
-      <if test="sim != null">
-        SIM,
-      </if>
-      <if test="basicOrgId != null">
-        BASIC_ORG_ID,
-      </if>
-      <if test="joinTime != null">
-        JOIN_TIME,
-      </if>
-      <if test="provinceCode != null">
-        PROVINCE_CODE,
-      </if>
-      <if test="cityCode != null">
-        CITY_CODE,
-      </if>
-      <if test="chlId != null">
-        CHL_ID,
-      </if>
-      <if test="devId != null">
-        DEV_ID,
-      </if>
-      <if test="activeTime != null">
-        ACTIVE_TIME,
-      </if>
-      <if test="inactiveTime != null">
-        INACTIVE_TIME,
-      </if>
-      <if test="tenantId != null">
-        TENANT_ID,
-      </if>
-      <if test="systemId != null">
-        SYSTEM_ID,
-      </if>
-      <if test="remark != null">
-        REMARK,
-      </if>
-      <if test="factorCode != null">
-        FACTOR_CODE,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="custId != null">
-        #{custId,jdbcType=VARCHAR},
-      </if>
-      <if test="subsId != null">
-        #{subsId,jdbcType=VARCHAR},
-      </if>
-      <if test="acctId != null">
-        #{acctId,jdbcType=VARCHAR},
-      </if>
-      <if test="userType != null">
-        #{userType,jdbcType=VARCHAR},
-      </if>
-      <if test="servType != null">
-        #{servType,jdbcType=VARCHAR},
-      </if>
-      <if test="userState != null">
-        #{userState,jdbcType=VARCHAR},
-      </if>
-      <if test="serviceNum != null">
-        #{serviceNum,jdbcType=VARCHAR},
-      </if>
-      <if test="imsi1 != null">
-        #{imsi1,jdbcType=VARCHAR},
-      </if>
-      <if test="imsi2 != null">
-        #{imsi2,jdbcType=VARCHAR},
-      </if>
-      <if test="imsi3 != null">
-        #{imsi3,jdbcType=VARCHAR},
-      </if>
-      <if test="simType != null">
-        #{simType,jdbcType=VARCHAR},
-      </if>
-      <if test="sim != null">
-        #{sim,jdbcType=VARCHAR},
-      </if>
-      <if test="basicOrgId != null">
-        #{basicOrgId,jdbcType=VARCHAR},
-      </if>
-      <if test="joinTime != null">
-        #{joinTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="provinceCode != null">
-        #{provinceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cityCode != null">
-        #{cityCode,jdbcType=VARCHAR},
-      </if>
-      <if test="chlId != null">
-        #{chlId,jdbcType=VARCHAR},
-      </if>
-      <if test="devId != null">
-        #{devId,jdbcType=VARCHAR},
-      </if>
-      <if test="activeTime != null">
-        #{activeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="inactiveTime != null">
-        #{inactiveTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tenantId != null">
-        #{tenantId,jdbcType=VARCHAR},
-      </if>
-      <if test="systemId != null">
-        #{systemId,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="factorCode != null">
-        #{factorCode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" resultType="java.lang.Integer">
-    select count(*) from bl_userinfo
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update bl_userinfo
-    <set>
-      <if test="record.custId != null">
-        CUST_ID = #{record.custId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.subsId != null">
-        SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.acctId != null">
-        ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userType != null">
-        USER_TYPE = #{record.userType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.servType != null">
-        SERV_TYPE = #{record.servType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userState != null">
-        USER_STATE = #{record.userState,jdbcType=VARCHAR},
-      </if>
-      <if test="record.serviceNum != null">
-        SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
-      </if>
-      <if test="record.imsi1 != null">
-        IMSI1 = #{record.imsi1,jdbcType=VARCHAR},
-      </if>
-      <if test="record.imsi2 != null">
-        IMSI2 = #{record.imsi2,jdbcType=VARCHAR},
-      </if>
-      <if test="record.imsi3 != null">
-        IMSI3 = #{record.imsi3,jdbcType=VARCHAR},
-      </if>
-      <if test="record.simType != null">
-        SIM_TYPE = #{record.simType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sim != null">
-        SIM = #{record.sim,jdbcType=VARCHAR},
-      </if>
-      <if test="record.basicOrgId != null">
-        BASIC_ORG_ID = #{record.basicOrgId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.joinTime != null">
-        JOIN_TIME = #{record.joinTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.provinceCode != null">
-        PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cityCode != null">
-        CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.chlId != null">
-        CHL_ID = #{record.chlId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.devId != null">
-        DEV_ID = #{record.devId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.activeTime != null">
-        ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.inactiveTime != null">
-        INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.tenantId != null">
-        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.systemId != null">
-        SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.remark != null">
-        REMARK = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.factorCode != null">
-        FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update bl_userinfo
-    set CUST_ID = #{record.custId,jdbcType=VARCHAR},
-      SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
-      ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
-      USER_TYPE = #{record.userType,jdbcType=VARCHAR},
-      SERV_TYPE = #{record.servType,jdbcType=VARCHAR},
-      USER_STATE = #{record.userState,jdbcType=VARCHAR},
-      SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
-      IMSI1 = #{record.imsi1,jdbcType=VARCHAR},
-      IMSI2 = #{record.imsi2,jdbcType=VARCHAR},
-      IMSI3 = #{record.imsi3,jdbcType=VARCHAR},
-      SIM_TYPE = #{record.simType,jdbcType=VARCHAR},
-      SIM = #{record.sim,jdbcType=VARCHAR},
-      BASIC_ORG_ID = #{record.basicOrgId,jdbcType=VARCHAR},
-      JOIN_TIME = #{record.joinTime,jdbcType=TIMESTAMP},
-      PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
-      CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
-      CHL_ID = #{record.chlId,jdbcType=VARCHAR},
-      DEV_ID = #{record.devId,jdbcType=VARCHAR},
-      ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
-      INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
-      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
-      SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
-      REMARK = #{record.remark,jdbcType=VARCHAR},
-      FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
-    <result column="CUST_ID" jdbcType="VARCHAR" property="custId" />
-    <result column="SUBS_ID" jdbcType="VARCHAR" property="subsId" />
-    <result column="ACCT_ID" jdbcType="VARCHAR" property="acctId" />
-    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
-    <result column="SERV_TYPE" jdbcType="VARCHAR" property="servType" />
-    <result column="USER_STATE" jdbcType="VARCHAR" property="userState" />
-    <result column="SERVICE_NUM" jdbcType="VARCHAR" property="serviceNum" />
-    <result column="IMSI1" jdbcType="VARCHAR" property="imsi1" />
-    <result column="IMSI2" jdbcType="VARCHAR" property="imsi2" />
-    <result column="IMSI3" jdbcType="VARCHAR" property="imsi3" />
-    <result column="SIM_TYPE" jdbcType="VARCHAR" property="simType" />
-    <result column="SIM" jdbcType="VARCHAR" property="sim" />
-    <result column="BASIC_ORG_ID" jdbcType="VARCHAR" property="basicOrgId" />
-    <result column="JOIN_TIME" jdbcType="TIMESTAMP" property="joinTime" />
-    <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode" />
-    <result column="CITY_CODE" jdbcType="VARCHAR" property="cityCode" />
-    <result column="CHL_ID" jdbcType="VARCHAR" property="chlId" />
-    <result column="DEV_ID" jdbcType="VARCHAR" property="devId" />
-    <result column="ACTIVE_TIME" jdbcType="TIMESTAMP" property="activeTime" />
-    <result column="INACTIVE_TIME" jdbcType="TIMESTAMP" property="inactiveTime" />
-    <result column="TENANT_ID" jdbcType="VARCHAR" property="tenantId" />
-    <result column="SYSTEM_ID" jdbcType="VARCHAR" property="systemId" />
-    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
-    <result column="FACTOR_CODE" jdbcType="VARCHAR" property="factorCode" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    CUST_ID, SUBS_ID, ACCT_ID, USER_TYPE, SERV_TYPE, USER_STATE, SERVICE_NUM, IMSI1, 
-    IMSI2, IMSI3, SIM_TYPE, SIM, BASIC_ORG_ID, JOIN_TIME, PROVINCE_CODE, CITY_CODE, CHL_ID, 
-    DEV_ID, ACTIVE_TIME, INACTIVE_TIME, TENANT_ID, SYSTEM_ID, REMARK, FACTOR_CODE
-  </sql>
-  <select id="selectByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from bl_userinfo
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="limitStart != null and limitStart&gt;=0">
-      limit #{limitStart} , #{limitEnd}
-    </if>
-  </select>
-  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria">
-    delete from bl_userinfo
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
-    insert into bl_userinfo (CUST_ID, SUBS_ID, ACCT_ID, 
-      USER_TYPE, SERV_TYPE, USER_STATE, 
-      SERVICE_NUM, IMSI1, IMSI2, 
-      IMSI3, SIM_TYPE, SIM, 
-      BASIC_ORG_ID, JOIN_TIME, PROVINCE_CODE, 
-      CITY_CODE, CHL_ID, DEV_ID, 
-      ACTIVE_TIME, INACTIVE_TIME, TENANT_ID, 
-      SYSTEM_ID, REMARK, FACTOR_CODE
-      )
-    values (#{custId,jdbcType=VARCHAR}, #{subsId,jdbcType=VARCHAR}, #{acctId,jdbcType=VARCHAR}, 
-      #{userType,jdbcType=VARCHAR}, #{servType,jdbcType=VARCHAR}, #{userState,jdbcType=VARCHAR}, 
-      #{serviceNum,jdbcType=VARCHAR}, #{imsi1,jdbcType=VARCHAR}, #{imsi2,jdbcType=VARCHAR}, 
-      #{imsi3,jdbcType=VARCHAR}, #{simType,jdbcType=VARCHAR}, #{sim,jdbcType=VARCHAR}, 
-      #{basicOrgId,jdbcType=VARCHAR}, #{joinTime,jdbcType=TIMESTAMP}, #{provinceCode,jdbcType=VARCHAR}, 
-      #{cityCode,jdbcType=VARCHAR}, #{chlId,jdbcType=VARCHAR}, #{devId,jdbcType=VARCHAR}, 
-      #{activeTime,jdbcType=TIMESTAMP}, #{inactiveTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=VARCHAR}, 
-      #{systemId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{factorCode,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo">
-    insert into bl_userinfo
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="custId != null">
-        CUST_ID,
-      </if>
-      <if test="subsId != null">
-        SUBS_ID,
-      </if>
-      <if test="acctId != null">
-        ACCT_ID,
-      </if>
-      <if test="userType != null">
-        USER_TYPE,
-      </if>
-      <if test="servType != null">
-        SERV_TYPE,
-      </if>
-      <if test="userState != null">
-        USER_STATE,
-      </if>
-      <if test="serviceNum != null">
-        SERVICE_NUM,
-      </if>
-      <if test="imsi1 != null">
-        IMSI1,
-      </if>
-      <if test="imsi2 != null">
-        IMSI2,
-      </if>
-      <if test="imsi3 != null">
-        IMSI3,
-      </if>
-      <if test="simType != null">
-        SIM_TYPE,
-      </if>
-      <if test="sim != null">
-        SIM,
-      </if>
-      <if test="basicOrgId != null">
-        BASIC_ORG_ID,
-      </if>
-      <if test="joinTime != null">
-        JOIN_TIME,
-      </if>
-      <if test="provinceCode != null">
-        PROVINCE_CODE,
-      </if>
-      <if test="cityCode != null">
-        CITY_CODE,
-      </if>
-      <if test="chlId != null">
-        CHL_ID,
-      </if>
-      <if test="devId != null">
-        DEV_ID,
-      </if>
-      <if test="activeTime != null">
-        ACTIVE_TIME,
-      </if>
-      <if test="inactiveTime != null">
-        INACTIVE_TIME,
-      </if>
-      <if test="tenantId != null">
-        TENANT_ID,
-      </if>
-      <if test="systemId != null">
-        SYSTEM_ID,
-      </if>
-      <if test="remark != null">
-        REMARK,
-      </if>
-      <if test="factorCode != null">
-        FACTOR_CODE,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="custId != null">
-        #{custId,jdbcType=VARCHAR},
-      </if>
-      <if test="subsId != null">
-        #{subsId,jdbcType=VARCHAR},
-      </if>
-      <if test="acctId != null">
-        #{acctId,jdbcType=VARCHAR},
-      </if>
-      <if test="userType != null">
-        #{userType,jdbcType=VARCHAR},
-      </if>
-      <if test="servType != null">
-        #{servType,jdbcType=VARCHAR},
-      </if>
-      <if test="userState != null">
-        #{userState,jdbcType=VARCHAR},
-      </if>
-      <if test="serviceNum != null">
-        #{serviceNum,jdbcType=VARCHAR},
-      </if>
-      <if test="imsi1 != null">
-        #{imsi1,jdbcType=VARCHAR},
-      </if>
-      <if test="imsi2 != null">
-        #{imsi2,jdbcType=VARCHAR},
-      </if>
-      <if test="imsi3 != null">
-        #{imsi3,jdbcType=VARCHAR},
-      </if>
-      <if test="simType != null">
-        #{simType,jdbcType=VARCHAR},
-      </if>
-      <if test="sim != null">
-        #{sim,jdbcType=VARCHAR},
-      </if>
-      <if test="basicOrgId != null">
-        #{basicOrgId,jdbcType=VARCHAR},
-      </if>
-      <if test="joinTime != null">
-        #{joinTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="provinceCode != null">
-        #{provinceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cityCode != null">
-        #{cityCode,jdbcType=VARCHAR},
-      </if>
-      <if test="chlId != null">
-        #{chlId,jdbcType=VARCHAR},
-      </if>
-      <if test="devId != null">
-        #{devId,jdbcType=VARCHAR},
-      </if>
-      <if test="activeTime != null">
-        #{activeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="inactiveTime != null">
-        #{inactiveTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tenantId != null">
-        #{tenantId,jdbcType=VARCHAR},
-      </if>
-      <if test="systemId != null">
-        #{systemId,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="factorCode != null">
-        #{factorCode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" resultType="java.lang.Integer">
-    select count(*) from bl_userinfo
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update bl_userinfo
-    <set>
-      <if test="record.custId != null">
-        CUST_ID = #{record.custId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.subsId != null">
-        SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.acctId != null">
-        ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userType != null">
-        USER_TYPE = #{record.userType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.servType != null">
-        SERV_TYPE = #{record.servType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userState != null">
-        USER_STATE = #{record.userState,jdbcType=VARCHAR},
-      </if>
-      <if test="record.serviceNum != null">
-        SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
-      </if>
-      <if test="record.imsi1 != null">
-        IMSI1 = #{record.imsi1,jdbcType=VARCHAR},
-      </if>
-      <if test="record.imsi2 != null">
-        IMSI2 = #{record.imsi2,jdbcType=VARCHAR},
-      </if>
-      <if test="record.imsi3 != null">
-        IMSI3 = #{record.imsi3,jdbcType=VARCHAR},
-      </if>
-      <if test="record.simType != null">
-        SIM_TYPE = #{record.simType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sim != null">
-        SIM = #{record.sim,jdbcType=VARCHAR},
-      </if>
-      <if test="record.basicOrgId != null">
-        BASIC_ORG_ID = #{record.basicOrgId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.joinTime != null">
-        JOIN_TIME = #{record.joinTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.provinceCode != null">
-        PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cityCode != null">
-        CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.chlId != null">
-        CHL_ID = #{record.chlId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.devId != null">
-        DEV_ID = #{record.devId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.activeTime != null">
-        ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.inactiveTime != null">
-        INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.tenantId != null">
-        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.systemId != null">
-        SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.remark != null">
-        REMARK = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.factorCode != null">
-        FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update bl_userinfo
-    set CUST_ID = #{record.custId,jdbcType=VARCHAR},
-      SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
-      ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
-      USER_TYPE = #{record.userType,jdbcType=VARCHAR},
-      SERV_TYPE = #{record.servType,jdbcType=VARCHAR},
-      USER_STATE = #{record.userState,jdbcType=VARCHAR},
-      SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
-      IMSI1 = #{record.imsi1,jdbcType=VARCHAR},
-      IMSI2 = #{record.imsi2,jdbcType=VARCHAR},
-      IMSI3 = #{record.imsi3,jdbcType=VARCHAR},
-      SIM_TYPE = #{record.simType,jdbcType=VARCHAR},
-      SIM = #{record.sim,jdbcType=VARCHAR},
-      BASIC_ORG_ID = #{record.basicOrgId,jdbcType=VARCHAR},
-      JOIN_TIME = #{record.joinTime,jdbcType=TIMESTAMP},
-      PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
-      CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
-      CHL_ID = #{record.chlId,jdbcType=VARCHAR},
-      DEV_ID = #{record.devId,jdbcType=VARCHAR},
-      ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
-      INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
-      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
-      SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
-      REMARK = #{record.remark,jdbcType=VARCHAR},
-      FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
   </update>
 </mapper>

@@ -4,15 +4,23 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.ai.baas.bmc.context.Constants;
-import com.ai.opt.sdk.util.DubboConsumerFactory;
-import com.ai.runner.center.dshm.api.dshmprocess.interfaces.IdshmSV;
 import com.ai.runner.center.dshm.api.dshmservice.interfaces.IdshmreadSV;
-
 public class DshmUtil {
     private static IdshmreadSV dshmread;
     
     private static Properties prop;
-
+    
+//    @Autowired
+//    @Qualifier("IdshmSV")
+//    private IdshmSV aIdshmSV;
+    
+    private static DshmUtil instantiation;
+    
+//    @PostConstruct
+//    private void init(){
+//        System.err.println(aIdshmSV);
+//    }
+    
     public synchronized static IdshmreadSV getDshmread() {
         if(prop == null){
             prop = new Properties();
@@ -33,7 +41,12 @@ public class DshmUtil {
         return dshmread;
     }
     
-    public static IdshmSV getIdshmSV(){
-        return DubboConsumerFactory.getService("IdshmSV", IdshmSV.class);
-    }
+//    public static IdshmSV getIdshmSV(){
+////        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("dubbo/consumer/dubbo-consumer.xml");
+////        context.registerShutdownHook();
+////        context.start();
+////        IdshmSV aIdshmSV = context.getBean(IdshmSV.class);
+////        IdshmSV aIdshmSV = DubboConsumerFactory.getService("IdshmSV", IdshmSV.class);
+//        return instantiation.aIdshmSV;
+//    }
 }

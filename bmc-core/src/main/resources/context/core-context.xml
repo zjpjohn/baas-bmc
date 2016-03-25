@@ -56,9 +56,9 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     	<property name="dataSource" ref="dataSource"/>
 	</bean>
-	<!-- PaaSTXS授权-->
+	<!-- PaaSTXS授权
     <bean id="paaSTransactionUserAuth" class="com.ai.runner.sdk.txs.auth.PaaSTransactionUserAuth" init-method="init">
-    </bean>
+    </bean>-->
     <!--AOP 事务配置 -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>

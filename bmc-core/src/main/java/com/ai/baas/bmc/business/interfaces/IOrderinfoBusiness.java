@@ -20,5 +20,5 @@ public interface IOrderinfoBusiness {
     /**
      * 写入mysql表,同时刷新内存
      */
-    public void writeData(OrderInfoParams record);
+    public void writeData(OrderInfoParams record,String custId);
 }

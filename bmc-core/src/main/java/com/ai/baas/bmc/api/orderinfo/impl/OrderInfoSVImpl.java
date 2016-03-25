@@ -1,6 +1,9 @@
 package com.ai.baas.bmc.api.orderinfo.impl;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,11 +15,15 @@ import com.ai.baas.bmc.api.orderinfo.params.Product;
 import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
 import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiness;
 import com.ai.baas.bmc.context.ErrorCode;
+import com.ai.baas.bmc.context.TableCon;
+import com.ai.baas.bmc.context.TableCon.ConBlCustinfo;
 import com.ai.baas.bmc.util.CheckUtil;
+import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.DateUtil;
+import com.ai.runner.center.dshm.api.dshmservice.interfaces.IdshmreadSV;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service
@@ -179,6 +186,20 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 }
             }
         }
+        
+        // 通过共享内存获得内部的custId
+        IdshmreadSV dshmread = DshmUtil.getDshmread();
+        Map<String, String> params = new TreeMap<String, String>();
+        params.put(ConBlCustinfo.EXT_CUST_ID, record.getExtCustId());
+        List<Map<String, String>> result = dshmread.list(TableCon.BL_CUSTINFO).where(params)
+                .executeQuery();
+        // 获得对应的内部的custId
+        if (result == null || result.isEmpty()) {
+            LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + record.getExtCustId());
+            return ErrorCode.NULL + "客户不存在";
+        }
+        String custIds[] = result.get(0).get(ConBlCustinfo.CUST_ID).split("#");
+        String custId = custIds[custIds.length - 1];
         LoggerUtil.log.debug("校验成功！");
         //幂等性判断（判重）
         try {
@@ -191,10 +212,10 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         }
         //写入mysql表中
         try {
-            business.writeData(record);
-        } catch (BusinessException e) {
+            business.writeData(record,custId);
+        } catch (BusinessException e){
             return e.getErrorCode() + e.getErrorMessage();
-        } catch (Exception e1){
+        } catch (Exception e1) {
             return "writeData发生错误："+e1.getMessage();
         }
         
