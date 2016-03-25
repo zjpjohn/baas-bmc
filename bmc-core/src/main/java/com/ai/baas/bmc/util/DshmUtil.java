@@ -14,13 +14,12 @@ public class DshmUtil {
 
     private static Properties prop;
 
-    private static IdshmSV aIdshmSV;
+    private static IdshmSV aIdshmSV = null;
 
-    private static ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+    private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
             "dubbo/consumer/dubbo-consumer.xml");
 
     static {
-        aIdshmSV = context.getBean(IdshmSV.class);
     }
 
     public synchronized static IdshmreadSV getDshmread() {
