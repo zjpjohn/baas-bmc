@@ -24,13 +24,6 @@ public class OrderInfoParams extends BaseInfo {
     private String tradeSeq;
 
     /**
-     * 租户ID<br>
-     * 必填<br>
-     * VARCHAR(32)
-     */
-    private String tenantId;
-
-    /**
      * 外部客户ID<br>
      * 必填<br>
      * VARCHAR(32)
@@ -132,14 +125,6 @@ public class OrderInfoParams extends BaseInfo {
 
     public void setTradeSeq(String tradeSeq) {
         this.tradeSeq = tradeSeq;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
     }
 
     public String getExtCustId() {
