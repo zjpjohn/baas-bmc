@@ -41,7 +41,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness{
 		baseCodeInfo.setTradeSeq(param.getTradeSeq());
 		baseCodeInfo.setTenantId(param.getTenantId());
 		baseCodeInfo.setParamType(param.getParamType());
-		baseCodeInfo.setList(baseCodeList);
+		baseCodeInfo.setParamList(baseCodeList);
 		return baseCodeInfo;
 	}
 

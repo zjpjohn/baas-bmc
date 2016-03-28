@@ -1,17 +1,29 @@
 package com.ai.baas.bmc.api.baseInfo.params;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class BaseCodeInfo implements Serializable{
+import com.ai.opt.base.vo.BaseResponse;
+
+public class BaseCodeInfo extends BaseResponse{
 
 	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 交易流水号
+	 */
 	private String tradeSeq;
+	/**
+	 * 租户Id
+	 */
 	private String tenantId;
+	/**
+	 * 参数类型
+	 */
 	private String paramType;
-	
-	private List<BaseCode> list;
+	/**
+	 * 参数列表
+	 */
+	private List<BaseCode> paramList;
 
 	public String getTradeSeq() {
 		return tradeSeq;
@@ -37,13 +49,15 @@ public class BaseCodeInfo implements Serializable{
 		this.paramType = paramType;
 	}
 
-	public List<BaseCode> getList() {
-		return list;
+	public List<BaseCode> getParamList() {
+		return paramList;
 	}
 
-	public void setList(List<BaseCode> list) {
-		this.list = list;
+	public void setParamList(List<BaseCode> paramList) {
+		this.paramList = paramList;
 	}
+
+	
 	
 	
 }

@@ -4,6 +4,7 @@ package com.ai.baas.bmc.api.baseInfo.params;
 
 import javax.validation.constraints.NotNull;
 
+import com.ai.baas.bmc.api.baseInfo.interfaces.IBaseInfoSV;
 import com.ai.opt.base.vo.BaseInfo;
 /**
  * 基本信息查询入参
@@ -21,13 +22,13 @@ public class QueryInfoParams extends BaseInfo{
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空")
+	@NotNull(message="消息流水号不能为空",groups = { IBaseInfoSV.GetBaseInfo.class })
 	private String tradeSeq;
 	/**
 	 *参数类型<br>
 	 *取值范围：UNIT：单位参数，WEIGHT_UNIT：重量单位，DISTANCE_UNIT：距离单位，TIME_UNIT：时间单位，AREA_UNIT：面积单位，VOLUME_UNIT：体积单位，DATA_UNIT：数据存储单位，SEAT_UNIT：坐席单位<br>
 	 */
-	@NotNull(message="参数类型不能为空")
+	@NotNull(message="参数类型不能为空",groups = { IBaseInfoSV.GetBaseInfo.class })
 	private String paramType;
 	public String getTradeSeq() {
 		return tradeSeq;

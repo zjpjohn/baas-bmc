@@ -21,8 +21,9 @@ public interface IBaseInfoSV {
 	 * @throws SystemException
 	 * @author gaogang
 	 * @ApiDocMethod
-	 * @ApiCode BaaS-00001
+	 * @ApiCode bmc-00001
 	 */
+	@interface GetBaseInfo{}
 	BaseCodeInfo getBaseInfo(QueryInfoParams param) throws BusinessException,
     SystemException;
 }
