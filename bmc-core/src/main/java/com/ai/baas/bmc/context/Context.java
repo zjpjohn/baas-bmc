@@ -15,4 +15,8 @@ public final class Context {
      * orderinfo的接口编号
      */
     public static final String ORDER_INFO_CODE = "BaaS-0002";
+    /**
+     * custinfo
+     */
+    public static final String CUST_INFO_CODE = "BaaS-0001";
 }
