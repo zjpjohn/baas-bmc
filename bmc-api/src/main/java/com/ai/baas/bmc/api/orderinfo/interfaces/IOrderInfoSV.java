@@ -1,6 +1,8 @@
 package com.ai.baas.bmc.api.orderinfo.interfaces;
 
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 
 /**
  * 订购信息接口<br>
@@ -17,5 +19,6 @@ public interface IOrderInfoSV {
      * @author caoyf
      * @ApiCode BaaS-0002
      */
-    public String orderInfo(OrderInfoParams record);
+    @interface OrderInfo{}
+    public String orderInfo(OrderInfoParams record) throws BusinessException,SystemException;
 }
