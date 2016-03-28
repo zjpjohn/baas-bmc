@@ -23,45 +23,36 @@ public class QueryInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message="消息流水不能为空",groups={IPriceInfoSV.PriceInfo.class})
-    @Size(max=32,groups={IPriceInfoSV.PriceInfo.class})
+    @NotNull(message="消息流水不能为空",groups={IPriceInfoSV.GetPriceInfo.class})
+    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private String tradeSeq;
-    
-    /**
-     * 租户ID<br>
-     * 必填<br>
-     * VARCHAR(32)
-     */
-    @NotNull(message="租户ID不能为空",groups={IPriceInfoSV.PriceInfo.class})
-    @Size(max=32,groups={IPriceInfoSV.PriceInfo.class})
-    private String tenantId;
     
     /**
      * 标准资费ID
      * VARCHAR(32)
      */
-    @Size(max=32,groups={IPriceInfoSV.PriceInfo.class})
+    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private String standardId;
     
     /**
      * 资费名称
      * VARCHAR(64)
      */
-    @Size(max=64,groups={IPriceInfoSV.PriceInfo.class})
+    @Size(max=64,groups={IPriceInfoSV.GetPriceInfo.class})
     private String priceName;
     
     /**
      * 业务类型
      * VARCHAR(32)
      */
-    @Size(max=32,groups={IPriceInfoSV.PriceInfo.class})
+    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private String serviceType;
     
     /**
      * 资费状态
      * VARCHAR(32)
      */
-    @Size(max=32,groups={IPriceInfoSV.PriceInfo.class})
+    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private String priceState;
 
     public String getTradeSeq() {
@@ -70,14 +61,6 @@ public class QueryInfoParams extends BaseInfo {
 
     public void setTradeSeq(String tradeSeq) {
         this.tradeSeq = tradeSeq;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
     }
 
     public String getStandardId() {
