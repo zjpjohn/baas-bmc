@@ -25,7 +25,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.DateUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
-@Service
+@Service(validation="true")
 @Component
 public class OrderInfoSVImpl implements IOrderInfoSV {
     @Autowired
@@ -35,7 +35,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
     public String orderInfo(OrderInfoParams record) {
         //入参检验
         if (record == null) {
-            return ErrorCode.NULL + "入参不能为空";
+            return ErrorCode.NULL + ":入参不能为空";
         }
         LoggerUtil.log.debug("入参："+MyJsonUtil.toJson(record));
 
@@ -73,7 +73,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
             return resultCode;
         } else if(!CheckUtil.check(record.getOrderTime(), DateUtil.YYYYMMDDHHMMSS)){
-            return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
+            return ErrorCode.UNFORMATE + ":orderTime格式YYYYMMDDHH24MISS";
         }
 
         resultCode = CheckUtil.check(record.getProvinceCode(), "provinceCode", true, 6);
@@ -100,14 +100,14 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
             return resultCode;
         } else if(!CheckUtil.check(record.getActiveTime(), DateUtil.YYYYMMDDHHMMSS)){
-            return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
+            return ErrorCode.UNFORMATE + ":activeTime格式YYYYMMDDHH24MISS";
         }
 
         resultCode = CheckUtil.check(record.getInactiveTime(), "inactiveTime", false, 14);
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
             return resultCode;
         }else if(!CheckUtil.check(record.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS)){
-            return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
+            return ErrorCode.UNFORMATE + ":inactiveTime格式YYYYMMDDHH24MISS";
         }
 
         if (record.getOrderExtInfo() != null) {
@@ -155,14 +155,14 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 if (!ErrorCode.SUCCESS.equals(resultCode)) {
                     return resultCode;
                 }else if(!CheckUtil.check(p.getActiveTime(), DateUtil.YYYYMMDDHHMMSS)){
-                    return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
+                    return ErrorCode.UNFORMATE + ":activeTime格式YYYYMMDDHH24MISS";
                 }
                 
                 resultCode = CheckUtil.check(p.getInactiveTime(), "inactiveTime", false, 14);
                 if (!ErrorCode.SUCCESS.equals(resultCode)) {
                     return resultCode;
                 }else if(!CheckUtil.check(p.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS)){
-                    return ErrorCode.UNFORMATE + "格式YYYYMMDDHH24MISS";
+                    return ErrorCode.UNFORMATE + ":inactiveTime格式YYYYMMDDHH24MISS";
                 }
                 
                 if (p.getProductExtInfoList() != null) {
@@ -185,7 +185,6 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 }
             }
         }
-        
         // 通过共享内存获得内部的custId
         Map<String, String> params = new TreeMap<String, String>();
         params.put(ConBlCustinfo.EXT_CUST_ID, record.getExtCustId());
@@ -194,35 +193,34 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         // 获得对应的内部的custId
         if (result == null || result.isEmpty()) {
             LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + record.getExtCustId());
-            return ErrorCode.NULL + "客户不存在";
+            return ErrorCode.NULL + ":客户不存在";
         }
         String custIds[] = result.get(0).get(ConBlCustinfo.CUST_ID).split("#");
         String custId = custIds[custIds.length - 1];
-//        String custId = "11";
+//        String custId = record.getExtCustId();
         LoggerUtil.log.debug("校验成功！");
         //幂等性判断（判重）
         try {
             if(business.hasSeq(record)){
-                return "tradeSeq已使用";
+                return "tradeSeq已存在";
             }
         } catch (IOException e) {
             LoggerUtil.log.error(e.getStackTrace());
-            return e.getMessage();
+            return "幂等性判断判断失败请联系管理员";
         }
         //写入mysql表中
         try {
             business.writeData(record,custId);
         } catch (BusinessException e){
             return e.getErrorCode() + e.getErrorMessage();
-        } catch (Exception e1) {
-            return "请联系管理员";
-        }
+        } 
+//        catch (Exception e1) {
+//            return "请联系管理员";
+//        }
         
         return ErrorCode.SUCCESS;
     }
 
-    //入参校验，canBeNull为true是可以为空，lenth是最大长度，enums是取值范围，不填是没有取值范围
-    
     public static void main(String[] args) {
     }
 }

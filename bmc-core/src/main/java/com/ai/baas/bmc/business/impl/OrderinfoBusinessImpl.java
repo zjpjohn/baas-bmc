@@ -115,7 +115,9 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             }
         }
         // 根据用户信息创建账户信息
-        writeAcctInfo(aBlUserinfo);
+        if(StringUtil.isBlank(subsId)){
+            writeAcctInfo(aBlUserinfo);
+        }
 
     }
 
@@ -178,7 +180,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         DshmUtil.getIdshmSV().initDel(TableCon.BL_USERINFO, json.toString());
         DshmUtil.getIdshmSV().initLoader(TableCon.BL_USERINFO, json.toString());
         LoggerUtil.log.debug("刷新用户表共享内存：" + json.toString());
-        // ^^meixie
+        // ^^^
         // ********************************
         // 当扩展信息为空退出，否则循环操作用户扩展信息
         if (record.getOrderExtInfo() != null) {
@@ -369,7 +371,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         DshmUtil.getIdshmSV().initDel(TableCon.BL_ACCT_INFO, json.toString());
         DshmUtil.getIdshmSV().initLoader(TableCon.BL_ACCT_INFO, json.toString());
         LoggerUtil.log.debug("刷新账户表共享内存：" + json.toString());
-        // ^^meixie
+        // ^^^
         // ********************************
     }
     // 账户扩展信息表操作^^目前不使用
