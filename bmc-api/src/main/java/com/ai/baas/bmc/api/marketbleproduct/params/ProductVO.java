@@ -30,7 +30,7 @@ public class ProductVO extends BaseInfo{
 	private String tradeSeq;
 
 	/**
-	 * 计费类型
+	 * 计费类型，必填
 	 */
 	@NotNull(message="计费类型不能为空",groups={IProductManageSV.AddProduct.class})
 	private String billingType;
@@ -43,6 +43,7 @@ public class ProductVO extends BaseInfo{
 	/**
 	 * 主产品使用量，必填
 	 */
+	@NotNull(message="主产品列表不能为空",groups={IProductManageSV.AddProduct.class})
 	private List<ServiceVO> majorProductAmount;
 	
 	/**
