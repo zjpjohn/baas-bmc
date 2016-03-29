@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpUnitpriceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo" >
+    <id column="UNIT_PRICE_ID" property="unitPriceId" jdbcType="INTEGER" />
+    <result column="UNIT_PRICE_CODE" property="unitPriceCode" jdbcType="VARCHAR" />
+    <result column="PRICE_NAME" property="priceName" jdbcType="VARCHAR" />
+    <result column="FACTOR_CODE" property="factorCode" jdbcType="VARCHAR" />
+    <result column="FEE_ITEM_CODE" property="feeItemCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UNIT_PRICE_ID, UNIT_PRICE_CODE, PRICE_NAME, FACTOR_CODE, FEE_ITEM_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_unitprice_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_unitprice_info
+    where UNIT_PRICE_ID = #{unitPriceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer" >
+    delete from cp_unitprice_info
+    where UNIT_PRICE_ID = #{unitPriceId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfoCriteria" >
+    delete from cp_unitprice_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo" >
+    insert into cp_unitprice_info (UNIT_PRICE_ID, UNIT_PRICE_CODE, PRICE_NAME, 
+      FACTOR_CODE, FEE_ITEM_CODE)
+    values (#{unitPriceId,jdbcType=INTEGER}, #{unitPriceCode,jdbcType=VARCHAR}, #{priceName,jdbcType=VARCHAR}, 
+      #{factorCode,jdbcType=VARCHAR}, #{feeItemCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo" >
+    insert into cp_unitprice_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="unitPriceId != null" >
+        UNIT_PRICE_ID,
+      </if>
+      <if test="unitPriceCode != null" >
+        UNIT_PRICE_CODE,
+      </if>
+      <if test="priceName != null" >
+        PRICE_NAME,
+      </if>
+      <if test="factorCode != null" >
+        FACTOR_CODE,
+      </if>
+      <if test="feeItemCode != null" >
+        FEE_ITEM_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="unitPriceId != null" >
+        #{unitPriceId,jdbcType=INTEGER},
+      </if>
+      <if test="unitPriceCode != null" >
+        #{unitPriceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="priceName != null" >
+        #{priceName,jdbcType=VARCHAR},
+      </if>
+      <if test="factorCode != null" >
+        #{factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feeItemCode != null" >
+        #{feeItemCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_unitprice_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_unitprice_info
+    <set >
+      <if test="record.unitPriceId != null" >
+        UNIT_PRICE_ID = #{record.unitPriceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitPriceCode != null" >
+        UNIT_PRICE_CODE = #{record.unitPriceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceName != null" >
+        PRICE_NAME = #{record.priceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factorCode != null" >
+        FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeItemCode != null" >
+        FEE_ITEM_CODE = #{record.feeItemCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_unitprice_info
+    set UNIT_PRICE_ID = #{record.unitPriceId,jdbcType=INTEGER},
+      UNIT_PRICE_CODE = #{record.unitPriceCode,jdbcType=VARCHAR},
+      PRICE_NAME = #{record.priceName,jdbcType=VARCHAR},
+      FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
+      FEE_ITEM_CODE = #{record.feeItemCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo" >
+    update cp_unitprice_info
+    <set >
+      <if test="unitPriceCode != null" >
+        UNIT_PRICE_CODE = #{unitPriceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="priceName != null" >
+        PRICE_NAME = #{priceName,jdbcType=VARCHAR},
+      </if>
+      <if test="factorCode != null" >
+        FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feeItemCode != null" >
+        FEE_ITEM_CODE = #{feeItemCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UNIT_PRICE_ID = #{unitPriceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo" >
+    update cp_unitprice_info
+    set UNIT_PRICE_CODE = #{unitPriceCode,jdbcType=VARCHAR},
+      PRICE_NAME = #{priceName,jdbcType=VARCHAR},
+      FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
+      FEE_ITEM_CODE = #{feeItemCode,jdbcType=VARCHAR}
+    where UNIT_PRICE_ID = #{unitPriceId,jdbcType=INTEGER}
+  </update>
+</mapper>

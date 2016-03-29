@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpFactorInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpFactorInfo" >
+    <id column="FACTOR_INFO_ID" property="factorInfoId" jdbcType="INTEGER" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="VARCHAR" />
+    <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <result column="FACTOR_CODE" property="factorCode" jdbcType="VARCHAR" />
+    <result column="FACTOR_NAME" property="factorName" jdbcType="VARCHAR" />
+    <result column="FACTOR_VALUE" property="factorValue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FACTOR_INFO_ID, SYSTEM_ID, TENANT_ID, FACTOR_CODE, FACTOR_NAME, FACTOR_VALUE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFactorInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_factor_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_factor_info
+    where FACTOR_INFO_ID = #{factorInfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer" >
+    delete from cp_factor_info
+    where FACTOR_INFO_ID = #{factorInfoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFactorInfoCriteria" >
+    delete from cp_factor_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFactorInfo" >
+    insert into cp_factor_info (FACTOR_INFO_ID, SYSTEM_ID, TENANT_ID, 
+      FACTOR_CODE, FACTOR_NAME, FACTOR_VALUE
+      )
+    values (#{factorInfoId,jdbcType=INTEGER}, #{systemId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, 
+      #{factorCode,jdbcType=VARCHAR}, #{factorName,jdbcType=VARCHAR}, #{factorValue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFactorInfo" >
+    insert into cp_factor_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="factorInfoId != null" >
+        FACTOR_INFO_ID,
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="factorCode != null" >
+        FACTOR_CODE,
+      </if>
+      <if test="factorName != null" >
+        FACTOR_NAME,
+      </if>
+      <if test="factorValue != null" >
+        FACTOR_VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="factorInfoId != null" >
+        #{factorInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="systemId != null" >
+        #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="factorCode != null" >
+        #{factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="factorName != null" >
+        #{factorName,jdbcType=VARCHAR},
+      </if>
+      <if test="factorValue != null" >
+        #{factorValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFactorInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_factor_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_factor_info
+    <set >
+      <if test="record.factorInfoId != null" >
+        FACTOR_INFO_ID = #{record.factorInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.systemId != null" >
+        SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factorCode != null" >
+        FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factorName != null" >
+        FACTOR_NAME = #{record.factorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factorValue != null" >
+        FACTOR_VALUE = #{record.factorValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_factor_info
+    set FACTOR_INFO_ID = #{record.factorInfoId,jdbcType=INTEGER},
+      SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
+      FACTOR_NAME = #{record.factorName,jdbcType=VARCHAR},
+      FACTOR_VALUE = #{record.factorValue,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFactorInfo" >
+    update cp_factor_info
+    <set >
+      <if test="systemId != null" >
+        SYSTEM_ID = #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="factorCode != null" >
+        FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="factorName != null" >
+        FACTOR_NAME = #{factorName,jdbcType=VARCHAR},
+      </if>
+      <if test="factorValue != null" >
+        FACTOR_VALUE = #{factorValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FACTOR_INFO_ID = #{factorInfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFactorInfo" >
+    update cp_factor_info
+    set SYSTEM_ID = #{systemId,jdbcType=VARCHAR},
+      TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
+      FACTOR_NAME = #{factorName,jdbcType=VARCHAR},
+      FACTOR_VALUE = #{factorValue,jdbcType=VARCHAR}
+    where FACTOR_INFO_ID = #{factorInfoId,jdbcType=INTEGER}
+  </update>
+</mapper>

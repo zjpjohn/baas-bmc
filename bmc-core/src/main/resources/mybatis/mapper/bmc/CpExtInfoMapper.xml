@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpExtInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpExtInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="VARCHAR" />
+    <result column="EXT_OWNER" property="extOwner" jdbcType="VARCHAR" />
+    <result column="EXT_CODE" property="extCode" jdbcType="VARCHAR" />
+    <result column="EXT_TYPE" property="extType" jdbcType="VARCHAR" />
+    <result column="EXT_NAME" property="extName" jdbcType="VARCHAR" />
+    <result column="EXT_VALUE" property="extValue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, TENANT_ID, SYSTEM_ID, EXT_OWNER, EXT_CODE, EXT_TYPE, EXT_NAME, EXT_VALUE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpExtInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_ext_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_ext_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer" >
+    delete from cp_ext_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpExtInfoCriteria" >
+    delete from cp_ext_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpExtInfo" >
+    insert into cp_ext_info (ID, TENANT_ID, SYSTEM_ID, 
+      EXT_OWNER, EXT_CODE, EXT_TYPE, 
+      EXT_NAME, EXT_VALUE)
+    values (#{id,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}, #{systemId,jdbcType=VARCHAR}, 
+      #{extOwner,jdbcType=VARCHAR}, #{extCode,jdbcType=VARCHAR}, #{extType,jdbcType=VARCHAR}, 
+      #{extName,jdbcType=VARCHAR}, #{extValue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpExtInfo" >
+    insert into cp_ext_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="extOwner != null" >
+        EXT_OWNER,
+      </if>
+      <if test="extCode != null" >
+        EXT_CODE,
+      </if>
+      <if test="extType != null" >
+        EXT_TYPE,
+      </if>
+      <if test="extName != null" >
+        EXT_NAME,
+      </if>
+      <if test="extValue != null" >
+        EXT_VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="extOwner != null" >
+        #{extOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="extCode != null" >
+        #{extCode,jdbcType=VARCHAR},
+      </if>
+      <if test="extType != null" >
+        #{extType,jdbcType=VARCHAR},
+      </if>
+      <if test="extName != null" >
+        #{extName,jdbcType=VARCHAR},
+      </if>
+      <if test="extValue != null" >
+        #{extValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpExtInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_ext_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_ext_info
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemId != null" >
+        SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extOwner != null" >
+        EXT_OWNER = #{record.extOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extCode != null" >
+        EXT_CODE = #{record.extCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extType != null" >
+        EXT_TYPE = #{record.extType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extName != null" >
+        EXT_NAME = #{record.extName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extValue != null" >
+        EXT_VALUE = #{record.extValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_ext_info
+    set ID = #{record.id,jdbcType=INTEGER},
+      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      EXT_OWNER = #{record.extOwner,jdbcType=VARCHAR},
+      EXT_CODE = #{record.extCode,jdbcType=VARCHAR},
+      EXT_TYPE = #{record.extType,jdbcType=VARCHAR},
+      EXT_NAME = #{record.extName,jdbcType=VARCHAR},
+      EXT_VALUE = #{record.extValue,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpExtInfo" >
+    update cp_ext_info
+    <set >
+      <if test="tenantId != null" >
+        TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID = #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="extOwner != null" >
+        EXT_OWNER = #{extOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="extCode != null" >
+        EXT_CODE = #{extCode,jdbcType=VARCHAR},
+      </if>
+      <if test="extType != null" >
+        EXT_TYPE = #{extType,jdbcType=VARCHAR},
+      </if>
+      <if test="extName != null" >
+        EXT_NAME = #{extName,jdbcType=VARCHAR},
+      </if>
+      <if test="extValue != null" >
+        EXT_VALUE = #{extValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpExtInfo" >
+    update cp_ext_info
+    set TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      SYSTEM_ID = #{systemId,jdbcType=VARCHAR},
+      EXT_OWNER = #{extOwner,jdbcType=VARCHAR},
+      EXT_CODE = #{extCode,jdbcType=VARCHAR},
+      EXT_TYPE = #{extType,jdbcType=VARCHAR},
+      EXT_NAME = #{extName,jdbcType=VARCHAR},
+      EXT_VALUE = #{extValue,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
