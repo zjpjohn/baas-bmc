@@ -1,42 +1,20 @@
 package com.ai.baas.bmc.api.priceinfo.params;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PriceCode {
-
-    private String returnCode;
-    private String tradeSeq;
-    private String tenantId;
+public class StandardList  implements Serializable{
     private String standardId;
     private String priceName;
     private String serviceType;
     private List<UsageList> usageList;
     private String cycleType;
-    private String cycleAmount;
+    private int cycleAmount;
     private String cycleId;
     private String priceType;
-    private String price;
+    private int price;
     private String comments;
     private String status;
-    
-    public String getReturnCode() {
-        return returnCode;
-    }
-    public void setReturnCode(String returnCode) {
-        this.returnCode = returnCode;
-    }
-    public String getTradeSeq() {
-        return tradeSeq;
-    }
-    public void setTradeSeq(String tradeSeq) {
-        this.tradeSeq = tradeSeq;
-    }
-    public String getTenantId() {
-        return tenantId;
-    }
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
     public String getStandardId() {
         return standardId;
     }
@@ -67,10 +45,10 @@ public class PriceCode {
     public void setCycleType(String cycleType) {
         this.cycleType = cycleType;
     }
-    public String getCycleAmount() {
+    public int getCycleAmount() {
         return cycleAmount;
     }
-    public void setCycleAmount(String cycleAmount) {
+    public void setCycleAmount(int cycleAmount) {
         this.cycleAmount = cycleAmount;
     }
     public String getCycleId() {
@@ -85,10 +63,10 @@ public class PriceCode {
     public void setPriceType(String priceType) {
         this.priceType = priceType;
     }
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
     public String getComments() {
@@ -103,6 +81,5 @@ public class PriceCode {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
+    
 }
