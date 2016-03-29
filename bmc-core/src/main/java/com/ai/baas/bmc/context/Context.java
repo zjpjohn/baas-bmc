@@ -19,4 +19,8 @@ public final class Context {
      * custinfo
      */
     public static final String CUST_INFO_CODE = "BaaS-0001";
+    /**
+     * priceinfo中标准资费更新服务接口编号
+     */
+    public static final String UPDATE_PRICEINFO = "BaaS-00003";
 }
