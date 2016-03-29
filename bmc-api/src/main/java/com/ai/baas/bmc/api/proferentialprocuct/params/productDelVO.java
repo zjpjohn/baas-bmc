@@ -2,6 +2,7 @@ package com.ai.baas.bmc.api.proferentialprocuct.params;
 
 import javax.validation.constraints.NotNull;
 
+import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManage;
 import com.ai.opt.base.vo.BaseInfo;
 
 public class productDelVO extends BaseInfo{
@@ -11,6 +12,7 @@ public class productDelVO extends BaseInfo{
 	/**
 	 *优惠产品Id
 	 */
+	@NotNull(message="产品Id不能为空",groups={IProferProductManage.DelProferProduct.class})
 	private String ProdutId;
 	 /**
      * 消息流水<br>
@@ -18,7 +20,7 @@ public class productDelVO extends BaseInfo{
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空")
+	@NotNull(message="消息流水号不能为空",groups={IProferProductManage.DelProferProduct.class})
 	private String tradeSeq;
 
 	public String getProdutId() {
