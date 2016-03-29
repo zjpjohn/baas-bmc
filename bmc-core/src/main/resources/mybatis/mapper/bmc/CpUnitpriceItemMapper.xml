@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpUnitpriceItemMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem" >
+    <id column="UNIT_ITEM_ID" property="unitItemId" jdbcType="INTEGER" />
+    <result column="FEE_ITEM_CODE" property="feeItemCode" jdbcType="VARCHAR" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="INTEGER" />
+    <result column="PRICE_VALUE" property="priceValue" jdbcType="INTEGER" />
+    <result column="UNIT_TYPE" property="unitType" jdbcType="VARCHAR" />
+    <result column="SUBJECT_CODE" property="subjectCode" jdbcType="VARCHAR" />
+    <result column="ACTIVE_TIME" property="activeTime" jdbcType="TIMESTAMP" />
+    <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="TIMESTAMP" />
+    <result column="ITEM_EXT_CODE" property="itemExtCode" jdbcType="VARCHAR" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UNIT_ITEM_ID, FEE_ITEM_CODE, FEE_TYPE, PRICE_VALUE, UNIT_TYPE, SUBJECT_CODE, ACTIVE_TIME, 
+    INACTIVE_TIME, ITEM_EXT_CODE, comments
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_unitprice_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_unitprice_item
+    where UNIT_ITEM_ID = #{unitItemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer" >
+    delete from cp_unitprice_item
+    where UNIT_ITEM_ID = #{unitItemId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria" >
+    delete from cp_unitprice_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem" >
+    insert into cp_unitprice_item (UNIT_ITEM_ID, FEE_ITEM_CODE, FEE_TYPE, 
+      PRICE_VALUE, UNIT_TYPE, SUBJECT_CODE, 
+      ACTIVE_TIME, INACTIVE_TIME, ITEM_EXT_CODE, 
+      comments)
+    values (#{unitItemId,jdbcType=INTEGER}, #{feeItemCode,jdbcType=VARCHAR}, #{feeType,jdbcType=INTEGER}, 
+      #{priceValue,jdbcType=INTEGER}, #{unitType,jdbcType=VARCHAR}, #{subjectCode,jdbcType=VARCHAR}, 
+      #{activeTime,jdbcType=TIMESTAMP}, #{inactiveTime,jdbcType=TIMESTAMP}, #{itemExtCode,jdbcType=VARCHAR}, 
+      #{comments,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem" >
+    insert into cp_unitprice_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="unitItemId != null" >
+        UNIT_ITEM_ID,
+      </if>
+      <if test="feeItemCode != null" >
+        FEE_ITEM_CODE,
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE,
+      </if>
+      <if test="priceValue != null" >
+        PRICE_VALUE,
+      </if>
+      <if test="unitType != null" >
+        UNIT_TYPE,
+      </if>
+      <if test="subjectCode != null" >
+        SUBJECT_CODE,
+      </if>
+      <if test="activeTime != null" >
+        ACTIVE_TIME,
+      </if>
+      <if test="inactiveTime != null" >
+        INACTIVE_TIME,
+      </if>
+      <if test="itemExtCode != null" >
+        ITEM_EXT_CODE,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="unitItemId != null" >
+        #{unitItemId,jdbcType=INTEGER},
+      </if>
+      <if test="feeItemCode != null" >
+        #{feeItemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="priceValue != null" >
+        #{priceValue,jdbcType=INTEGER},
+      </if>
+      <if test="unitType != null" >
+        #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectCode != null" >
+        #{subjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="activeTime != null" >
+        #{activeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inactiveTime != null" >
+        #{inactiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemExtCode != null" >
+        #{itemExtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_unitprice_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_unitprice_item
+    <set >
+      <if test="record.unitItemId != null" >
+        UNIT_ITEM_ID = #{record.unitItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.feeItemCode != null" >
+        FEE_ITEM_CODE = #{record.feeItemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeType != null" >
+        FEE_TYPE = #{record.feeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceValue != null" >
+        PRICE_VALUE = #{record.priceValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitType != null" >
+        UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectCode != null" >
+        SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activeTime != null" >
+        ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.inactiveTime != null" >
+        INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemExtCode != null" >
+        ITEM_EXT_CODE = #{record.itemExtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comments != null" >
+        comments = #{record.comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_unitprice_item
+    set UNIT_ITEM_ID = #{record.unitItemId,jdbcType=INTEGER},
+      FEE_ITEM_CODE = #{record.feeItemCode,jdbcType=VARCHAR},
+      FEE_TYPE = #{record.feeType,jdbcType=INTEGER},
+      PRICE_VALUE = #{record.priceValue,jdbcType=INTEGER},
+      UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
+      SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
+      ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
+      INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
+      ITEM_EXT_CODE = #{record.itemExtCode,jdbcType=VARCHAR},
+      comments = #{record.comments,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem" >
+    update cp_unitprice_item
+    <set >
+      <if test="feeItemCode != null" >
+        FEE_ITEM_CODE = #{feeItemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE = #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="priceValue != null" >
+        PRICE_VALUE = #{priceValue,jdbcType=INTEGER},
+      </if>
+      <if test="unitType != null" >
+        UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectCode != null" >
+        SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="activeTime != null" >
+        ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inactiveTime != null" >
+        INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemExtCode != null" >
+        ITEM_EXT_CODE = #{itemExtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UNIT_ITEM_ID = #{unitItemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem" >
+    update cp_unitprice_item
+    set FEE_ITEM_CODE = #{feeItemCode,jdbcType=VARCHAR},
+      FEE_TYPE = #{feeType,jdbcType=INTEGER},
+      PRICE_VALUE = #{priceValue,jdbcType=INTEGER},
+      UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
+      SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
+      ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP},
+      INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
+      ITEM_EXT_CODE = #{itemExtCode,jdbcType=VARCHAR},
+      comments = #{comments,jdbcType=VARCHAR}
+    where UNIT_ITEM_ID = #{unitItemId,jdbcType=INTEGER}
+  </update>
+</mapper>
