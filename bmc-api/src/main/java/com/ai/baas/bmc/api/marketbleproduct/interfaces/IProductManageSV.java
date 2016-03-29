@@ -51,4 +51,18 @@ public interface IProductManageSV {
 	 */
 	@interface DelProduct{}
 	void delProduct(ProductDelVO vo) throws BusinessException, SystemException;
+	
+
+	
+	/**
+	 * 更新产品信息
+	 * @param vo
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode bmc-00012
+	 */
+	@interface UpdateProduct{}
+	void updateProduct(ProductVO vo) throws BusinessException, SystemException;
 }

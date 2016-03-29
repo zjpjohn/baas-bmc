@@ -51,5 +51,15 @@ public interface IProferProductManage {
 	 */
 	@interface DelProferProduct{}
 	void delProferProduct(productDelVO vo) throws BusinessException, SystemException;
+	/**
+	 * 更新优惠产品
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode bmc-00013
+	 */
+	@interface UpdateProferProduct{}
+	void updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
 	
 }

@@ -28,9 +28,14 @@ public class ProductVO extends BaseInfo{
      */
 	@NotNull(message="消息流水号不能为空",groups={IProductManageSV.AddProduct.class})
 	private String tradeSeq;
+	/**
+	 * 产品Id
+	 */
+	@NotNull(message="产品Id不能为空",groups={IProductManageSV.UpdateProduct.class})
+	private String productId;
 
 	/**
-	 * 计费类型
+	 * 计费类型，必填
 	 */
 	@NotNull(message="计费类型不能为空",groups={IProductManageSV.AddProduct.class})
 	private String billingType;
@@ -43,6 +48,7 @@ public class ProductVO extends BaseInfo{
 	/**
 	 * 主产品使用量，必填
 	 */
+	@NotNull(message="主产品列表不能为空",groups={IProductManageSV.AddProduct.class})
 	private List<ServiceVO> majorProductAmount;
 	
 	/**
@@ -65,15 +71,17 @@ public class ProductVO extends BaseInfo{
 	@NotNull(message="生效日期不能为空",groups={IProductManageSV.AddProduct.class})
 	private Timestamp activeDate;
 	/**
+	 * 产品生效日期标识
+	 */
+	@NotNull(message="生效日期标识不能为空",groups={IProductManageSV.AddProduct.class})
+	private String activeDateTag;
+	/**
 	 * 产品失效日期
 	 */
 	@NotNull(message="失效日期不能为空",groups={IProductManageSV.AddProduct.class})
 	private Timestamp invalidDate;
 	
-	/**
-	 * 创建标识，取值范围：UPDATE：更新；CREATE：创建；DELETE：删除
-	 */
-	private String updateId;
+	
 	
 	public String getBillingType() {
 		return billingType;
@@ -124,17 +132,24 @@ public class ProductVO extends BaseInfo{
 	public void setIsPriceEqual(String isPriceEqual) {
 		this.isPriceEqual = isPriceEqual;
 	}
-	public String getUpdateId() {
-		return updateId;
-	}
-	public void setUpdateId(String updateId) {
-		this.updateId = updateId;
-	}
+	
 	public String getTradeSeq() {
 		return tradeSeq;
 	}
 	public void setTradeSeq(String tradeSeq) {
 		this.tradeSeq = tradeSeq;
+	}
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+	public String getActiveDateTag() {
+		return activeDateTag;
+	}
+	public void setActiveDateTag(String activeDateTag) {
+		this.activeDateTag = activeDateTag;
 	}
 	
 	
