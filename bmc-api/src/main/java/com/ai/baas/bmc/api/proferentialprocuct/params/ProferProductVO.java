@@ -86,7 +86,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 赠品
 	 */
-	private String gift;
+	private List<String> gift;
 	
 	public String getProductId() {
 		return productId;
@@ -150,10 +150,11 @@ public class ProferProductVO extends BaseInfo {
 	public void setProductList(List<ProductVO> productList) {
 		this.productList = productList;
 	}
-	public String getGift() {
+	
+	public List<String> getGift() {
 		return gift;
 	}
-	public void setGift(String gift) {
+	public void setGift(List<String> gift) {
 		this.gift = gift;
 	}
 	public String getTradeSeq() {
