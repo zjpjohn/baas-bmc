@@ -14,7 +14,7 @@ import com.ai.opt.base.exception.SystemException;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
-public interface IProferProductManage {
+public interface IProferProductManageSV {
 
 	/**
 	 * 添加优惠产品(满赠)

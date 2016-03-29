@@ -13,7 +13,7 @@ import com.ai.opt.base.vo.PageInfo;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
-public interface IQueryProferProduct {
+public interface IQueryProferProductSV {
 
 	/**
 	 * 优惠产品查询服务

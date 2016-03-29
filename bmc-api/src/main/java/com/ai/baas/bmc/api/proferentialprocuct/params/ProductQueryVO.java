@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import javax.validation.constraints.NotNull;
 
-import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IQueryProferProduct;
+import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IQueryProferProductSV;
 import com.ai.opt.base.vo.BaseInfo;
 
 public class ProductQueryVO extends BaseInfo {
@@ -17,7 +17,7 @@ public class ProductQueryVO extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空",groups={IQueryProferProduct.GetProductInfo.class})
+	@NotNull(message="消息流水号不能为空",groups={IQueryProferProductSV.GetProductInfo.class})
 	private String tradeSeq;
 
 	/**
