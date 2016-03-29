@@ -1,15 +1,19 @@
 package com.ai.baas.bmc.api.priceinfo.params;
 
-public class UsageList {
+import java.io.Serializable;
 
-    private String amount;
+public class UsageList implements Serializable{
+    
+    private static final long serialVersionUID = -4989482563493979L;
+            
+    private int amount;
     private String subServiceType;
     private String unit;
     
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
     public String getSubServiceType() {

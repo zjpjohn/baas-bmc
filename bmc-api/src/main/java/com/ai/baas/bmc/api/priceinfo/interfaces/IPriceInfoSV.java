@@ -1,6 +1,6 @@
 package com.ai.baas.bmc.api.priceinfo.interfaces;
 
-import com.ai.baas.bmc.api.priceinfo.params.PriceCode;
+import com.ai.baas.bmc.api.priceinfo.params.ResponseMessage;
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
 import com.ai.baas.bmc.api.priceinfo.params.StandardPriceInfoParams;
 import com.ai.opt.base.exception.BusinessException;
@@ -19,7 +19,7 @@ public interface IPriceInfoSV {
       * @author wangkai
       * @ApiCode BaaS-00002
       */
-     public PriceCode getPriceInfo(QueryInfoParams record)throws BusinessException,SystemException;
+     public ResponseMessage getPriceInfo(QueryInfoParams record)throws BusinessException,SystemException;
      
      @interface UpdatePriceInfo{}
      /**
