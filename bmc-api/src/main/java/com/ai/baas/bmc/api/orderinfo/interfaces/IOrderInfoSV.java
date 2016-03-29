@@ -12,6 +12,7 @@ import com.ai.opt.base.exception.SystemException;
  * @author caoyf
  */
 public interface IOrderInfoSV {
+    @interface OrderInfo{}
     /**
      * 订购信息接口 
      * @param OrderInfoParams
@@ -19,6 +20,5 @@ public interface IOrderInfoSV {
      * @author caoyf
      * @ApiCode BaaS-0002
      */
-    @interface OrderInfo{}
     public String orderInfo(OrderInfoParams record) throws BusinessException,SystemException;
 }
