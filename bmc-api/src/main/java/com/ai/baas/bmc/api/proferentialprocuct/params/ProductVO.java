@@ -32,6 +32,7 @@ public class ProductVO {
 	 * 状态
 	 */
 	private String status;
+	
 	public String getProductId() {
 		return productId;
 	}

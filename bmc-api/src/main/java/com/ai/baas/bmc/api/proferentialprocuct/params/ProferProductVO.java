@@ -32,6 +32,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 产品Id
 	 */
+	@NotNull(message="产品Id不能为空",groups={IProferProductManage.UpdateProferProduct.class})
 	private String productId;
 	
 	/**
@@ -46,11 +47,22 @@ public class ProferProductVO extends BaseInfo {
 	 */
 	@NotNull(message="优惠活动名称不能为空",groups={IProferProductManage.AddProferProduct.class})
 	private String programName;
+	
 	/**
-	 * 优惠规则，必填
+	 * 规则金额
 	 */
 	@NotNull(message="优惠规则不能为空",groups={IProferProductManage.AddProferProduct.class})
-	private String rule;
+	private double ruleAmount;
+	/**
+	 * 规则单位
+	 */
+	@NotNull(message="优惠规则不能为空",groups={IProferProductManage.AddProferProduct.class})
+	private String ruleUnit;
+	/**
+	 * 满减金额
+	 */
+	private double reduceAmount;
+	
 	/**
 	 * 生效日期，必填
 	 */
@@ -93,11 +105,24 @@ public class ProferProductVO extends BaseInfo {
 	public void setProgramName(String programName) {
 		this.programName = programName;
 	}
-	public String getRule() {
-		return rule;
+	
+	public double getRuleAmount() {
+		return ruleAmount;
 	}
-	public void setRule(String rule) {
-		this.rule = rule;
+	public void setRuleAmount(double ruleAmount) {
+		this.ruleAmount = ruleAmount;
+	}
+	public String getRuleUnit() {
+		return ruleUnit;
+	}
+	public void setRuleUnit(String ruleUnit) {
+		this.ruleUnit = ruleUnit;
+	}
+	public double getReduceAmount() {
+		return reduceAmount;
+	}
+	public void setReduceAmount(double reduceAmount) {
+		this.reduceAmount = reduceAmount;
 	}
 	public Timestamp getActiveDate() {
 		return activeDate;
