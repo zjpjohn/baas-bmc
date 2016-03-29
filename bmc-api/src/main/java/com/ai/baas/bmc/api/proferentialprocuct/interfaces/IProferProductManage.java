@@ -17,7 +17,7 @@ import com.ai.opt.base.exception.SystemException;
 public interface IProferProductManage {
 
 	/**
-	 * 添加优惠产品
+	 * 添加优惠产品(满赠)
 	 * @param vo
 	 * @return
 	 * @throws BusinessException
@@ -28,6 +28,17 @@ public interface IProferProductManage {
 	 */
 	@interface AddProferProduct{}
 	ProductResponse addProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	/**
+	 * 添加优惠产品(满减)
+	 * @return
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode bmc-00014
+	 */
+	@interface AddDiscontProduct{}
+	ProductResponse addDiscontProduct(ProferProductVO vo)throws BusinessException, SystemException;
 	/**
 	 * 状态管理
 	 * @param vo
