@@ -9,7 +9,7 @@ public class CpUnitpriceItem {
 
     private Integer feeType;
 
-    private Integer priceValue;
+    private Double priceValue;
 
     private String unitType;
 
@@ -47,11 +47,11 @@ public class CpUnitpriceItem {
         this.feeType = feeType;
     }
 
-    public Integer getPriceValue() {
+    public Double getPriceValue() {
         return priceValue;
     }
 
-    public void setPriceValue(Integer priceValue) {
+    public void setPriceValue(Double priceValue) {
         this.priceValue = priceValue;
     }
 

@@ -325,52 +325,52 @@ public class CpUnitpriceItemCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueEqualTo(Integer value) {
+        public Criteria andPriceValueEqualTo(Double value) {
             addCriterion("PRICE_VALUE =", value, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueNotEqualTo(Integer value) {
+        public Criteria andPriceValueNotEqualTo(Double value) {
             addCriterion("PRICE_VALUE <>", value, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueGreaterThan(Integer value) {
+        public Criteria andPriceValueGreaterThan(Double value) {
             addCriterion("PRICE_VALUE >", value, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPriceValueGreaterThanOrEqualTo(Double value) {
             addCriterion("PRICE_VALUE >=", value, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueLessThan(Integer value) {
+        public Criteria andPriceValueLessThan(Double value) {
             addCriterion("PRICE_VALUE <", value, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueLessThanOrEqualTo(Integer value) {
+        public Criteria andPriceValueLessThanOrEqualTo(Double value) {
             addCriterion("PRICE_VALUE <=", value, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueIn(List<Integer> values) {
+        public Criteria andPriceValueIn(List<Double> values) {
             addCriterion("PRICE_VALUE in", values, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueNotIn(List<Integer> values) {
+        public Criteria andPriceValueNotIn(List<Double> values) {
             addCriterion("PRICE_VALUE not in", values, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueBetween(Integer value1, Integer value2) {
+        public Criteria andPriceValueBetween(Double value1, Double value2) {
             addCriterion("PRICE_VALUE between", value1, value2, "priceValue");
             return (Criteria) this;
         }
 
-        public Criteria andPriceValueNotBetween(Integer value1, Integer value2) {
+        public Criteria andPriceValueNotBetween(Double value1, Double value2) {
             addCriterion("PRICE_VALUE not between", value1, value2, "priceValue");
             return (Criteria) this;
         }
