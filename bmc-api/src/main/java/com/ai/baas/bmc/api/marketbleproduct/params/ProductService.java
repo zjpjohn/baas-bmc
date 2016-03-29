@@ -15,7 +15,7 @@ public class ProductService {
 	/**
 	 * 单价
 	 */
-	private BigDecimal price;
+	private double price;
 	
 	
 	private List<ServiceDetail> list;
@@ -31,12 +31,15 @@ public class ProductService {
 	}
 
 
-	public BigDecimal getPrice() {
+	
+
+
+	public double getPrice() {
 		return price;
 	}
 
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
