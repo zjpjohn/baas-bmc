@@ -3,7 +3,13 @@ package com.ai.baas.bmc.api.baseInfo.params;
 import java.util.List;
 
 import com.ai.opt.base.vo.BaseResponse;
-
+/**
+ * 基本信息查询出参
+ *
+ * Date: 2016年3月29日 <br>
+ * Copyright (c) 2016 asiainfo.com <br>
+ * @author gaogang
+ */
 public class BaseCodeInfo extends BaseResponse{
 
 	

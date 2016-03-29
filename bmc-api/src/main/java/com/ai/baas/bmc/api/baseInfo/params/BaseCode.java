@@ -1,14 +1,32 @@
 package com.ai.baas.bmc.api.baseInfo.params;
 
 import java.io.Serializable;
-
+/**
+ * 基本信息
+ *
+ * Date: 2016年3月29日 <br>
+ * Copyright (c) 2016 asiainfo.com <br>
+ * @author gaogang
+ */
 public class BaseCode implements Serializable{
 
 	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 参数编码
+	 */
 	private String paramCode;
+	/**
+	 * 参数名称
+	 */
 	private String paramName;
+	/**
+	 * 默认值
+	 */
 	private String defaultValue;
+	/**
+	 * 说明
+	 */
 	private String comments;
 	public String getParamCode() {
 		return paramCode;
