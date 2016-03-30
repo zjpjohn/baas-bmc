@@ -6,7 +6,7 @@ import java.util.Properties;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ai.baas.bmc.context.Constants;
-import com.ai.runner.center.dshm.api.dshmprocess.interfaces.IdshmSV;
+import com.ai.baas.dshm.api.dshmprocess.interfaces.IdshmSV;
 import com.ai.runner.center.dshm.api.dshmservice.interfaces.IdshmreadSV;
 
 public class DshmUtil {
