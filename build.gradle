@@ -89,6 +89,19 @@ project("bmc-core") {
     }
 }
 
+project("bmc-checking") {
+    project.ext { appName = "bmc-checking" }
+
+    jar {
+        baseName appName
+        version moduleVersion
+        include "com/ai/baas/bmc/*/**"
+        manifest {
+            attributes 'packageName': appName, 'Built-By': builtBy, 'create-date': new Date().format('yyyy-MM-dd HH:mm:ss')
+        }
+    }
+}
+
 jar {
     baseName baseName
     version moduleVersion
