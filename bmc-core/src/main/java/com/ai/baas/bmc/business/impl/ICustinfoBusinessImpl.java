@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.sf.json.JSONObject;
-
 import org.apache.hadoop.hbase.client.Table;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,8 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.runner.base.exception.CallerException;
+
+import net.sf.json.JSONObject;
 
 
 @Service
@@ -165,8 +165,8 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		aBlCustinfoMapper.deleteByExample(blCustinfoCriteria);
 		aBlCustinfoMapper.insert(blCustinfo);
 		
-		DshmUtil.getIdshmSV().initDel("bl_custinfo", custobject.toString());
-        DshmUtil.getIdshmSV().initLoader("bl_custinfo", custobject.toString());
+//		DshmUtil.getIdshmSV().initdel("bl_custinfo", custobject.toString());
+        DshmUtil.getIdshmSV().initLoader("bl_custinfo", custobject.toString(),0);
 		
 	}
 	private void writeBlCustinfoExt(String custId, ExtInfo extInfo) {
@@ -189,7 +189,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            .andCustIdEqualTo(custId);
 	            
 	            BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
-	            DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp));
+	            DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),1);
 
 		}else if(extInfo.getUpdateFlag().equals("U")){
 			 blCustinfoExt.setExtValue(extInfo.getExtValue());
@@ -200,8 +200,8 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
 	            	blCustinfoExtMapper.updateByExampleSelective(blCustinfoExt, example);
 	             
-	                DshmUtil.getIdshmSV().initDel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
-	                DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp));
+//	                DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
+	                DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),0);
 	             
 	            } catch (NullPointerException e) {
 	                throw new BusinessException(ErrorCode.NULL, "用户扩展信息不在表中，无法更新");
@@ -218,7 +218,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            try {
 	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
 	            	blCustinfoExtMapper.deleteByExample(example);
-	            	DshmUtil.getIdshmSV().initDel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
+	            	DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
 	            } catch (NullPointerException e) {
 	                throw new BusinessException(ErrorCode.NULL, "用户扩展信息不在表中，无法删除");
 	            }
