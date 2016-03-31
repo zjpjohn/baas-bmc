@@ -3,8 +3,12 @@ package com.ai.baas.bmc.checking.thead;
 import com.ai.baas.bmc.checking.util.HBaseUtil;
 import com.ai.baas.bmc.checking.vo.BatchInfo;
 import com.ai.baas.bmc.checking.vo.CheckResult;
-import com.ai.baas.bmc.checking.vo.TransFlowInfo;
+import com.ai.baas.bmc.checking.vo.RecordItem;
+import com.ai.baas.bmc.checking.vo.ScanCriteria;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
@@ -13,33 +17,54 @@ import java.util.concurrent.CountDownLatch;
  * Created by xin on 16-3-30.
  */
 public class CheckTask implements Callable<CheckResult> {
+    private Logger logger = LogManager.getLogger(CheckTask.class);
     private BatchInfo batchInfo;
     private CountDownLatch countDownLatch;
 
     public CheckTask(BatchInfo batchInfo, CountDownLatch countDownLatch) {
         this.batchInfo = batchInfo;
         this.countDownLatch = countDownLatch;
+
     }
 
     @Override
     public CheckResult call() throws Exception {
-        CheckResult checkResult = new CheckResult();
-        //
+        CheckResult checkResult = new CheckResult(batchInfo.getBSN(), batchInfo.getTableName());
         // 读取明细对账表
-        List<TransFlowInfo> checkingTransFlowInfos = HBaseUtil.queryCheckingTransFlowInfos(batchInfo.getBSN());
+        List<RecordItem> auditItems = HBaseUtil.queryAuditItems(batchInfo.getBSN(),
+                ScanCriteria.getAuditScanCriteria(batchInfo.getTableSuffix()));
+
+        logger.info("Thread:{}, batchId:{} size from hbase :{}", Thread.currentThread().getName(),
+                batchInfo.getBSN(), auditItems.size());
+        logger.info("Thread:{} batchId :{} size from mysql :{}", Thread.currentThread().getName(),
+                batchInfo.getBSN(), batchInfo.getTotalSize());
 
         // 先比较个数
-        if (checkingTransFlowInfos.size() != batchInfo.getTotalSize()) {
+        if (auditItems.size() != batchInfo.getTotalSize()) {
             checkResult.setLost(true);
             // 读取原始对账明细表
-            List<TransFlowInfo> orginInfoList = HBaseUtil.queryOriginTransFlowInfo(batchInfo.getBSN());
+            List<RecordItem> recordItems = HBaseUtil.queryRecodeItems(batchInfo.getBSN(), ScanCriteria
+                    .getRecordScanCriteria(batchInfo.getTableSuffix()));
             // 如果个数不一样则，比各个明细
-            for (TransFlowInfo transFlowInfo : checkingTransFlowInfos) {
+            for (RecordItem recordItem : auditItems) {
                 //重写hashcode方法
-                orginInfoList.remove(orginInfoList);
+                recordItems.remove(recordItem);
             }
 
-            checkResult.addTransFlowInfos(orginInfoList);
+            logger.info("Thread:{} batchId :{} lost size: {}", Thread.currentThread().getName(),
+                    batchInfo.getBSN(), recordItems.size());
+
+            //从错单表中去掉重复的
+            Iterator<RecordItem> recordItemIterator = recordItems.iterator();
+            while (recordItemIterator.hasNext()) {
+                RecordItem recordItem = recordItemIterator.next();
+                if (HBaseUtil.checkSNInFailedBill(recordItem.getSN(), ScanCriteria.getFailedScanCriteria())) {
+                    recordItemIterator.remove();
+                }
+            }
+
+            checkResult.addTransFlowInfos(recordItems);
+            checkResult.setAuditMessage("Has lost data");
         }
 
         countDownLatch.countDown();

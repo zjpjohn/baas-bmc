@@ -1,29 +1,71 @@
 package com.ai.baas.bmc.checking.vo;
 
+import com.ai.baas.bmc.checking.util.DBUtil;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CheckResult {
-
+    private String BSN;
     private boolean isLost;
+    private List<RecordItem> recordItems;
+    private String auditMessage;
+    private String auditResult;
+    private String auditState;
+    private String tableName;
 
-    private List<TransFlowInfo> transFlowInfos;
-
-    public CheckResult() {
+    public CheckResult(String bsn, String tableName) {
+        this.BSN = bsn;
         this.isLost = false;
-        transFlowInfos = new ArrayList<TransFlowInfo>();
+        this.tableName = tableName;
+        recordItems = new ArrayList<RecordItem>();
     }
 
     public void setLost(boolean lost) {
         isLost = lost;
     }
 
-    public void doReportCheckResult() {
-        // save to kafka
-        //Save to Mysql
+    public void doReportCheckResult() throws SQLException {
+        auditState = "Y";
+        if (isLost) {
+            // save to kafka
+
+            //Save to Mysql
+            auditResult = "Failed";
+        } else {
+            auditMessage = "";
+            auditResult = "Success!";
+        }
+
+        DBUtil.updateBatchCheckResult(this);
     }
 
-    public void addTransFlowInfos(List<TransFlowInfo> orginInfoList) {
-        transFlowInfos.addAll(orginInfoList);
+    public void addTransFlowInfos(List<RecordItem> orginInfoList) {
+        recordItems.addAll(orginInfoList);
+    }
+
+    public void setAuditMessage(String auditMessage) {
+        this.auditMessage = auditMessage;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public String getBSN() {
+        return BSN;
+    }
+
+    public String getAuditMessage() {
+        return auditMessage;
+    }
+
+    public String getAuditResult() {
+        return auditResult;
+    }
+
+    public String getAuditState() {
+        return auditState;
     }
 }
