@@ -97,8 +97,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         String acctId = null;
         Map<String, String> params = new TreeMap<String, String>();
         params.put(ConBlUserinfo.CUST_ID, custId);
-        List<Map<String, String>> result = DshmUtil.getDshmread().list(TableCon.BL_USERINFO)
-                .where(params).executeQuery();
+        List<Map<String, String>> result = DshmUtil.getClient().list(TableCon.BL_USERINFO)
+                .where(params).executeQuery(DshmUtil.getCacheClient());
         if (!(result == null || result.isEmpty())) {
             String temp[] = result.get(0).get(ConBlUserinfo.SUBS_ID).split("#");
             subsId = temp[temp.length - 1];

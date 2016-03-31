@@ -188,8 +188,8 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         // 通过共享内存获得内部的custId
         Map<String, String> params = new TreeMap<String, String>();
         params.put(ConBlCustinfo.EXT_CUST_ID, record.getExtCustId());
-        List<Map<String, String>> result =  DshmUtil.getDshmread().list(TableCon.BL_CUSTINFO).where(params)
-                .executeQuery();
+        List<Map<String, String>> result =  DshmUtil.getClient().list(TableCon.BL_CUSTINFO).where(params)
+                .executeQuery(DshmUtil.getCacheClient());
         // 获得对应的内部的custId
         if (result == null || result.isEmpty()) {
             LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + record.getExtCustId());
