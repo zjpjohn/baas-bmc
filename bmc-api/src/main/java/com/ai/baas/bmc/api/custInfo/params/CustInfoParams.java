@@ -2,6 +2,10 @@ package com.ai.baas.bmc.api.custInfo.params;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
+import com.ai.baas.bmc.api.custInfo.interfaces.ICustInfoSV;
+import com.ai.baas.bmc.api.marketbleproduct.interfaces.IProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 
 
@@ -16,18 +20,21 @@ public class CustInfoParams extends BaseInfo {
     private static final long serialVersionUID = 4079811955726211786L;
 
     /**
-     * 交易流水，必填，最大长度32字节
+     * 交易流水，最大长度32字节
      */
+    @NotNull(message="交易流水不能为空",groups={ICustInfoSV.CustNotify.class})
     private String tradeSeq;
 
     /**
      * 外部客户ID，必填，最大长度32字节，外部值
      */
+    @NotNull(message="外部客户ID不能为空",groups={ICustInfoSV.CustNotify.class})
     private String extCustId;
 
     /**
-     * 客户姓名，必填，最大长度128字节                            
+     * 客户姓名,最大长度128字节                            
      */
+    @NotNull(message="客户姓名不能为空",groups={ICustInfoSV.CustNotify.class})
     private String custName;
 
     /**
@@ -43,11 +50,13 @@ public class CustInfoParams extends BaseInfo {
     /**
      * 归属省，必填，最大长度6字节 ，参考省份定义表
      */
+    @NotNull(message=" 归属省不能为空",groups={ICustInfoSV.CustNotify.class})
     private String provinceCode;
 
     /**
      * 归属地市，必填，最大长度6字节 
      */
+    @NotNull(message="归属地市不能为空",groups={ICustInfoSV.CustNotify.class})
     private String cityCode;
     
     /**
