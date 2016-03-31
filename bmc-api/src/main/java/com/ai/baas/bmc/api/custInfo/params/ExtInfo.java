@@ -15,17 +15,17 @@ public class ExtInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 名称，必填，最大长度32字节
+	 * 名称，最大长度32字节
 	 */
 	private String extName;
 	
 	/**
-	 * 值，必填，最大长度64字节
+	 * 值，最大长度64字节
 	 */
 	private String extValue;
 
 	/**
-	 * 更新标识，必填，最大长度1字节 取值范围：D：删除，U：更新，N：新增
+	 * 更新标识，最大长度1字节 取值范围：D：删除，U：更新，N：新增
 	 */
 	private String updateFlag;
 
