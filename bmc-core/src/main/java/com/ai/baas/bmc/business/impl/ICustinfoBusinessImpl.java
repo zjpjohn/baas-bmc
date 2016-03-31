@@ -137,8 +137,8 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		String custId = null;
 		Map<String, String> params = new TreeMap<String, String>();
         params.put("EXT_CUST_ID", custInfo.getExtCustId());
-        List<Map<String, String>> result = DshmUtil.getDshmread().list("bl_custinfo").where(params)
-                .executeQuery();
+        List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
+                .executeQuery(DshmUtil.getCacheClient());
         if(!(result==null||result.isEmpty())){
         	 String temp[] = result.get(0).get("CUST_ID").split("#");
         	 custId = temp[temp.length - 1];

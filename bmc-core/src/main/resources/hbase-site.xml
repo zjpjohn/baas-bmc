@@ -27,10 +27,10 @@
 	</property>
 	<property>
 		<name>hbase.zookeeper.quorum</name>
-	    <value>node01,node02,node03</value>
+	    <value>pkgzkpdev11,pkgzkpdev12,pkgzkpdev13</value>
 	</property>
 	<property>
 		<name>hbase.master</name>
-	    <value>node01</value>
+	    <value>pkgzkpdev11</value>
 	</property>
 </configuration>

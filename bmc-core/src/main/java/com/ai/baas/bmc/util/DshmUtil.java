@@ -1,22 +1,22 @@
 package com.ai.baas.bmc.util;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.ai.baas.bmc.context.Constants;
 import com.ai.baas.dshm.api.dshmprocess.interfaces.IdshmSV;
-import com.ai.runner.center.dshm.api.dshmservice.interfaces.IdshmreadSV;
+import com.ai.baas.dshm.client.CacheFactoryUtil;
+import com.ai.baas.dshm.client.impl.CacheBLMapper;
+import com.ai.baas.dshm.client.impl.DshmClient;
+import com.ai.baas.dshm.client.interfaces.IDshmClient;
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 
 public class DshmUtil {
-    private static IdshmreadSV dshmread;
-
-    private static Properties prop;
-
     private static DshmUtil instance;
 
     private IdshmSV aIdshmSV;
+
+    private IDshmClient client;
+
+    private ICacheClient cacheClient;
 
     private ClassPathXmlApplicationContext context;
 
@@ -25,6 +25,8 @@ public class DshmUtil {
         context.registerShutdownHook();
         context.start();
         aIdshmSV = context.getBean(IdshmSV.class);
+        client = new DshmClient();
+        cacheClient = CacheFactoryUtil.getCacheClient(CacheBLMapper.CACHE_BL_CAL_PARAM);
     }
 
     private static DshmUtil getInstance() {
@@ -34,28 +36,15 @@ public class DshmUtil {
         return instance;
     }
 
-    public synchronized static IdshmreadSV getDshmread() {
-        if (prop == null) {
-            prop = new Properties();
-            try {
-                prop.load(DshmUtil.class.getClassLoader()
-                        .getResourceAsStream("context/config.properties"));
-            } catch (IOException e) {
-                e.printStackTrace();
-                LoggerUtil.log.error(e);
-            }
-        }
-        try {
-            dshmread = (IdshmreadSV) ServiceRegiter.registerService(prop.getProperty("dshm.ip"),
-                    prop.getProperty("dshm.port"), Constants.ShmServiceCode.SHM_SERVICE_CODE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            LoggerUtil.log.error(e);
-        }
-        return dshmread;
-    }
-
     public static IdshmSV getIdshmSV() {
         return getInstance().aIdshmSV;
+    }
+    
+    public static IDshmClient getClient(){
+        return getInstance().client;
+    }
+    
+    public static ICacheClient getCacheClient(){
+        return getInstance().cacheClient;
     }
 }
