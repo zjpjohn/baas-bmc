@@ -9,10 +9,10 @@ public class StandardList  implements Serializable{
     private String serviceType;
     private List<UsageList> usageList;
     private String cycleType;
-    private int cycleAmount;
+    private Double cycleAmount;
     private String cycleId;
     private String priceType;
-    private int price;
+    private Double price;
     private String comments;
     private String status;
     public String getStandardId() {
@@ -45,10 +45,10 @@ public class StandardList  implements Serializable{
     public void setCycleType(String cycleType) {
         this.cycleType = cycleType;
     }
-    public int getCycleAmount() {
+    public Double getCycleAmount() {
         return cycleAmount;
     }
-    public void setCycleAmount(int cycleAmount) {
+    public void setCycleAmount(Double cycleAmount) {
         this.cycleAmount = cycleAmount;
     }
     public String getCycleId() {
@@ -63,10 +63,10 @@ public class StandardList  implements Serializable{
     public void setPriceType(String priceType) {
         this.priceType = priceType;
     }
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
     public String getComments() {

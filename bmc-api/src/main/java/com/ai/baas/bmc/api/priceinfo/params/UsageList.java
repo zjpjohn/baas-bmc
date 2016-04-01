@@ -6,14 +6,14 @@ public class UsageList implements Serializable{
     
     private static final long serialVersionUID = -4989482563493979L;
             
-    private int amount;
+    private Double amount;
     private String subServiceType;
     private String unit;
     
-    public int getAmount() {
+    public Double getAmount() {
         return amount;
     }
-    public void setAmount(int amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
     public String getSubServiceType() {

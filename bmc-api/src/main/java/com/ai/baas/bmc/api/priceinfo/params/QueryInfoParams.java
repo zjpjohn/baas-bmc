@@ -3,9 +3,9 @@ package com.ai.baas.bmc.api.priceinfo.params;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.opt.base.vo.BaseInfo;
+import com.ai.opt.base.vo.PageInfo;
 
 /**
  * 标准资费查询入参
@@ -54,6 +54,16 @@ public class QueryInfoParams extends BaseInfo {
      */
     @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private String priceState;
+    
+    PageInfo<QueryInfoParams> pageInfo;
+
+    public PageInfo<QueryInfoParams> getPageInfo() {
+        return pageInfo;
+    }
+
+    public void setPageInfo(PageInfo<QueryInfoParams> pageInfo) {
+        this.pageInfo = pageInfo;
+    }
 
     public String getTradeSeq() {
         return tradeSeq;

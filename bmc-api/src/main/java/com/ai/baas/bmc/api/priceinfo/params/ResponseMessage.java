@@ -3,7 +3,9 @@ package com.ai.baas.bmc.api.priceinfo.params;
 import java.io.Serializable;
 import java.util.List;
 
-public class ResponseMessage  implements Serializable {
+import com.ai.opt.base.vo.BaseResponse;
+
+public class ResponseMessage extends BaseResponse {
 
     private String returnCode;
     private String tradeSeq;
