@@ -82,12 +82,32 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 已选择的产品列表,必填
 	 */
-	private List<ProductVO> productList;
+	private List<Integer> productList;
 	/**
-	 * 赠品
+	 * 赠品类型
 	 */
-	private List<String> gift;
+	private String giftType;
+	/**
+	 * 赠品数量
+	 */
+	private double gitfAmount;
 	
+	/**
+	 * 赠品生效日期
+	 */
+	private Timestamp giftActiveDate;
+	/**
+	 * 赠品失效日期
+	 */
+	private Timestamp giftInvalidDate;
+	/**
+	 *参与赠品产品列表
+	 */
+	private List<Integer> giftProList;
+	/**
+	 * 操作员Id
+	 */
+	private String operatorId;
 	public String getProductId() {
 		return productId;
 	}
@@ -144,24 +164,54 @@ public class ProferProductVO extends BaseInfo {
 		this.comments = comments;
 	}
 	
-	public List<ProductVO> getProductList() {
-		return productList;
-	}
-	public void setProductList(List<ProductVO> productList) {
-		this.productList = productList;
-	}
-	
-	public List<String> getGift() {
-		return gift;
-	}
-	public void setGift(List<String> gift) {
-		this.gift = gift;
-	}
 	public String getTradeSeq() {
 		return tradeSeq;
 	}
 	public void setTradeSeq(String tradeSeq) {
 		this.tradeSeq = tradeSeq;
+	}
+	public List<Integer> getProductList() {
+		return productList;
+	}
+	public void setProductList(List<Integer> productList) {
+		this.productList = productList;
+	}
+	public String getGiftType() {
+		return giftType;
+	}
+	public void setGiftType(String giftType) {
+		this.giftType = giftType;
+	}
+	
+	public double getGitfAmount() {
+		return gitfAmount;
+	}
+	public void setGitfAmount(double gitfAmount) {
+		this.gitfAmount = gitfAmount;
+	}
+	public Timestamp getGiftActiveDate() {
+		return giftActiveDate;
+	}
+	public void setGiftActiveDate(Timestamp giftActiveDate) {
+		this.giftActiveDate = giftActiveDate;
+	}
+	public Timestamp getGiftInvalidDate() {
+		return giftInvalidDate;
+	}
+	public void setGiftInvalidDate(Timestamp giftInvalidDate) {
+		this.giftInvalidDate = giftInvalidDate;
+	}
+	public List<Integer> getGiftProList() {
+		return giftProList;
+	}
+	public void setGiftProList(List<Integer> giftProList) {
+		this.giftProList = giftProList;
+	}
+	public String getOperatorId() {
+		return operatorId;
+	}
+	public void setOperatorId(String operatorId) {
+		this.operatorId = operatorId;
 	}
 	
 	
