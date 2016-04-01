@@ -3,6 +3,7 @@ package com.ai.baas.bmc.api.priceinfo.impl;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
@@ -14,7 +15,10 @@ import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.util.StringUtil;
+import com.alibaba.dubbo.config.annotation.Service;
 
+@Service(validation = "true")
+@Component
 public class PriceInfoSVImpl implements IPriceInfoSV {
 
     @Autowired
@@ -32,9 +36,9 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
     @Override
     public String updatePriceInfo(StandardPriceInfoParams record)
             throws BusinessException, SystemException {
-        //幂等性判断（判重）
+        // 幂等性判断（判重）
         try {
-            if(aIUpdatePriceInfoBussiness.dupCheck(record)){
+            if (aIUpdatePriceInfoBussiness.dupCheck(record)) {
                 return "tradeSeq已存在";
             }
         } catch (IOException e) {
