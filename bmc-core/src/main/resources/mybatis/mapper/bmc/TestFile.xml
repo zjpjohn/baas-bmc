@@ -17,7 +17,7 @@
     PRICE_INFO_ID, TENANT_ID, PRICE_CODE, PRICE_NAME, ACTIVE_TIME, INACTIVE_TIME, CREATE_TIME, 
     OPERATOR_ID, COMMENTS, PRODUCT_TYPE
   </sql>
-  <select id="findByName" parameterType="String" resultType="BaseResultMap">
+  <select id="findByName" parameterType="String" resultMap="BaseResultMap">
         select 
 		<include refid="Base_Column_List" />
 		 from cp_price_info where PRICE_CODE like #{code} and PRICE_NAME like #{name}
