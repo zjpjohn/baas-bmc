@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpFullReduceMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpFullReduce" >
+    <id column="REDUCE_ID" property="reduceId" jdbcType="BIGINT" />
+    <result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    <result column="REACH_AMOUNT" property="reachAmount" jdbcType="DOUBLE" />
+    <result column="REDUCE_AMOUNT" property="reduceAmount" jdbcType="DOUBLE" />
+    <result column="ACTIVE_TIME" property="activeTime" jdbcType="DATE" />
+    <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="DATE" />
+    <result column="REDUCE_CODE" property="reduceCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_IDS" property="productIds" jdbcType="VARCHAR" />
+    <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REDUCE_ID, DETAIL_CODE, REACH_AMOUNT, REDUCE_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
+    REDUCE_CODE, PRODUCT_IDS, UNIT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduceCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cp_full_reduce
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_full_reduce
+    where REDUCE_ID = #{reduceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Long" >
+    delete from cp_full_reduce
+    where REDUCE_ID = #{reduceId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduceCriteria" >
+    delete from cp_full_reduce
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduce" >
+    insert into cp_full_reduce (REDUCE_ID, DETAIL_CODE, REACH_AMOUNT, 
+      REDUCE_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
+      REDUCE_CODE, PRODUCT_IDS, UNIT
+      )
+    values (#{reduceId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{reachAmount,jdbcType=DOUBLE}, 
+      #{reduceAmount,jdbcType=DOUBLE}, #{activeTime,jdbcType=DATE}, #{inactiveTime,jdbcType=DATE}, 
+      #{reduceCode,jdbcType=VARCHAR}, #{productIds,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduce" >
+    insert into cp_full_reduce
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reduceId != null" >
+        REDUCE_ID,
+      </if>
+      <if test="detailCode != null" >
+        DETAIL_CODE,
+      </if>
+      <if test="reachAmount != null" >
+        REACH_AMOUNT,
+      </if>
+      <if test="reduceAmount != null" >
+        REDUCE_AMOUNT,
+      </if>
+      <if test="activeTime != null" >
+        ACTIVE_TIME,
+      </if>
+      <if test="inactiveTime != null" >
+        INACTIVE_TIME,
+      </if>
+      <if test="reduceCode != null" >
+        REDUCE_CODE,
+      </if>
+      <if test="productIds != null" >
+        PRODUCT_IDS,
+      </if>
+      <if test="unit != null" >
+        UNIT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reduceId != null" >
+        #{reduceId,jdbcType=BIGINT},
+      </if>
+      <if test="detailCode != null" >
+        #{detailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reachAmount != null" >
+        #{reachAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="reduceAmount != null" >
+        #{reduceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="activeTime != null" >
+        #{activeTime,jdbcType=DATE},
+      </if>
+      <if test="inactiveTime != null" >
+        #{inactiveTime,jdbcType=DATE},
+      </if>
+      <if test="reduceCode != null" >
+        #{reduceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productIds != null" >
+        #{productIds,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduceCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_full_reduce
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_full_reduce
+    <set >
+      <if test="record.reduceId != null" >
+        REDUCE_ID = #{record.reduceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.detailCode != null" >
+        DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reachAmount != null" >
+        REACH_AMOUNT = #{record.reachAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.reduceAmount != null" >
+        REDUCE_AMOUNT = #{record.reduceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.activeTime != null" >
+        ACTIVE_TIME = #{record.activeTime,jdbcType=DATE},
+      </if>
+      <if test="record.inactiveTime != null" >
+        INACTIVE_TIME = #{record.inactiveTime,jdbcType=DATE},
+      </if>
+      <if test="record.reduceCode != null" >
+        REDUCE_CODE = #{record.reduceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productIds != null" >
+        PRODUCT_IDS = #{record.productIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        UNIT = #{record.unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_full_reduce
+    set REDUCE_ID = #{record.reduceId,jdbcType=BIGINT},
+      DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
+      REACH_AMOUNT = #{record.reachAmount,jdbcType=DOUBLE},
+      REDUCE_AMOUNT = #{record.reduceAmount,jdbcType=DOUBLE},
+      ACTIVE_TIME = #{record.activeTime,jdbcType=DATE},
+      INACTIVE_TIME = #{record.inactiveTime,jdbcType=DATE},
+      REDUCE_CODE = #{record.reduceCode,jdbcType=VARCHAR},
+      PRODUCT_IDS = #{record.productIds,jdbcType=VARCHAR},
+      UNIT = #{record.unit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduce" >
+    update cp_full_reduce
+    <set >
+      <if test="detailCode != null" >
+        DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reachAmount != null" >
+        REACH_AMOUNT = #{reachAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="reduceAmount != null" >
+        REDUCE_AMOUNT = #{reduceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="activeTime != null" >
+        ACTIVE_TIME = #{activeTime,jdbcType=DATE},
+      </if>
+      <if test="inactiveTime != null" >
+        INACTIVE_TIME = #{inactiveTime,jdbcType=DATE},
+      </if>
+      <if test="reduceCode != null" >
+        REDUCE_CODE = #{reduceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productIds != null" >
+        PRODUCT_IDS = #{productIds,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where REDUCE_ID = #{reduceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduce" >
+    update cp_full_reduce
+    set DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
+      REACH_AMOUNT = #{reachAmount,jdbcType=DOUBLE},
+      REDUCE_AMOUNT = #{reduceAmount,jdbcType=DOUBLE},
+      ACTIVE_TIME = #{activeTime,jdbcType=DATE},
+      INACTIVE_TIME = #{inactiveTime,jdbcType=DATE},
+      REDUCE_CODE = #{reduceCode,jdbcType=VARCHAR},
+      PRODUCT_IDS = #{productIds,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR}
+    where REDUCE_ID = #{reduceId,jdbcType=BIGINT}
+  </update>
+</mapper>

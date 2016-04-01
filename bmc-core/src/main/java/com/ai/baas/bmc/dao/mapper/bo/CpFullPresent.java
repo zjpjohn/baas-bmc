@@ -21,6 +21,10 @@ public class CpFullPresent {
 
     private String presentCode;
 
+    private Double reachAmount;
+
+    private String unit;
+
     public Long getPresentId() {
         return presentId;
     }
@@ -91,5 +95,21 @@ public class CpFullPresent {
 
     public void setPresentCode(String presentCode) {
         this.presentCode = presentCode == null ? null : presentCode.trim();
+    }
+
+    public Double getReachAmount() {
+        return reachAmount;
+    }
+
+    public void setReachAmount(Double reachAmount) {
+        this.reachAmount = reachAmount;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit == null ? null : unit.trim();
     }
 }

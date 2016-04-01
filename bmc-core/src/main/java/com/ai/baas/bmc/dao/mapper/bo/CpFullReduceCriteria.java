@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CpFullPresentCriteria {
+public class CpFullReduceCriteria {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -15,7 +15,7 @@ public class CpFullPresentCriteria {
 
     protected Integer limitEnd;
 
-    public CpFullPresentCriteria() {
+    public CpFullReduceCriteria() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -125,63 +125,63 @@ public class CpFullPresentCriteria {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andPresentIdIsNull() {
-            addCriterion("PRESENT_ID is null");
+        public Criteria andReduceIdIsNull() {
+            addCriterion("REDUCE_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdIsNotNull() {
-            addCriterion("PRESENT_ID is not null");
+        public Criteria andReduceIdIsNotNull() {
+            addCriterion("REDUCE_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdEqualTo(Long value) {
-            addCriterion("PRESENT_ID =", value, "presentId");
+        public Criteria andReduceIdEqualTo(Long value) {
+            addCriterion("REDUCE_ID =", value, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdNotEqualTo(Long value) {
-            addCriterion("PRESENT_ID <>", value, "presentId");
+        public Criteria andReduceIdNotEqualTo(Long value) {
+            addCriterion("REDUCE_ID <>", value, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdGreaterThan(Long value) {
-            addCriterion("PRESENT_ID >", value, "presentId");
+        public Criteria andReduceIdGreaterThan(Long value) {
+            addCriterion("REDUCE_ID >", value, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("PRESENT_ID >=", value, "presentId");
+        public Criteria andReduceIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("REDUCE_ID >=", value, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdLessThan(Long value) {
-            addCriterion("PRESENT_ID <", value, "presentId");
+        public Criteria andReduceIdLessThan(Long value) {
+            addCriterion("REDUCE_ID <", value, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdLessThanOrEqualTo(Long value) {
-            addCriterion("PRESENT_ID <=", value, "presentId");
+        public Criteria andReduceIdLessThanOrEqualTo(Long value) {
+            addCriterion("REDUCE_ID <=", value, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdIn(List<Long> values) {
-            addCriterion("PRESENT_ID in", values, "presentId");
+        public Criteria andReduceIdIn(List<Long> values) {
+            addCriterion("REDUCE_ID in", values, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdNotIn(List<Long> values) {
-            addCriterion("PRESENT_ID not in", values, "presentId");
+        public Criteria andReduceIdNotIn(List<Long> values) {
+            addCriterion("REDUCE_ID not in", values, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdBetween(Long value1, Long value2) {
-            addCriterion("PRESENT_ID between", value1, value2, "presentId");
+        public Criteria andReduceIdBetween(Long value1, Long value2) {
+            addCriterion("REDUCE_ID between", value1, value2, "reduceId");
             return (Criteria) this;
         }
 
-        public Criteria andPresentIdNotBetween(Long value1, Long value2) {
-            addCriterion("PRESENT_ID not between", value1, value2, "presentId");
+        public Criteria andReduceIdNotBetween(Long value1, Long value2) {
+            addCriterion("REDUCE_ID not between", value1, value2, "reduceId");
             return (Criteria) this;
         }
 
@@ -255,133 +255,123 @@ public class CpFullPresentCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeIsNull() {
-            addCriterion("PRESENT_TYPE is null");
+        public Criteria andReachAmountIsNull() {
+            addCriterion("REACH_AMOUNT is null");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeIsNotNull() {
-            addCriterion("PRESENT_TYPE is not null");
+        public Criteria andReachAmountIsNotNull() {
+            addCriterion("REACH_AMOUNT is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeEqualTo(String value) {
-            addCriterion("PRESENT_TYPE =", value, "presentType");
+        public Criteria andReachAmountEqualTo(Double value) {
+            addCriterion("REACH_AMOUNT =", value, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeNotEqualTo(String value) {
-            addCriterion("PRESENT_TYPE <>", value, "presentType");
+        public Criteria andReachAmountNotEqualTo(Double value) {
+            addCriterion("REACH_AMOUNT <>", value, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeGreaterThan(String value) {
-            addCriterion("PRESENT_TYPE >", value, "presentType");
+        public Criteria andReachAmountGreaterThan(Double value) {
+            addCriterion("REACH_AMOUNT >", value, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("PRESENT_TYPE >=", value, "presentType");
+        public Criteria andReachAmountGreaterThanOrEqualTo(Double value) {
+            addCriterion("REACH_AMOUNT >=", value, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeLessThan(String value) {
-            addCriterion("PRESENT_TYPE <", value, "presentType");
+        public Criteria andReachAmountLessThan(Double value) {
+            addCriterion("REACH_AMOUNT <", value, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeLessThanOrEqualTo(String value) {
-            addCriterion("PRESENT_TYPE <=", value, "presentType");
+        public Criteria andReachAmountLessThanOrEqualTo(Double value) {
+            addCriterion("REACH_AMOUNT <=", value, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeLike(String value) {
-            addCriterion("PRESENT_TYPE like", value, "presentType");
+        public Criteria andReachAmountIn(List<Double> values) {
+            addCriterion("REACH_AMOUNT in", values, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeNotLike(String value) {
-            addCriterion("PRESENT_TYPE not like", value, "presentType");
+        public Criteria andReachAmountNotIn(List<Double> values) {
+            addCriterion("REACH_AMOUNT not in", values, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeIn(List<String> values) {
-            addCriterion("PRESENT_TYPE in", values, "presentType");
+        public Criteria andReachAmountBetween(Double value1, Double value2) {
+            addCriterion("REACH_AMOUNT between", value1, value2, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeNotIn(List<String> values) {
-            addCriterion("PRESENT_TYPE not in", values, "presentType");
+        public Criteria andReachAmountNotBetween(Double value1, Double value2) {
+            addCriterion("REACH_AMOUNT not between", value1, value2, "reachAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeBetween(String value1, String value2) {
-            addCriterion("PRESENT_TYPE between", value1, value2, "presentType");
+        public Criteria andReduceAmountIsNull() {
+            addCriterion("REDUCE_AMOUNT is null");
             return (Criteria) this;
         }
 
-        public Criteria andPresentTypeNotBetween(String value1, String value2) {
-            addCriterion("PRESENT_TYPE not between", value1, value2, "presentType");
+        public Criteria andReduceAmountIsNotNull() {
+            addCriterion("REDUCE_AMOUNT is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountIsNull() {
-            addCriterion("PRESENT_AMOUNT is null");
+        public Criteria andReduceAmountEqualTo(Double value) {
+            addCriterion("REDUCE_AMOUNT =", value, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountIsNotNull() {
-            addCriterion("PRESENT_AMOUNT is not null");
+        public Criteria andReduceAmountNotEqualTo(Double value) {
+            addCriterion("REDUCE_AMOUNT <>", value, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountEqualTo(Double value) {
-            addCriterion("PRESENT_AMOUNT =", value, "presentAmount");
+        public Criteria andReduceAmountGreaterThan(Double value) {
+            addCriterion("REDUCE_AMOUNT >", value, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountNotEqualTo(Double value) {
-            addCriterion("PRESENT_AMOUNT <>", value, "presentAmount");
+        public Criteria andReduceAmountGreaterThanOrEqualTo(Double value) {
+            addCriterion("REDUCE_AMOUNT >=", value, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountGreaterThan(Double value) {
-            addCriterion("PRESENT_AMOUNT >", value, "presentAmount");
+        public Criteria andReduceAmountLessThan(Double value) {
+            addCriterion("REDUCE_AMOUNT <", value, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountGreaterThanOrEqualTo(Double value) {
-            addCriterion("PRESENT_AMOUNT >=", value, "presentAmount");
+        public Criteria andReduceAmountLessThanOrEqualTo(Double value) {
+            addCriterion("REDUCE_AMOUNT <=", value, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountLessThan(Double value) {
-            addCriterion("PRESENT_AMOUNT <", value, "presentAmount");
+        public Criteria andReduceAmountIn(List<Double> values) {
+            addCriterion("REDUCE_AMOUNT in", values, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountLessThanOrEqualTo(Double value) {
-            addCriterion("PRESENT_AMOUNT <=", value, "presentAmount");
+        public Criteria andReduceAmountNotIn(List<Double> values) {
+            addCriterion("REDUCE_AMOUNT not in", values, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountIn(List<Double> values) {
-            addCriterion("PRESENT_AMOUNT in", values, "presentAmount");
+        public Criteria andReduceAmountBetween(Double value1, Double value2) {
+            addCriterion("REDUCE_AMOUNT between", value1, value2, "reduceAmount");
             return (Criteria) this;
         }
 
-        public Criteria andPresentAmountNotIn(List<Double> values) {
-            addCriterion("PRESENT_AMOUNT not in", values, "presentAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentAmountBetween(Double value1, Double value2) {
-            addCriterion("PRESENT_AMOUNT between", value1, value2, "presentAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentAmountNotBetween(Double value1, Double value2) {
-            addCriterion("PRESENT_AMOUNT not between", value1, value2, "presentAmount");
+        public Criteria andReduceAmountNotBetween(Double value1, Double value2) {
+            addCriterion("REDUCE_AMOUNT not between", value1, value2, "reduceAmount");
             return (Criteria) this;
         }
 
@@ -505,6 +495,76 @@ public class CpFullPresentCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andReduceCodeIsNull() {
+            addCriterion("REDUCE_CODE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeIsNotNull() {
+            addCriterion("REDUCE_CODE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeEqualTo(String value) {
+            addCriterion("REDUCE_CODE =", value, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeNotEqualTo(String value) {
+            addCriterion("REDUCE_CODE <>", value, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeGreaterThan(String value) {
+            addCriterion("REDUCE_CODE >", value, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("REDUCE_CODE >=", value, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeLessThan(String value) {
+            addCriterion("REDUCE_CODE <", value, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeLessThanOrEqualTo(String value) {
+            addCriterion("REDUCE_CODE <=", value, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeLike(String value) {
+            addCriterion("REDUCE_CODE like", value, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeNotLike(String value) {
+            addCriterion("REDUCE_CODE not like", value, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeIn(List<String> values) {
+            addCriterion("REDUCE_CODE in", values, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeNotIn(List<String> values) {
+            addCriterion("REDUCE_CODE not in", values, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeBetween(String value1, String value2) {
+            addCriterion("REDUCE_CODE between", value1, value2, "reduceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andReduceCodeNotBetween(String value1, String value2) {
+            addCriterion("REDUCE_CODE not between", value1, value2, "reduceCode");
+            return (Criteria) this;
+        }
+
         public Criteria andProductIdsIsNull() {
             addCriterion("PRODUCT_IDS is null");
             return (Criteria) this;
@@ -572,206 +632,6 @@ public class CpFullPresentCriteria {
 
         public Criteria andProductIdsNotBetween(String value1, String value2) {
             addCriterion("PRODUCT_IDS not between", value1, value2, "productIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsIsNull() {
-            addCriterion("PRODUCT_GIFT_IDS is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsIsNotNull() {
-            addCriterion("PRODUCT_GIFT_IDS is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsEqualTo(String value) {
-            addCriterion("PRODUCT_GIFT_IDS =", value, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsNotEqualTo(String value) {
-            addCriterion("PRODUCT_GIFT_IDS <>", value, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsGreaterThan(String value) {
-            addCriterion("PRODUCT_GIFT_IDS >", value, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsGreaterThanOrEqualTo(String value) {
-            addCriterion("PRODUCT_GIFT_IDS >=", value, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsLessThan(String value) {
-            addCriterion("PRODUCT_GIFT_IDS <", value, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsLessThanOrEqualTo(String value) {
-            addCriterion("PRODUCT_GIFT_IDS <=", value, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsLike(String value) {
-            addCriterion("PRODUCT_GIFT_IDS like", value, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsNotLike(String value) {
-            addCriterion("PRODUCT_GIFT_IDS not like", value, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsIn(List<String> values) {
-            addCriterion("PRODUCT_GIFT_IDS in", values, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsNotIn(List<String> values) {
-            addCriterion("PRODUCT_GIFT_IDS not in", values, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsBetween(String value1, String value2) {
-            addCriterion("PRODUCT_GIFT_IDS between", value1, value2, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andProductGiftIdsNotBetween(String value1, String value2) {
-            addCriterion("PRODUCT_GIFT_IDS not between", value1, value2, "productGiftIds");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeIsNull() {
-            addCriterion("PRESENT_CODE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeIsNotNull() {
-            addCriterion("PRESENT_CODE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeEqualTo(String value) {
-            addCriterion("PRESENT_CODE =", value, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeNotEqualTo(String value) {
-            addCriterion("PRESENT_CODE <>", value, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeGreaterThan(String value) {
-            addCriterion("PRESENT_CODE >", value, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeGreaterThanOrEqualTo(String value) {
-            addCriterion("PRESENT_CODE >=", value, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeLessThan(String value) {
-            addCriterion("PRESENT_CODE <", value, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeLessThanOrEqualTo(String value) {
-            addCriterion("PRESENT_CODE <=", value, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeLike(String value) {
-            addCriterion("PRESENT_CODE like", value, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeNotLike(String value) {
-            addCriterion("PRESENT_CODE not like", value, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeIn(List<String> values) {
-            addCriterion("PRESENT_CODE in", values, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeNotIn(List<String> values) {
-            addCriterion("PRESENT_CODE not in", values, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeBetween(String value1, String value2) {
-            addCriterion("PRESENT_CODE between", value1, value2, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andPresentCodeNotBetween(String value1, String value2) {
-            addCriterion("PRESENT_CODE not between", value1, value2, "presentCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountIsNull() {
-            addCriterion("REACH_AMOUNT is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountIsNotNull() {
-            addCriterion("REACH_AMOUNT is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountEqualTo(Double value) {
-            addCriterion("REACH_AMOUNT =", value, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountNotEqualTo(Double value) {
-            addCriterion("REACH_AMOUNT <>", value, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountGreaterThan(Double value) {
-            addCriterion("REACH_AMOUNT >", value, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountGreaterThanOrEqualTo(Double value) {
-            addCriterion("REACH_AMOUNT >=", value, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountLessThan(Double value) {
-            addCriterion("REACH_AMOUNT <", value, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountLessThanOrEqualTo(Double value) {
-            addCriterion("REACH_AMOUNT <=", value, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountIn(List<Double> values) {
-            addCriterion("REACH_AMOUNT in", values, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountNotIn(List<Double> values) {
-            addCriterion("REACH_AMOUNT not in", values, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountBetween(Double value1, Double value2) {
-            addCriterion("REACH_AMOUNT between", value1, value2, "reachAmount");
-            return (Criteria) this;
-        }
-
-        public Criteria andReachAmountNotBetween(Double value1, Double value2) {
-            addCriterion("REACH_AMOUNT not between", value1, value2, "reachAmount");
             return (Criteria) this;
         }
 
