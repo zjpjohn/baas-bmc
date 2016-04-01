@@ -13,7 +13,7 @@ public interface IPriceInfoSV {
      /**
       * 标准资费查询接口
       * @param QueryInfoParams
-      * @return PriceCode
+      * @return BMC-000000成功；其他失败
       * @throws BusinessException
       * @throws SystemException
       * @author wangkai
