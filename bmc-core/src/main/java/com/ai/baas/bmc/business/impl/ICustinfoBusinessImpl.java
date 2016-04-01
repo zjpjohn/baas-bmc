@@ -51,7 +51,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 
 	@Override
 	public boolean hasSeq(CustInfoParams custInfo) throws IOException {
-		 String rowkey = custInfo.getTenantId() + Context.SPLIT + Context.ORDER_INFO_CODE
+		 String rowkey = custInfo.getTenantId() + Context.SPLIT + Context.CUST_INFO_CODE
 	                + Context.SPLIT + custInfo.getTradeSeq();
 	        Table table = MyHbaseUtil.getTable(TableCon.TRADE_SEQ_LOG);
 
