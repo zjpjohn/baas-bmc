@@ -23,7 +23,7 @@ public class StanderdPriceInfoUsage implements Serializable {
      * NUMBER(32)
      */
     @NotNull(message = "标准资费使用量不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+//    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private double amount;
 
     /**

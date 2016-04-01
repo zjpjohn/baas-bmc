@@ -23,11 +23,11 @@
 <configuration>
 	<property>
 		<name>hbase.zookeeper.property.clientPort</name>
-	    <value>39181</value>
+	    <value>49181</value>
 	</property>
 	<property>
 		<name>hbase.zookeeper.quorum</name>
-	    <value>pkgzkpdev11,pkgzkpdev12,pkgzkpdev13</value>
+	    <value>pkgzkpdev11,pkgzkpdev11,pkgzkpdev11</value>
 	</property>
 	<property>
 		<name>hbase.master</name>

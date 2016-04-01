@@ -148,8 +148,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             priceInfo.setCreateTime(DateUtil.getTimestamp(System.currentTimeMillis()));
             priceInfo.setComments(param.getComments());
             // ^^设置默认值
-            priceInfo.setActiveTime(DateUtil.getTimestamp("20150101", DateUtil.YYYYMM));
-            priceInfo.setInactiveTime(DateUtil.getTimestamp("20300101", DateUtil.YYYYMM));
+            priceInfo.setActiveTime(DateUtil.getTimestamp("20150101", DateUtil.YYYYMMDD));
+            priceInfo.setInactiveTime(DateUtil.getTimestamp("20300101", DateUtil.YYYYMMDD));
             // ^^操作员和产品类型为空
 
             aCpPriceInfoMapper.insertSelective(priceInfo);
@@ -164,8 +164,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             priceDetail
                     .setDetailCode(aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0));
             // ^^设置默认值
-            priceDetail.setActiveTime(DateUtil.getTimestamp("20150101", DateUtil.YYYYMM));
-            priceDetail.setInactiveTime(DateUtil.getTimestamp("20300101", DateUtil.YYYYMM));
+            priceDetail.setActiveTime(DateUtil.getTimestamp("20150101", DateUtil.YYYYMMDD));
+            priceDetail.setInactiveTime(DateUtil.getTimestamp("20300101", DateUtil.YYYYMMDD));
             // ^^明细项名称为空，计费类型为空，说明为空
 
             aCpPriceDetailMapper.insertSelective(priceDetail);
@@ -190,8 +190,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             // ^^费用类型写死为1
             unitpriceItem.setFeeType(1);
             // ^^生失效时间默认
-            unitpriceItem.setActiveTime(DateUtil.getTimestamp("20150101", DateUtil.YYYYMM));
-            unitpriceItem.setInactiveTime(DateUtil.getTimestamp("20300101", DateUtil.YYYYMM));
+            unitpriceItem.setActiveTime(DateUtil.getTimestamp("20150101", DateUtil.YYYYMMDD));
+            unitpriceItem.setInactiveTime(DateUtil.getTimestamp("20300101", DateUtil.YYYYMMDD));
 
             aCpUnitpriceItemMapper.insertSelective(unitpriceItem);
             // *******************end***************************
