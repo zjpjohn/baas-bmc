@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.base.vo.PageInfo;
 
 public class ResponseMessage extends BaseResponse {
 
     private String returnCode;
     private String tradeSeq;
     private String tenantId;
-    private List<StandardList> standardList;
+    private PageInfo<StandardList> standardList;
     
     public String getReturnCode() {
         return returnCode;
@@ -30,10 +31,10 @@ public class ResponseMessage extends BaseResponse {
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
     }
-    public List<StandardList> getStandardList() {
+    public PageInfo<StandardList> getStandardList() {
         return standardList;
     }
-    public void setStandardList(List<StandardList> standardList) {
+    public void setStandardList(PageInfo<StandardList> standardList) {
         this.standardList = standardList;
     }
     

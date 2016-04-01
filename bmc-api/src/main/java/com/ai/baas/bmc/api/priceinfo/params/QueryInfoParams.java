@@ -55,14 +55,32 @@ public class QueryInfoParams extends BaseInfo {
     @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private String priceState;
     
-    PageInfo<QueryInfoParams> pageInfo;
-
-    public PageInfo<QueryInfoParams> getPageInfo() {
-        return pageInfo;
+    /**
+     * 请求查询的页码
+     */
+    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+    private Integer pageNo;
+    
+    /**
+     * 每页显示条数
+     */
+    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+    private Integer pageSize;
+    
+    public Integer getPageNo() {
+        return pageNo;
     }
 
-    public void setPageInfo(PageInfo<QueryInfoParams> pageInfo) {
-        this.pageInfo = pageInfo;
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
     public String getTradeSeq() {

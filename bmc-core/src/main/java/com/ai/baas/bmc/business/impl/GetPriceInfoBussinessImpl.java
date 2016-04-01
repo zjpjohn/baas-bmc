@@ -31,6 +31,8 @@ import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfoCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria;
+import com.ai.opt.base.vo.PageInfo;
+import com.ai.opt.sdk.util.StringUtil;
 @Service
 @Transactional
 public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
@@ -54,7 +56,6 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         
         
         //基于StandardId 和 PriceName 模糊查询
-        CpPriceInfo2Mapper cpPriceInfo2Mapper = sqlSessionTemplate.getMapper(CpPriceInfo2Mapper.class);
         CpPriceDetailMapper cpPriceDetailMapper = sqlSessionTemplate.getMapper(CpPriceDetailMapper.class);
         CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
         CpUnitpriceInfoMapper cpUnitpriceInfoMapper = sqlSessionTemplate.getMapper(CpUnitpriceInfoMapper.class);
@@ -63,12 +64,40 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         CpUnitpriceItemCriteria cpUnitpriceItemCriteria = new CpUnitpriceItemCriteria();
         CpFactorInfoMapper cpFactorInfoMapper = sqlSessionTemplate.getMapper(CpFactorInfoMapper.class);
         CpFactorInfoCriteria cpFactorInfoCriteria = new CpFactorInfoCriteria();
+        CpPriceInfoMapper  cpPriceInfoMapper = sqlSessionTemplate.getMapper(CpPriceInfoMapper.class);
         
+        CpPriceInfoCriteria cpPriceInfoCriteria=new CpPriceInfoCriteria();
+        //判断是否需要分页
+        if(record.getPageSize()!=null&&record.getPageNo()!=null){
+            //pageSize
+            int pageSize=record.getPageSize();        
+            //pageNo
+            int pageNo=record.getPageNo();
+            cpPriceInfoCriteria.setLimitStart((pageNo-1)*pageSize);
+            cpPriceInfoCriteria.setLimitEnd(pageSize);            
+        }        
         String code = null;
         String name = null;
-        code = "%"+record.getStandardId()+"%";
-        name = "%"+record.getPriceName()+"%";
-        List<CpPriceInfo>  cpPriceInfoList = cpPriceInfo2Mapper.findByName(code, name);
+        code = record.getStandardId();
+        name = record.getPriceName();
+        if(!StringUtil.isBlank(code)){
+            cpPriceInfoCriteria.or().andPriceCodeLike(code);
+        }
+        if(!StringUtil.isBlank(name)){
+            cpPriceInfoCriteria.or().andPriceNameLike(name);
+        }
+        List<CpPriceInfo>  cpPriceInfoList=cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria);
+        PageInfo<StandardList> resultPage=new PageInfo<StandardList>();
+        resultPage.setCount(cpPriceInfoList.size());
+        if(record.getPageSize()!=null&&record.getPageNo()!=null){
+            resultPage.setPageSize(record.getPageSize());
+            resultPage.setPageNo(record.getPageNo());
+        }
+        else{
+            resultPage.setPageSize(cpPriceInfoList.size());
+            resultPage.setPageNo(1);
+        }
+        
         System.out.println("获得"+cpPriceInfoList.size()+"条资费信息");
         if(cpPriceInfoList.size() == 0)return null;
        
@@ -97,6 +126,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            cpFactorInfoCriteria.createCriteria()
             .andFactorCodeEqualTo(factor_code)
             .andFactorNameEqualTo("subServiceType");
+           
            List<CpFactorInfo>cpFactorInfoList = cpFactorInfoMapper.selectByExample(cpFactorInfoCriteria) ;
            CpFactorInfo cpFactorInfo = cpFactorInfoList.get(0);
            
@@ -113,10 +143,12 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            usageList.add(usages);   
            standards.setUsageList(usageList);
            standardList.add(standards);  
+           
            //CpUnitpriceItem
            //目前list.size() = 1
         }
-        responseMessage.setStandardList(standardList);       
+        resultPage.setResult(standardList);
+        responseMessage.setStandardList(resultPage);
         responseMessage.setReturnCode("BMC-000000");
         return responseMessage;
     }
