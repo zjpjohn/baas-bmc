@@ -41,56 +41,56 @@ public final class TableCon {
      * BL_CUSTINFO对应的表结构名称
      */
     public class ConBlCustinfo{
-        public static final String EXT_CUST_ID = "EXT_CUST_ID";
-        public static final String CUST_ID = "CUST_ID";
+        public static final String EXT_CUST_ID = "ext_cust_id";
+        public static final String CUST_ID = "cust_id";
     }
     /**
      * BL_USERINFO对应的表结构名称
      */
     public class ConBlUserinfo{
-        public static final String TENANT_ID = "TENANT_ID";
-        public static final String CUST_ID = "CUST_ID";
-        public static final String SUBS_ID = "SUBS_ID";
-        public static final String ACCT_ID = "ACCT_ID";
-        public static final String SERVICE_ID = "SERVICE_ID";
-        public static final String DEAL_TIME = "DEAL_TIME";
-        public static final String PROVINCE_CODE = "PROVINCE_CODE";
-        public static final String CITY_CODE = "CITY_CODE";
-        public static final String CHL_ID = "CHL_ID";
-        public static final String DEV_ID = "DEV_ID";
-        public static final String ACTIVE_TIME = "ACTIVE_TIME";
-        public static final String INACTIVE_TIME = "INACTIVE_TIME";
-        public static final String REMARK = "REMARK";
-        public static final String SERV_TYPE = "SERV_TYPE";
-        public static final String USER_TYPE = "USER_TYPE";
-        public static final String USER_STATE = "USER_STATE";
+        public static final String TENANT_ID = "tenant_id";
+        public static final String CUST_ID = "cust_id";
+        public static final String SUBS_ID = "subs_id";
+        public static final String ACCT_ID = "acct_id";
+        public static final String SERVICE_ID = "service_id";
+        public static final String DEAL_TIME = "deal_time";
+        public static final String PROVINCE_CODE = "province_code";
+        public static final String CITY_CODE = "city_code";
+        public static final String CHL_ID = "chl_id";
+        public static final String DEV_ID = "dev_id";
+        public static final String ACTIVE_TIME = "active_time";
+        public static final String INACTIVE_TIME = "inactive_time";
+        public static final String REMARK = "remark";
+        public static final String SERV_TYPE = "serv_type";
+        public static final String USER_TYPE = "user_type";
+        public static final String USER_STATE = "user_state";
     }
     /**
      * BL_SUBS_COMM对应的表结构名称
      */
     public class ConBlSubsComm{
-        public static final String SUBS_ID = "SUBS_ID";
-        public static final String PRODUCT_ID = "PRODUCT_ID";
-        public static final String SUBS_PRODUCT_ID = "SUBS_PRODUCT_ID";
-        public static final String RES_BONUS_FLAG = "RES_BONUS_FLAG";
-        public static final String ACTIVE_TIME = "ACTIVE_TIME";
-        public static final String INACTIVE_TIME = "INACTIVE_TIME";
-        public static final String TENANT_ID = "TENANT_ID";
-        public static final String CUST_ID = "CUST_ID";
+        public static final String SUBS_ID = "subs_id";
+        public static final String PRODUCT_ID = "product_id";
+        public static final String SUBS_PRODUCT_ID = "subs_product_id";
+        public static final String RES_BONUS_FLAG = "res_bonus_flag";
+        public static final String ACTIVE_TIME = "active_time";
+        public static final String INACTIVE_TIME = "inactive_time";
+        public static final String TENANT_ID = "tenant_id";
+        public static final String CUST_ID = "cust_id";
     }
     
     /**
      * BL_ACCT_INFO对应的表的结构名称
      */
     public class ConBlAcctInfo{
-        public static final String TENANT_ID = "TENANT_ID";
-        public static final String ACCT_ID = "ACCT_ID";
-        public static final String OWNER_TYPE = "OWNER_TYPE";
-        public static final String OWNER_ID = "OWNER_ID";
-        public static final String ACCT_NAME = "ACCT_NAME";
-        public static final String ACCT_TYPE = "ACCT_TYPE";
-        public static final String CREATE_TIME = "CREATE_TIME";
-        public static final String COMMENTS = "COMMENTS";
+        public static final String TENANT_ID = "tenant_id";
+        public static final String ACCT_ID = "acct_id";
+        public static final String OWNER_TYPE = "owner_type";
+        public static final String OWNER_ID = "owner_id";
+        public static final String ACCT_NAME = "acct_name";
+        public static final String ACCT_TYPE = "acct_type";
+        public static final String CREATE_TIME = "create_time";
+        public static final String COMMENTS = "comments";
     }
     
 }

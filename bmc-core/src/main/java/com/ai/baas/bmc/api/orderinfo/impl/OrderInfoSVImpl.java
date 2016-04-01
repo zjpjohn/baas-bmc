@@ -188,6 +188,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         // 通过共享内存获得内部的custId
         Map<String, String> params = new TreeMap<String, String>();
         params.put(ConBlCustinfo.EXT_CUST_ID, record.getExtCustId());
+        params.put("tenant_id", record.getTenantId());
         List<Map<String, String>> result =  DshmUtil.getClient().list(TableCon.BL_CUSTINFO).where(params)
                 .executeQuery(DshmUtil.getCacheClient());
         // 获得对应的内部的custId
@@ -205,7 +206,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 return "tradeSeq已存在";
             }
         } catch (IOException e) {
-            LoggerUtil.log.error(e.getStackTrace());
+            LoggerUtil.log.error(e);
             return "幂等性判断判断失败请联系管理员";
         }
         //写入mysql表中

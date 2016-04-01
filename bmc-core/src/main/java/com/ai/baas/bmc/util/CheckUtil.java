@@ -15,23 +15,23 @@ public class CheckUtil {
             if (canBeNull) {
                 return ErrorCode.SUCCESS;
             }
-            return ErrorCode.NULL + name + "不能为空";
+            return ErrorCode.NULL +":" +name + "不能为空";
         }
 
         if (o.toString().length() > lenth) {
-            return ErrorCode.OVER_LENTH + name + "不能超过" + lenth + "位";
+            return ErrorCode.OVER_LENTH + ":" +name + "不能超过" + lenth + "位";
         }
 
         if (enums == null || enums.length == 0) {
             return ErrorCode.SUCCESS;
         }
 
-        String result = ErrorCode.UNKNOWN + name + "取值范围";
+        String result = ErrorCode.UNKNOWN + ":" +name + "取值范围";
         for (String e : enums) {
             if (e.equals(o.toString())) {
                 return ErrorCode.SUCCESS;
             }
-            result += e + ",";
+            result += e + " ";
         }
         return result;
     }
