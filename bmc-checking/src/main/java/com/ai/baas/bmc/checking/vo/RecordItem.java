@@ -40,4 +40,8 @@ public class RecordItem {
         result = 31 * result + SN.hashCode();
         return result;
     }
+
+    public String getDetail() {
+        return detail;
+    }
 }
