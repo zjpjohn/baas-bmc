@@ -3,6 +3,7 @@ package com.ai.baas.bmc.checking;
 import com.ai.baas.bmc.checking.thead.CheckTask;
 import com.ai.baas.bmc.checking.util.DBUtil;
 import com.ai.baas.bmc.checking.util.HBaseUtil;
+import com.ai.baas.bmc.checking.util.MDSUtil;
 import com.ai.baas.bmc.checking.vo.BatchInfo;
 import com.ai.baas.bmc.checking.vo.CheckResult;
 import com.ai.baas.bmc.checking.vo.ScanCriteria;
@@ -44,6 +45,7 @@ public class CheckDriver {
 
         HBaseUtil.init(config);
         DBUtil.init(config);
+        MDSUtil.init(config);
         // 两张HBase表中的查询条件
         ScanCriteria.initClause(config);
         interval = Long.parseLong(config.getProperty("checker.interval", "10")) * 60 * 1000L;

@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.checking.vo;
 
 import com.ai.baas.bmc.checking.util.DBUtil;
+import com.ai.baas.bmc.checking.util.MDSUtil;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,15 +30,16 @@ public class CheckResult {
     public void doReportCheckResult() throws SQLException {
         auditState = "Y";
         if (isLost) {
-            // save to kafka
-
-            //Save to Mysql
+            for (RecordItem recordItem : recordItems) {
+                MDSUtil.sendMessage(recordItem.getDetail());
+            }
             auditResult = "Failed";
         } else {
-            auditMessage = "";
+            auditMessage = "Audit Success";
             auditResult = "Success!";
         }
 
+        //Save to Mysql
         DBUtil.updateBatchCheckResult(this);
     }
 

@@ -3,4 +3,5 @@ dependencies {
     compile 'com.zaxxer:HikariCP:2.4.3'
     compile 'org.apache.hbase:hbase-client:1.2.0'
     compile 'mysql:mysql-connector-java:5.1.38'
+    compile 'com.ai:paas-mds-ex-auth:1.2.2-SNAPSHOT'
 }
