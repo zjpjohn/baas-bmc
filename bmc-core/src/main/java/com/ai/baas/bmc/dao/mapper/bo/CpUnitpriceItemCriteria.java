@@ -375,6 +375,66 @@ public class CpUnitpriceItemCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andUnitTypeValueIsNull() {
+            addCriterion("UNIT_TYPE_VALUE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueIsNotNull() {
+            addCriterion("UNIT_TYPE_VALUE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueEqualTo(Double value) {
+            addCriterion("UNIT_TYPE_VALUE =", value, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueNotEqualTo(Double value) {
+            addCriterion("UNIT_TYPE_VALUE <>", value, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueGreaterThan(Double value) {
+            addCriterion("UNIT_TYPE_VALUE >", value, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueGreaterThanOrEqualTo(Double value) {
+            addCriterion("UNIT_TYPE_VALUE >=", value, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueLessThan(Double value) {
+            addCriterion("UNIT_TYPE_VALUE <", value, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueLessThanOrEqualTo(Double value) {
+            addCriterion("UNIT_TYPE_VALUE <=", value, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueIn(List<Double> values) {
+            addCriterion("UNIT_TYPE_VALUE in", values, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueNotIn(List<Double> values) {
+            addCriterion("UNIT_TYPE_VALUE not in", values, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueBetween(Double value1, Double value2) {
+            addCriterion("UNIT_TYPE_VALUE between", value1, value2, "unitTypeValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitTypeValueNotBetween(Double value1, Double value2) {
+            addCriterion("UNIT_TYPE_VALUE not between", value1, value2, "unitTypeValue");
+            return (Criteria) this;
+        }
+
         public Criteria andUnitTypeIsNull() {
             addCriterion("UNIT_TYPE is null");
             return (Criteria) this;

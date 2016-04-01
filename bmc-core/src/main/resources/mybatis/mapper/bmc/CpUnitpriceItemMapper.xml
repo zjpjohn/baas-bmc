@@ -6,6 +6,7 @@
     <result column="FEE_ITEM_CODE" property="feeItemCode" jdbcType="VARCHAR" />
     <result column="FEE_TYPE" property="feeType" jdbcType="INTEGER" />
     <result column="PRICE_VALUE" property="priceValue" jdbcType="DOUBLE" />
+    <result column="UNIT_TYPE_VALUE" property="unitTypeValue" jdbcType="DOUBLE" />
     <result column="UNIT_TYPE" property="unitType" jdbcType="VARCHAR" />
     <result column="SUBJECT_CODE" property="subjectCode" jdbcType="VARCHAR" />
     <result column="ACTIVE_TIME" property="activeTime" jdbcType="TIMESTAMP" />
@@ -72,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    UNIT_ITEM_ID, FEE_ITEM_CODE, FEE_TYPE, PRICE_VALUE, UNIT_TYPE, SUBJECT_CODE, ACTIVE_TIME, 
-    INACTIVE_TIME, ITEM_EXT_CODE, comments
+    UNIT_ITEM_ID, FEE_ITEM_CODE, FEE_TYPE, PRICE_VALUE, UNIT_TYPE_VALUE, UNIT_TYPE, SUBJECT_CODE, 
+    ACTIVE_TIME, INACTIVE_TIME, ITEM_EXT_CODE, comments
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria" >
     select
@@ -110,13 +111,13 @@
   </delete>
   <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem" >
     insert into cp_unitprice_item (UNIT_ITEM_ID, FEE_ITEM_CODE, FEE_TYPE, 
-      PRICE_VALUE, UNIT_TYPE, SUBJECT_CODE, 
-      ACTIVE_TIME, INACTIVE_TIME, ITEM_EXT_CODE, 
-      comments)
+      PRICE_VALUE, UNIT_TYPE_VALUE, UNIT_TYPE, 
+      SUBJECT_CODE, ACTIVE_TIME, INACTIVE_TIME, 
+      ITEM_EXT_CODE, comments)
     values (#{unitItemId,jdbcType=INTEGER}, #{feeItemCode,jdbcType=VARCHAR}, #{feeType,jdbcType=INTEGER}, 
-      #{priceValue,jdbcType=DOUBLE}, #{unitType,jdbcType=VARCHAR}, #{subjectCode,jdbcType=VARCHAR}, 
-      #{activeTime,jdbcType=TIMESTAMP}, #{inactiveTime,jdbcType=TIMESTAMP}, #{itemExtCode,jdbcType=VARCHAR}, 
-      #{comments,jdbcType=VARCHAR})
+      #{priceValue,jdbcType=DOUBLE}, #{unitTypeValue,jdbcType=DOUBLE}, #{unitType,jdbcType=VARCHAR}, 
+      #{subjectCode,jdbcType=VARCHAR}, #{activeTime,jdbcType=TIMESTAMP}, #{inactiveTime,jdbcType=TIMESTAMP}, 
+      #{itemExtCode,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem" >
     insert into cp_unitprice_item
@@ -132,6 +133,9 @@
       </if>
       <if test="priceValue != null" >
         PRICE_VALUE,
+      </if>
+      <if test="unitTypeValue != null" >
+        UNIT_TYPE_VALUE,
       </if>
       <if test="unitType != null" >
         UNIT_TYPE,
@@ -164,6 +168,9 @@
       </if>
       <if test="priceValue != null" >
         #{priceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="unitTypeValue != null" >
+        #{unitTypeValue,jdbcType=DOUBLE},
       </if>
       <if test="unitType != null" >
         #{unitType,jdbcType=VARCHAR},
@@ -206,6 +213,9 @@
       <if test="record.priceValue != null" >
         PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
       </if>
+      <if test="record.unitTypeValue != null" >
+        UNIT_TYPE_VALUE = #{record.unitTypeValue,jdbcType=DOUBLE},
+      </if>
       <if test="record.unitType != null" >
         UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
       </if>
@@ -235,6 +245,7 @@
       FEE_ITEM_CODE = #{record.feeItemCode,jdbcType=VARCHAR},
       FEE_TYPE = #{record.feeType,jdbcType=INTEGER},
       PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
+      UNIT_TYPE_VALUE = #{record.unitTypeValue,jdbcType=DOUBLE},
       UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
       SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
       ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
@@ -256,6 +267,9 @@
       </if>
       <if test="priceValue != null" >
         PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="unitTypeValue != null" >
+        UNIT_TYPE_VALUE = #{unitTypeValue,jdbcType=DOUBLE},
       </if>
       <if test="unitType != null" >
         UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
@@ -283,6 +297,7 @@
     set FEE_ITEM_CODE = #{feeItemCode,jdbcType=VARCHAR},
       FEE_TYPE = #{feeType,jdbcType=INTEGER},
       PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
+      UNIT_TYPE_VALUE = #{unitTypeValue,jdbcType=DOUBLE},
       UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
       SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
       ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP},

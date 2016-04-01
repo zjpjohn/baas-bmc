@@ -11,6 +11,8 @@ public class CpUnitpriceItem {
 
     private Double priceValue;
 
+    private Double unitTypeValue;
+
     private String unitType;
 
     private String subjectCode;
@@ -53,6 +55,14 @@ public class CpUnitpriceItem {
 
     public void setPriceValue(Double priceValue) {
         this.priceValue = priceValue;
+    }
+
+    public Double getUnitTypeValue() {
+        return unitTypeValue;
+    }
+
+    public void setUnitTypeValue(Double unitTypeValue) {
+        this.unitTypeValue = unitTypeValue;
     }
 
     public String getUnitType() {
