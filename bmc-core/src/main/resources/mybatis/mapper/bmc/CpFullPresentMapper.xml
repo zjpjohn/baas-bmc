@@ -1,38 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpFullPresentMapper">
-  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    <id column="PRESENT_ID" jdbcType="BIGINT" property="presentId" />
-    <result column="DETAIL_CODE" jdbcType="VARCHAR" property="detailCode" />
-    <result column="PRESENT_TYPE" jdbcType="VARCHAR" property="presentType" />
-    <result column="PRESENT_AMOUNT" jdbcType="DOUBLE" property="presentAmount" />
-    <result column="ACTIVE_TIME" jdbcType="DATE" property="activeTime" />
-    <result column="INACTIVE_TIME" jdbcType="DATE" property="inactiveTime" />
-    <result column="PRODUCT_IDS" jdbcType="VARCHAR" property="productIds" />
-    <result column="PRODUCT_GIFT_IDS" jdbcType="VARCHAR" property="productGiftIds" />
-    <result column="PRESENT_CODE" jdbcType="VARCHAR" property="presentCode" />
-    <result column="REACH_AMOUNT" jdbcType="DOUBLE" property="reachAmount" />
-    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpFullPresentMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent" >
+    <id column="PRESENT_ID" property="presentId" jdbcType="BIGINT" />
+    <result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    <result column="PRESENT_TYPE" property="presentType" jdbcType="VARCHAR" />
+    <result column="PRESENT_AMOUNT" property="presentAmount" jdbcType="DOUBLE" />
+    <result column="ACTIVE_TIME" property="activeTime" jdbcType="DATE" />
+    <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="DATE" />
+    <result column="PRODUCT_IDS" property="productIds" jdbcType="VARCHAR" />
+    <result column="PRODUCT_GIFT_IDS" property="productGiftIds" jdbcType="VARCHAR" />
+    <result column="PRESENT_CODE" property="presentCode" jdbcType="VARCHAR" />
+    <result column="REACH_AMOUNT" property="reachAmount" jdbcType="DOUBLE" />
+    <result column="UNIT" property="unit" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -43,25 +43,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -72,45 +72,45 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
     PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE, REACH_AMOUNT, UNIT
   </sql>
-  <select id="selectByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
     from cp_full_present
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    <if test="limitStart != null and limitStart&gt;=0">
+    <if test="limitStart != null and limitStart>=0" >
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Long" >
     select 
     <include refid="Base_Column_List" />
     from cp_full_present
     where PRESENT_ID = #{presentId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="Long">
+  <delete id="deleteByPrimaryKey" parameterType="Long" >
     delete from cp_full_present
     where PRESENT_ID = #{presentId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria">
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" >
     delete from cp_full_present
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent" >
     insert into cp_full_present (PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, 
       PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
       PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE, 
@@ -120,127 +120,127 @@
       #{productIds,jdbcType=VARCHAR}, #{productGiftIds,jdbcType=VARCHAR}, #{presentCode,jdbcType=VARCHAR}, 
       #{reachAmount,jdbcType=DOUBLE}, #{unit,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent" >
     insert into cp_full_present
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="presentId != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="presentId != null" >
         PRESENT_ID,
       </if>
-      <if test="detailCode != null">
+      <if test="detailCode != null" >
         DETAIL_CODE,
       </if>
-      <if test="presentType != null">
+      <if test="presentType != null" >
         PRESENT_TYPE,
       </if>
-      <if test="presentAmount != null">
+      <if test="presentAmount != null" >
         PRESENT_AMOUNT,
       </if>
-      <if test="activeTime != null">
+      <if test="activeTime != null" >
         ACTIVE_TIME,
       </if>
-      <if test="inactiveTime != null">
+      <if test="inactiveTime != null" >
         INACTIVE_TIME,
       </if>
-      <if test="productIds != null">
+      <if test="productIds != null" >
         PRODUCT_IDS,
       </if>
-      <if test="productGiftIds != null">
+      <if test="productGiftIds != null" >
         PRODUCT_GIFT_IDS,
       </if>
-      <if test="presentCode != null">
+      <if test="presentCode != null" >
         PRESENT_CODE,
       </if>
-      <if test="reachAmount != null">
+      <if test="reachAmount != null" >
         REACH_AMOUNT,
       </if>
-      <if test="unit != null">
+      <if test="unit != null" >
         UNIT,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="presentId != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="presentId != null" >
         #{presentId,jdbcType=BIGINT},
       </if>
-      <if test="detailCode != null">
+      <if test="detailCode != null" >
         #{detailCode,jdbcType=VARCHAR},
       </if>
-      <if test="presentType != null">
+      <if test="presentType != null" >
         #{presentType,jdbcType=VARCHAR},
       </if>
-      <if test="presentAmount != null">
+      <if test="presentAmount != null" >
         #{presentAmount,jdbcType=DOUBLE},
       </if>
-      <if test="activeTime != null">
+      <if test="activeTime != null" >
         #{activeTime,jdbcType=DATE},
       </if>
-      <if test="inactiveTime != null">
+      <if test="inactiveTime != null" >
         #{inactiveTime,jdbcType=DATE},
       </if>
-      <if test="productIds != null">
+      <if test="productIds != null" >
         #{productIds,jdbcType=VARCHAR},
       </if>
-      <if test="productGiftIds != null">
+      <if test="productGiftIds != null" >
         #{productGiftIds,jdbcType=VARCHAR},
       </if>
-      <if test="presentCode != null">
+      <if test="presentCode != null" >
         #{presentCode,jdbcType=VARCHAR},
       </if>
-      <if test="reachAmount != null">
+      <if test="reachAmount != null" >
         #{reachAmount,jdbcType=DOUBLE},
       </if>
-      <if test="unit != null">
+      <if test="unit != null" >
         #{unit,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" resultType="java.lang.Integer" >
     select count(*) from cp_full_present
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update cp_full_present
-    <set>
-      <if test="record.presentId != null">
+    <set >
+      <if test="record.presentId != null" >
         PRESENT_ID = #{record.presentId,jdbcType=BIGINT},
       </if>
-      <if test="record.detailCode != null">
+      <if test="record.detailCode != null" >
         DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.presentType != null">
+      <if test="record.presentType != null" >
         PRESENT_TYPE = #{record.presentType,jdbcType=VARCHAR},
       </if>
-      <if test="record.presentAmount != null">
+      <if test="record.presentAmount != null" >
         PRESENT_AMOUNT = #{record.presentAmount,jdbcType=DOUBLE},
       </if>
-      <if test="record.activeTime != null">
+      <if test="record.activeTime != null" >
         ACTIVE_TIME = #{record.activeTime,jdbcType=DATE},
       </if>
-      <if test="record.inactiveTime != null">
+      <if test="record.inactiveTime != null" >
         INACTIVE_TIME = #{record.inactiveTime,jdbcType=DATE},
       </if>
-      <if test="record.productIds != null">
+      <if test="record.productIds != null" >
         PRODUCT_IDS = #{record.productIds,jdbcType=VARCHAR},
       </if>
-      <if test="record.productGiftIds != null">
+      <if test="record.productGiftIds != null" >
         PRODUCT_GIFT_IDS = #{record.productGiftIds,jdbcType=VARCHAR},
       </if>
-      <if test="record.presentCode != null">
+      <if test="record.presentCode != null" >
         PRESENT_CODE = #{record.presentCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.reachAmount != null">
+      <if test="record.reachAmount != null" >
         REACH_AMOUNT = #{record.reachAmount,jdbcType=DOUBLE},
       </if>
-      <if test="record.unit != null">
+      <if test="record.unit != null" >
         UNIT = #{record.unit,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update cp_full_present
     set PRESENT_ID = #{record.presentId,jdbcType=BIGINT},
       DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
@@ -253,47 +253,47 @@
       PRESENT_CODE = #{record.presentCode,jdbcType=VARCHAR},
       REACH_AMOUNT = #{record.reachAmount,jdbcType=DOUBLE},
       UNIT = #{record.unit,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent" >
     update cp_full_present
-    <set>
-      <if test="detailCode != null">
+    <set >
+      <if test="detailCode != null" >
         DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
       </if>
-      <if test="presentType != null">
+      <if test="presentType != null" >
         PRESENT_TYPE = #{presentType,jdbcType=VARCHAR},
       </if>
-      <if test="presentAmount != null">
+      <if test="presentAmount != null" >
         PRESENT_AMOUNT = #{presentAmount,jdbcType=DOUBLE},
       </if>
-      <if test="activeTime != null">
+      <if test="activeTime != null" >
         ACTIVE_TIME = #{activeTime,jdbcType=DATE},
       </if>
-      <if test="inactiveTime != null">
+      <if test="inactiveTime != null" >
         INACTIVE_TIME = #{inactiveTime,jdbcType=DATE},
       </if>
-      <if test="productIds != null">
+      <if test="productIds != null" >
         PRODUCT_IDS = #{productIds,jdbcType=VARCHAR},
       </if>
-      <if test="productGiftIds != null">
+      <if test="productGiftIds != null" >
         PRODUCT_GIFT_IDS = #{productGiftIds,jdbcType=VARCHAR},
       </if>
-      <if test="presentCode != null">
+      <if test="presentCode != null" >
         PRESENT_CODE = #{presentCode,jdbcType=VARCHAR},
       </if>
-      <if test="reachAmount != null">
+      <if test="reachAmount != null" >
         REACH_AMOUNT = #{reachAmount,jdbcType=DOUBLE},
       </if>
-      <if test="unit != null">
+      <if test="unit != null" >
         UNIT = #{unit,jdbcType=VARCHAR},
       </if>
     </set>
     where PRESENT_ID = #{presentId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent" >
     update cp_full_present
     set DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
       PRESENT_TYPE = #{presentType,jdbcType=VARCHAR},
@@ -305,541 +305,6 @@
       PRESENT_CODE = #{presentCode,jdbcType=VARCHAR},
       REACH_AMOUNT = #{reachAmount,jdbcType=DOUBLE},
       UNIT = #{unit,jdbcType=VARCHAR}
-    where PRESENT_ID = #{presentId,jdbcType=BIGINT}
-  </update>
-  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    <id column="PRESENT_ID" jdbcType="BIGINT" property="presentId" />
-    <result column="DETAIL_CODE" jdbcType="VARCHAR" property="detailCode" />
-    <result column="PRESENT_TYPE" jdbcType="VARCHAR" property="presentType" />
-    <result column="PRESENT_AMOUNT" jdbcType="DOUBLE" property="presentAmount" />
-    <result column="ACTIVE_TIME" jdbcType="DATE" property="activeTime" />
-    <result column="INACTIVE_TIME" jdbcType="DATE" property="inactiveTime" />
-    <result column="PRODUCT_IDS" jdbcType="VARCHAR" property="productIds" />
-    <result column="PRODUCT_GIFT_IDS" jdbcType="VARCHAR" property="productGiftIds" />
-    <result column="PRESENT_CODE" jdbcType="VARCHAR" property="presentCode" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
-    PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE
-  </sql>
-  <select id="selectByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'false' as QUERYID,
-    <include refid="Base_Column_List" />
-    from cp_full_present
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="limitStart != null and limitStart&gt;=0">
-      limit #{limitStart} , #{limitEnd}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cp_full_present
-    where PRESENT_ID = #{presentId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="Long">
-    delete from cp_full_present
-    where PRESENT_ID = #{presentId,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria">
-    delete from cp_full_present
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    insert into cp_full_present (PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, 
-      PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
-      PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE
-      )
-    values (#{presentId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{presentType,jdbcType=VARCHAR}, 
-      #{presentAmount,jdbcType=DOUBLE}, #{activeTime,jdbcType=DATE}, #{inactiveTime,jdbcType=DATE}, 
-      #{productIds,jdbcType=VARCHAR}, #{productGiftIds,jdbcType=VARCHAR}, #{presentCode,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    insert into cp_full_present
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="presentId != null">
-        PRESENT_ID,
-      </if>
-      <if test="detailCode != null">
-        DETAIL_CODE,
-      </if>
-      <if test="presentType != null">
-        PRESENT_TYPE,
-      </if>
-      <if test="presentAmount != null">
-        PRESENT_AMOUNT,
-      </if>
-      <if test="activeTime != null">
-        ACTIVE_TIME,
-      </if>
-      <if test="inactiveTime != null">
-        INACTIVE_TIME,
-      </if>
-      <if test="productIds != null">
-        PRODUCT_IDS,
-      </if>
-      <if test="productGiftIds != null">
-        PRODUCT_GIFT_IDS,
-      </if>
-      <if test="presentCode != null">
-        PRESENT_CODE,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="presentId != null">
-        #{presentId,jdbcType=BIGINT},
-      </if>
-      <if test="detailCode != null">
-        #{detailCode,jdbcType=VARCHAR},
-      </if>
-      <if test="presentType != null">
-        #{presentType,jdbcType=VARCHAR},
-      </if>
-      <if test="presentAmount != null">
-        #{presentAmount,jdbcType=DOUBLE},
-      </if>
-      <if test="activeTime != null">
-        #{activeTime,jdbcType=DATE},
-      </if>
-      <if test="inactiveTime != null">
-        #{inactiveTime,jdbcType=DATE},
-      </if>
-      <if test="productIds != null">
-        #{productIds,jdbcType=VARCHAR},
-      </if>
-      <if test="productGiftIds != null">
-        #{productGiftIds,jdbcType=VARCHAR},
-      </if>
-      <if test="presentCode != null">
-        #{presentCode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" resultType="java.lang.Integer">
-    select count(*) from cp_full_present
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update cp_full_present
-    <set>
-      <if test="record.presentId != null">
-        PRESENT_ID = #{record.presentId,jdbcType=BIGINT},
-      </if>
-      <if test="record.detailCode != null">
-        DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.presentType != null">
-        PRESENT_TYPE = #{record.presentType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.presentAmount != null">
-        PRESENT_AMOUNT = #{record.presentAmount,jdbcType=DOUBLE},
-      </if>
-      <if test="record.activeTime != null">
-        ACTIVE_TIME = #{record.activeTime,jdbcType=DATE},
-      </if>
-      <if test="record.inactiveTime != null">
-        INACTIVE_TIME = #{record.inactiveTime,jdbcType=DATE},
-      </if>
-      <if test="record.productIds != null">
-        PRODUCT_IDS = #{record.productIds,jdbcType=VARCHAR},
-      </if>
-      <if test="record.productGiftIds != null">
-        PRODUCT_GIFT_IDS = #{record.productGiftIds,jdbcType=VARCHAR},
-      </if>
-      <if test="record.presentCode != null">
-        PRESENT_CODE = #{record.presentCode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update cp_full_present
-    set PRESENT_ID = #{record.presentId,jdbcType=BIGINT},
-      DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
-      PRESENT_TYPE = #{record.presentType,jdbcType=VARCHAR},
-      PRESENT_AMOUNT = #{record.presentAmount,jdbcType=DOUBLE},
-      ACTIVE_TIME = #{record.activeTime,jdbcType=DATE},
-      INACTIVE_TIME = #{record.inactiveTime,jdbcType=DATE},
-      PRODUCT_IDS = #{record.productIds,jdbcType=VARCHAR},
-      PRODUCT_GIFT_IDS = #{record.productGiftIds,jdbcType=VARCHAR},
-      PRESENT_CODE = #{record.presentCode,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    update cp_full_present
-    <set>
-      <if test="detailCode != null">
-        DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
-      </if>
-      <if test="presentType != null">
-        PRESENT_TYPE = #{presentType,jdbcType=VARCHAR},
-      </if>
-      <if test="presentAmount != null">
-        PRESENT_AMOUNT = #{presentAmount,jdbcType=DOUBLE},
-      </if>
-      <if test="activeTime != null">
-        ACTIVE_TIME = #{activeTime,jdbcType=DATE},
-      </if>
-      <if test="inactiveTime != null">
-        INACTIVE_TIME = #{inactiveTime,jdbcType=DATE},
-      </if>
-      <if test="productIds != null">
-        PRODUCT_IDS = #{productIds,jdbcType=VARCHAR},
-      </if>
-      <if test="productGiftIds != null">
-        PRODUCT_GIFT_IDS = #{productGiftIds,jdbcType=VARCHAR},
-      </if>
-      <if test="presentCode != null">
-        PRESENT_CODE = #{presentCode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where PRESENT_ID = #{presentId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    update cp_full_present
-    set DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
-      PRESENT_TYPE = #{presentType,jdbcType=VARCHAR},
-      PRESENT_AMOUNT = #{presentAmount,jdbcType=DOUBLE},
-      ACTIVE_TIME = #{activeTime,jdbcType=DATE},
-      INACTIVE_TIME = #{inactiveTime,jdbcType=DATE},
-      PRODUCT_IDS = #{productIds,jdbcType=VARCHAR},
-      PRODUCT_GIFT_IDS = #{productGiftIds,jdbcType=VARCHAR},
-      PRESENT_CODE = #{presentCode,jdbcType=VARCHAR}
-    where PRESENT_ID = #{presentId,jdbcType=BIGINT}
-  </update>
-  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    <id column="PRESENT_ID" jdbcType="BIGINT" property="presentId" />
-    <result column="DETAIL_CODE" jdbcType="VARCHAR" property="detailCode" />
-    <result column="PRESENT_TYPE" jdbcType="VARCHAR" property="presentType" />
-    <result column="PRESENT_AMOUNT" jdbcType="DOUBLE" property="presentAmount" />
-    <result column="ACTIVE_TIME" jdbcType="DATE" property="activeTime" />
-    <result column="INACTIVE_TIME" jdbcType="DATE" property="inactiveTime" />
-    <result column="PRODUCT_IDS" jdbcType="VARCHAR" property="productIds" />
-    <result column="PRODUCT_GIFT_IDS" jdbcType="VARCHAR" property="productGiftIds" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
-    PRODUCT_IDS, PRODUCT_GIFT_IDS
-  </sql>
-  <select id="selectByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'false' as QUERYID,
-    <include refid="Base_Column_List" />
-    from cp_full_present
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="limitStart != null and limitStart&gt;=0">
-      limit #{limitStart} , #{limitEnd}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cp_full_present
-    where PRESENT_ID = #{presentId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="Long">
-    delete from cp_full_present
-    where PRESENT_ID = #{presentId,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria">
-    delete from cp_full_present
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    insert into cp_full_present (PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, 
-      PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
-      PRODUCT_IDS, PRODUCT_GIFT_IDS)
-    values (#{presentId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{presentType,jdbcType=VARCHAR}, 
-      #{presentAmount,jdbcType=DOUBLE}, #{activeTime,jdbcType=DATE}, #{inactiveTime,jdbcType=DATE}, 
-      #{productIds,jdbcType=VARCHAR}, #{productGiftIds,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    insert into cp_full_present
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="presentId != null">
-        PRESENT_ID,
-      </if>
-      <if test="detailCode != null">
-        DETAIL_CODE,
-      </if>
-      <if test="presentType != null">
-        PRESENT_TYPE,
-      </if>
-      <if test="presentAmount != null">
-        PRESENT_AMOUNT,
-      </if>
-      <if test="activeTime != null">
-        ACTIVE_TIME,
-      </if>
-      <if test="inactiveTime != null">
-        INACTIVE_TIME,
-      </if>
-      <if test="productIds != null">
-        PRODUCT_IDS,
-      </if>
-      <if test="productGiftIds != null">
-        PRODUCT_GIFT_IDS,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="presentId != null">
-        #{presentId,jdbcType=BIGINT},
-      </if>
-      <if test="detailCode != null">
-        #{detailCode,jdbcType=VARCHAR},
-      </if>
-      <if test="presentType != null">
-        #{presentType,jdbcType=VARCHAR},
-      </if>
-      <if test="presentAmount != null">
-        #{presentAmount,jdbcType=DOUBLE},
-      </if>
-      <if test="activeTime != null">
-        #{activeTime,jdbcType=DATE},
-      </if>
-      <if test="inactiveTime != null">
-        #{inactiveTime,jdbcType=DATE},
-      </if>
-      <if test="productIds != null">
-        #{productIds,jdbcType=VARCHAR},
-      </if>
-      <if test="productGiftIds != null">
-        #{productGiftIds,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" resultType="java.lang.Integer">
-    select count(*) from cp_full_present
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update cp_full_present
-    <set>
-      <if test="record.presentId != null">
-        PRESENT_ID = #{record.presentId,jdbcType=BIGINT},
-      </if>
-      <if test="record.detailCode != null">
-        DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.presentType != null">
-        PRESENT_TYPE = #{record.presentType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.presentAmount != null">
-        PRESENT_AMOUNT = #{record.presentAmount,jdbcType=DOUBLE},
-      </if>
-      <if test="record.activeTime != null">
-        ACTIVE_TIME = #{record.activeTime,jdbcType=DATE},
-      </if>
-      <if test="record.inactiveTime != null">
-        INACTIVE_TIME = #{record.inactiveTime,jdbcType=DATE},
-      </if>
-      <if test="record.productIds != null">
-        PRODUCT_IDS = #{record.productIds,jdbcType=VARCHAR},
-      </if>
-      <if test="record.productGiftIds != null">
-        PRODUCT_GIFT_IDS = #{record.productGiftIds,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update cp_full_present
-    set PRESENT_ID = #{record.presentId,jdbcType=BIGINT},
-      DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
-      PRESENT_TYPE = #{record.presentType,jdbcType=VARCHAR},
-      PRESENT_AMOUNT = #{record.presentAmount,jdbcType=DOUBLE},
-      ACTIVE_TIME = #{record.activeTime,jdbcType=DATE},
-      INACTIVE_TIME = #{record.inactiveTime,jdbcType=DATE},
-      PRODUCT_IDS = #{record.productIds,jdbcType=VARCHAR},
-      PRODUCT_GIFT_IDS = #{record.productGiftIds,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    update cp_full_present
-    <set>
-      <if test="detailCode != null">
-        DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
-      </if>
-      <if test="presentType != null">
-        PRESENT_TYPE = #{presentType,jdbcType=VARCHAR},
-      </if>
-      <if test="presentAmount != null">
-        PRESENT_AMOUNT = #{presentAmount,jdbcType=DOUBLE},
-      </if>
-      <if test="activeTime != null">
-        ACTIVE_TIME = #{activeTime,jdbcType=DATE},
-      </if>
-      <if test="inactiveTime != null">
-        INACTIVE_TIME = #{inactiveTime,jdbcType=DATE},
-      </if>
-      <if test="productIds != null">
-        PRODUCT_IDS = #{productIds,jdbcType=VARCHAR},
-      </if>
-      <if test="productGiftIds != null">
-        PRODUCT_GIFT_IDS = #{productGiftIds,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where PRESENT_ID = #{presentId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent">
-    update cp_full_present
-    set DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
-      PRESENT_TYPE = #{presentType,jdbcType=VARCHAR},
-      PRESENT_AMOUNT = #{presentAmount,jdbcType=DOUBLE},
-      ACTIVE_TIME = #{activeTime,jdbcType=DATE},
-      INACTIVE_TIME = #{inactiveTime,jdbcType=DATE},
-      PRODUCT_IDS = #{productIds,jdbcType=VARCHAR},
-      PRODUCT_GIFT_IDS = #{productGiftIds,jdbcType=VARCHAR}
     where PRESENT_ID = #{presentId,jdbcType=BIGINT}
   </update>
 </mapper>

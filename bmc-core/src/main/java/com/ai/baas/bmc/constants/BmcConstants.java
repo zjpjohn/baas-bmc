@@ -34,6 +34,11 @@ public final class BmcConstants {
             public static final String ALL = "all";
         }
 
-   
+        public static final class CacheNS{
+        	private CacheNS(){
+        		
+        	}
+        	public static final String CACHENS_PROFERENTIALPRODUCT="com.ai.baas.bmc.proferentialprocuct";
+        }
 
 }
