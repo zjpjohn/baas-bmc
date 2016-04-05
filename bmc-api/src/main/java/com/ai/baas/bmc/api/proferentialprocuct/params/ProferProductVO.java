@@ -86,7 +86,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 赠品类型
 	 */
-	private String giftType;
+	private List<String> giftType;
 	/**
 	 * 赠品数量
 	 */
@@ -176,13 +176,14 @@ public class ProferProductVO extends BaseInfo {
 	public void setProductList(List<Integer> productList) {
 		this.productList = productList;
 	}
-	public String getGiftType() {
+	
+	
+	public List<String> getGiftType() {
 		return giftType;
 	}
-	public void setGiftType(String giftType) {
+	public void setGiftType(List<String> giftType) {
 		this.giftType = giftType;
 	}
-	
 	public double getGitfAmount() {
 		return gitfAmount;
 	}

@@ -75,8 +75,9 @@ public final class BmcSeqUtil {
      * @ApiDocMethod
      * @ApiCode
      */
-    public static Long getPresentCode(){
-    	return SeqUtil.getNewId(SEQ.PRESENT_CODE_SEQ);
+    public static String getPresentCode(){
+    	 Long seq = SeqUtil.getNewId(SEQ.PRESENT_CODE_SEQ);
+         return StringUtil.toString(seq);
     }
     
 }
