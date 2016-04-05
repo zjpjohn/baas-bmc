@@ -23,6 +23,10 @@ public class CpPriceInfo {
 
     private String productType;
 
+    private String activeStatus;
+
+    private String status;
+
     public Long getPriceInfoId() {
         return priceInfoId;
     }
@@ -101,5 +105,21 @@ public class CpPriceInfo {
 
     public void setProductType(String productType) {
         this.productType = productType == null ? null : productType.trim();
+    }
+
+    public String getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(String activeStatus) {
+        this.activeStatus = activeStatus == null ? null : activeStatus.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 }
