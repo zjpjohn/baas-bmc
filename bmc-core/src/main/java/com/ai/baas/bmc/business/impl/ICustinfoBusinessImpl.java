@@ -102,7 +102,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		}    
 	        
 		blCustinfo.setTenantId(custInfo.getTenantId());
-		custobject.put("TENANTA_ID", custInfo.getTenantId());
+		custobject.put("TENANT_ID", custInfo.getTenantId());
 		
 		blCustinfo.setExtCustId(custInfo.getExtCustId());
 		custobject.put("EXT_CUST_ID", custInfo.getExtCustId());
