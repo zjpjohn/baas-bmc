@@ -3,7 +3,6 @@ package com.ai.baas.bmc.api.orderinfo.params;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
@@ -46,7 +45,7 @@ public class OrderInfoParams extends BaseInfo {
      * VARCHAR(32)
      */
     @NotNull(message="订购类型不能为空",groups={IOrderInfoSV.OrderInfo.class})
-    @Pattern(regexp="^(Test|Normal)$",message="取值范围：Test:测试；Normal：正式",groups={IOrderInfoSV.OrderInfo.class})
+//    @Pattern(regexp="^(Test|Normal)$",message="取值范围：Test:测试；Normal：正式",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=32,groups={IOrderInfoSV.OrderInfo.class})
     private String usetype;
 
@@ -55,7 +54,7 @@ public class OrderInfoParams extends BaseInfo {
      * 取值范围：Normal：正常；Stop：停机；Cancel：销户<br>
      * VARCHAR(32)
      */
-    @Pattern(regexp="^(Normal|Stop|Cancel)$",message="取值范围：Normal：正常；Stop：停机；Cancel：销户",groups={IOrderInfoSV.OrderInfo.class})
+//    @Pattern(regexp="^(Normal|Stop|Cancel)$",message="取值范围：Normal：正常；Stop：停机；Cancel：销户",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=32,groups={IOrderInfoSV.OrderInfo.class})
     private String state;
 
@@ -89,7 +88,7 @@ public class OrderInfoParams extends BaseInfo {
      * 以0开头的地区号<br>
      * VARCHAR(6)
      */
-    @Pattern(regexp="^0.*$",message="以0开头的地区号",groups={IOrderInfoSV.OrderInfo.class})
+//    @Pattern(regexp="^0.*$",message="以0开头的地区号",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=6,groups={IOrderInfoSV.OrderInfo.class})
     private String cityCode;
 

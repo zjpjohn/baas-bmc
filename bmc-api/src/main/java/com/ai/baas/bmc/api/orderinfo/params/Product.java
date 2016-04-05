@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
@@ -44,7 +43,7 @@ public class Product implements Serializable {
      * VARCHAR(1)
      */
     @NotNull(message="赠送标识不能为空",groups={IOrderInfoSV.OrderInfo.class})
-    @Pattern(regexp="^[Y|N]$",message="取值范围：Y：是赠送；N：不是赠送",groups={IOrderInfoSV.OrderInfo.class})
+//    @Pattern(regexp="^[Y|N]$",message="取值范围：Y：是赠送；N：不是赠送",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=1,groups={IOrderInfoSV.OrderInfo.class})
     private String resBonusFlag;
 

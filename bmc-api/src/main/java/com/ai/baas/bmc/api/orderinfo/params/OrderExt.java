@@ -3,7 +3,6 @@ package com.ai.baas.bmc.api.orderinfo.params;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
@@ -44,7 +43,7 @@ public class OrderExt implements Serializable {
      * VARCHAR(1)
      */
     @NotNull(message="更新标识不能为空",groups={IOrderInfoSV.OrderInfo.class})
-    @Pattern(regexp="^[DUN]$",message="取值范围：D：删除，U：更新，N：新增",groups={IOrderInfoSV.OrderInfo.class})
+//    @Pattern(regexp="^[DUN]$",message="取值范围：D：删除，U：更新，N：新增",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=1,groups={IOrderInfoSV.OrderInfo.class})
     private String updateFlag;
 
