@@ -34,7 +34,7 @@ public class IConfigCenterClientTest {
         String bmcRedisHost = "bmcRedisHost";
         // 缓存空间
         String cachesnsConfig = "{\"com.ai.baas.bmc.proferentialprocuct\":\"" + bmcRedisHost
-                //+ "\",\"com.ai.baas.bmc.proferentialprocuct\":\"" + bmcRedisHost
+                + "\",\"com.ai.runner.center.dshm.cache.calparam\":\"" + bmcRedisHost
                 
                  + "\"}";
         
