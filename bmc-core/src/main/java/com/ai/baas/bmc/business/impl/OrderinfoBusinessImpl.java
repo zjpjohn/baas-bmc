@@ -176,7 +176,12 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         json.put("user_type", aBluserinfo.getUserType());
         json.put("user_state", aBluserinfo.getUserState());
 //        DshmUtil.getIdshmSV().initDel(TableCon.BL_USERINFO, json.toString());
-        DshmUtil.getIdshmSV().initLoader("bl_userinfo", json.toString(),0);
+        // 如果subsId为空则认为需要插入，否则执行更新
+        if (StringUtil.isBlank(subsId)) {
+            DshmUtil.getIdshmSV().initLoader("bl_userinfo", json.toString(),1);
+        } else {
+            DshmUtil.getIdshmSV().initLoader("bl_userinfo", json.toString(),0);
+        }
         LoggerUtil.log.debug("刷新用户表共享内存：" + json.toString());
         // ^^^
         // ********************************
@@ -298,7 +303,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             json.put("tenant_id", aBlSubsComm.getTenantId());
             json.put("cust_id", aBlSubsComm.getCustId());
 //            DshmUtil.getIdshmSV().initdel(TableCon.BL_SUBS_COMM, json.toString());
-            DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),0);
+            DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),1);
             LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());
             // ^^meixie
             // ********************************
@@ -413,7 +418,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         json.put("create_time", aBlAcctInfo.getCreateTime());
         json.put("comments", aBlAcctInfo.getComments());
 //        DshmUtil.getIdshmSV().initdel(TableCon.BL_ACCT_INFO, json.toString());
-        DshmUtil.getIdshmSV().initLoader("bl_acct_info", json.toString(),0);
+        DshmUtil.getIdshmSV().initLoader("bl_acct_info", json.toString(),1);
         LoggerUtil.log.debug("刷新账户表共享内存：" + json.toString());
         // ^^^
         // ********************************

@@ -168,7 +168,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		aBlCustinfoMapper.insert(blCustinfo);
 		
 //		DshmUtil.getIdshmSV().initdel("bl_custinfo", custobject.toString());
-        DshmUtil.getIdshmSV().initLoader("bl_custinfo", custobject.toString(),0);
+        DshmUtil.getIdshmSV().initLoader("bl_custinfo", custobject.toString(),1);
 		
 	}
 	private void writeBlCustinfoExt(String custId, ExtInfo extInfo) {
