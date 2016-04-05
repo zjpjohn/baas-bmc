@@ -3,6 +3,7 @@ package com.ai.baas.bmc.api.priceinfo.params;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.ai.baas.bmc.api.billQuery.interfaces.IBillQuerySV;
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.opt.base.vo.BaseInfo;
 import com.ai.opt.base.vo.PageInfo;
@@ -23,15 +24,15 @@ public class QueryInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message="消息流水不能为空",groups={IPriceInfoSV.GetPriceInfo.class})
-    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+    @NotNull(message="消息流水不能为空",groups={IBillQuerySV.GetBillInfo.class})
+    @Size(max=32,groups={IBillQuerySV.GetBillInfo.class})
     private String tradeSeq;
     
     /**
      * 标准资费ID
      * VARCHAR(32)
      */
-    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+    @Size(max=32,groups={IBillQuerySV.GetBillInfo.class})
     private String standardId;
     
     /**
@@ -58,13 +59,13 @@ public class QueryInfoParams extends BaseInfo {
     /**
      * 请求查询的页码
      */
-    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+    //@Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private Integer pageNo;
     
     /**
      * 每页显示条数
      */
-    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+    //@Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private Integer pageSize;
     
     public Integer getPageNo() {

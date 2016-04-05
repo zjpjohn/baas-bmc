@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.api.billQuery.params;
 
-public class ServiceId {
+import java.util.List;
 
+public class ServiceId {
+    private List<Bill> billList;
 }
