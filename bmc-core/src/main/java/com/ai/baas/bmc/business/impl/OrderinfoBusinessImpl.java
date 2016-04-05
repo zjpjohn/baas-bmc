@@ -19,9 +19,6 @@ import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
 import com.ai.baas.bmc.context.Context;
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.context.TableCon;
-import com.ai.baas.bmc.context.TableCon.ConBlAcctInfo;
-import com.ai.baas.bmc.context.TableCon.ConBlSubsComm;
-import com.ai.baas.bmc.context.TableCon.ConBlUserinfo;
 import com.ai.baas.bmc.context.TableCon.ConTradeSeqLog;
 import com.ai.baas.bmc.dao.interfaces.BlAcctInfoMapper;
 import com.ai.baas.bmc.dao.interfaces.BlSubsCommMapper;
@@ -96,14 +93,14 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         String subsId = null;
         String acctId = null;
         Map<String, String> params = new TreeMap<String, String>();
-        params.put(ConBlUserinfo.CUST_ID, custId);
+        params.put("cust_id", custId);
         params.put("tenant_id", record.getTenantId());
-        List<Map<String, String>> result = DshmUtil.getClient().list(TableCon.BL_USERINFO)
+        List<Map<String, String>> result = DshmUtil.getClient().list("bl_userinfo")
                 .where(params).executeQuery(DshmUtil.getCacheClient());
-        if (!(result == null || result.isEmpty())) {
-            String temp[] = result.get(0).get(ConBlUserinfo.SUBS_ID).split("#");
+        if (!(result == null || result.isEmpty()||result.get(0).isEmpty())) {
+            String temp[] = result.get(0).get("subs_id").split("#");
             subsId = temp[temp.length - 1];
-            temp = result.get(0).get(ConBlUserinfo.ACCT_ID).split("#");
+            temp = result.get(0).get("acct_id").split("#");
             acctId = temp[temp.length - 1];
         }
         // *************判重end**********************
@@ -149,10 +146,10 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         if (StringUtil.isBlank(subsId)) {
             // subsId调用序列
             aBluserinfo.setSubsId(
-                    aISysSequenceSvc.terrigerSysSequence(ConBlUserinfo.SUBS_ID, 1).get(0));
+                    aISysSequenceSvc.terrigerSysSequence("SUBS_ID", 1).get(0));
             // acctId调用序列
             aBluserinfo.setAcctId(
-                    aISysSequenceSvc.terrigerSysSequence(ConBlUserinfo.ACCT_ID, 1).get(0));
+                    aISysSequenceSvc.terrigerSysSequence("ACCT_ID", 1).get(0));
             aBlUserinfoMapper.insertSelective(aBluserinfo);
         } else {
             aBluserinfo.setSubsId(subsId);
@@ -162,24 +159,24 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         // 刷新用户的内存表
         // ********************************
         JSONObject json = new JSONObject();
-        json.put(ConBlUserinfo.TENANT_ID, aBluserinfo.getTenantId());
-        json.put(ConBlUserinfo.SUBS_ID, aBluserinfo.getSubsId());
-        json.put(ConBlUserinfo.ACTIVE_TIME, aBluserinfo.getActiveTime());
-        json.put(ConBlUserinfo.CUST_ID, aBluserinfo.getCustId());
-        json.put(ConBlUserinfo.ACCT_ID, aBluserinfo.getAcctId());
-        json.put(ConBlUserinfo.SERVICE_ID, aBluserinfo.getServiceId());
-        json.put(ConBlUserinfo.DEAL_TIME, aBluserinfo.getDealTime());
-        json.put(ConBlUserinfo.PROVINCE_CODE, aBluserinfo.getProvinceCode());
-        json.put(ConBlUserinfo.CITY_CODE, aBluserinfo.getCityCode());
-        json.put(ConBlUserinfo.CHL_ID, aBluserinfo.getChlId());
-        json.put(ConBlUserinfo.DEV_ID, aBluserinfo.getDevId());
-        json.put(ConBlUserinfo.INACTIVE_TIME, aBluserinfo.getInactiveTime());
-        json.put(ConBlUserinfo.REMARK, aBluserinfo.getRemark());
-        json.put(ConBlUserinfo.SERV_TYPE, aBluserinfo.getServType());
-        json.put(ConBlUserinfo.USER_TYPE, aBluserinfo.getUserType());
-        json.put(ConBlUserinfo.USER_STATE, aBluserinfo.getUserState());
+        json.put("tenant_id", aBluserinfo.getTenantId());
+        json.put("subs_id", aBluserinfo.getSubsId());
+        json.put("active_time", aBluserinfo.getActiveTime());
+        json.put("cust_id", aBluserinfo.getCustId());
+        json.put("acct_id", aBluserinfo.getAcctId());
+        json.put("service_id", aBluserinfo.getServiceId());
+        json.put("deal_time", aBluserinfo.getDealTime());
+        json.put("province_code", aBluserinfo.getProvinceCode());
+        json.put("city_code", aBluserinfo.getCityCode());
+        json.put("chl_id", aBluserinfo.getChlId());
+        json.put("dev_id", aBluserinfo.getDevId());
+        json.put("inactive_time", aBluserinfo.getInactiveTime());
+        json.put("remark", aBluserinfo.getRemark());
+        json.put("serv_type", aBluserinfo.getServType());
+        json.put("user_type", aBluserinfo.getUserType());
+        json.put("user_state", aBluserinfo.getUserState());
 //        DshmUtil.getIdshmSV().initDel(TableCon.BL_USERINFO, json.toString());
-        DshmUtil.getIdshmSV().initLoader(TableCon.BL_USERINFO, json.toString(),0);
+        DshmUtil.getIdshmSV().initLoader("bl_userinfo", json.toString(),0);
         LoggerUtil.log.debug("刷新用户表共享内存：" + json.toString());
         // ^^^
         // ********************************
@@ -279,7 +276,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             BlSubsComm aBlSubsComm = new BlSubsComm();
             aBlSubsComm.setSubsId(userInfo.getSubsId());
             aBlSubsComm.setSubsProductId(
-                    aISysSequenceSvc.terrigerSysSequence(ConBlSubsComm.SUBS_PRODUCT_ID, 1).get(0));
+                    aISysSequenceSvc.terrigerSysSequence("SUBS_PRODUCT_ID", 1).get(0));
             aBlSubsComm.setActiveTime(
                     DateUtil.getTimestamp(product.getActiveTime(), DateUtil.YYYYMMDDHHMMSS));
             aBlSubsComm.setProductId(product.getProductId());
@@ -292,16 +289,16 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             // 刷新产品订购信息的内存表
             // ********************************
             JSONObject json = new JSONObject();
-            json.put(ConBlSubsComm.SUBS_ID, aBlSubsComm.getSubsId());
-            json.put(ConBlSubsComm.SUBS_PRODUCT_ID, aBlSubsComm.getSubsProductId());
-            json.put(ConBlSubsComm.ACTIVE_TIME, aBlSubsComm.getActiveTime());
-            json.put(ConBlSubsComm.PRODUCT_ID, aBlSubsComm.getProductId());
-            json.put(ConBlSubsComm.RES_BONUS_FLAG, aBlSubsComm.getResBonusFlag());
-            json.put(ConBlSubsComm.INACTIVE_TIME, aBlSubsComm.getInactiveTime());
-            json.put(ConBlSubsComm.TENANT_ID, aBlSubsComm.getTenantId());
-            json.put(ConBlSubsComm.CUST_ID, aBlSubsComm.getCustId());
+            json.put("subs_id", aBlSubsComm.getSubsId());
+            json.put("subs_product_id", aBlSubsComm.getSubsProductId());
+            json.put("active_time", aBlSubsComm.getActiveTime());
+            json.put("product_id", aBlSubsComm.getProductId());
+            json.put("res_bonus_flag", aBlSubsComm.getResBonusFlag());
+            json.put("inactive_time", aBlSubsComm.getInactiveTime());
+            json.put("tenant_id", aBlSubsComm.getTenantId());
+            json.put("cust_id", aBlSubsComm.getCustId());
 //            DshmUtil.getIdshmSV().initdel(TableCon.BL_SUBS_COMM, json.toString());
-            DshmUtil.getIdshmSV().initLoader(TableCon.BL_SUBS_COMM, json.toString(),0);
+            DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),0);
             LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());
             // ^^meixie
             // ********************************
@@ -407,16 +404,16 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         // 刷新用户扩展信息表的内存表
         // ********************************
         JSONObject json = new JSONObject();
-        json.put(ConBlAcctInfo.ACCT_ID, aBlAcctInfo.getAcctId());
-        json.put(ConBlAcctInfo.TENANT_ID, aBlAcctInfo.getTenantId());
-        json.put(ConBlAcctInfo.OWNER_TYPE, aBlAcctInfo.getOwnerType());
-        json.put(ConBlAcctInfo.OWNER_ID, aBlAcctInfo.getOwnerId());
-        json.put(ConBlAcctInfo.ACCT_NAME, aBlAcctInfo.getAcctName());
-        json.put(ConBlAcctInfo.ACCT_TYPE, aBlAcctInfo.getAcctType());
-        json.put(ConBlAcctInfo.CREATE_TIME, aBlAcctInfo.getCreateTime());
-        json.put(ConBlAcctInfo.COMMENTS, aBlAcctInfo.getComments());
+        json.put("acct_id", aBlAcctInfo.getAcctId());
+        json.put("tenant_id", aBlAcctInfo.getTenantId());
+        json.put("owner_type", aBlAcctInfo.getOwnerType());
+        json.put("owner_id", aBlAcctInfo.getOwnerId());
+        json.put("acct_name", aBlAcctInfo.getAcctName());
+        json.put("acct_type", aBlAcctInfo.getAcctType());
+        json.put("create_time", aBlAcctInfo.getCreateTime());
+        json.put("comments", aBlAcctInfo.getComments());
 //        DshmUtil.getIdshmSV().initdel(TableCon.BL_ACCT_INFO, json.toString());
-        DshmUtil.getIdshmSV().initLoader(TableCon.BL_ACCT_INFO, json.toString(),0);
+        DshmUtil.getIdshmSV().initLoader("bl_acct_info", json.toString(),0);
         LoggerUtil.log.debug("刷新账户表共享内存：" + json.toString());
         // ^^^
         // ********************************
