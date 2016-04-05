@@ -11,6 +11,8 @@
     <result column="REDUCE_CODE" property="reduceCode" jdbcType="VARCHAR" />
     <result column="PRODUCT_IDS" property="productIds" jdbcType="VARCHAR" />
     <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="VARCHAR" />
+    <result column="RELATED_ACCOUNT" property="relatedAccount" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List" >
     REDUCE_ID, DETAIL_CODE, REACH_AMOUNT, REDUCE_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
-    REDUCE_CODE, PRODUCT_IDS, UNIT
+    REDUCE_CODE, PRODUCT_IDS, UNIT, ACCOUNT_TYPE, RELATED_ACCOUNT
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduceCriteria" >
     select
@@ -111,12 +113,12 @@
   <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduce" >
     insert into cp_full_reduce (REDUCE_ID, DETAIL_CODE, REACH_AMOUNT, 
       REDUCE_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
-      REDUCE_CODE, PRODUCT_IDS, UNIT
-      )
+      REDUCE_CODE, PRODUCT_IDS, UNIT, 
+      ACCOUNT_TYPE, RELATED_ACCOUNT)
     values (#{reduceId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{reachAmount,jdbcType=DOUBLE}, 
       #{reduceAmount,jdbcType=DOUBLE}, #{activeTime,jdbcType=DATE}, #{inactiveTime,jdbcType=DATE}, 
-      #{reduceCode,jdbcType=VARCHAR}, #{productIds,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}
-      )
+      #{reduceCode,jdbcType=VARCHAR}, #{productIds,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=VARCHAR}, #{relatedAccount,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullReduce" >
     insert into cp_full_reduce
@@ -148,6 +150,12 @@
       <if test="unit != null" >
         UNIT,
       </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE,
+      </if>
+      <if test="relatedAccount != null" >
+        RELATED_ACCOUNT,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="reduceId != null" >
@@ -176,6 +184,12 @@
       </if>
       <if test="unit != null" >
         #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedAccount != null" >
+        #{relatedAccount,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -215,6 +229,12 @@
       <if test="record.unit != null" >
         UNIT = #{record.unit,jdbcType=VARCHAR},
       </if>
+      <if test="record.accountType != null" >
+        ACCOUNT_TYPE = #{record.accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relatedAccount != null" >
+        RELATED_ACCOUNT = #{record.relatedAccount,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -230,7 +250,9 @@
       INACTIVE_TIME = #{record.inactiveTime,jdbcType=DATE},
       REDUCE_CODE = #{record.reduceCode,jdbcType=VARCHAR},
       PRODUCT_IDS = #{record.productIds,jdbcType=VARCHAR},
-      UNIT = #{record.unit,jdbcType=VARCHAR}
+      UNIT = #{record.unit,jdbcType=VARCHAR},
+      ACCOUNT_TYPE = #{record.accountType,jdbcType=VARCHAR},
+      RELATED_ACCOUNT = #{record.relatedAccount,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -262,6 +284,12 @@
       <if test="unit != null" >
         UNIT = #{unit,jdbcType=VARCHAR},
       </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedAccount != null" >
+        RELATED_ACCOUNT = #{relatedAccount,jdbcType=VARCHAR},
+      </if>
     </set>
     where REDUCE_ID = #{reduceId,jdbcType=BIGINT}
   </update>
@@ -274,7 +302,9 @@
       INACTIVE_TIME = #{inactiveTime,jdbcType=DATE},
       REDUCE_CODE = #{reduceCode,jdbcType=VARCHAR},
       PRODUCT_IDS = #{productIds,jdbcType=VARCHAR},
-      UNIT = #{unit,jdbcType=VARCHAR}
+      UNIT = #{unit,jdbcType=VARCHAR},
+      ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR},
+      RELATED_ACCOUNT = #{relatedAccount,jdbcType=VARCHAR}
     where REDUCE_ID = #{reduceId,jdbcType=BIGINT}
   </update>
 </mapper>

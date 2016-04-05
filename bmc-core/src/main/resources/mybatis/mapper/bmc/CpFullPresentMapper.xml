@@ -13,6 +13,8 @@
     <result column="PRESENT_CODE" property="presentCode" jdbcType="VARCHAR" />
     <result column="REACH_AMOUNT" property="reachAmount" jdbcType="DOUBLE" />
     <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="VARCHAR" />
+    <result column="RELATED_ACCOUNT" property="relatedAccount" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
-    PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE, REACH_AMOUNT, UNIT
+    PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE, REACH_AMOUNT, UNIT, ACCOUNT_TYPE, RELATED_ACCOUNT
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" >
     select
@@ -114,11 +116,13 @@
     insert into cp_full_present (PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, 
       PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
       PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE, 
-      REACH_AMOUNT, UNIT)
+      REACH_AMOUNT, UNIT, ACCOUNT_TYPE, 
+      RELATED_ACCOUNT)
     values (#{presentId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{presentType,jdbcType=VARCHAR}, 
       #{presentAmount,jdbcType=DOUBLE}, #{activeTime,jdbcType=DATE}, #{inactiveTime,jdbcType=DATE}, 
       #{productIds,jdbcType=VARCHAR}, #{productGiftIds,jdbcType=VARCHAR}, #{presentCode,jdbcType=VARCHAR}, 
-      #{reachAmount,jdbcType=DOUBLE}, #{unit,jdbcType=VARCHAR})
+      #{reachAmount,jdbcType=DOUBLE}, #{unit,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR}, 
+      #{relatedAccount,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent" >
     insert into cp_full_present
@@ -156,6 +160,12 @@
       <if test="unit != null" >
         UNIT,
       </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE,
+      </if>
+      <if test="relatedAccount != null" >
+        RELATED_ACCOUNT,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="presentId != null" >
@@ -190,6 +200,12 @@
       </if>
       <if test="unit != null" >
         #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null" >
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedAccount != null" >
+        #{relatedAccount,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -235,6 +251,12 @@
       <if test="record.unit != null" >
         UNIT = #{record.unit,jdbcType=VARCHAR},
       </if>
+      <if test="record.accountType != null" >
+        ACCOUNT_TYPE = #{record.accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relatedAccount != null" >
+        RELATED_ACCOUNT = #{record.relatedAccount,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -252,7 +274,9 @@
       PRODUCT_GIFT_IDS = #{record.productGiftIds,jdbcType=VARCHAR},
       PRESENT_CODE = #{record.presentCode,jdbcType=VARCHAR},
       REACH_AMOUNT = #{record.reachAmount,jdbcType=DOUBLE},
-      UNIT = #{record.unit,jdbcType=VARCHAR}
+      UNIT = #{record.unit,jdbcType=VARCHAR},
+      ACCOUNT_TYPE = #{record.accountType,jdbcType=VARCHAR},
+      RELATED_ACCOUNT = #{record.relatedAccount,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -290,6 +314,12 @@
       <if test="unit != null" >
         UNIT = #{unit,jdbcType=VARCHAR},
       </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedAccount != null" >
+        RELATED_ACCOUNT = #{relatedAccount,jdbcType=VARCHAR},
+      </if>
     </set>
     where PRESENT_ID = #{presentId,jdbcType=BIGINT}
   </update>
@@ -304,7 +334,9 @@
       PRODUCT_GIFT_IDS = #{productGiftIds,jdbcType=VARCHAR},
       PRESENT_CODE = #{presentCode,jdbcType=VARCHAR},
       REACH_AMOUNT = #{reachAmount,jdbcType=DOUBLE},
-      UNIT = #{unit,jdbcType=VARCHAR}
+      UNIT = #{unit,jdbcType=VARCHAR},
+      ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR},
+      RELATED_ACCOUNT = #{relatedAccount,jdbcType=VARCHAR}
     where PRESENT_ID = #{presentId,jdbcType=BIGINT}
   </update>
 </mapper>

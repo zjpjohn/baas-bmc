@@ -704,6 +704,146 @@ public class CpFullReduceCriteria {
             addCriterion("UNIT not between", value1, value2, "unit");
             return (Criteria) this;
         }
+
+        public Criteria andAccountTypeIsNull() {
+            addCriterion("ACCOUNT_TYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeIsNotNull() {
+            addCriterion("ACCOUNT_TYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeEqualTo(String value) {
+            addCriterion("ACCOUNT_TYPE =", value, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeNotEqualTo(String value) {
+            addCriterion("ACCOUNT_TYPE <>", value, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeGreaterThan(String value) {
+            addCriterion("ACCOUNT_TYPE >", value, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ACCOUNT_TYPE >=", value, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeLessThan(String value) {
+            addCriterion("ACCOUNT_TYPE <", value, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeLessThanOrEqualTo(String value) {
+            addCriterion("ACCOUNT_TYPE <=", value, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeLike(String value) {
+            addCriterion("ACCOUNT_TYPE like", value, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeNotLike(String value) {
+            addCriterion("ACCOUNT_TYPE not like", value, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeIn(List<String> values) {
+            addCriterion("ACCOUNT_TYPE in", values, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeNotIn(List<String> values) {
+            addCriterion("ACCOUNT_TYPE not in", values, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeBetween(String value1, String value2) {
+            addCriterion("ACCOUNT_TYPE between", value1, value2, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTypeNotBetween(String value1, String value2) {
+            addCriterion("ACCOUNT_TYPE not between", value1, value2, "accountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountIsNull() {
+            addCriterion("RELATED_ACCOUNT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountIsNotNull() {
+            addCriterion("RELATED_ACCOUNT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountEqualTo(String value) {
+            addCriterion("RELATED_ACCOUNT =", value, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountNotEqualTo(String value) {
+            addCriterion("RELATED_ACCOUNT <>", value, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountGreaterThan(String value) {
+            addCriterion("RELATED_ACCOUNT >", value, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountGreaterThanOrEqualTo(String value) {
+            addCriterion("RELATED_ACCOUNT >=", value, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountLessThan(String value) {
+            addCriterion("RELATED_ACCOUNT <", value, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountLessThanOrEqualTo(String value) {
+            addCriterion("RELATED_ACCOUNT <=", value, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountLike(String value) {
+            addCriterion("RELATED_ACCOUNT like", value, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountNotLike(String value) {
+            addCriterion("RELATED_ACCOUNT not like", value, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountIn(List<String> values) {
+            addCriterion("RELATED_ACCOUNT in", values, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountNotIn(List<String> values) {
+            addCriterion("RELATED_ACCOUNT not in", values, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountBetween(String value1, String value2) {
+            addCriterion("RELATED_ACCOUNT between", value1, value2, "relatedAccount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedAccountNotBetween(String value1, String value2) {
+            addCriterion("RELATED_ACCOUNT not between", value1, value2, "relatedAccount");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

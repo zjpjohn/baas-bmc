@@ -784,6 +784,146 @@ public class CpPriceInfoCriteria {
             addCriterion("PRODUCT_TYPE not between", value1, value2, "productType");
             return (Criteria) this;
         }
+
+        public Criteria andActiveStatusIsNull() {
+            addCriterion("ACTIVE_STATUS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusIsNotNull() {
+            addCriterion("ACTIVE_STATUS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusEqualTo(String value) {
+            addCriterion("ACTIVE_STATUS =", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotEqualTo(String value) {
+            addCriterion("ACTIVE_STATUS <>", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusGreaterThan(String value) {
+            addCriterion("ACTIVE_STATUS >", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("ACTIVE_STATUS >=", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLessThan(String value) {
+            addCriterion("ACTIVE_STATUS <", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLessThanOrEqualTo(String value) {
+            addCriterion("ACTIVE_STATUS <=", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLike(String value) {
+            addCriterion("ACTIVE_STATUS like", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotLike(String value) {
+            addCriterion("ACTIVE_STATUS not like", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusIn(List<String> values) {
+            addCriterion("ACTIVE_STATUS in", values, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotIn(List<String> values) {
+            addCriterion("ACTIVE_STATUS not in", values, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusBetween(String value1, String value2) {
+            addCriterion("ACTIVE_STATUS between", value1, value2, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotBetween(String value1, String value2) {
+            addCriterion("ACTIVE_STATUS not between", value1, value2, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("STATUS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("STATUS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("STATUS =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(String value) {
+            addCriterion("STATUS <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(String value) {
+            addCriterion("STATUS >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("STATUS >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(String value) {
+            addCriterion("STATUS <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(String value) {
+            addCriterion("STATUS <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLike(String value) {
+            addCriterion("STATUS like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotLike(String value) {
+            addCriterion("STATUS not like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<String> values) {
+            addCriterion("STATUS in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<String> values) {
+            addCriterion("STATUS not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(String value1, String value2) {
+            addCriterion("STATUS between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(String value1, String value2) {
+            addCriterion("STATUS not between", value1, value2, "status");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

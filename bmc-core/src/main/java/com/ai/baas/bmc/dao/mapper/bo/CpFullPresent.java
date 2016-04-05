@@ -25,6 +25,10 @@ public class CpFullPresent {
 
     private String unit;
 
+    private String accountType;
+
+    private String relatedAccount;
+
     public Long getPresentId() {
         return presentId;
     }
@@ -111,5 +115,21 @@ public class CpFullPresent {
 
     public void setUnit(String unit) {
         this.unit = unit == null ? null : unit.trim();
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType == null ? null : accountType.trim();
+    }
+
+    public String getRelatedAccount() {
+        return relatedAccount;
+    }
+
+    public void setRelatedAccount(String relatedAccount) {
+        this.relatedAccount = relatedAccount == null ? null : relatedAccount.trim();
     }
 }
