@@ -79,5 +79,12 @@ public final class BmcSeqUtil {
     	 Long seq = SeqUtil.getNewId(SEQ.PRESENT_CODE_SEQ);
          return StringUtil.toString(seq);
     }
+    public static Long getReduceId(){
+    	return SeqUtil.getNewId(SEQ.REDUCE_ID_SEQ);
+    }
+    public static String getReduceCode(){
+   	 Long seq = SeqUtil.getNewId(SEQ.REDUCE_CODE_SEQ);
+        return StringUtil.toString(seq);
+   }
     
 }
