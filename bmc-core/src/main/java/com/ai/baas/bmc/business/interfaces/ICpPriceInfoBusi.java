@@ -1,5 +1,8 @@
 package com.ai.baas.bmc.business.interfaces;
 
+import java.util.List;
+
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 /**
  * 信息资费
@@ -11,6 +14,8 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 public interface ICpPriceInfoBusi {
 	
 	Integer addCpPriceInfo(CpPriceInfo info);
+	void delCpRpriceInfo(CpPriceInfo info);
 	
+	List<CpPriceInfo> getCpPriceInfo(ProductQueryVO vo);
 	
 }

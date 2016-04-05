@@ -33,7 +33,7 @@ public class ProferProductVO extends BaseInfo {
 	 * 产品Id
 	 */
 	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
-	private String productId;
+	private Long productId;
 	
 	/**
 	 * 优惠产品类型，必填
@@ -108,10 +108,11 @@ public class ProferProductVO extends BaseInfo {
 	 * 操作员Id
 	 */
 	private String operatorId;
-	public String getProductId() {
+	
+	public Long getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 	public String getProductType() {

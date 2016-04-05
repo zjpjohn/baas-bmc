@@ -23,16 +23,23 @@ public class ActiveProductVO extends BaseInfo {
 	 * 产品Id
 	 */
 	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
-	private String productId;
+	private Long productId;
 	/**
 	 * 负责状态
 	 */
 	@NotNull(message="状态信息不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
 	private String status;
-	public String getProductId() {
+	
+	public String getTradeSeq() {
+		return tradeSeq;
+	}
+	public void setTradeSeq(String tradeSeq) {
+		this.tradeSeq = tradeSeq;
+	}
+	public Long getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 	public String getStatus() {

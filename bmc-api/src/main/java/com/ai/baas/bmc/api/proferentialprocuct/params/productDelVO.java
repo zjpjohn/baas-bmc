@@ -13,7 +13,7 @@ public class productDelVO extends BaseInfo{
 	 *优惠产品Id
 	 */
 	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.DelProferProduct.class})
-	private String ProdutId;
+	private Long ProdutId;
 	 /**
      * 消息流水<br>
      * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
@@ -23,11 +23,15 @@ public class productDelVO extends BaseInfo{
 	@NotNull(message="消息流水号不能为空",groups={IProferProductManageSV.DelProferProduct.class})
 	private String tradeSeq;
 
-	public String getProdutId() {
+	
+
+	
+
+	public Long getProdutId() {
 		return ProdutId;
 	}
 
-	public void setProdutId(String produtId) {
+	public void setProdutId(Long produtId) {
 		ProdutId = produtId;
 	}
 

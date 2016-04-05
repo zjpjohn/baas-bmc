@@ -198,20 +198,123 @@ public class ProferProductManageSV implements IProferProductManageSV {
 
 	@Override
 	public void updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
-		// TODO Auto-generated method stub
-
+		CpPriceInfo cpPriceInfo=new CpPriceInfo();
+		cpPriceInfo.setPriceInfoId(vo.getProductId());
+		cpPriceInfo.setStatus(vo.getStatus());  //设置状态
+		cpPriceInfo.setTenantId(vo.getTenantId());
+		cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
 	}
 
 	@Override
 	public void delProferProduct(productDelVO vo) throws BusinessException, SystemException {
-		// TODO Auto-generated method stub
-
+		CpPriceInfo cpPriceInfo=new CpPriceInfo();
+		cpPriceInfo.setPriceInfoId(vo.getProdutId());
+		cpPriceInfo.setTenantId(vo.getTenantId());
+		cpPriceInfo.setStatus("DEL");  //设置状态为删除
+		cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
 	}
 
 	@Override
 	public void updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException {
-		// TODO Auto-generated method stub
+		
+		//TODO 暂时不处理更新操作
+		/**
+		 * 更新资费信息表 cp_price_info
+		 */
+		//String priceCode = BmcSeqUtil.getPriceCode();
+		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		cpPriceInfo.setPriceInfoId(vo.getProductId());
+		//cpPriceInfo.setPriceCode(priceCode);
+		//cpPriceInfo.setCreateTime(DateUtil.getSysDate());
+		cpPriceInfo.setActiveTime(vo.getActiveDate());
+		cpPriceInfo.setComments(vo.getComments());
+		cpPriceInfo.setOperatorId(vo.getOperatorId());
+		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
+		cpPriceInfo.setPriceName(vo.getProgramName());
+		cpPriceInfo.setProductType(vo.getProductType());
+		cpPriceInfo.setTenantId(vo.getTenantId());
+		//cpPriceInfo.setStatus("INOPERATIVE"); //inoperative 待生效
+		// TODO 有返回值，后期注意处理
+		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
+		/**
+		 * 更新资费计划明细表 cp_price_detail
+		 */
+		CpPriceDetail detail = new CpPriceDetail();
+	//	detail.setPriceCode(priceCode);
+		// detail.setActiveTime(vo.getActiveDate());
+		String billType = vo.getProductType();
+		detail.setChargeType(billType);
+		detail.setComments(vo.getComments());
+	//	String detailCode = BmcSeqUtil.getDetailCode();
+	//	detail.setDetailCode(detailCode);
+	//	detail.setDetailId(BmcSeqUtil.getDetailId());
+		// 冗余字段，暂时不填
+		// detail.setDetailName(vo.getProgramName());
+		// detail.setInactiveTime(vo.getInvalidDate());
+	//	detail.setPriceCode(priceCode);
+		// 冗余字段，暂时不填
+		// detail.setServiceType(vo.getProductType());
+		cpPriceDetailBusi.addCpPriceDetal(detail);
+
+		/**
+		 * 更新满减的详细表
+		 */
+		CpFullReduce reduce = new CpFullReduce();
+
+		reduce.setActiveTime(vo.getActiveDate());
+	//	reduce.setDetailCode(detailCode);
+		reduce.setInactiveTime(vo.getInvalidDate());
+		reduce.setProductIds(JSON.toJSONString(vo.getProductList()));
+		reduce.setReachAmount(vo.getRuleAmount());
+		reduce.setReduceAmount(vo.getReduceAmount());
+		reduce.setReduceCode(BmcSeqUtil.getReduceCode());
+		reduce.setReduceId(BmcSeqUtil.getReduceId());
+		reduce.setUnit(vo.getRuleUnit());
+		//TODO 改成更新
+	 //	cpFullReduceBusi.add(reduce);
+		
+	
+		//更新满赠表
+		for (String type : vo.getGiftType()) {
+			CpFullPresent present = new CpFullPresent();
+			if ("SERVICETYPE".equals(type)) {// 赠送业务类型
+				present.setPresentType(type);
+				present.setActiveTime(vo.getGiftActiveDate());
+				//present.setDetailCode(detailCode);
+				present.setInactiveTime(vo.getGiftInvalidDate());
+
+				String presentCode = BmcSeqUtil.getPresentCode();
+				present.setPresentCode(presentCode);
+				present.setPresentId(BmcSeqUtil.getPresentId());
+				present.setProductGiftIds(JSON.toJSONString(vo.getGiftProList()));
+				present.setProductIds(JSON.toJSONString(vo.getProductList()));
+			} else if ("CASH".equals(type)) { // 赠送现金
+				present.setPresentType(type);
+				present.setPresentAmount(vo.getGitfAmount());
+				present.setActiveTime(vo.getGiftActiveDate());
+				//present.setDetailCode(detailCode);
+				present.setInactiveTime(vo.getGiftInvalidDate());
+				String presentCode = BmcSeqUtil.getPresentCode();
+				present.setPresentCode(presentCode);
+				present.setPresentId(BmcSeqUtil.getPresentId());
+				present.setProductIds(JSON.toJSONString(vo.getProductList()));
+			} else if ("VIRTURECOIN".equals(type)) {// 增送虚拟货币
+				present.setPresentType(type);
+				present.setPresentAmount(vo.getGitfAmount());
+				present.setActiveTime(vo.getGiftActiveDate());
+				//present.setDetailCode(detailCode);
+				present.setInactiveTime(vo.getGiftInvalidDate());
+
+				String presentCode = BmcSeqUtil.getPresentCode();
+				present.setPresentCode(presentCode);
+				present.setPresentId(BmcSeqUtil.getPresentId());
+				present.setProductIds(JSON.toJSONString(vo.getProductList()));
+			}
+			//TODO 改成更新
+			//cpFullPresentBusi.addFullPresent(present);
+		} 
+		
 	}
 
 }
