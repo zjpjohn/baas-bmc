@@ -27,4 +27,8 @@ public final class ErrorCode {
      * 格式转换错误
      */
     public static final String UNFORMATE = "BaaS-000001";
+     /**
+     * 已存在
+     */
+    public static final String EXIST = "BaaS-000001";
 }
