@@ -59,7 +59,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceInfo.setPriceName(vo.getProgramName());
 		// cpPriceInfo.setProductType(vo.getProductType()); 暂时不启用
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setStatus("INOPERATIVE"); // inoperative 待生效
+		cpPriceInfo.setActiveStatus("INOPERATIVE"); // inoperative 待生效
 		// TODO 有返回值，后期注意处理
 		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
@@ -125,7 +125,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceInfo.setPriceName(vo.getProgramName());
 		cpPriceInfo.setProductType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setStatus("INOPERATIVE"); // inoperative 待生效
+		cpPriceInfo.setActiveStatus("INOPERATIVE"); // inoperative 待生效
 		// TODO 有返回值，后期注意处理
 		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
@@ -176,7 +176,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	public void updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
-		cpPriceInfo.setStatus(vo.getStatus()); // 设置状态
+		cpPriceInfo.setActiveStatus(vo.getStatus()); // 设置状态
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
 	}
@@ -186,7 +186,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProdutId());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setStatus("DEL"); // 设置状态为删除
+		cpPriceInfo.setActiveStatus("DEL"); // 设置状态为删除
 		cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
 	}
 

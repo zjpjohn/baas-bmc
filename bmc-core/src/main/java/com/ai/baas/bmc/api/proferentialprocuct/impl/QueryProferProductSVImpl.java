@@ -53,7 +53,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 		 productInfo.setProductId(info.getPriceInfoId());
 		 productInfo.setProductName(info.getPriceName());
 		// productInfo.setRule(info.get);  规则应该由后边表的数据拼写而成
-		 productInfo.setStatus(info.getStatus());
+		 productInfo.setStatus(info.getActiveStatus());
 		 productInfo.setTenantId(info.getTenantId());
 		 productInfo.setTradeSeq(vo.getTradeSeq());
 		 CpPriceDetail detail=iCpPriceDetailBusi.getCpPriceDetail(info.getPriceCode()); 
