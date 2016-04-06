@@ -130,8 +130,8 @@ public class CustInfoSVImpl implements ICustInfoSV {
         }
             
 		
-        iCustinfoBusiness.writeData(custInfo);
         try {
+            iCustinfoBusiness.writeData(custInfo);
         	
         } catch (BusinessException e){
             return e.getErrorCode() + e.getErrorMessage();

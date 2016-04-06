@@ -97,11 +97,17 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         params.put("tenant_id", record.getTenantId());
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_userinfo")
                 .where(params).executeQuery(DshmUtil.getCacheClient());
-        if (!(result == null || result.isEmpty()||result.get(0).isEmpty())) {
-            String temp[] = result.get(0).get("subs_id").split("#");
-            subsId = temp[temp.length - 1];
-            temp = result.get(0).get("acct_id").split("#");
-            acctId = temp[temp.length - 1];
+        //获得缓存中第一条有效数据
+        if (!(result == null || result.isEmpty())) {
+            for(Map<String, String> r : result){
+                if(r.isEmpty()){
+                    String temp[] = result.get(0).get("subs_id").split("#");
+                    subsId = temp[temp.length - 1];
+                    temp = result.get(0).get("acct_id").split("#");
+                    acctId = temp[temp.length - 1];
+                    break;
+                }
+            }
         }
         // *************判重end**********************
         BlUserinfo aBlUserinfo = writeBlUserinfo(record, custId, subsId, acctId);

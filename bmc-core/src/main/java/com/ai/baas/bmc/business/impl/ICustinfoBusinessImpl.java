@@ -140,11 +140,17 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
         params.put("TENANT_ID", custInfo.getTenantId());
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
                 .executeQuery(DshmUtil.getCacheClient());
-        if(!(result==null||result.isEmpty()||result.get(0).isEmpty())){
-        	 String temp[] = result.get(0).get("cust_id").split("#");
-        	 custId = temp[temp.length - 1];
-        	 blCustinfo.setCustId(custId);
-     		 custobject.put("CUST_ID", custId);
+        //获得缓存中第一条有效数据
+        if(!(result==null||result.isEmpty())){
+            for(Map<String, String> r : result){
+                if(r.isEmpty()){
+                    String temp[] = result.get(0).get("cust_id").split("#");
+                    custId = temp[temp.length - 1];
+                    blCustinfo.setCustId(custId);
+                    custobject.put("CUST_ID", custId);
+                    break;
+                }
+            }
         }else{
         	custId = aISysSequenceSvc.terrigerSysSequence("CUST_ID", 1).get(0);
     		blCustinfo.setCustId(custId);

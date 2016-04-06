@@ -194,12 +194,22 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
                 .executeQuery(DshmUtil.getCacheClient());
         // 获得对应的内部的custId
-        if (result == null || result.isEmpty() || result.get(0).isEmpty()) {
+        if (result == null || result.isEmpty()) {
             LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + record.getExtCustId());
             return ErrorCode.NULL + ":客户不存在";
         }
-        String custIds[] = result.get(0).get("cust_id").split("#");
-        String custId = custIds[custIds.length - 1];
+
+        // 循环获得第一条非空的数据
+        String custIds[];
+        String custId = null;
+        for (Map<String, String> r : result) {
+            if (!r.isEmpty()) {
+                custIds = r.get("cust_id").split("#");
+                custId = custIds[custIds.length - 1];
+                break;
+            }
+        }
+        LoggerUtil.log.debug("获得cust_id:" + custId);
         // String custId = record.getExtCustId();
         LoggerUtil.log.debug("校验成功！");
         // 幂等性判断（判重）

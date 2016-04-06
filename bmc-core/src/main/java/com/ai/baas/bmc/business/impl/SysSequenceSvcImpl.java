@@ -75,7 +75,7 @@ public class SysSequenceSvcImpl implements ISysSequenceSvc {
             if ((sysSequenceSrc_.getCurrentValue()) + 1 < (sysSequenceSrc_.getMaxValue())) {
                 LoggerUtil.log.info("存在" + sequenceName + "的信息,当前值未超过最大值");
                 long current = sysSequenceSrc_.getCurrentValue() + 1;
-                System.out.println(current);
+//                System.out.println(current);
                 sysSequenceSrc.setCurrentValue(current);
                 aSysSequenceSrcMapper.updateByExample(sysSequenceSrc, sysSequenceSrcCriteria);
                 return String.valueOf(current);
