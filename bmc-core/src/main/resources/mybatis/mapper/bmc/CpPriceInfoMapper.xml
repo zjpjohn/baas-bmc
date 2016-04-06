@@ -13,7 +13,6 @@
     <result column="COMMENTS" property="comments" jdbcType="VARCHAR" />
     <result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
     <result column="ACTIVE_STATUS" property="activeStatus" jdbcType="VARCHAR" />
-    <result column="STATUS" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List" >
     PRICE_INFO_ID, TENANT_ID, PRICE_CODE, PRICE_NAME, ACTIVE_TIME, INACTIVE_TIME, CREATE_TIME, 
-    OPERATOR_ID, COMMENTS, PRODUCT_TYPE, ACTIVE_STATUS, STATUS
+    OPERATOR_ID, COMMENTS, PRODUCT_TYPE, ACTIVE_STATUS
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria" >
     select
@@ -115,13 +114,11 @@
     insert into cp_price_info (PRICE_INFO_ID, TENANT_ID, PRICE_CODE, 
       PRICE_NAME, ACTIVE_TIME, INACTIVE_TIME, 
       CREATE_TIME, OPERATOR_ID, COMMENTS, 
-      PRODUCT_TYPE, ACTIVE_STATUS, STATUS
-      )
+      PRODUCT_TYPE, ACTIVE_STATUS)
     values (#{priceInfoId,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, #{priceCode,jdbcType=VARCHAR}, 
       #{priceName,jdbcType=VARCHAR}, #{activeTime,jdbcType=TIMESTAMP}, #{inactiveTime,jdbcType=TIMESTAMP}, 
       #{createTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}, 
-      #{productType,jdbcType=VARCHAR}, #{activeStatus,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
-      )
+      #{productType,jdbcType=VARCHAR}, #{activeStatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo" >
     insert into cp_price_info
@@ -159,9 +156,6 @@
       <if test="activeStatus != null" >
         ACTIVE_STATUS,
       </if>
-      <if test="status != null" >
-        STATUS,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="priceInfoId != null" >
@@ -196,9 +190,6 @@
       </if>
       <if test="activeStatus != null" >
         #{activeStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -244,9 +235,6 @@
       <if test="record.activeStatus != null" >
         ACTIVE_STATUS = #{record.activeStatus,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null" >
-        STATUS = #{record.status,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -264,8 +252,7 @@
       OPERATOR_ID = #{record.operatorId,jdbcType=VARCHAR},
       COMMENTS = #{record.comments,jdbcType=VARCHAR},
       PRODUCT_TYPE = #{record.productType,jdbcType=VARCHAR},
-      ACTIVE_STATUS = #{record.activeStatus,jdbcType=VARCHAR},
-      STATUS = #{record.status,jdbcType=VARCHAR}
+      ACTIVE_STATUS = #{record.activeStatus,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -303,9 +290,6 @@
       <if test="activeStatus != null" >
         ACTIVE_STATUS = #{activeStatus,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        STATUS = #{status,jdbcType=VARCHAR},
-      </if>
     </set>
     where PRICE_INFO_ID = #{priceInfoId,jdbcType=BIGINT}
   </update>
@@ -320,8 +304,7 @@
       OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
       COMMENTS = #{comments,jdbcType=VARCHAR},
       PRODUCT_TYPE = #{productType,jdbcType=VARCHAR},
-      ACTIVE_STATUS = #{activeStatus,jdbcType=VARCHAR},
-      STATUS = #{status,jdbcType=VARCHAR}
+      ACTIVE_STATUS = #{activeStatus,jdbcType=VARCHAR}
     where PRICE_INFO_ID = #{priceInfoId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -13,4 +13,5 @@ public interface ICpFullReduceBusi {
 	 * @ApiCode 
 	 */
 	Integer add(CpFullReduce present);
+	CpFullReduce getFullReduce(String detailCode);
 }

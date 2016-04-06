@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.business.interfaces;
 
+import java.util.List;
+
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
 
 /**
@@ -12,4 +14,6 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
 public interface ICpPriceDetailBusi {
 
 	Integer addCpPriceDetal(CpPriceDetail info);
+	List<CpPriceDetail> getCpPriceDetail(CpPriceDetail detail);
+	CpPriceDetail getCpPriceDetail(String priceCode);
 }

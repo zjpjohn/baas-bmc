@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
 import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
-import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria.Criteria;
 @Service
 @Transactional
 public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
@@ -39,11 +39,15 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 
 
 
+	/**
+	 * 获取资费信息表
+	 */
 	@Override
 	public List<CpPriceInfo> getCpPriceInfo(ProductQueryVO vo) {
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
+		criteria.andActiveStatusNotEqualTo("DEL");
 		if(vo.getActiveDate()!=null){
 			criteria.andActiveTimeEqualTo(vo.getActiveDate());
 		}
@@ -56,10 +60,23 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		if(vo.getProferType()!=null){
 			criteria.andProductTypeEqualTo(vo.getProferType());
 		}
-		example.setLimitStart((vo.getPageNo()-1)*vo.getPageSize());
-		example.setLimitEnd(vo.getPageSize());
+		if(vo.getPageNo()!=null&&vo.getPageSize()!=null){
+			example.setLimitStart((vo.getPageNo()-1)*vo.getPageSize());
+			example.setLimitEnd(vo.getPageSize());
+		}
+		
 		
 		return cpPriceInfoMapper.selectByExample(example);
+	}
+
+
+
+	@Override
+	public CpPriceInfo getCpPriceInfo(ProductQueryParam param) {
+		
+		
+		
+		return null;
 	}
 }
 
