@@ -3,6 +3,7 @@ package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.productDelVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -72,5 +73,16 @@ public interface IProferProductManageSV {
 	 */
 	@interface UpdateProferProduct{}
 	void updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	
+	/**
+	 * 关联费用科目
+	 * @param vo
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	void relatedAccout(RelatedVO vo) throws BusinessException, SystemException;
 	
 }

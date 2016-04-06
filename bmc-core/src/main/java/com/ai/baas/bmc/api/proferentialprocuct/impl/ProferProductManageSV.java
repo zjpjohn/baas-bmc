@@ -8,6 +8,7 @@ import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.FullPresent;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.productDelVO;
 import com.ai.baas.bmc.business.interfaces.ICpFullPresentBusi;
 import com.ai.baas.bmc.business.interfaces.ICpFullReduceBusi;
@@ -257,5 +258,19 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		// cpFullPresentBusi.addFullPresent(present);
 
 	}
+
+	@Override
+	public void relatedAccout(RelatedVO vo) throws BusinessException, SystemException {//仅仅是关联处理，不是处理，参数需要调整
+		CpPriceInfo price=cpPriceInfoBusi.getCpPriceInfo(vo); 
+		CpPriceDetail detail=cpPriceDetailBusi.getCpPriceDetail(price.getPriceCode());
+		//如果是满赠，加入到满赠
+		
+		//如果是满减，加入到满减
+		
+		
+		
+	}
+
+	
 
 }

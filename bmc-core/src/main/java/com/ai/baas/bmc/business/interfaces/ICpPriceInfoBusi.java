@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 /**
  * 信息资费
@@ -22,4 +23,5 @@ public interface ICpPriceInfoBusi {
 	
 	CpPriceInfo getCpPriceInfo(ProductQueryParam param);
 	
+	CpPriceInfo getCpPriceInfo(RelatedVO vo);
 }

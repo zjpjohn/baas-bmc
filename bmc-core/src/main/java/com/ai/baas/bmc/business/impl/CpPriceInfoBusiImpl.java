@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
 import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
@@ -76,6 +77,14 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		
 		
 		
+		return null;
+	}
+
+
+
+	@Override
+	public CpPriceInfo getCpPriceInfo(RelatedVO vo) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }
