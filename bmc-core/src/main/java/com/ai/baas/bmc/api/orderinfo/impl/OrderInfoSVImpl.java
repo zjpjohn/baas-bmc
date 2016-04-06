@@ -21,6 +21,7 @@ import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.DateUtil;
+import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
@@ -209,7 +210,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 break;
             }
         }
-        if(custId == null){
+        if(StringUtil.isBlank(custId)){
             LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + record.getExtCustId());
             return ErrorCode.NULL + ":客户不存在";
         }
