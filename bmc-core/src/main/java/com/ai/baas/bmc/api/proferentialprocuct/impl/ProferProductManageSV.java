@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.FullPresent;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.productDelVO;
@@ -56,9 +57,9 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceInfo.setOperatorId(vo.getOperatorId());
 		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
 		cpPriceInfo.setPriceName(vo.getProgramName());
-		cpPriceInfo.setProductType(vo.getProductType());
+		// cpPriceInfo.setProductType(vo.getProductType()); 暂时不启用
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setStatus("INOPERATIVE"); //inoperative 待生效
+		cpPriceInfo.setStatus("INOPERATIVE"); // inoperative 待生效
 		// TODO 有返回值，后期注意处理
 		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
@@ -86,44 +87,20 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		 * 插入满赠的详细表
 		 */
 
-		for (String type : vo.getGiftType()) {
+		for (FullPresent p : vo.getPresentList()) {
 			CpFullPresent present = new CpFullPresent();
-			if ("SERVICETYPE".equals(type)) {// 赠送业务类型
-				present.setPresentType(type);
-				present.setActiveTime(vo.getGiftActiveDate());
-				present.setDetailCode(detailCode);
-				present.setInactiveTime(vo.getGiftInvalidDate());
-
-				String presentCode = BmcSeqUtil.getPresentCode();
-				present.setPresentCode(presentCode);
-				present.setPresentId(BmcSeqUtil.getPresentId());
-				present.setProductGiftIds(JSON.toJSONString(vo.getGiftProList()));
-				present.setProductIds(JSON.toJSONString(vo.getProductList()));
-			} else if ("CASH".equals(type)) { // 赠送现金
-				present.setPresentType(type);
-				present.setPresentAmount(vo.getGitfAmount());
-				present.setActiveTime(vo.getGiftActiveDate());
-				present.setDetailCode(detailCode);
-				present.setInactiveTime(vo.getGiftInvalidDate());
-				String presentCode = BmcSeqUtil.getPresentCode();
-				present.setPresentCode(presentCode);
-				present.setPresentId(BmcSeqUtil.getPresentId());
-				present.setProductIds(JSON.toJSONString(vo.getProductList()));
-			} else if ("VIRTURECOIN".equals(type)) {// 增送虚拟货币
-				present.setPresentType(type);
-				present.setPresentAmount(vo.getGitfAmount());
-				present.setActiveTime(vo.getGiftActiveDate());
-				present.setDetailCode(detailCode);
-				present.setInactiveTime(vo.getGiftInvalidDate());
-
-				String presentCode = BmcSeqUtil.getPresentCode();
-				present.setPresentCode(presentCode);
-				present.setPresentId(BmcSeqUtil.getPresentId());
-				present.setProductIds(JSON.toJSONString(vo.getProductList()));
-			}
+			present.setPresentType(p.getGiftType());
+			present.setActiveTime(p.getGiftActiveDate());
+			present.setDetailCode(detailCode);
+			present.setInactiveTime(p.getGiftInvalidDate());
+			String presentCode = BmcSeqUtil.getPresentCode();
+			present.setPresentCode(presentCode);
+			present.setPresentId(BmcSeqUtil.getPresentId());
+			present.setProductGiftIds(JSON.toJSONString(p.getGiftProList()));
+			present.setProductIds(JSON.toJSONString(vo.getProductList()));
+			present.setPresentAmount(p.getGitfAmount());
 			cpFullPresentBusi.addFullPresent(present);
 		}
-
 		ProductResponse response = new ProductResponse();
 		ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
 		response.setResponseHeader(responseHeader);
@@ -148,7 +125,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceInfo.setPriceName(vo.getProgramName());
 		cpPriceInfo.setProductType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setStatus("INOPERATIVE"); //inoperative 待生效
+		cpPriceInfo.setStatus("INOPERATIVE"); // inoperative 待生效
 		// TODO 有返回值，后期注意处理
 		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
@@ -187,7 +164,6 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		reduce.setReduceId(BmcSeqUtil.getReduceId());
 		reduce.setUnit(vo.getRuleUnit());
 		cpFullReduceBusi.add(reduce);
-		
 
 		ProductResponse response = new ProductResponse();
 		ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
@@ -198,42 +174,43 @@ public class ProferProductManageSV implements IProferProductManageSV {
 
 	@Override
 	public void updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
-		CpPriceInfo cpPriceInfo=new CpPriceInfo();
+		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
-		cpPriceInfo.setStatus(vo.getStatus());  //设置状态
+		cpPriceInfo.setStatus(vo.getStatus()); // 设置状态
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
 	}
 
 	@Override
 	public void delProferProduct(productDelVO vo) throws BusinessException, SystemException {
-		CpPriceInfo cpPriceInfo=new CpPriceInfo();
+		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProdutId());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setStatus("DEL");  //设置状态为删除
+		cpPriceInfo.setStatus("DEL"); // 设置状态为删除
 		cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
 	}
 
 	@Override
 	public void updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException {
-		
-		//TODO 暂时不处理更新操作
+
+		// TODO 暂时不处理更新操作
 		/**
 		 * 更新资费信息表 cp_price_info
 		 */
-		//String priceCode = BmcSeqUtil.getPriceCode();
+		// String priceCode = BmcSeqUtil.getPriceCode();
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
-		cpPriceInfo.setPriceInfoId(vo.getProductId());
-		//cpPriceInfo.setPriceCode(priceCode);
-		//cpPriceInfo.setCreateTime(DateUtil.getSysDate());
+		cpPriceInfo.setPriceInfoId(vo.getProductId()); // 获得PriceId
+		cpPriceInfo.setTenantId(vo.getTenantId()); // 得到租户
+		// cpPriceInfo.setPriceCode(priceCode);
+		// cpPriceInfo.setCreateTime(DateUtil.getSysDate());
 		cpPriceInfo.setActiveTime(vo.getActiveDate());
 		cpPriceInfo.setComments(vo.getComments());
 		cpPriceInfo.setOperatorId(vo.getOperatorId());
 		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
 		cpPriceInfo.setPriceName(vo.getProgramName());
 		cpPriceInfo.setProductType(vo.getProductType());
-		cpPriceInfo.setTenantId(vo.getTenantId());
-		//cpPriceInfo.setStatus("INOPERATIVE"); //inoperative 待生效
+
+		// cpPriceInfo.setStatus("INOPERATIVE"); //inoperative 待生效
 		// TODO 有返回值，后期注意处理
 		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
@@ -241,18 +218,18 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		 * 更新资费计划明细表 cp_price_detail
 		 */
 		CpPriceDetail detail = new CpPriceDetail();
-	//	detail.setPriceCode(priceCode);
+		// detail.setPriceCode(priceCode);
 		// detail.setActiveTime(vo.getActiveDate());
 		String billType = vo.getProductType();
 		detail.setChargeType(billType);
 		detail.setComments(vo.getComments());
-	//	String detailCode = BmcSeqUtil.getDetailCode();
-	//	detail.setDetailCode(detailCode);
-	//	detail.setDetailId(BmcSeqUtil.getDetailId());
+		// String detailCode = BmcSeqUtil.getDetailCode();
+		// detail.setDetailCode(detailCode);
+		// detail.setDetailId(BmcSeqUtil.getDetailId());
 		// 冗余字段，暂时不填
 		// detail.setDetailName(vo.getProgramName());
 		// detail.setInactiveTime(vo.getInvalidDate());
-	//	detail.setPriceCode(priceCode);
+		// detail.setPriceCode(priceCode);
 		// 冗余字段，暂时不填
 		// detail.setServiceType(vo.getProductType());
 		cpPriceDetailBusi.addCpPriceDetal(detail);
@@ -263,7 +240,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		CpFullReduce reduce = new CpFullReduce();
 
 		reduce.setActiveTime(vo.getActiveDate());
-	//	reduce.setDetailCode(detailCode);
+		// reduce.setDetailCode(detailCode);
 		reduce.setInactiveTime(vo.getInvalidDate());
 		reduce.setProductIds(JSON.toJSONString(vo.getProductList()));
 		reduce.setReachAmount(vo.getRuleAmount());
@@ -271,50 +248,14 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		reduce.setReduceCode(BmcSeqUtil.getReduceCode());
 		reduce.setReduceId(BmcSeqUtil.getReduceId());
 		reduce.setUnit(vo.getRuleUnit());
-		//TODO 改成更新
-	 //	cpFullReduceBusi.add(reduce);
-		
-	
-		//更新满赠表
-		for (String type : vo.getGiftType()) {
-			CpFullPresent present = new CpFullPresent();
-			if ("SERVICETYPE".equals(type)) {// 赠送业务类型
-				present.setPresentType(type);
-				present.setActiveTime(vo.getGiftActiveDate());
-				//present.setDetailCode(detailCode);
-				present.setInactiveTime(vo.getGiftInvalidDate());
+		// TODO 改成更新
+		// cpFullReduceBusi.add(reduce);
 
-				String presentCode = BmcSeqUtil.getPresentCode();
-				present.setPresentCode(presentCode);
-				present.setPresentId(BmcSeqUtil.getPresentId());
-				present.setProductGiftIds(JSON.toJSONString(vo.getGiftProList()));
-				present.setProductIds(JSON.toJSONString(vo.getProductList()));
-			} else if ("CASH".equals(type)) { // 赠送现金
-				present.setPresentType(type);
-				present.setPresentAmount(vo.getGitfAmount());
-				present.setActiveTime(vo.getGiftActiveDate());
-				//present.setDetailCode(detailCode);
-				present.setInactiveTime(vo.getGiftInvalidDate());
-				String presentCode = BmcSeqUtil.getPresentCode();
-				present.setPresentCode(presentCode);
-				present.setPresentId(BmcSeqUtil.getPresentId());
-				present.setProductIds(JSON.toJSONString(vo.getProductList()));
-			} else if ("VIRTURECOIN".equals(type)) {// 增送虚拟货币
-				present.setPresentType(type);
-				present.setPresentAmount(vo.getGitfAmount());
-				present.setActiveTime(vo.getGiftActiveDate());
-				//present.setDetailCode(detailCode);
-				present.setInactiveTime(vo.getGiftInvalidDate());
+		// 更新满赠表
 
-				String presentCode = BmcSeqUtil.getPresentCode();
-				present.setPresentCode(presentCode);
-				present.setPresentId(BmcSeqUtil.getPresentId());
-				present.setProductIds(JSON.toJSONString(vo.getProductList()));
-			}
-			//TODO 改成更新
-			//cpFullPresentBusi.addFullPresent(present);
-		} 
-		
+		// TODO 改成更新
+		// cpFullPresentBusi.addFullPresent(present);
+
 	}
 
 }

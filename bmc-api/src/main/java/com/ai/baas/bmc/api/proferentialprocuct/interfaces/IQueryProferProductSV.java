@@ -1,7 +1,9 @@
 package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductInfo;
+import com.ai.baas.bmc.api.proferentialprocuct.params.SingleProductInfo;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
@@ -27,4 +29,13 @@ public interface IQueryProferProductSV {
 	 */
 	@interface GetProductInfo{}
 	PageInfo<ProferProductInfo> getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
+	/**
+	 * 查询单个产品
+	 * @param param
+	 * @return
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	SingleProductInfo  getProductById(ProductQueryParam param) throws BusinessException, SystemException;	
 }

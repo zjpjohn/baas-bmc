@@ -17,5 +17,10 @@ public class CpFullReduceBusiImpl implements ICpFullReduceBusi {
 		
 		return null;
 	}
+	@Override
+	public CpFullReduce getFullReduce(String detailCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

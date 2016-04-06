@@ -5,75 +5,76 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
-import com.ai.opt.base.vo.BaseInfo;
+import com.ai.opt.base.vo.BaseResponse;
 /**
- * 优惠产品添加入参
+ * 查询单个产品返回参数
  *
- * Date: 2016年3月28日 <br>
+ * Date: 2016年4月6日 <br>
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
-public class ProferProductVO extends BaseInfo {
+public class SingleProductInfo extends BaseResponse {
 
 	
-	 
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
      * 消息流水<br>
      * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
-     * 必填<br>
-     * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="消息流水号不能为空")
 	private String tradeSeq;
+
+	/**
+	 * 租户Id
+	 */
+	private String tenantId;
 	
 	/**
 	 * 产品Id
 	 */
-	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="产品Id不能为空")
 	private Long productId;
 	
 	/**
 	 * 优惠产品类型，必填
 	 */
-	@NotNull(message="优惠产品类型不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="优惠产品类型不能为空")
 	private String productType;
 	
 	
 	/**
 	 * 优惠活动名称
 	 */
-	@NotNull(message="优惠活动名称不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="优惠活动名称不能为空")
 	private String programName;
 	
 	/**
 	 * 规则金额
 	 */
-	@NotNull(message="优惠规则不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="优惠规则不能为空")
 	private double ruleAmount;
 	/**
 	 * 规则单位
 	 */
-	@NotNull(message="优惠单位不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="优惠单位不能为空")
 	private String ruleUnit;
 	/**
 	 * 满减金额
 	 */
-	@NotNull(message="满减金额不能为空",groups={IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="满减金额不能为空")
 	private double reduceAmount;
 	
 	/**
 	 * 生效日期，必填
 	 */
-	@NotNull(message="生效日期不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="生效日期不能为空")
 	private Timestamp activeDate;
 	
 	/**
 	 * 失效时间，必填
 	 */
-	@NotNull(message=" 失效时间不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message=" 失效时间不能为空")
 	private Timestamp invalidDate;
 	/**
 	 * 备注
@@ -83,7 +84,7 @@ public class ProferProductVO extends BaseInfo {
 	 * 已选择的产品列表,必填
 	 */
 	private List<Integer> productList;
-
+	
 	/**
 	 * 操作员Id
 	 */
@@ -93,7 +94,12 @@ public class ProferProductVO extends BaseInfo {
 	 * 满赠数据
 	 */
 	private List<FullPresent> presentList;
-	
+	public String getTradeSeq() {
+		return tradeSeq;
+	}
+	public void setTradeSeq(String tradeSeq) {
+		this.tradeSeq = tradeSeq;
+	}
 	public Long getProductId() {
 		return productId;
 	}
@@ -112,7 +118,6 @@ public class ProferProductVO extends BaseInfo {
 	public void setProgramName(String programName) {
 		this.programName = programName;
 	}
-	
 	public double getRuleAmount() {
 		return ruleAmount;
 	}
@@ -149,13 +154,6 @@ public class ProferProductVO extends BaseInfo {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	
-	public String getTradeSeq() {
-		return tradeSeq;
-	}
-	public void setTradeSeq(String tradeSeq) {
-		this.tradeSeq = tradeSeq;
-	}
 	public List<Integer> getProductList() {
 		return productList;
 	}
@@ -163,13 +161,17 @@ public class ProferProductVO extends BaseInfo {
 		this.productList = productList;
 	}
 	
-	
-	
 	public String getOperatorId() {
 		return operatorId;
 	}
 	public void setOperatorId(String operatorId) {
 		this.operatorId = operatorId;
+	}
+	public String getTenantId() {
+		return tenantId;
+	}
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
 	}
 	public List<FullPresent> getPresentList() {
 		return presentList;
@@ -179,4 +181,5 @@ public class ProferProductVO extends BaseInfo {
 	}
 	
 	
+
 }
