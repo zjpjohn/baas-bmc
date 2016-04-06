@@ -100,10 +100,10 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         //获得缓存中第一条有效数据
         if (!(result == null || result.isEmpty())) {
             for(Map<String, String> r : result){
-                if(r.isEmpty()){
-                    String temp[] = result.get(0).get("subs_id").split("#");
+                if(!r.isEmpty()){
+                    String temp[] = r.get("subs_id").split("#");
                     subsId = temp[temp.length - 1];
-                    temp = result.get(0).get("acct_id").split("#");
+                    temp = r.get("acct_id").split("#");
                     acctId = temp[temp.length - 1];
                     break;
                 }
