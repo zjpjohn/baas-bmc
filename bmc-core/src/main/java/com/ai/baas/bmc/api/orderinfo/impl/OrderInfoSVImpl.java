@@ -209,6 +209,10 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 break;
             }
         }
+        if(custId == null){
+            LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + record.getExtCustId());
+            return ErrorCode.NULL + ":客户不存在";
+        }
         LoggerUtil.log.debug("获得cust_id:" + custId);
         // String custId = record.getExtCustId();
         LoggerUtil.log.debug("校验成功！");
