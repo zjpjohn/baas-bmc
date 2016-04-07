@@ -32,7 +32,7 @@ public class ScanCriteria {
         String detailColumnName = properties.getProperty("hbase.recode.detail.value.columnName");
         Criteria recordCriteria = new Criteria(tableName, columnFamilyName, columnName);
         recordCriteria.setDetailColumnName(detailColumnName);
-        clauses.put(AUDIT_CRITERIA, recordCriteria);
+        clauses.put(RECORD_CRITERIA, recordCriteria);
 
         tableName = properties.getProperty("hbase.failed.tableName");
         columnFamilyName = properties.getProperty("hbase.failed.columnFamilyName");
@@ -76,7 +76,9 @@ public class ScanCriteria {
         }
 
         public String getTableName() {
-            return baseTableName + "_" + suffix;
+            if (suffix == null || suffix.length() == 0)
+                return baseTableName;
+            return baseTableName + suffix;
         }
 
         public String getDetailColumnName() {

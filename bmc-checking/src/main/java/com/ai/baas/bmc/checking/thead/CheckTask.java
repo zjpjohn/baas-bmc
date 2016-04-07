@@ -62,9 +62,15 @@ public class CheckTask implements Callable<CheckResult> {
                     recordItemIterator.remove();
                 }
             }
+            logger.info("afterFailedBilled : Thread:{} batchId :{} lost size: {} ", Thread.currentThread().getName(),
+                    batchInfo.getBSN(), recordItems.size());
 
             checkResult.addTransFlowInfos(recordItems);
-            checkResult.setAuditMessage("Has lost data");
+            StringBuilder stringBuilder = new StringBuilder("Has lost sn: ");
+            for (RecordItem recordItem : recordItems){
+                stringBuilder.append(recordItem.getSN() + " ");
+            }
+            checkResult.setAuditMessage(stringBuilder.toString());
         }
 
         countDownLatch.countDown();
