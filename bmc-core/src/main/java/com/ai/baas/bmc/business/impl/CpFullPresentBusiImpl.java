@@ -9,26 +9,55 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ai.baas.bmc.business.interfaces.ICpFullPresentBusi;
 import com.ai.baas.bmc.dao.interfaces.CpFullPresentMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullPresent;
+import com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria;
+import com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria.Criteria;
+
 @Service
 @Transactional
 public class CpFullPresentBusiImpl implements ICpFullPresentBusi {
 
+	//TODO 需要统一检查如果需要使用缓存的需要使用缓存进行处理，统一排查
 	@Autowired
-	private CpFullPresentMapper CpFullPresentMapper;
+	private CpFullPresentMapper cpFullPresentMapper;
+
 	@Override
 	public Integer addFullPresent(CpFullPresent present) {
-		
-		return CpFullPresentMapper.insert(present);
+
+		return cpFullPresentMapper.insert(present);
 	}
+
 	@Override
 	public CpFullPresent getFullPresent(String detailCode) {
-		// TODO Auto-generated method stub
-		return null;
+		CpFullPresentCriteria example = new CpFullPresentCriteria();
+		Criteria criteria = example.createCriteria();
+		criteria.andDetailCodeEqualTo(detailCode);
+		
+		return  cpFullPresentMapper.selectByExample(example).get(0);
 	}
+
 	@Override
 	public List<CpFullPresent> getFullPresents(String detailCode) {
-		// TODO Auto-generated method stub
-		return null;
+		CpFullPresentCriteria example = new CpFullPresentCriteria();
+		Criteria criteria = example.createCriteria();
+		criteria.andDetailCodeEqualTo(detailCode);
+		return cpFullPresentMapper.selectByExample(example);
+	}
+
+	@Override
+	public CpFullPresent getFullPresent(Long presentId) {
+		CpFullPresentCriteria example = new CpFullPresentCriteria();
+		Criteria criteria = example.createCriteria();
+		criteria.andPresentIdEqualTo(presentId);
+		return cpFullPresentMapper.selectByExample(example).get(0);
+	}
+
+	@Override
+	public void updateFullPresent(CpFullPresent present) {
+		CpFullPresentCriteria example = new CpFullPresentCriteria();
+		Criteria criteria = example.createCriteria();
+		criteria.andPresentIdEqualTo(present.getPresentId());
+		cpFullPresentMapper.updateByExample(present, example);
+
 	}
 
 }

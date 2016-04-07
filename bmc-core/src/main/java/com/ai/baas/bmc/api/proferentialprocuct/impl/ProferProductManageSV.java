@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.api.proferentialprocuct.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +10,7 @@ import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.FullPresent;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
-import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedAccountVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.productDelVO;
 import com.ai.baas.bmc.business.interfaces.ICpFullPresentBusi;
 import com.ai.baas.bmc.business.interfaces.ICpFullReduceBusi;
@@ -82,7 +84,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		detail.setPriceCode(priceCode);
 		// 冗余字段，暂时不填
 		// detail.setServiceType(vo.getProductType());
-		cpPriceDetailBusi.addCpPriceDetal(detail);
+		cpPriceDetailBusi.addCpPriceDetail(detail);
 
 		/**
 		 * 插入满赠的详细表
@@ -148,7 +150,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		detail.setPriceCode(priceCode);
 		// 冗余字段，暂时不填
 		// detail.setServiceType(vo.getProductType());
-		cpPriceDetailBusi.addCpPriceDetal(detail);
+		cpPriceDetailBusi.addCpPriceDetail(detail);
 
 		/**
 		 * 插入满减的详细表
@@ -233,7 +235,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		// detail.setPriceCode(priceCode);
 		// 冗余字段，暂时不填
 		// detail.setServiceType(vo.getProductType());
-		cpPriceDetailBusi.addCpPriceDetal(detail);
+		cpPriceDetailBusi.addCpPriceDetail(detail);
 
 		/**
 		 * 更新满减的详细表
@@ -251,7 +253,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		reduce.setUnit(vo.getRuleUnit());
 		// TODO 改成更新
 		// cpFullReduceBusi.add(reduce);
-
+		
 		// 更新满赠表
 
 		// TODO 改成更新
@@ -260,14 +262,26 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	}
 
 	@Override
-	public void relatedAccout(RelatedVO vo) throws BusinessException, SystemException {//仅仅是关联处理，不是处理，参数需要调整
-		CpPriceInfo price=cpPriceInfoBusi.getCpPriceInfo(vo); 
-		CpPriceDetail detail=cpPriceDetailBusi.getCpPriceDetail(price.getPriceCode());
-		//如果是满赠，加入到满赠
-		
-		//如果是满减，加入到满减
-		
-		
+	public void relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException {
+		//满赠
+		if("PRESENT".equals(vo.getChargeType())){
+			List<Long> pIds=vo.getFullIds();
+			for(Long id:pIds){
+				CpFullPresent p=cpFullPresentBusi.getFullPresent(id);
+				p.setAccountType("");
+				p.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
+				cpFullPresentBusi.updateFullPresent(p);
+			}
+			
+		}
+		//满减
+		if("REDUCE".equals(vo.getChargeType())){
+			Long rId=vo.getFullIds().get(0);
+			CpFullReduce r=cpFullReduceBusi.getFullReduce(rId);
+			r.setRelatedAccount(JSON.toJSONString(vo.getFullIds()));
+			r.setAccountType(vo.getAccountType());
+			cpFullReduceBusi.updateFullReduce(r);
+		}
 		
 	}
 

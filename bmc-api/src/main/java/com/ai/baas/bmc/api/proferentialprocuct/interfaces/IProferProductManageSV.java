@@ -3,7 +3,7 @@ package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
-import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedAccountVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.productDelVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -83,6 +83,6 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode
 	 */
-	void relatedAccout(RelatedVO vo) throws BusinessException, SystemException;
+	void relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException;
 	
 }

@@ -21,7 +21,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 
 	@Override
 	public Integer addCpPriceInfo(CpPriceInfo info) {
-		
+		//TODO 向缓存中添加一份
 		Integer cpPriceInfoId=cpPriceInfoMapper.insert(info);
 		
 		return cpPriceInfoId;
@@ -31,6 +31,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 
 	@Override
 	public void delCpRpriceInfo(CpPriceInfo info) {
+		//TODO 还需要在缓存中进行删除
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(info.getTenantId()).andPriceInfoIdEqualTo(info.getPriceInfoId());
@@ -45,6 +46,9 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	 */
 	@Override
 	public List<CpPriceInfo> getCpPriceInfo(ProductQueryVO vo) {
+		//TODO 需要改成想缓存中获取
+		
+		
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
@@ -74,18 +78,23 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 
 	@Override
 	public CpPriceInfo getCpPriceInfo(ProductQueryParam param) {
-		
-		
-		
-		return null;
+		CpPriceInfoCriteria sql=new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
+		criteria.andTenantIdEqualTo(param.getTenantId());
+		criteria.andPriceInfoIdEqualTo(param.getProductId());
+		return cpPriceInfoMapper.selectByExample(sql).get(0);
 	}
 
 
 
 	@Override
 	public CpPriceInfo getCpPriceInfo(RelatedVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		CpPriceInfoCriteria sql=new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
+		criteria.andTenantIdEqualTo(vo.getTenantId());
+		criteria.andPriceInfoIdEqualTo(vo.getProductId());
+		
+		return cpPriceInfoMapper.selectByExample(sql).get(0);
 	}
 }
 

@@ -13,7 +13,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
  */
 public interface ICpPriceDetailBusi {
 
-	Integer addCpPriceDetal(CpPriceDetail info);
+	Integer addCpPriceDetail(CpPriceDetail info);
 	List<CpPriceDetail> getCpPriceDetail(CpPriceDetail detail);
 	CpPriceDetail getCpPriceDetail(String priceCode);
 }

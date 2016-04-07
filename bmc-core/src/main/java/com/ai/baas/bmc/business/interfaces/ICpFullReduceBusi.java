@@ -13,5 +13,16 @@ public interface ICpFullReduceBusi {
 	 * @ApiCode 
 	 */
 	Integer add(CpFullReduce present);
+	
 	CpFullReduce getFullReduce(String detailCode);
+	
+	CpFullReduce getFullReduce(Long id);
+	/**
+	 * 更新满减
+	 * @param present
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	void updateFullReduce(CpFullReduce present);
 }
