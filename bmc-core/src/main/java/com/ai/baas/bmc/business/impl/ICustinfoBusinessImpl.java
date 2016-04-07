@@ -145,8 +145,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
         if(!(result==null||result.isEmpty())){
             for(Map<String, String> r : result){
                 if(!r.isEmpty()){
-                    String temp[] = r.get("cust_id").split("#");
-                    custId = temp[temp.length - 1];
+                    custId = r.get("cust_id");
                     blCustinfo.setCustId(custId);
                     custobject.put("CUST_ID", custId);
                     bool = false;

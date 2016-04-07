@@ -201,12 +201,10 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         }
 
         // 循环获得第一条非空的数据
-        String custIds[];
         String custId = null;
         for (Map<String, String> r : result) {
             if (!r.isEmpty()) {
-                custIds = r.get("cust_id").split("#");
-                custId = custIds[custIds.length - 1];
+                custId = r.get("cust_id");
                 break;
             }
         }

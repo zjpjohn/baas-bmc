@@ -102,10 +102,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         if (!(result == null || result.isEmpty())) {
             for(Map<String, String> r : result){
                 if(!r.isEmpty()){
-                    String temp[] = r.get("subs_id").split("#");
-                    subsId = temp[temp.length - 1];
-                    temp = r.get("acct_id").split("#");
-                    acctId = temp[temp.length - 1];
+                    subsId = r.get("subs_id");
+                    acctId = r.get("acct_id");
                     break;
                 }
             }
