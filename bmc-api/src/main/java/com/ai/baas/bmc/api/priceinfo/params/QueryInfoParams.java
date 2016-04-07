@@ -24,48 +24,48 @@ public class QueryInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-  //  @NotNull(message="消息流水不能为空",groups={IBillQuerySV.GetBillInfo.class})
-   // @Size(max=32,groups={IBillQuerySV.GetBillInfo.class})
+    @NotNull(message="消息流水不能为空")
+   @Size(max=32)
     private String tradeSeq;
     
     /**
      * 标准资费ID
      * VARCHAR(32)
      */
-    //@Size(max=32,groups={IBillQuerySV.GetBillInfo.class})
+    @Size(max=32)
     private String standardId;
     
     /**
      * 资费名称
      * VARCHAR(64)
      */
-    //@Size(max=64,groups={IPriceInfoSV.GetPriceInfo.class})
+    @Size(max=64)
     private String priceName;
     
     /**
      * 业务类型
      * VARCHAR(32)
      */
-   // @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+   @Size(max=32)
     private String serviceType;
     
     /**
      * 资费状态
      * VARCHAR(32)
      */
-  //  @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+  @Size(max=32)
     private String priceState;
     
     /**
      * 请求查询的页码
      */
-    //@Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+    @Size(max=32)
     private Integer pageNo;
     
     /**
      * 每页显示条数
      */
-    //@Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+    @Size(max=32)
     private Integer pageSize;
     
     public Integer getPageNo() {
