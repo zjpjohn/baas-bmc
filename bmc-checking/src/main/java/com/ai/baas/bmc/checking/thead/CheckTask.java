@@ -66,10 +66,12 @@ public class CheckTask implements Callable<CheckResult> {
                     batchInfo.getBSN(), recordItems.size());
 
             checkResult.addTransFlowInfos(recordItems);
+
             StringBuilder stringBuilder = new StringBuilder("Has lost sn: ");
-            for (RecordItem recordItem : recordItems){
+            for (RecordItem recordItem : checkResult.getRecordItems()) {
                 stringBuilder.append(recordItem.getSN() + " ");
             }
+            logger.info("audit message : {}", stringBuilder.toString());
             checkResult.setAuditMessage(stringBuilder.toString());
         }
 

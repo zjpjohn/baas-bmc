@@ -36,7 +36,7 @@ public class CheckResult {
         if (isLost) {
             for (RecordItem recordItem : recordItems) {
                 logger.info("send message for bsn : " + recordItem.getDetail());
-                //MDSUtil.sendMessage(recordItem.getDetail());
+                MDSUtil.sendMessage(recordItem.getDetail());
             }
             auditResult = "Failed";
         } else {
@@ -74,5 +74,9 @@ public class CheckResult {
 
     public String getAuditState() {
         return auditState;
+    }
+
+    public List<RecordItem> getRecordItems() {
+        return recordItems;
     }
 }
