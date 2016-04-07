@@ -13,6 +13,11 @@ import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
 import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
+import com.ai.baas.bmc.util.DshmUtil;
+import com.ai.opt.sdk.util.StringUtil;
+import com.alibaba.fastjson.JSON;
+
+import net.sf.json.JSONObject;
 @Service
 @Transactional
 public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
@@ -20,25 +25,29 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	private CpPriceInfoMapper cpPriceInfoMapper;
 
 	@Override
-	public Integer addCpPriceInfo(CpPriceInfo info) {
-		//TODO 向缓存中添加一份
-		Integer cpPriceInfoId=cpPriceInfoMapper.insert(info);
-		
-		return cpPriceInfoId;
+	public Long addCpPriceInfo(CpPriceInfo info) {
+		//1 是添加，0是删除
+	
+		int cpPriceInfoId=cpPriceInfoMapper.insert(info);
+		if(cpPriceInfoId>0){ //刷新缓存
+			DshmUtil.getIdshmSV().initLoader("cp_price_info",JSON.toJSONString(info),1);	
+		}
+		return info.getPriceInfoId();
 	}
 	
 	
 
 	@Override
 	public void delCpRpriceInfo(CpPriceInfo info) {
-		//TODO 还需要在缓存中进行删除
+		//TODO 还需要在缓存中进行更新
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(info.getTenantId()).andPriceInfoIdEqualTo(info.getPriceInfoId());
-		cpPriceInfoMapper.updateByExample(info, example);
-
+		int count=cpPriceInfoMapper.updateByExample(info, example);
+		if(count>0){
+			DshmUtil.getIdshmSV().initLoader("cp_price_info",JSON.toJSONString(info),0);	
+		}
 	}
-
 
 
 	/**
@@ -46,8 +55,6 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	 */
 	@Override
 	public List<CpPriceInfo> getCpPriceInfo(ProductQueryVO vo) {
-		//TODO 需要改成想缓存中获取
-		
 		
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
@@ -69,7 +76,6 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 			example.setLimitStart((vo.getPageNo()-1)*vo.getPageSize());
 			example.setLimitEnd(vo.getPageSize());
 		}
-		
 		
 		return cpPriceInfoMapper.selectByExample(example);
 	}
@@ -95,6 +101,19 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		criteria.andPriceInfoIdEqualTo(vo.getProductId());
 		
 		return cpPriceInfoMapper.selectByExample(sql).get(0);
+	}
+
+
+
+	@Override
+	public void updatePriceInfo(CpPriceInfo info) {
+		CpPriceInfoCriteria sql=new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
+		criteria.andTenantIdEqualTo(info.getTenantId());
+		criteria.andPriceInfoIdEqualTo(info.getPriceInfoId());
+		cpPriceInfoMapper.updateByExample(info, sql);
+		
+		//TODO 需要维护一个缓存
 	}
 }
 

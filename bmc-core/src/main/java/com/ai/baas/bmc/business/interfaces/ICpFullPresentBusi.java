@@ -12,4 +12,5 @@ public interface ICpFullPresentBusi {
 	List<CpFullPresent> getFullPresents(String detailCode);
 	CpFullPresent getFullPresent(Long presentId);
 	void updateFullPresent(CpFullPresent present);
+	void deleteFullPresent(String detailCode);
 }

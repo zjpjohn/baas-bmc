@@ -10,6 +10,8 @@ import com.ai.baas.bmc.business.interfaces.ICpPriceDetailBusi;
 import com.ai.baas.bmc.dao.interfaces.CpPriceDetailMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetailCriteria;
+import com.ai.baas.bmc.util.DshmUtil;
+import com.alibaba.fastjson.JSON;
 @Service
 @Transactional
 public class CpPriceDetailBusiImpl implements ICpPriceDetailBusi {
@@ -17,10 +19,13 @@ public class CpPriceDetailBusiImpl implements ICpPriceDetailBusi {
 	@Autowired
 	private CpPriceDetailMapper cpPriceDetailMapper;
 	@Override
-	public Integer addCpPriceDetail(CpPriceDetail info) {
+	public Long addCpPriceDetail(CpPriceDetail info) {
 		//TODO 还需要刷到缓存当中去
-		
-		return cpPriceDetailMapper.insert(info);
+		int id=cpPriceDetailMapper.insert(info);
+		if(id>0){
+			DshmUtil.getIdshmSV().initLoader("cp_price_detail",JSON.toJSONString(info),1);	
+		}
+		return info.getDetailId();
 	}
 	@Override
 	public List<CpPriceDetail> getCpPriceDetail(CpPriceDetail detail) {
@@ -35,6 +40,14 @@ public class CpPriceDetailBusiImpl implements ICpPriceDetailBusi {
 		CpPriceDetailCriteria.Criteria criteria =sql.createCriteria();
 		criteria.andPriceCodeEqualTo(priceCode);
 		return cpPriceDetailMapper.selectByExample(sql).get(0);
+	}
+	@Override
+	public void updatePriceDetail(CpPriceDetail info) {
+		
+		CpPriceDetailCriteria sql=new CpPriceDetailCriteria();	
+		CpPriceDetailCriteria.Criteria criteria =sql.createCriteria();
+		criteria.andDetailIdEqualTo(info.getDetailId());
+		cpPriceDetailMapper.updateByExample(info, sql);
 	}
 	
 
