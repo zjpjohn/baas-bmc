@@ -59,13 +59,13 @@ public class QueryInfoParams extends BaseInfo {
     /**
      * 请求查询的页码
      */
-    @Size(max=32)
+    //@Size(max=32)
     private Integer pageNo;
     
     /**
      * 每页显示条数
      */
-    @Size(max=32)
+    //@Size(max=32)
     private Integer pageSize;
     
     public Integer getPageNo() {
