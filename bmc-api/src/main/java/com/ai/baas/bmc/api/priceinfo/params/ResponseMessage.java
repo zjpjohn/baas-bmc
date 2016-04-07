@@ -8,6 +8,7 @@ import com.ai.opt.base.vo.PageInfo;
 
 public class ResponseMessage extends BaseResponse {
 
+    private static final long serialVersionUID = -433299863493979L;
     private String returnCode;
     private String tradeSeq;
     private String tenantId;

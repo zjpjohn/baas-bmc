@@ -16,7 +16,7 @@ import com.ai.opt.base.vo.PageInfo;
  * @author KAI
  */
 public class QueryInfoParams extends BaseInfo {
-    //private static final long serialVersionUID = 37L;
+    private static final long serialVersionUID = 37L;
     
     /**
      * 消息流水<br>
@@ -24,36 +24,36 @@ public class QueryInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message="消息流水不能为空",groups={IBillQuerySV.GetBillInfo.class})
-    @Size(max=32,groups={IBillQuerySV.GetBillInfo.class})
+  //  @NotNull(message="消息流水不能为空",groups={IBillQuerySV.GetBillInfo.class})
+   // @Size(max=32,groups={IBillQuerySV.GetBillInfo.class})
     private String tradeSeq;
     
     /**
      * 标准资费ID
      * VARCHAR(32)
      */
-    @Size(max=32,groups={IBillQuerySV.GetBillInfo.class})
+    //@Size(max=32,groups={IBillQuerySV.GetBillInfo.class})
     private String standardId;
     
     /**
      * 资费名称
      * VARCHAR(64)
      */
-    @Size(max=64,groups={IPriceInfoSV.GetPriceInfo.class})
+    //@Size(max=64,groups={IPriceInfoSV.GetPriceInfo.class})
     private String priceName;
     
     /**
      * 业务类型
      * VARCHAR(32)
      */
-    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+   // @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private String serviceType;
     
     /**
      * 资费状态
      * VARCHAR(32)
      */
-    @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
+  //  @Size(max=32,groups={IPriceInfoSV.GetPriceInfo.class})
     private String priceState;
     
     /**
