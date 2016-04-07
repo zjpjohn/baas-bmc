@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.api.marketbleproduct.params;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -80,7 +81,11 @@ public class ProductVO extends BaseInfo{
 	 */
 	@NotNull(message="失效日期不能为空",groups={IProductManageSV.AddProduct.class})
 	private Timestamp invalidDate;
-	
+	/**
+	 * 产品总价
+	 */
+	@NotNull(message="产品总价",groups={IProductManageSV.AddProduct.class})
+	private BigDecimal TotalPrice;
 	
 	
 	public String getBillingType() {
@@ -150,6 +155,12 @@ public class ProductVO extends BaseInfo{
 	}
 	public void setActiveDateTag(String activeDateTag) {
 		this.activeDateTag = activeDateTag;
+	}
+	public BigDecimal getTotalPrice() {
+		return TotalPrice;
+	}
+	public void setTotalPrice(BigDecimal totalPrice) {
+		TotalPrice = totalPrice;
 	}
 	
 	

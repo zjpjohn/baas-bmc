@@ -42,9 +42,6 @@ public class ProductInfo extends BaseResponse{
 	 * 业务细分
 	 */
 	private List<ServiceVO> usageList;
-	
-	
-	
 
 	/**
 	 * 生效时间

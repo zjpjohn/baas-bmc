@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpPackageInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo" >
+    <id column="PACKAGE_ID" property="packageId" jdbcType="BIGINT" />
+    <id column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="DOUBLE" />
+    <result column="PRICE_VALUE" property="priceValue" jdbcType="DOUBLE" />
+    <result column="TOTAL_PRICE_VALUE" property="totalPriceValue" jdbcType="DOUBLE" />
+    <result column="UNIT_CODE" property="unitCode" jdbcType="VARCHAR" />
+    <result column="UNIT_TYPE" property="unitType" jdbcType="VARCHAR" />
+    <result column="FACTOR_CODE" property="factorCode" jdbcType="VARCHAR" />
+    <result column="EXCEED_TYPE" property="exceedType" jdbcType="VARCHAR" />
+    <result column="UNITPRICE_CODE" property="unitpriceCode" jdbcType="VARCHAR" />
+    <result column="EXT_CODE" property="extCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PACKAGE_ID, DETAIL_CODE, AMOUNT, UNIT_CODE, UNIT_TYPE, FACTOR_CODE, EXCEED_TYPE, 
+    UNITPRICE_CODE, EXT_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_package_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_package_info
+    where PACKAGE_ID = #{packageId,jdbcType=BIGINT}
+      and DETAIL_CODE = #{detailCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfoKey" >
+    delete from cp_package_info
+    where PACKAGE_ID = #{packageId,jdbcType=BIGINT}
+      and DETAIL_CODE = #{detailCode,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfoCriteria" >
+    delete from cp_package_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo" >
+    insert into cp_package_info (PACKAGE_ID, DETAIL_CODE, AMOUNT, 
+      PRICE_VALUE, TOTAL_PRICE_VALUE, UNIT_CODE, 
+      UNIT_TYPE, FACTOR_CODE, EXCEED_TYPE, 
+      UNITPRICE_CODE, EXT_CODE)
+    values (#{packageId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE}, 
+      #{priceValue,jdbcType=DOUBLE}, #{totalPriceValue,jdbcType=DOUBLE}, #{unitCode,jdbcType=VARCHAR}, 
+      #{unitType,jdbcType=VARCHAR}, #{factorCode,jdbcType=VARCHAR}, #{exceedType,jdbcType=VARCHAR}, 
+      #{unitpriceCode,jdbcType=VARCHAR}, #{extCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo" >
+    insert into cp_package_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="packageId != null" >
+        PACKAGE_ID,
+      </if>
+      <if test="detailCode != null" >
+        DETAIL_CODE,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="priceValue != null" >
+        PRICE_VALUE,
+      </if>
+      <if test="totalPriceValue != null" >
+        TOTAL_PRICE_VALUE,
+      </if>
+      <if test="unitCode != null" >
+        UNIT_CODE,
+      </if>
+      <if test="unitType != null" >
+        UNIT_TYPE,
+      </if>
+      <if test="factorCode != null" >
+        FACTOR_CODE,
+      </if>
+      <if test="exceedType != null" >
+        EXCEED_TYPE,
+      </if>
+      <if test="unitpriceCode != null" >
+        UNITPRICE_CODE,
+      </if>
+      <if test="extCode != null" >
+        EXT_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="packageId != null" >
+        #{packageId,jdbcType=BIGINT},
+      </if>
+      <if test="detailCode != null" >
+        #{detailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="priceValue != null" >
+        #{priceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPriceValue != null" >
+        #{totalPriceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="unitCode != null" >
+        #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="factorCode != null" >
+        #{factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="exceedType != null" >
+        #{exceedType,jdbcType=VARCHAR},
+      </if>
+      <if test="unitpriceCode != null" >
+        #{unitpriceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="extCode != null" >
+        #{extCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_package_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_package_info
+    <set >
+      <if test="record.packageId != null" >
+        PACKAGE_ID = #{record.packageId,jdbcType=BIGINT},
+      </if>
+      <if test="record.detailCode != null" >
+        DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        AMOUNT = #{record.amount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.priceValue != null" >
+        PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalPriceValue != null" >
+        TOTAL_PRICE_VALUE = #{record.totalPriceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="record.unitCode != null" >
+        UNIT_CODE = #{record.unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitType != null" >
+        UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factorCode != null" >
+        FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exceedType != null" >
+        EXCEED_TYPE = #{record.exceedType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitpriceCode != null" >
+        UNITPRICE_CODE = #{record.unitpriceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extCode != null" >
+        EXT_CODE = #{record.extCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_package_info
+    set PACKAGE_ID = #{record.packageId,jdbcType=BIGINT},
+      DETAIL_CODE = #{record.detailCode,jdbcType=VARCHAR},
+      AMOUNT = #{record.amount,jdbcType=DOUBLE},
+      PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
+      TOTAL_PRICE_VALUE = #{record.totalPriceValue,jdbcType=DOUBLE},
+      UNIT_CODE = #{record.unitCode,jdbcType=VARCHAR},
+      UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
+      FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
+      EXCEED_TYPE = #{record.exceedType,jdbcType=VARCHAR},
+      UNITPRICE_CODE = #{record.unitpriceCode,jdbcType=VARCHAR},
+      EXT_CODE = #{record.extCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo" >
+    update cp_package_info
+    <set >
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="priceValue != null" >
+        PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPriceValue != null" >
+        TOTAL_PRICE_VALUE = #{totalPriceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="unitCode != null" >
+        UNIT_CODE = #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="factorCode != null" >
+        FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="exceedType != null" >
+        EXCEED_TYPE = #{exceedType,jdbcType=VARCHAR},
+      </if>
+      <if test="unitpriceCode != null" >
+        UNITPRICE_CODE = #{unitpriceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="extCode != null" >
+        EXT_CODE = #{extCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PACKAGE_ID = #{packageId,jdbcType=BIGINT}
+      and DETAIL_CODE = #{detailCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo" >
+    update cp_package_info
+    set AMOUNT = #{amount,jdbcType=DOUBLE},
+      PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
+      TOTAL_PRICE_VALUE = #{totalPriceValue,jdbcType=DOUBLE},
+      UNIT_CODE = #{unitCode,jdbcType=VARCHAR},
+      UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
+      FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
+      EXCEED_TYPE = #{exceedType,jdbcType=VARCHAR},
+      UNITPRICE_CODE = #{unitpriceCode,jdbcType=VARCHAR},
+      EXT_CODE = #{extCode,jdbcType=VARCHAR}
+    where PACKAGE_ID = #{packageId,jdbcType=BIGINT}
+      and DETAIL_CODE = #{detailCode,jdbcType=VARCHAR}
+  </update>
+</mapper>
