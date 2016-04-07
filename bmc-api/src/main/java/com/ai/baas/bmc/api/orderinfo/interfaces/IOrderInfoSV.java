@@ -28,6 +28,7 @@ public interface IOrderInfoSV {
      * @return BaaS-000000成功；其他失败
      * @author caoyf
      * @ApiCode BaaS-0002
+     * @RestRelativeURL order/service/sync/orderinfo
      */
     @Path("/sync/orderinfo")
     @POST

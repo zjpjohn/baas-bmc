@@ -1,10 +1,11 @@
 package com.ai.baas.bmc.api.priceinfo.interfaces;
 
-import com.ai.baas.bmc.api.priceinfo.params.ResponseMessage;
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
+import com.ai.baas.bmc.api.priceinfo.params.ResponseMessage;
 import com.ai.baas.bmc.api.priceinfo.params.StandardPriceInfoParams;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseResponse;
 
 
 public interface IPriceInfoSV {
@@ -31,5 +32,5 @@ public interface IPriceInfoSV {
       * @author caoyf
       * @ApiCode BaaS-00003
       */
-     public String updatePriceInfo(StandardPriceInfoParams record)throws BusinessException,SystemException;
+     public BaseResponse updatePriceInfo(StandardPriceInfoParams record)throws BusinessException,SystemException;
 }

@@ -95,6 +95,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         Map<String, String> params = new TreeMap<String, String>();
         params.put("cust_id", custId);
         params.put("tenant_id", record.getTenantId());
+        params.put("ACTIVE_TIME", DateUtil.getTimestamp(record.getActiveTime(), DateUtil.YYYYMMDDHHMMSS).toString());
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_userinfo")
                 .where(params).executeQuery(DshmUtil.getCacheClient());
         //获得缓存中第一条有效数据

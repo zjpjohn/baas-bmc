@@ -34,6 +34,7 @@ public interface ICustInfoSV {
 	 * @author wangzhi 
 	 * @ApiCode BaaS-0001
 	 * @param cust java beans 对象
+	 * @RestRelativeURL cust/service/sync/custNotify
 	 */
 	@Path("/sync/custNotify")
     @POST
