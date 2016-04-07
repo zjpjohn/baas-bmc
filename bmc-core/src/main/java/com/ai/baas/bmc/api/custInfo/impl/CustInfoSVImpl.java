@@ -135,8 +135,6 @@ public class CustInfoSVImpl implements ICustInfoSV {
         	
         } catch (BusinessException e){
             return e.getErrorCode() + e.getErrorMessage();
-        } catch (Exception e1) {
-            return "writeData发生错误："+e1.getMessage();
         }
 	
 		return ErrorCode.SUCCESS;
