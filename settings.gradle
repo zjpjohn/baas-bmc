@@ -1,3 +1,2 @@
 include 'bmc-api','bmc-core'
-include 'bmc-checking'
 
