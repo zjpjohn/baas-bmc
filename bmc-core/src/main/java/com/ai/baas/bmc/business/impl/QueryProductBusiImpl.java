@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductInfo;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductQueryVO;
@@ -24,6 +26,8 @@ import com.ai.baas.bmc.dao.mapper.bo.CpStepInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria;
 import com.ai.opt.base.vo.ResponseHeader;
 
+@Service
+@Transactional
 public class QueryProductBusiImpl implements IQueryProductBusi {
 	@Autowired
 	private CpPriceInfoMapper cpPriceInfoMapper;
