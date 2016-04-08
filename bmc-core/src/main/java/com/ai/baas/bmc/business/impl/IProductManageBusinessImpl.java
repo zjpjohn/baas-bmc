@@ -53,9 +53,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		if (MyHbaseUtil.hasExists(table, rowkey)) {
 			return true;
 		}
-		MyHbaseUtil.addData(
-						table,
-						rowkey,
+		MyHbaseUtil.addData(table,rowkey,
 						CellTemp.inst(ConTradeSeqLog.TENANT_ID,
 								vo.getTenantId()),
 						CellTemp.inst(ConTradeSeqLog.INTERFACE_CODE,
@@ -98,24 +96,28 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
 
 		cpPriceInfoMapper.insert(cpPriceInfo);
+		//插入共享内存
 		DshmUtil.getIdshmSV().initLoader("cp_price_info",
 				priceinfobject.toString(), 0);
 		long stepSeq = 0;
 		for (ServiceVO s : vo.getMajorProductAmount()) {
+			//序列生成DETAIL_CODE
 			String detailCode = aISysSequenceSvc.terrigerSysSequence(
 					"DETAIL_CODE", 1).get(0);
 			CpPriceDetail(priceCode, vo, s, detailCode);
-			if (vo.getBillingType().equals("")) {
+			if (vo.getBillingType().equals("STEP")) {
+				//阶梯类型
 				stepSeq++;
 				CpStepInfo(detailCode, s, stepSeq, vo);
 			} else {
+				//标准类型
 				CpPackageInfo(detailCode, s, vo);
 
 			}
 		}
 
 	}
-
+//CpPriceDetail
 	private void CpPriceDetail(String priceCode, ProductVO vo, ServiceVO s,
 			String detailCode) {
 		JSONObject detailobject = new JSONObject();
@@ -145,7 +147,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		DshmUtil.getIdshmSV().initLoader("cp_price_detail",
 				detailobject.toString(), 0);
 	}
-
+//CpStepInfo
 	private void CpStepInfo(String detailCode, ServiceVO serviceVO,
 			long stepSeq, ProductVO vo) {
 		CpStepInfo cpStepInfo = new CpStepInfo();
@@ -178,7 +180,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		cpStepInfoMapper.insert(cpStepInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(),0);
 	}
-
+//CpPackageInfo
 	private void CpPackageInfo(String detailCode, ServiceVO serviceVO,
 			ProductVO vo) {
 		CpPackageInfo cpPackageInfo = new CpPackageInfo();

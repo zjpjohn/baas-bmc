@@ -24,8 +24,7 @@ public final class BmcSeqUtil {
      * @ApiCode
      */
     public static String getPriceCode() {
-        Long seq = SeqUtil.getNewId(SEQ.PRICE_CODE_SEQ);
-        return StringUtil.toString(seq);
+        return SeqUtil.getNewId(SEQ.PRICE_CODE_SEQ,10);
     }
     /**
      * 获取cpPiceId
@@ -45,8 +44,7 @@ public final class BmcSeqUtil {
      * @ApiCode
      */
     public static String getDetailCode() {
-        Long seq = SeqUtil.getNewId(SEQ.DETAIL_CODE_SEQ);
-        return StringUtil.toString(seq);
+        return SeqUtil.getNewId(SEQ.DETAIL_CODE_SEQ,10);
     }
     /**
      * 获取detailId
@@ -76,15 +74,14 @@ public final class BmcSeqUtil {
      * @ApiCode
      */
     public static String getPresentCode(){
-    	 Long seq = SeqUtil.getNewId(SEQ.PRESENT_CODE_SEQ);
-         return StringUtil.toString(seq);
+         return SeqUtil.getNewId(SEQ.PRESENT_CODE_SEQ,10);
     }
     public static Long getReduceId(){
     	return SeqUtil.getNewId(SEQ.REDUCE_ID_SEQ);
     }
+    
     public static String getReduceCode(){
-   	 Long seq = SeqUtil.getNewId(SEQ.REDUCE_CODE_SEQ);
-        return StringUtil.toString(seq);
+        return SeqUtil.getNewId(SEQ.REDUCE_CODE_SEQ,10);
    }
     
 }

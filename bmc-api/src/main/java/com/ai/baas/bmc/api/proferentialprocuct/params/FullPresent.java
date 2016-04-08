@@ -11,6 +11,10 @@ import java.util.List;
  */
 public class FullPresent {
 
+	/**
+	 * Id
+	 */
+	private Long presentId;
 	
 	/**
 	 * 赠品类型
@@ -62,6 +66,12 @@ public class FullPresent {
 	}
 	public void setGiftProList(List<Integer> giftProList) {
 		this.giftProList = giftProList;
+	}
+	public Long getPresentId() {
+		return presentId;
+	}
+	public void setPresentId(Long presentId) {
+		this.presentId = presentId;
 	}
 	
 	

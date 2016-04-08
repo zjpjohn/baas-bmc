@@ -93,6 +93,14 @@ public class ProferProductVO extends BaseInfo {
 	 * 满赠数据
 	 */
 	private List<FullPresent> presentList;
+	/**
+	 * 资费编码
+	 */
+	private String priceCode;
+	/**
+	 * 满减Id
+	 */
+	private Long reduceId;
 	
 	public Long getProductId() {
 		return productId;
@@ -163,8 +171,6 @@ public class ProferProductVO extends BaseInfo {
 		this.productList = productList;
 	}
 	
-	
-	
 	public String getOperatorId() {
 		return operatorId;
 	}
@@ -176,6 +182,18 @@ public class ProferProductVO extends BaseInfo {
 	}
 	public void setPresentList(List<FullPresent> presentList) {
 		this.presentList = presentList;
+	}
+	public String getPriceCode() {
+		return priceCode;
+	}
+	public void setPriceCode(String priceCode) {
+		this.priceCode = priceCode;
+	}
+	public Long getReduceId() {
+		return reduceId;
+	}
+	public void setReduceId(Long reduceId) {
+		this.reduceId = reduceId;
 	}
 	
 	

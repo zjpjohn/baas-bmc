@@ -15,7 +15,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
  */
 public interface ICpPriceInfoBusi {
 	
-	Integer addCpPriceInfo(CpPriceInfo info);
+	Long addCpPriceInfo(CpPriceInfo info);
 	
 	void delCpRpriceInfo(CpPriceInfo info);
 	
@@ -24,4 +24,7 @@ public interface ICpPriceInfoBusi {
 	CpPriceInfo getCpPriceInfo(ProductQueryParam param);
 	
 	CpPriceInfo getCpPriceInfo(RelatedVO vo);
+	
+	void updatePriceInfo(CpPriceInfo info);
+	
 }

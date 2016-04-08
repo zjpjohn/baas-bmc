@@ -56,8 +56,16 @@ public class CpFullPresentBusiImpl implements ICpFullPresentBusi {
 		CpFullPresentCriteria example = new CpFullPresentCriteria();
 		Criteria criteria = example.createCriteria();
 		criteria.andPresentIdEqualTo(present.getPresentId());
-		cpFullPresentMapper.updateByExample(present, example);
+		cpFullPresentMapper.updateByExampleSelective(present, example);
 
+	}
+
+	@Override
+	public void deleteFullPresent(String detailCode) {
+		CpFullPresentCriteria example = new CpFullPresentCriteria();
+		Criteria criteria = example.createCriteria();
+		criteria.andDetailCodeEqualTo(detailCode);
+		cpFullPresentMapper.deleteByExample(example);
 	}
 
 }
