@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ai.baas.bmc.api.custInfo.impl.CustInfoSVImpl;
 import com.ai.baas.bmc.api.marketbleproduct.interfaces.IProductManageSV;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProcductResponse;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductActiveVO;
@@ -39,7 +38,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 
 	@Autowired
 	private IProductManageBusiness iProductManageBusiness;
-
+//新建产品
 	@Override
 	public ProcductResponse addProduct(ProductVO vo) throws BusinessException,
 			SystemException {
@@ -50,6 +49,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 			log.debug("addProduct() vo = " + vo.toString() + "]");
 		}
 		ProcductResponse response = new ProcductResponse();
+		//判重
 		try {
 			if (iProductManageBusiness.hasSeq(vo)) {
 
@@ -62,7 +62,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 			LoggerUtil.log.error(e.getStackTrace());
 			throw new SystemException(e.getMessage());
 		}
-
+       //数据校验
 		ProcductResponse resultCode = InCheckUtil.check(vo.getActiveDate(),
 				"activeDate", false, 0);
 		if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
@@ -78,7 +78,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 			return resultCode;
 		}
 		resultCode = InCheckUtil.check(vo.getBillingType(), "billingType",
-				false, 0);
+				false, 32,"","");
 		if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
 			return resultCode;
 		}
@@ -149,7 +149,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 			if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
 				return resultCode;
 			}
-			resultCode = InCheckUtil.check(s.getPrice(), "", false, 0);
+			resultCode = InCheckUtil.check(s.getPrice(), "price", false, 0);
 			if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
 				return resultCode;
 			}
@@ -219,10 +219,15 @@ public class IProductManageSVImpl implements IProductManageSV {
 			}
 
 		}
+		//数据库操作
 		try {
 			iProductManageBusiness.addproduct(vo);
 
 		} catch (Exception e) {
+			ResponseHeader responseHeader = new ResponseHeader(true,
+					ErrorCode.FALSE, "失败");
+			response.setResponseHeader(responseHeader);
+			return response;
 
 		}
 
