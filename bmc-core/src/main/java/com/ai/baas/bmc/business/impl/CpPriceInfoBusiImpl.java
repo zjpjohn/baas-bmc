@@ -44,7 +44,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(info.getTenantId()).andPriceInfoIdEqualTo(info.getPriceInfoId());
 		
-		int count=cpPriceInfoMapper.updateByPrimaryKeySelective(info);
+		int count=cpPriceInfoMapper.updateByExampleSelective(info, example);
 		/*if(count>0){
 			DshmUtil.getIdshmSV().initLoader("cp_price_info",JSON.toJSONString(info),0);	
 		}*/
@@ -112,7 +112,8 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
 		criteria.andTenantIdEqualTo(info.getTenantId());
 		criteria.andPriceInfoIdEqualTo(info.getPriceInfoId());
-		cpPriceInfoMapper.updateByExample(info, sql);
+	
+		cpPriceInfoMapper.updateByExampleSelective(info,sql);
 		
 		//TODO 需要维护一个缓存
 	}
