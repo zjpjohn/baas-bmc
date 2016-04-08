@@ -3,7 +3,7 @@ package com.ai.baas.bmc.api.priceinfo.params;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.ai.baas.bmc.api.billQuery.interfaces.IBillQuerySV;
+
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.opt.base.vo.BaseInfo;
 import com.ai.opt.base.vo.PageInfo;
