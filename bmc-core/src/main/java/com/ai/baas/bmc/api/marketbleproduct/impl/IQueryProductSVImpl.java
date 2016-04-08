@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.ai.baas.bmc.api.marketbleproduct.interfaces.IQueryProductSV;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductInfo;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductQueryVO;
-import com.ai.baas.bmc.business.impl.QueryProductBusiImpl;
+import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
@@ -22,7 +22,7 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 	private static final Logger log = LogManager
 			.getLogger(IQueryProductSVImpl.class);
 	@Autowired
-	private QueryProductBusiImpl iQueryProductBusiImpl;
+	private IQueryProductBusi iQueryProductBusiImpl;
 	
 	@Override
 	public PageInfo<ProductInfo> getProductInfo(ProductQueryVO vo)
