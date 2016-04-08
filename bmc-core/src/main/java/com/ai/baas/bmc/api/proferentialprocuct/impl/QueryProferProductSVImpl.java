@@ -49,7 +49,9 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 		List<CpPriceInfo> priceInfoList = iCpPriceInfoBusi.getCpPriceInfo(vo);
 
 		PageInfo<ProferProductInfo> page = new PageInfo<ProferProductInfo>();
-		page.setPageCount(priceInfoList.size()); // 得到总条数
+		page.setCount(priceInfoList.size()); // 得到总条数
+		page.setPageNo(vo.getPageNo());
+		page.setPageSize(vo.getPageSize());
 		List<ProferProductInfo> list = new ArrayList<ProferProductInfo>();
 		ProferProductInfo productInfo = null;
 		for (CpPriceInfo info : priceInfoList) {
@@ -63,47 +65,59 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 			productInfo.setTenantId(info.getTenantId());
 			productInfo.setTradeSeq(vo.getTradeSeq());
 			CpPriceDetail detail = iCpPriceDetailBusi.getCpPriceDetail(info.getPriceCode());
-			productInfo.setProferType(detail.getChargeType());
-			String detailCode = detail.getDetailCode();
-			String chargeType = detail.getChargeType();
+			if(detail!=null){
+				productInfo.setProferType(detail.getChargeType());
+				String detailCode = detail.getDetailCode();
+				String chargeType = detail.getChargeType();
 
-			if (chargeType.equals("PRESENT")) { // 如果类型是满赠
-				// 赠表可能有多个记录
-				// CpFullPresent present=
-				// iCpFullPresentBusi.getFullPresent(detailCode);
-				List<CpFullPresent> presentList = iCpFullPresentBusi.getFullPresents(detailCode);
-				StringBuffer sb = new StringBuffer();
-				for (CpFullPresent present : presentList) {
-					sb.append("满");
-					sb.append(present.getReachAmount());
-					sb.append("赠送");
-					String presentType = present.getPresentType();
-					if (presentType.equals("SERVICETYPE")) {
-						sb.append("赠送业务");
-					} else if ("CASH".equals(presentType)) {
-						sb.append(present.getPresentAmount());
-						sb.append("元");
-					} else if ("VIRTURECOIN".equals(presentType)) {
-						sb.append(present.getPresentAmount());
-						sb.append("个虚拟货币");
+				if (chargeType.equals("PRESENT")) { // 如果类型是满赠
+					// 赠表可能有多个记录
+					// CpFullPresent present=
+					// iCpFullPresentBusi.getFullPresent(detailCode);
+					List<CpFullPresent> presentList = iCpFullPresentBusi.getFullPresents(detailCode);
+					if(!CollectionUtil.isEmpty(presentList)){
+						StringBuffer sb = new StringBuffer();
+						for (CpFullPresent present : presentList) {
+							sb.append("满");
+							sb.append(present.getReachAmount());
+							sb.append("赠送");
+							String presentType = present.getPresentType();
+							if (presentType.equals("SERVICETYPE")) {
+								sb.append("赠送业务");
+							} else if ("CASH".equals(presentType)) {
+								sb.append(present.getPresentAmount());
+								sb.append("元");
+							} else if ("VIRTURECOIN".equals(presentType)) {
+								sb.append(present.getPresentAmount());
+								sb.append("个虚拟货币");
+							}
+							sb.append(";");
+						}
+						String rule = sb.toString();
+						if(rule.length()>1){
+							productInfo.setRule(rule.substring(0, rule.length() - 1));
+						}
 					}
-					sb.append(";");
+					
+					
+				} else if (chargeType.equals("REDUCE")) { // 如果是满减
+					CpFullReduce cpFullReduce = iCpFullReduceBusi.getFullReduce(detailCode);
+					if(cpFullReduce!=null){
+						StringBuffer sb = new StringBuffer();
+						sb.append("满");
+						sb.append(cpFullReduce.getReachAmount());
+						sb.append(cpFullReduce.getUnit());
+						sb.append("减");
+						sb.append(cpFullReduce.getReduceAmount());
+						sb.append("元");
+						productInfo.setRule(sb.toString());
+					}
+					
+				} else {
+					productInfo.setRule("");
 				}
-				String rule = sb.toString();
-				productInfo.setRule(rule.substring(0, rule.length() - 1));
-			} else if (chargeType.equals("REDUCE")) { // 如果是满减
-				CpFullReduce cpFullReduce = iCpFullReduceBusi.getFullReduce(detailCode);
-				StringBuffer sb = new StringBuffer();
-				sb.append("满");
-				sb.append(cpFullReduce.getReachAmount());
-				sb.append(cpFullReduce.getUnit());
-				sb.append("减");
-				sb.append(cpFullReduce.getReduceAmount());
-				sb.append("元");
-				productInfo.setRule(sb.toString());
-			} else {
-				productInfo.setRule("");
 			}
+			
 			list.add(productInfo);
 		}
 		page.setResult(list);

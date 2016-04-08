@@ -11,6 +11,7 @@ import com.ai.baas.bmc.dao.interfaces.CpPriceDetailMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetailCriteria;
 import com.ai.baas.bmc.util.DshmUtil;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.alibaba.fastjson.JSON;
 @Service
 @Transactional
@@ -39,7 +40,11 @@ public class CpPriceDetailBusiImpl implements ICpPriceDetailBusi {
 		CpPriceDetailCriteria sql=new CpPriceDetailCriteria();	
 		CpPriceDetailCriteria.Criteria criteria =sql.createCriteria();
 		criteria.andPriceCodeEqualTo(priceCode);
-		return cpPriceDetailMapper.selectByExample(sql).get(0);
+		List<CpPriceDetail> list=cpPriceDetailMapper.selectByExample(sql);
+		if(!CollectionUtil.isEmpty(list)){
+			return list.get(0);
+		}
+		return null;
 	}
 	@Override
 	public void updatePriceDetail(CpPriceDetail info) {

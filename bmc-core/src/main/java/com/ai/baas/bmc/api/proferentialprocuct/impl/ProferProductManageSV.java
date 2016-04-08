@@ -111,6 +111,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			present.setProductIds(JSON.toJSONString(vo.getProductList()));
 			present.setReachAmount(vo.getRuleAmount());
 			present.setPresentAmount(p.getGitfAmount());
+			present.setUnit(vo.getRuleUnit());
 			cpFullPresentBusi.addFullPresent(present);
 		}
 		ProductResponse response = new ProductResponse();
@@ -255,13 +256,15 @@ public class ProferProductManageSV implements IProferProductManageSV {
 				cfp.setPresentCode(presentCode);
 				cfp.setPresentId(BmcSeqUtil.getPresentId());
 				cfp.setProductGiftIds(JSON.toJSONString(p.getGiftProList()));
+				cfp.setReachAmount(vo.getRuleAmount());
 				cfp.setProductIds(JSON.toJSONString(vo.getProductList()));
 				cfp.setPresentAmount(p.getGitfAmount());
+				cfp.setUnit(vo.getRuleUnit());
 				cpFullPresentBusi.addFullPresent(cfp);
 			}
 		}
 		if ("REDUCE".equals(chargeType)) {// 满减
-		
+			
 			CpFullReduce reduce = new CpFullReduce();
 			reduce.setActiveTime(vo.getActiveDate());
 			// reduce.setDetailCode(detailCode);
@@ -285,7 +288,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			List<Long> pIds = vo.getFullIds();
 			for (Long id : pIds) {
 				CpFullPresent p = cpFullPresentBusi.getFullPresent(id);
-				p.setAccountType("");
+				p.setAccountType(vo.getAccountType());
 				p.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
 				cpFullPresentBusi.updateFullPresent(p);
 			}
@@ -295,9 +298,16 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		if ("REDUCE".equals(vo.getChargeType())) {
 			Long rId = vo.getFullIds().get(0);
 			CpFullReduce r = cpFullReduceBusi.getFullReduce(rId);
-			r.setRelatedAccount(JSON.toJSONString(vo.getFullIds()));
-			r.setAccountType(vo.getAccountType());
-			cpFullReduceBusi.updateFullReduce(r);
+			if(r!=null){
+				System.out.println("-------"+JSON.toJSONString(vo.getFullIds()));
+				
+				CpFullReduce cfr=new CpFullReduce();
+				cfr.setRelatedAccount(JSON.toJSONString(vo.getFullIds()));
+				cfr.setAccountType(vo.getAccountType());
+				cfr.setReduceId(r.getReduceId());
+				cpFullReduceBusi.updateFullReduce(cfr);
+			}
+			
 		}
 
 	}

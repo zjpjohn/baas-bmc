@@ -14,6 +14,7 @@ import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
 import com.ai.baas.bmc.util.DshmUtil;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.fastjson.JSON;
 
@@ -100,8 +101,11 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
 		criteria.andPriceInfoIdEqualTo(vo.getProductId());
-		
-		return cpPriceInfoMapper.selectByExample(sql).get(0);
+		List<CpPriceInfo> list=cpPriceInfoMapper.selectByExample(sql);
+		if(!CollectionUtil.isEmpty(list)){
+			return list.get(0);
+		}
+		return null;
 	}
 
 

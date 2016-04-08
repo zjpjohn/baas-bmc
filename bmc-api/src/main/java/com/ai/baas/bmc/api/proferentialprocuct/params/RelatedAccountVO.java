@@ -23,7 +23,7 @@ public class RelatedAccountVO extends BaseInfo {
 	/**
 	 * 关联费用列表
 	 */
-	private List<String> relAccounts;
+	private List<Long> relAccounts;
 	/** 
 	 * 产品Id
 	 */
@@ -59,11 +59,13 @@ public class RelatedAccountVO extends BaseInfo {
 		this.tradeSeq = tradeSeq;
 	}
 
-	public List<String> getRelAccounts() {
+	
+
+	public List<Long> getRelAccounts() {
 		return relAccounts;
 	}
 
-	public void setRelAccounts(List<String> relAccounts) {
+	public void setRelAccounts(List<Long> relAccounts) {
 		this.relAccounts = relAccounts;
 	}
 
