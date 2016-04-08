@@ -43,10 +43,11 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(info.getTenantId()).andPriceInfoIdEqualTo(info.getPriceInfoId());
-		int count=cpPriceInfoMapper.updateByExample(info, example);
-		if(count>0){
+		
+		int count=cpPriceInfoMapper.updateByPrimaryKeySelective(info);
+		/*if(count>0){
 			DshmUtil.getIdshmSV().initLoader("cp_price_info",JSON.toJSONString(info),0);	
-		}
+		}*/
 	}
 
 

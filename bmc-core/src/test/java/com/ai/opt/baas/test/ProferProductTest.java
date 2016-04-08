@@ -11,9 +11,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
+import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.FullPresent;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
 import com.ai.opt.sdk.util.DateUtil;
+import com.alibaba.fastjson.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/context/core-context.xml" })
@@ -78,9 +80,49 @@ public class ProferProductTest {
 		vo.setRuleUnit("YUAN");
 		vo.setTenantId("BYD");
 		vo.setTradeSeq("11111111111111111111111111111111111");
+		System.out.println(JSON.toJSONString(vo));
 		iProferProductManageSV.addProferProduct(vo);
 	}
+	//测试满减
+	@Test
+	public void testAddmanjian(){
+		//测试满赠添加
+		ProferProductVO vo=new ProferProductVO();
+		vo.setActiveDate(DateUtil.getSysDate());
+		vo.setComments("这是个测试产品");
+		vo.setInvalidDate(DateUtil.getSysDate());
+		vo.setOperatorId("BYD001");
 	
+		//产品列表
+		List<Integer> list1=new ArrayList<Integer>();
+		list1.add(1);
+		list1.add(2);
+		list1.add(3);
+		vo.setProductList(list1);
+		
+		
+		vo.setProductType("PRESENT");
+		vo.setProgramName("满减活动");
+		vo.setRuleAmount(180);
+		vo.setRuleUnit("YUAN");
+		vo.setTenantId("BYD");
+		vo.setTradeSeq("11111111111111111111111111111111111");
+		vo.setReduceAmount(10);
+		System.out.println(JSON.toJSONString(vo));
+		iProferProductManageSV.addDiscontProduct(vo);
+	}
+	@Test
+	public void updateStatus(){
+		
+		
+		ActiveProductVO vo=new ActiveProductVO();
+		vo.setProductId(21L);
+		vo.setStatus("ACTIVE");
+		vo.setTenantId("BYD");
+		vo.setTradeSeq("BYD2016040812312321321");
+		System.out.println("---->"+JSON.toJSONString(vo));
+		iProferProductManageSV.updateProferProductStatus(vo);
+	}
 	
 	
 	

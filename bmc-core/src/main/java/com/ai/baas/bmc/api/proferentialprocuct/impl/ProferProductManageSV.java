@@ -1,5 +1,8 @@
 package com.ai.baas.bmc.api.proferentialprocuct.impl;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +87,11 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		detail.setPriceCode(priceCode);
 		// 冗余字段，暂时不填
 		// detail.setServiceType(vo.getProductType());
+		
+		detail.setActiveTime(DateUtil.getTimestamp("2015-1-1"));
+		detail.setInactiveTime(DateUtil.getTimestamp("2030-1-1"));
+		detail.setServiceType(vo.getProductType());
+		
 		cpPriceDetailBusi.addCpPriceDetail(detail);
 
 		/**
@@ -101,6 +109,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			present.setPresentId(BmcSeqUtil.getPresentId());
 			present.setProductGiftIds(JSON.toJSONString(p.getGiftProList()));
 			present.setProductIds(JSON.toJSONString(vo.getProductList()));
+			present.setReachAmount(vo.getRuleAmount());
 			present.setPresentAmount(p.getGitfAmount());
 			cpFullPresentBusi.addFullPresent(present);
 		}
@@ -144,6 +153,10 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		String detailCode = BmcSeqUtil.getDetailCode();
 		detail.setDetailCode(detailCode);
 		detail.setDetailId(BmcSeqUtil.getDetailId());
+		//设置缺省值
+		detail.setActiveTime(DateUtil.getTimestamp("2015-1-1"));
+		detail.setInactiveTime(DateUtil.getTimestamp("2030-1-1"));
+		detail.setServiceType(vo.getProductType());
 		// 冗余字段，暂时不填
 		// detail.setDetailName(vo.getProgramName());
 		// detail.setInactiveTime(vo.getInvalidDate());
