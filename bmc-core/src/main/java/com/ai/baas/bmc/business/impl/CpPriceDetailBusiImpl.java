@@ -47,7 +47,7 @@ public class CpPriceDetailBusiImpl implements ICpPriceDetailBusi {
 		CpPriceDetailCriteria sql=new CpPriceDetailCriteria();	
 		CpPriceDetailCriteria.Criteria criteria =sql.createCriteria();
 		criteria.andDetailIdEqualTo(info.getDetailId());
-		cpPriceDetailMapper.updateByExample(info, sql);
+		cpPriceDetailMapper.updateByExampleSelective(info, sql);
 	}
 	
 

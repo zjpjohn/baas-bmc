@@ -30,7 +30,7 @@ public class CpFullReduceBusiImpl implements ICpFullReduceBusi {
 		CpFullReduceCriteria sql=new CpFullReduceCriteria();
 		CpFullReduceCriteria.Criteria  criteria=sql.createCriteria();
 		criteria.andReduceIdEqualTo(present.getReduceId());
-		cpFullReduceMapper.updateByExample(present, sql);
+		cpFullReduceMapper.updateByExampleSelective(present, sql);
 		
 	}
 	@Override

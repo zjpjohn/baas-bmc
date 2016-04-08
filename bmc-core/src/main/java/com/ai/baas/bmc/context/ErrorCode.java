@@ -31,4 +31,10 @@ public final class ErrorCode {
      * 已存在
      */
     public static final String EXIST = "BaaS-000001";
+    /**
+     * 查询失败
+     */
+    public static final String FALSE = "BaaS-000001";
+
+    
 }
