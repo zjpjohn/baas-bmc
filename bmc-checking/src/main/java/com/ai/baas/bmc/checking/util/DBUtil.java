@@ -64,7 +64,7 @@ public class DBUtil {
         Connection connection = dataSource.getConnection();
         try {
             for (String suffix : tableNameSuffixes) {
-                final String querySql = "SELECT BSN, DATA_COUNT FROM " + baseTableName + "_" +
+                final String querySql = "SELECT BSN, DATA_COUNT FROM " + baseTableName +
                         suffix + " WHERE IS_SWITCH = 'Y' AND CHECK_STATE='N' AND SWITCH_TIME < DATE_SUB(NOW(),INTERVAL ? MINUTE)";
                 logger.info("query uncheck batch info SQL :{}", querySql);
                 PreparedStatement preparedStatement = connection.prepareStatement(querySql);
