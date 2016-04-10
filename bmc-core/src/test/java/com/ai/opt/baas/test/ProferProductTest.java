@@ -17,6 +17,7 @@ import com.ai.baas.bmc.api.proferentialprocuct.params.FullPresent;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedAccountVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.opt.sdk.util.DateUtil;
 import com.alibaba.fastjson.JSON;
 
@@ -282,6 +283,38 @@ public class ProferProductTest {
 		vo.setTradeSeq("xuliehao123");
 		
 		iProferProductManageSV.relatedAccout(vo);
+	}
+	//测试关联费用科目-满赠
+		@Test
+		public void testRelatedAccount2(){
+			RelatedAccountVO vo=new RelatedAccountVO();
+			vo.setAccountType("xiangdankemuzengjia");
+			vo.setChargeType("PRESENT");
+			vo.setProductId(561L);
+			List<Long> list=new ArrayList<Long>();
+			list.add(1L);
+			list.add(2L);
+			list.add(3L);
+			vo.setRelAccounts(list);
+			
+			List<Long> list1=new ArrayList<Long>();
+			list1.add(282L);
+			list1.add(283L);
+			list1.add(284L);
+			vo.setFullIds(list1);
+			vo.setTenantId("BYD");
+			vo.setTradeSeq("xuliehao123");
+			
+			iProferProductManageSV.relatedAccout(vo);
+		}
+	//获取关联的费用科目
+	@Test
+	public void testgetRelated(){
+		RelatedVO vo=new RelatedVO();
+		vo.setProductId(561L);
+		vo.setTenantId("BYD");
+		vo.setTradeSeq("12321321321");
+		System.out.println(JSON.toJSONString(iQueryProferProductSV.getRelatedAccount(vo)));
 	}
 	
 }

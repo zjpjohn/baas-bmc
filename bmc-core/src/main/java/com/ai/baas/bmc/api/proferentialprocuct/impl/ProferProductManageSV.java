@@ -288,6 +288,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			List<Long> pIds = vo.getFullIds();
 			for (Long id : pIds) {
 				CpFullPresent p = cpFullPresentBusi.getFullPresent(id);
+				
 				p.setAccountType(vo.getAccountType());
 				p.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
 				cpFullPresentBusi.updateFullPresent(p);
