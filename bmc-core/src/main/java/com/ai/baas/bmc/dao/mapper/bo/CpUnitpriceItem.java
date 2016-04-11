@@ -21,6 +21,8 @@ public class CpUnitpriceItem {
 
     private Timestamp inactiveTime;
 
+    private String activeStatus;
+
     private String itemExtCode;
 
     private String comments;
@@ -95,6 +97,14 @@ public class CpUnitpriceItem {
 
     public void setInactiveTime(Timestamp inactiveTime) {
         this.inactiveTime = inactiveTime;
+    }
+
+    public String getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(String activeStatus) {
+        this.activeStatus = activeStatus == null ? null : activeStatus.trim();
     }
 
     public String getItemExtCode() {

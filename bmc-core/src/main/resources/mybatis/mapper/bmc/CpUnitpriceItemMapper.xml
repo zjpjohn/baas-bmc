@@ -11,6 +11,7 @@
     <result column="SUBJECT_CODE" property="subjectCode" jdbcType="VARCHAR" />
     <result column="ACTIVE_TIME" property="activeTime" jdbcType="TIMESTAMP" />
     <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="TIMESTAMP" />
+    <result column="ACTIVE_STATUS" property="activeStatus" jdbcType="VARCHAR" />
     <result column="ITEM_EXT_CODE" property="itemExtCode" jdbcType="VARCHAR" />
     <result column="comments" property="comments" jdbcType="VARCHAR" />
   </resultMap>
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     UNIT_ITEM_ID, FEE_ITEM_CODE, FEE_TYPE, PRICE_VALUE, UNIT_TYPE_VALUE, UNIT_TYPE, SUBJECT_CODE, 
-    ACTIVE_TIME, INACTIVE_TIME, ITEM_EXT_CODE, comments
+    ACTIVE_TIME, INACTIVE_TIME, ACTIVE_STATUS, ITEM_EXT_CODE, comments
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria" >
     select
@@ -113,11 +114,13 @@
     insert into cp_unitprice_item (UNIT_ITEM_ID, FEE_ITEM_CODE, FEE_TYPE, 
       PRICE_VALUE, UNIT_TYPE_VALUE, UNIT_TYPE, 
       SUBJECT_CODE, ACTIVE_TIME, INACTIVE_TIME, 
-      ITEM_EXT_CODE, comments)
+      ACTIVE_STATUS, ITEM_EXT_CODE, comments
+      )
     values (#{unitItemId,jdbcType=INTEGER}, #{feeItemCode,jdbcType=VARCHAR}, #{feeType,jdbcType=INTEGER}, 
       #{priceValue,jdbcType=DOUBLE}, #{unitTypeValue,jdbcType=DOUBLE}, #{unitType,jdbcType=VARCHAR}, 
       #{subjectCode,jdbcType=VARCHAR}, #{activeTime,jdbcType=TIMESTAMP}, #{inactiveTime,jdbcType=TIMESTAMP}, 
-      #{itemExtCode,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR})
+      #{activeStatus,jdbcType=VARCHAR}, #{itemExtCode,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem" >
     insert into cp_unitprice_item
@@ -148,6 +151,9 @@
       </if>
       <if test="inactiveTime != null" >
         INACTIVE_TIME,
+      </if>
+      <if test="activeStatus != null" >
+        ACTIVE_STATUS,
       </if>
       <if test="itemExtCode != null" >
         ITEM_EXT_CODE,
@@ -183,6 +189,9 @@
       </if>
       <if test="inactiveTime != null" >
         #{inactiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activeStatus != null" >
+        #{activeStatus,jdbcType=VARCHAR},
       </if>
       <if test="itemExtCode != null" >
         #{itemExtCode,jdbcType=VARCHAR},
@@ -228,6 +237,9 @@
       <if test="record.inactiveTime != null" >
         INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.activeStatus != null" >
+        ACTIVE_STATUS = #{record.activeStatus,jdbcType=VARCHAR},
+      </if>
       <if test="record.itemExtCode != null" >
         ITEM_EXT_CODE = #{record.itemExtCode,jdbcType=VARCHAR},
       </if>
@@ -250,6 +262,7 @@
       SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
       ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
       INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
+      ACTIVE_STATUS = #{record.activeStatus,jdbcType=VARCHAR},
       ITEM_EXT_CODE = #{record.itemExtCode,jdbcType=VARCHAR},
       comments = #{record.comments,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -283,6 +296,9 @@
       <if test="inactiveTime != null" >
         INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="activeStatus != null" >
+        ACTIVE_STATUS = #{activeStatus,jdbcType=VARCHAR},
+      </if>
       <if test="itemExtCode != null" >
         ITEM_EXT_CODE = #{itemExtCode,jdbcType=VARCHAR},
       </if>
@@ -302,6 +318,7 @@
       SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
       ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP},
       INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
+      ACTIVE_STATUS = #{activeStatus,jdbcType=VARCHAR},
       ITEM_EXT_CODE = #{itemExtCode,jdbcType=VARCHAR},
       comments = #{comments,jdbcType=VARCHAR}
     where UNIT_ITEM_ID = #{unitItemId,jdbcType=INTEGER}
