@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import com.ai.baas.bmc.api.custInfo.interfaces.ICustInfoSV;
-import com.ai.baas.bmc.api.marketbleproduct.interfaces.IProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 
 
