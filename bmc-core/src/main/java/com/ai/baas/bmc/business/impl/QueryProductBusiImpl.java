@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductInfo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductQueryVO;
-import com.ai.baas.bmc.api.marketbleproduct.params.ServiceVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
 import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.dao.interfaces.CpPackageInfoMapper;

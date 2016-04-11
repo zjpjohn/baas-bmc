@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.api.marketbleproduct.impl;
+package com.ai.baas.bmc.api.marktableproduct.impl;
 
 import java.io.IOException;
 
@@ -7,14 +7,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ai.baas.bmc.api.marketbleproduct.interfaces.IProductManageSV;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProcductResponse;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductActiveVO;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductDelVO;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamKeyVo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamVo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductVO;
-import com.ai.baas.bmc.api.marketbleproduct.params.ServiceVO;
+import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
+import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
 import com.ai.baas.bmc.business.interfaces.IProductManageBusi;
 import com.ai.baas.bmc.business.interfaces.IProductManageBusiness;
 import com.ai.baas.bmc.context.ErrorCode;
@@ -266,8 +266,8 @@ public class IProductManageSVImpl implements IProductManageSV {
 
 	@Override
 	public ProductParamVo editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.iProductManageBusi.editProduct(vo);
+		
 	}
 
 }

@@ -2,7 +2,7 @@ package com.ai.baas.bmc.business.interfaces;
 
 import java.io.IOException;
 
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 
 public interface IProductManageBusiness {
 	
