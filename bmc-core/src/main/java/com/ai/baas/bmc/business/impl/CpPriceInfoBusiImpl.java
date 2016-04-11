@@ -39,7 +39,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	
 
 	@Override
-	public void delCpRpriceInfo(CpPriceInfo info) {
+	public int delCpRpriceInfo(CpPriceInfo info) {
 		//TODO 还需要在缓存中进行更新
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
@@ -49,6 +49,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		/*if(count>0){
 			DshmUtil.getIdshmSV().initLoader("cp_price_info",JSON.toJSONString(info),0);	
 		}*/
+		return count;
 	}
 
 

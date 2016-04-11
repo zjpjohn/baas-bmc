@@ -7,6 +7,7 @@ import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedAccountVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.productDelVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseResponse;
 
 /**
  * 优惠产品管理
@@ -50,7 +51,7 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00009
 	 */
-	void updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
+	BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProferProductStatus{}
 	
 	/**
