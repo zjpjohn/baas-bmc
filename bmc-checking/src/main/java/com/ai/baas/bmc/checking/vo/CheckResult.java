@@ -2,12 +2,16 @@ package com.ai.baas.bmc.checking.vo;
 
 import com.ai.baas.bmc.checking.util.DBUtil;
 import com.ai.baas.bmc.checking.util.MDSUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CheckResult {
+    private Logger logger = LogManager.getLogger(CheckResult.class);
+
     private String BSN;
     private boolean isLost;
     private List<RecordItem> recordItems;
@@ -31,6 +35,7 @@ public class CheckResult {
         auditState = "Y";
         if (isLost) {
             for (RecordItem recordItem : recordItems) {
+                logger.info("send message for bsn : " + recordItem.getDetail());
                 MDSUtil.sendMessage(recordItem.getDetail());
             }
             auditResult = "Failed";
@@ -69,5 +74,9 @@ public class CheckResult {
 
     public String getAuditState() {
         return auditState;
+    }
+
+    public List<RecordItem> getRecordItems() {
+        return recordItems;
     }
 }

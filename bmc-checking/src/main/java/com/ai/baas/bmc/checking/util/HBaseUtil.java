@@ -3,6 +3,7 @@ package com.ai.baas.bmc.checking.util;
 import com.ai.baas.bmc.checking.vo.RecordItem;
 import com.ai.baas.bmc.checking.vo.ScanCriteria;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
@@ -73,9 +74,11 @@ public final class HBaseUtil {
             RecordItem recordItem = new RecordItem(Bytes.toString(result.getRow()),
                     Bytes.toString(result.getValue(clause.getColumnFamily().getBytes(),
                             clause.getColumnName().getBytes())));
+
+            Cell detailCell = result.getColumnLatestCell(clause.getColumnFamily().getBytes()
+                    , clause.getDetailColumnName().getBytes());
             // 获取详情
-            recordItem.setDetail(Bytes.toString(result.getValue(clause.getColumnFamily().getBytes()
-                    , clause.getDetailColumnName().getBytes())));
+            recordItem.setDetail(Bytes.toString(detailCell.getValueArray()));
 
             recordItems.add(recordItem);
         }

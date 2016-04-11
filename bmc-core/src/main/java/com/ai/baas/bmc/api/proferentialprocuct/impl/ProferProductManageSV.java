@@ -1,8 +1,5 @@
 package com.ai.baas.bmc.api.proferentialprocuct.impl;
 
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +16,7 @@ import com.ai.baas.bmc.business.interfaces.ICpFullPresentBusi;
 import com.ai.baas.bmc.business.interfaces.ICpFullReduceBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceDetailBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
+import com.ai.baas.bmc.constants.BmcConstants.ResultCode;
 import com.ai.baas.bmc.constants.ExceptCodeConstant;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullPresent;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullReduce;
@@ -27,6 +25,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.util.BmcSeqUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.DateUtil;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -87,11 +86,11 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		detail.setPriceCode(priceCode);
 		// 冗余字段，暂时不填
 		// detail.setServiceType(vo.getProductType());
-		
+
 		detail.setActiveTime(DateUtil.getTimestamp("2015-1-1"));
 		detail.setInactiveTime(DateUtil.getTimestamp("2030-1-1"));
 		detail.setServiceType(vo.getProductType());
-		
+
 		cpPriceDetailBusi.addCpPriceDetail(detail);
 
 		/**
@@ -154,7 +153,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		String detailCode = BmcSeqUtil.getDetailCode();
 		detail.setDetailCode(detailCode);
 		detail.setDetailId(BmcSeqUtil.getDetailId());
-		//设置缺省值
+		// 设置缺省值
 		detail.setActiveTime(DateUtil.getTimestamp("2015-1-1"));
 		detail.setInactiveTime(DateUtil.getTimestamp("2030-1-1"));
 		detail.setServiceType(vo.getProductType());
@@ -190,12 +189,27 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	}
 
 	@Override
-	public void updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
+	public BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
 		cpPriceInfo.setActiveStatus(vo.getStatus()); // 设置状态
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
+		int count = cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
+		// 整理返回对象
+		ResponseHeader responseHeader = new ResponseHeader();
+		if (count > 0) {
+			responseHeader.setIsSuccess(true);
+			responseHeader.setResultCode(ResultCode.SUCCESS_CODE);
+			responseHeader.setResultMessage("数据更新成功");
+		} else {
+			responseHeader.setIsSuccess(false);
+			responseHeader.setResultCode(ResultCode.FAIL_CODE);
+			responseHeader.setResultMessage("数据更新不成功");
+		}
+		BaseResponse baseResponse = new BaseResponse();
+		baseResponse.setResponseHeader(responseHeader);
+		return baseResponse;
+
 	}
 
 	@Override
@@ -264,7 +278,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			}
 		}
 		if ("REDUCE".equals(chargeType)) {// 满减
-			
+
 			CpFullReduce reduce = new CpFullReduce();
 			reduce.setActiveTime(vo.getActiveDate());
 			// reduce.setDetailCode(detailCode);
@@ -288,7 +302,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			List<Long> pIds = vo.getFullIds();
 			for (Long id : pIds) {
 				CpFullPresent p = cpFullPresentBusi.getFullPresent(id);
-				
+
 				p.setAccountType(vo.getAccountType());
 				p.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
 				cpFullPresentBusi.updateFullPresent(p);
@@ -299,16 +313,16 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		if ("REDUCE".equals(vo.getChargeType())) {
 			Long rId = vo.getFullIds().get(0);
 			CpFullReduce r = cpFullReduceBusi.getFullReduce(rId);
-			if(r!=null){
-				System.out.println("-------"+JSON.toJSONString(vo.getFullIds()));
-				
-				CpFullReduce cfr=new CpFullReduce();
+			if (r != null) {
+				System.out.println("-------" + JSON.toJSONString(vo.getFullIds()));
+
+				CpFullReduce cfr = new CpFullReduce();
 				cfr.setRelatedAccount(JSON.toJSONString(vo.getFullIds()));
 				cfr.setAccountType(vo.getAccountType());
 				cfr.setReduceId(r.getReduceId());
 				cpFullReduceBusi.updateFullReduce(cfr);
 			}
-			
+
 		}
 
 	}

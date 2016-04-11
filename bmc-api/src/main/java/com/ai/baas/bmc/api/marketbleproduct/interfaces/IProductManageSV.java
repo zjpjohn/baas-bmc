@@ -3,6 +3,8 @@ package com.ai.baas.bmc.api.marketbleproduct.interfaces;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProcductResponse;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductDelVO;
+import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamVo;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -50,7 +52,7 @@ public interface IProductManageSV {
 	 * @ApiCode bmc-00011
 	 */
 	@interface DelProduct{}
-	void delProduct(ProductDelVO vo) throws BusinessException, SystemException;
+	void delProduct(ProductParamKeyVo vo) throws BusinessException, SystemException;
 	
 
 	
@@ -64,5 +66,16 @@ public interface IProductManageSV {
 	 * @ApiCode bmc-00012
 	 */
 	@interface UpdateProduct{}
-	void updateProduct(ProductVO vo) throws BusinessException, SystemException;
+	void updateProduct(ProductParamVo vo) throws BusinessException, SystemException;
+	/**
+	 * 根据priceCode编辑信息
+	 * @param vo
+	 * @return
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	ProductParamVo editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException;
 }

@@ -7,7 +7,13 @@ package com.ai.baas.bmc.constants;
  * @author gaogang
  */
 public final class BmcConstants {
-
+	public final static class ResultCode{
+    	private ResultCode(){}
+    	
+    	public static final String SUCCESS_CODE = "000000";
+    	
+    	public static final String FAIL_CODE = "000001";
+    }
     private BmcConstants() {
 
     }

@@ -35,6 +35,8 @@ public class BatchInfo {
     }
 
     public String getTableName() {
-        return tableName + "_" + tableSuffix;
+        if (tableSuffix != null && tableSuffix.length() > 0)
+            return tableName + tableSuffix;
+        return tableName;
     }
 }

@@ -17,7 +17,7 @@ public interface ICpPriceInfoBusi {
 	
 	Long addCpPriceInfo(CpPriceInfo info);
 	
-	void delCpRpriceInfo(CpPriceInfo info);
+	int delCpRpriceInfo(CpPriceInfo info);
 	
 	List<CpPriceInfo> getCpPriceInfo(ProductQueryVO vo);
 	
@@ -26,5 +26,29 @@ public interface ICpPriceInfoBusi {
 	CpPriceInfo getCpPriceInfo(RelatedVO vo);
 	
 	void updatePriceInfo(CpPriceInfo info);
-	
+	/**
+	 * 通过priceCode修改信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	void updatePriceInfoByPriceCode(CpPriceInfo info);
+	/**
+	 * 通过priceCode删除信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	void deletePriceInfoByPriceCode(CpPriceInfo info);
+	/**
+	 * 根据priceCode查询信息
+	 * @param info
+	 * @return
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	CpPriceInfo getCpPriceInfoByPriceCode(CpPriceInfo info);
 }

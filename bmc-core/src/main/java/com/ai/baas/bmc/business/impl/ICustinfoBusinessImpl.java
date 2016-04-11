@@ -125,8 +125,8 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		blCustinfo.setRemark(custInfo.getRemark());
 		custobject.put("REMARK", custInfo.getRemark());
 		
-		blCustinfo.setContactNo(custInfo.getRemark());
-		custobject.put("CONTACT_NO", custInfo.getRemark());
+		blCustinfo.setContactNo(custInfo.getContactNo());
+		custobject.put("CONTACT_NO", custInfo.getContactNo());
 		
 		blCustinfo.setEmail(custInfo.getEmail());
 		custobject.put("EMAIL", custInfo.getEmail());

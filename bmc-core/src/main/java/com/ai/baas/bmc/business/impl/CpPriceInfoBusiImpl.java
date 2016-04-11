@@ -39,7 +39,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	
 
 	@Override
-	public void delCpRpriceInfo(CpPriceInfo info) {
+	public int delCpRpriceInfo(CpPriceInfo info) {
 		//TODO 还需要在缓存中进行更新
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
@@ -49,6 +49,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		/*if(count>0){
 			DshmUtil.getIdshmSV().initLoader("cp_price_info",JSON.toJSONString(info),0);	
 		}*/
+		return count;
 	}
 
 
@@ -120,6 +121,62 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		cpPriceInfoMapper.updateByExampleSelective(info,sql);
 		
 		//TODO 需要维护一个缓存
+	}
+	
+	/**
+	 * 通过priceCode修改信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	@Override
+	public void updatePriceInfoByPriceCode(CpPriceInfo info) {
+		CpPriceInfoCriteria sql=new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
+		criteria.andPriceCodeEqualTo(info.getPriceCode());
+		//
+		this.cpPriceInfoMapper.updateByExampleSelective(info, sql);
+	}
+
+
+	/**
+	 * 通过priceCode删除信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	@Override
+	public void deletePriceInfoByPriceCode(CpPriceInfo info) {
+		CpPriceInfoCriteria sql=new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
+		criteria.andPriceCodeEqualTo(info.getPriceCode());
+		//
+		this.cpPriceInfoMapper.deleteByExample(sql);
+	}
+
+
+	/**
+	 * 根据priceCode查询信息
+	 * @param info
+	 * @return
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	@Override
+	public CpPriceInfo getCpPriceInfoByPriceCode(CpPriceInfo info) {
+		CpPriceInfoCriteria sql=new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
+		criteria.andPriceCodeEqualTo(info.getPriceCode());
+		
+		List<CpPriceInfo> cpPriceInfoList = this.cpPriceInfoMapper.selectByExample(sql);
+		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		if(null != cpPriceInfoList){
+			cpPriceInfo = cpPriceInfoList.get(0);
+		}
+		return cpPriceInfo;
 	}
 }
 
