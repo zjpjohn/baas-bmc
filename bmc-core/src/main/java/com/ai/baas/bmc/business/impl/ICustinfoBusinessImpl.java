@@ -208,9 +208,10 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            example.createCriteria().andCustIdEqualTo(custId)
 	                    .andExtNameEqualTo(extInfo.getExtName());
 	            try {
-	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
+	            	
 	            	blCustinfoExtMapper.updateByExampleSelective(blCustinfoExt, example);
-	             
+	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
+	            	
 //	                DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
 	                DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),0);
 	             
