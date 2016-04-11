@@ -27,8 +27,8 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00007
 	 */
-	@interface AddProferProduct{}
 	ProductResponse addProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	@interface AddProferProduct{}
 	/**
 	 * 添加优惠产品(满减)
 	 * @return
@@ -38,8 +38,9 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00014
 	 */
-	@interface AddDiscontProduct{}
 	ProductResponse addDiscontProduct(ProferProductVO vo)throws BusinessException, SystemException;
+	@interface AddDiscontProduct{}
+	
 	/**
 	 * 状态管理
 	 * @param vo
@@ -49,8 +50,8 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00009
 	 */
-	@interface UpdateProferProductStatus{}
 	void updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
+	@interface UpdateProferProductStatus{}
 	
 	/**
 	 * 删除优惠产品
@@ -61,8 +62,8 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00010
 	 */
-	@interface DelProferProduct{}
 	void delProferProduct(productDelVO vo) throws BusinessException, SystemException;
+	@interface DelProferProduct{}
 	/**
 	 * 更新优惠产品
 	 * @throws BusinessException
@@ -71,8 +72,8 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00013
 	 */
-	@interface UpdateProferProduct{}
 	void updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	@interface UpdateProferProduct{}
 	
 	/**
 	 * 关联费用科目
