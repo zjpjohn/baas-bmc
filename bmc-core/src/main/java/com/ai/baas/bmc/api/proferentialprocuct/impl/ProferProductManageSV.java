@@ -204,7 +204,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		} else {
 			responseHeader.setIsSuccess(false);
 			responseHeader.setResultCode(ResultCode.FAIL_CODE);
-			responseHeader.setResultMessage("数据更新失败");
+			responseHeader.setResultMessage("数据更新不成功");
 		}
 		BaseResponse baseResponse = new BaseResponse();
 		baseResponse.setResponseHeader(responseHeader);
