@@ -28,6 +28,7 @@ import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.DateUtil;
+import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 
@@ -190,6 +191,9 @@ public class ProferProductManageSV implements IProferProductManageSV {
 
 	@Override
 	public BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
+		if(StringUtil.isBlank(vo.getTenantId())){
+			 throw new BusinessException("88888888", "[租户Id]不能为空");
+		}
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
 		cpPriceInfo.setActiveStatus(vo.getStatus()); // 设置状态
