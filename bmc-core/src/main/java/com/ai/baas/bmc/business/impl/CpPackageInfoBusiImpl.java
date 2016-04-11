@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.business.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,5 +42,17 @@ public class CpPackageInfoBusiImpl implements ICpPackageInfoBusi {
 		//
 		this.cpPackageInfoMapper.deleteByExample(sql);
 	}
-
+	@Override
+	public CpPackageInfo getCpPackageInfoByDetailCode(CpPackageInfo info) {
+		CpPackageInfoCriteria sql = new CpPackageInfoCriteria();
+		CpPackageInfoCriteria.Criteria criteria = sql.createCriteria();
+		criteria.andDetailCodeEqualTo(info.getDetailCode());
+		List<CpPackageInfo> cpPackageInfoList = this.cpPackageInfoMapper.selectByExample(sql);
+		CpPackageInfo cpPackageInfo = new CpPackageInfo();
+		
+		if(null != cpPackageInfoList){
+			cpPackageInfo = cpPackageInfoList.get(0);
+		}
+		return cpPackageInfo;
+	}
 }

@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.business.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,5 +34,18 @@ public class CpStepInfoBusiImpl implements ICpStepInfoBusi {
 		this.cpStepInfoMapper.deleteByExample(sql);
 		
 	}
-
+	@Override
+	public CpStepInfo getCpStepInfoByDetailCode(CpStepInfo info) {
+		CpStepInfoCriteria sql = new CpStepInfoCriteria();
+		CpStepInfoCriteria.Criteria criteria = sql.createCriteria();
+		criteria.andDetailCodeEqualTo(info.getDetailCode());
+		//
+		List<CpStepInfo> cpStepInfoList = this.cpStepInfoMapper.selectByExample(sql);
+		CpStepInfo cpStepInfo = new CpStepInfo();
+		if(null != cpStepInfoList){
+			cpStepInfo = cpStepInfoList.get(0);
+		}
+		return cpStepInfo;
+		
+	}
 }

@@ -26,4 +26,13 @@ public interface ICpPackageInfoBusi {
 	 * @ApiCode
 	 */
 	public void deleteCpPackageInfoByDetailCode(CpPackageInfo info);
+	/**
+	 * 通过detailCode查询信息
+	 * @param info
+	 * @return
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public CpPackageInfo getCpPackageInfoByDetailCode(CpPackageInfo info);
 }

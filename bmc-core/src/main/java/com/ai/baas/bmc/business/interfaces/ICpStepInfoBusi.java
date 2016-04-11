@@ -19,4 +19,13 @@ public interface ICpStepInfoBusi {
 	 * @ApiCode
 	 */
 	public void deleteCpStepInfoByDetailCode(CpStepInfo info);
+	/**
+	 * 通过detailCode查询单条信息
+	 * @param info
+	 * @return
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public CpStepInfo getCpStepInfoByDetailCode(CpStepInfo info);
 }

@@ -11,8 +11,11 @@ import com.ai.baas.bmc.api.marketbleproduct.interfaces.IProductManageSV;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProcductResponse;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductDelVO;
+import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamVo;
 import com.ai.baas.bmc.api.marketbleproduct.params.ProductVO;
 import com.ai.baas.bmc.api.marketbleproduct.params.ServiceVO;
+import com.ai.baas.bmc.business.interfaces.IProductManageBusi;
 import com.ai.baas.bmc.business.interfaces.IProductManageBusiness;
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.util.InCheckUtil;
@@ -38,7 +41,10 @@ public class IProductManageSVImpl implements IProductManageSV {
 
 	@Autowired
 	private IProductManageBusiness iProductManageBusiness;
-//新建产品
+	
+	@Autowired
+	private IProductManageBusi iProductManageBusi;
+	//新建产品
 	@Override
 	public ProcductResponse addProduct(ProductVO vo) throws BusinessException,
 			SystemException {
@@ -246,17 +252,22 @@ public class IProductManageSVImpl implements IProductManageSV {
 	}
 
 	@Override
-	public void delProduct(ProductDelVO vo) throws BusinessException,
+	public void delProduct(ProductParamKeyVo vo) throws BusinessException,
 			SystemException {
-		// TODO Auto-generated method stub
-
+		this.iProductManageBusi.deleteProduct(vo);
+		
 	}
 
 	@Override
-	public void updateProduct(ProductVO vo) throws BusinessException,
+	public void updateProduct(ProductParamVo vo) throws BusinessException,
 			SystemException {
-		// TODO Auto-generated method stub
+		this.iProductManageBusi.updateProduct(vo);
+	}
 
+	@Override
+	public ProductParamVo editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

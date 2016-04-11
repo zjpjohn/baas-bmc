@@ -54,6 +54,56 @@ public class CpPriceDetailBusiImpl implements ICpPriceDetailBusi {
 		criteria.andDetailIdEqualTo(info.getDetailId());
 		cpPriceDetailMapper.updateByExampleSelective(info, sql);
 	}
+	/**
+	 * 通过priceCode修改信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	@Override
+	public void updatePriceDetailByPriceCode(CpPriceDetail info) {
+		CpPriceDetailCriteria sql=new CpPriceDetailCriteria();	
+		CpPriceDetailCriteria.Criteria criteria =sql.createCriteria();
+		criteria.andPriceCodeEqualTo(info.getPriceCode());
+		//
+		this.cpPriceDetailMapper.updateByExampleSelective(info, sql);
+	}
+	/**
+	 * 通过priceCode删除信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	@Override
+	public void deletePriceDetailByPriceCode(CpPriceDetail info) {
+		CpPriceDetailCriteria sql=new CpPriceDetailCriteria();	
+		CpPriceDetailCriteria.Criteria criteria =sql.createCriteria();
+		criteria.andPriceCodeEqualTo(info.getPriceCode());
+		//
+		this.cpPriceDetailMapper.deleteByExample(sql);
+	}
+	/**
+	 * 根据priceCode查询信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	@Override
+	public CpPriceDetail getCpPriceDetailByPriceCode(CpPriceDetail info) {
+		CpPriceDetailCriteria sql=new CpPriceDetailCriteria();	
+		CpPriceDetailCriteria.Criteria criteria =sql.createCriteria();
+		criteria.andPriceCodeEqualTo(info.getPriceCode());
+		//
+		List<CpPriceDetail> cpPriceDetailList = this.cpPriceDetailMapper.selectByExample(sql);
+		CpPriceDetail cpPriceDetail = new CpPriceDetail();
+		if(null != cpPriceDetailList){
+			cpPriceDetail = cpPriceDetailList.get(0);
+		}
+		return cpPriceDetail;
+	}
 	
 
 }
