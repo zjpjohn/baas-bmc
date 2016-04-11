@@ -2,7 +2,6 @@ package com.ai.baas.bmc.api.proferentialprocuct.params;
 
 import javax.validation.constraints.NotNull;
 
-import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 
 public class ActiveProductVO extends BaseInfo {
@@ -16,18 +15,18 @@ public class ActiveProductVO extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
+	@NotNull(message="消息流水号不能为空")
 	private String tradeSeq;
 	
 	/**
 	 * 产品Id
 	 */
-	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
+	@NotNull(message="产品Id不能为空")
 	private Long productId;
 	/**
 	 * 负责状态
 	 */
-	@NotNull(message="状态信息不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
+	@NotNull(message="状态信息不能为空")
 	private String status;
 	
 	public String getTradeSeq() {

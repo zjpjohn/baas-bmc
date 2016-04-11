@@ -11,6 +11,7 @@ import com.ai.baas.bmc.dao.interfaces.CpFullPresentMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullPresent;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria.Criteria;
+import com.ai.opt.sdk.util.CollectionUtil;
 
 @Service
 @Transactional
@@ -31,8 +32,11 @@ public class CpFullPresentBusiImpl implements ICpFullPresentBusi {
 		CpFullPresentCriteria example = new CpFullPresentCriteria();
 		Criteria criteria = example.createCriteria();
 		criteria.andDetailCodeEqualTo(detailCode);
-		
-		return  cpFullPresentMapper.selectByExample(example).get(0);
+		List<CpFullPresent> list=cpFullPresentMapper.selectByExample(example);
+		if(!CollectionUtil.isEmpty(list)){
+			return  list.get(0);
+		}
+		return  null;
 	}
 
 	@Override

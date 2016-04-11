@@ -16,6 +16,7 @@ import com.ai.baas.bmc.api.priceinfo.params.StandardList;
 import com.ai.baas.bmc.api.priceinfo.params.UsageList;
 import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
 import com.ai.opt.base.vo.PageInfo;
+import com.alibaba.dubbo.common.json.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/context/core-context.xml" })
@@ -29,8 +30,8 @@ public class GetPriceInfoTest {
         QueryInfoParams queryInfoParams = new QueryInfoParams();
         queryInfoParams.setTenantId("test");
         queryInfoParams.setTradeSeq("123456693");
-        queryInfoParams.setStandardId("1");
-        queryInfoParams.setPriceName(null);
+        queryInfoParams.setStandardId("13");
+        queryInfoParams.setPriceName("");
 //        queryInfoParams.setServiceType(null);
 //        queryInfoParams.setPriceState(null);
 //        queryInfoParams.setPageNo(null);
@@ -38,10 +39,11 @@ public class GetPriceInfoTest {
 
         ResponseMessage responseMessage = iPriceInfoSV.getPriceInfo(queryInfoParams);
         System.out.println(responseMessage.toString());
-        List<StandardList> result= responseMessage.getStandardList().getResult();
-        StandardList standardList = result.get(0);
-        System.err.println("result.toString()"+result.toString());
-        System.err.println("standardList"+standardList.toString());
+//        List<StandardList> result= responseMessage.getStandardList().getResult();
+//        StandardList standardList = result.get(0);
+        System.out.println("param="+com.alibaba.fastjson.JSON.toJSONString(queryInfoParams));
+        System.out.println("responseMessage="+com.alibaba.fastjson.JSON.toJSONString(responseMessage));
+
        
     }
 }

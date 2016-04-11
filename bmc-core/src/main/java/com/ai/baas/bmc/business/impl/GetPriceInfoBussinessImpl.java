@@ -105,21 +105,36 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
           
            //查询CpPriceDetail
            price_code = cpPriceInfo.getPriceCode();
+           System.out.println("price_code"+price_code);
            cpPriceDetailCriteria.createCriteria()
              .andPriceCodeEqualTo(price_code);
            List<CpPriceDetail> cpPriceDetailList = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
+           //CpPriceDetail判空
+           if(cpPriceDetailList.size()==0){
+               System.out.println("price_code:"+price_code+"在CpPriceDetail表中没有对应的数据");
+               continue;
+           }
            CpPriceDetail cpPriceDetail = cpPriceDetailList.get(0);
            //查询CpUnitpriceInfo    获得factor_code fee_item_code
            detail_code = cpPriceDetail.getDetailCode();
            cpUnitpriceInfoCriteria.createCriteria()
              .andUnitPriceCodeEqualTo(detail_code);
+           //判空
            List<CpUnitpriceInfo> cpUnitpriceInfoList = cpUnitpriceInfoMapper.selectByExample(cpUnitpriceInfoCriteria);
+           if(cpUnitpriceInfoList.size()==0){
+               System.out.println("detail_code:"+detail_code+"在CpUnitpriceInfo表中没有对应的数据");
+               continue;
+           }
            CpUnitpriceInfo cpUnitpriceInfo = cpUnitpriceInfoList.get(0);
            //查询CpUnitpriceItem
            fee_item_code = cpUnitpriceInfo.getFeeItemCode();
            cpUnitpriceItemCriteria.createCriteria()
              .andFeeItemCodeEqualTo(fee_item_code);
            List<CpUnitpriceItem> cpUnitpriceItemList =  cpUnitpriceItemMapper.selectByExample(cpUnitpriceItemCriteria);
+           if(cpUnitpriceItemList.size()==0){
+               System.out.println("fee_item_code:"+fee_item_code+"在CpUnitpriceItem表中没有对应的数据");
+               continue;
+           }
            CpUnitpriceItem cpUnitpriceItem = cpUnitpriceItemList.get(0);
            //查询CpFactorInfo
            factor_code = cpUnitpriceInfo.getFactorCode();
@@ -128,6 +143,10 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
             .andFactorNameEqualTo("subServiceType");
            
            List<CpFactorInfo>cpFactorInfoList = cpFactorInfoMapper.selectByExample(cpFactorInfoCriteria) ;
+           if(cpFactorInfoList.size()==0){
+               System.out.println("factor_code:"+factor_code+"在CpFactorInfo表中没有对应的数据");
+               continue;
+           }
            CpFactorInfo cpFactorInfo = cpFactorInfoList.get(0);
            
            responseMessage.setTradeSeq(record.getTradeSeq());//TradeSeq 交易流水

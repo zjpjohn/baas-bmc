@@ -17,7 +17,7 @@ public interface ICpPriceInfoBusi {
 	
 	Long addCpPriceInfo(CpPriceInfo info);
 	
-	void delCpRpriceInfo(CpPriceInfo info);
+	int delCpRpriceInfo(CpPriceInfo info);
 	
 	List<CpPriceInfo> getCpPriceInfo(ProductQueryVO vo);
 	

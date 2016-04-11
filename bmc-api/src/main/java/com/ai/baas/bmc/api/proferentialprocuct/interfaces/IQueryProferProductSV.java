@@ -29,8 +29,8 @@ public interface IQueryProferProductSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00008
 	 */
-	@interface GetProductInfo{}
 	PageInfo<ProferProductInfo> getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
+	@interface GetProductInfo{}
 	/**
 	 * 查询单个产品
 	 * @param param
