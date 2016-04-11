@@ -2,6 +2,7 @@ package com.ai.baas.bmc.api.proferentialprocuct.params;
 
 import javax.validation.constraints.NotNull;
 
+import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 
 public class ActiveProductVO extends BaseInfo {
@@ -15,7 +16,7 @@ public class ActiveProductVO extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空")
+	@NotNull(message="消息流水号不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
 	private String tradeSeq;
 	
 	/**
