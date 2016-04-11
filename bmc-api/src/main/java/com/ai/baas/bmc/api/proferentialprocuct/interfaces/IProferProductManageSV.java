@@ -51,8 +51,9 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00009
 	 */
-	BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProferProductStatus{}
+	BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
+	
 	
 	/**
 	 * 删除优惠产品
