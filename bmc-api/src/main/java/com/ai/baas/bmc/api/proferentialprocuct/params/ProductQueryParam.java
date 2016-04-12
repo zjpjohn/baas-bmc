@@ -2,13 +2,16 @@ package com.ai.baas.bmc.api.proferentialprocuct.params;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.opt.base.vo.BaseInfo;
 
 public class ProductQueryParam extends BaseInfo {
 	
 	private static final long serialVersionUID = 1L;
-	@NotNull(message="消息流水号不能为空")
+	@NotBlank(message="消息流水号不能为空")
 	private String tradeSeq;
+	
 	@NotNull(message="产品Id不能为空")
 	private Long productId;
 	public String getTradeSeq() {

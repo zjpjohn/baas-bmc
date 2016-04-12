@@ -1,11 +1,11 @@
-package com.ai.baas.bmc.api.marketbleproduct.interfaces;
+package com.ai.baas.bmc.api.marktableproduct.interfaces;
 
-import com.ai.baas.bmc.api.marketbleproduct.params.ProcductResponse;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductActiveVO;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductDelVO;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamKeyVo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamVo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 

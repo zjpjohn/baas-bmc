@@ -1,7 +1,7 @@
 package com.ai.baas.bmc.business.interfaces;
 
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamKeyVo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
 
 public interface IProductManageBusi {
 	public void updateProduct(ProductParamVo vo);

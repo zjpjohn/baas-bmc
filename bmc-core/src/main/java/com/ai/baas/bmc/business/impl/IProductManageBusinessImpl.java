@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductVO;
-import com.ai.baas.bmc.api.marketbleproduct.params.ServiceVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
 import com.ai.baas.bmc.business.interfaces.IProductManageBusiness;
 import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
 import com.ai.baas.bmc.context.Context;

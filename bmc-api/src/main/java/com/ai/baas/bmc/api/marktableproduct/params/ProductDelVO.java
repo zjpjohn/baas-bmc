@@ -1,8 +1,8 @@
-package com.ai.baas.bmc.api.marketbleproduct.params;
+package com.ai.baas.bmc.api.marktableproduct.params;
 
 import javax.validation.constraints.NotNull;
 
-import com.ai.baas.bmc.api.marketbleproduct.interfaces.IProductManageSV;
+import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 /**
  * 删除产品入参

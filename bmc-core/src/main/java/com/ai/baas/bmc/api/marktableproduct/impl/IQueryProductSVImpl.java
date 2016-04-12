@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.api.marketbleproduct.impl;
+package com.ai.baas.bmc.api.marktableproduct.impl;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ai.baas.bmc.api.marketbleproduct.interfaces.IQueryProductSV;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductInfo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.marktableproduct.interfaces.IQueryProductSV;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
 import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;

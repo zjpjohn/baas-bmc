@@ -2,7 +2,7 @@ package com.ai.baas.bmc.util;
 
 import java.text.SimpleDateFormat;
 
-import com.ai.baas.bmc.api.marketbleproduct.params.ProcductResponse;
+import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.opt.base.vo.ResponseHeader;
 

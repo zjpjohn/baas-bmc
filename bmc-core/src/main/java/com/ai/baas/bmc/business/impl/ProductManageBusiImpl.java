@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamKeyVo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.CpPackageInfoParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.CpPriceDetailParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.CpPriceInfoParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.CpStepInfoParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
 import com.ai.baas.bmc.business.interfaces.ICpPackageInfoBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceDetailBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
@@ -142,31 +146,107 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 	@Override
 	public ProductParamVo editProduct(ProductParamKeyVo vo) {
+		ProductParamVo productParamVo = new ProductParamVo();
+		//1.add priceCode
+		productParamVo.setPriceCode(vo.getPriceCode());
+		//2.add chargeType
+		productParamVo.setChargeType(vo.getChargeType());
+		//
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceCode(vo.getPriceCode());
 		//
 		CpPriceInfo cpPriceInfoNew = this.cpPriceInfoBusi.getCpPriceInfoByPriceCode(cpPriceInfo);
 		//
+		CpPriceInfoParamVo cpPriceInfoParamVo = new CpPriceInfoParamVo();
+		if(null != cpPriceInfoNew){
+			cpPriceInfoParamVo.setActiveStatus(cpPriceInfoNew.getActiveStatus());
+			cpPriceInfoParamVo.setActiveTime(cpPriceInfoNew.getActiveTime());
+			cpPriceInfoParamVo.setComments(cpPriceInfoNew.getComments());
+			cpPriceInfoParamVo.setCreateTime(cpPriceInfoNew.getCreateTime());
+			cpPriceInfoParamVo.setInactiveTime(cpPriceInfoNew.getInactiveTime());
+			cpPriceInfoParamVo.setOperatorId(cpPriceInfoNew.getOperatorId());
+			cpPriceInfoParamVo.setPriceCode(cpPriceInfoNew.getPriceCode());
+			cpPriceInfoParamVo.setPriceInfoId(cpPriceInfoNew.getPriceInfoId());
+			cpPriceInfoParamVo.setPriceName(cpPriceInfoNew.getPriceName());
+			cpPriceInfoParamVo.setProductType(cpPriceInfoNew.getProductType());
+			cpPriceInfoParamVo.setTenantId(cpPriceInfoNew.getTenantId());
+		}
+		//3.add cpPriceInfo
+		productParamVo.setCpPriceInfoParamVo(cpPriceInfoParamVo);
+		
+		//
 		CpPriceDetail cpPriceDetail = new CpPriceDetail();
 		cpPriceDetail.setPriceCode(vo.getPriceCode());
 		//
 		CpPriceDetail cpPriceDetailNew = this.cpPriceDetailBusi.getCpPriceDetailByPriceCode(cpPriceDetail);
-		
-		String chargeType = vo.getChargeType(); 
+		//
+		CpPriceDetailParamVo cpPriceDetailParamVo = new CpPriceDetailParamVo();
+		if(null != cpPriceDetailNew){
+			cpPriceDetailParamVo.setActiveTime(cpPriceDetailNew.getActiveTime());
+			cpPriceDetailParamVo.setChargeType(cpPriceDetailNew.getChargeType());
+			cpPriceDetailParamVo.setComments(cpPriceDetailNew.getComments());
+			cpPriceDetailParamVo.setDetailCode(cpPriceDetailNew.getDetailCode());
+			cpPriceDetailParamVo.setDetailId(cpPriceDetailNew.getDetailId());
+			cpPriceDetailParamVo.setDetailName(cpPriceDetailNew.getDetailName());
+			cpPriceDetailParamVo.setInactiveTime(cpPriceDetailNew.getInactiveTime());
+			cpPriceDetailParamVo.setPriceCode(cpPriceDetailNew.getPriceCode());
+			cpPriceDetailParamVo.setServiceType(cpPriceDetailNew.getServiceType());
+			
+		}
+		//4.add cpPriceDetail
+		productParamVo.setCpPriceDetailParamVo(cpPriceDetailParamVo);
+		//
+		String chargeType = vo.getChargeType();
+		CpStepInfoParamVo cpStepInfoParamVo = new CpStepInfoParamVo();
+		CpStepInfo cpStepInfoNew = null;
 		if(!StringUtil.isBlank(chargeType) && chargeType.equals(CHARGE_TYPE_STEP)){
 			CpStepInfo cpStepInfo = new CpStepInfo();
 			cpStepInfo.setDetailCode(new Long(cpPriceDetailNew.getDetailCode()));
 			//
-			this.cpStepInfoBusi.getCpStepInfoByDetailCode(cpStepInfo);
+			cpStepInfoNew = this.cpStepInfoBusi.getCpStepInfoByDetailCode(cpStepInfo);
+			//
+			if(null != cpStepInfoNew){
+				cpStepInfoParamVo.setDetailCode(cpStepInfoNew.getDetailCode());
+				cpStepInfoParamVo.setExtCode(cpStepInfoNew.getExtCode());
+				cpStepInfoParamVo.setFactorCode(cpStepInfoNew.getFactorCode());
+				cpStepInfoParamVo.setPriceValue(cpStepInfoNew.getPriceValue());
+				cpStepInfoParamVo.setSectionA(cpStepInfoNew.getSectionA());
+				cpStepInfoParamVo.setSectionB(cpStepInfoNew.getSectionB());
+				cpStepInfoParamVo.setSetpId(cpStepInfoNew.getSetpId());
+				cpStepInfoParamVo.setStepSeq(cpStepInfoNew.getStepSeq());
+				cpStepInfoParamVo.setTotalPriceValue(cpStepInfoNew.getTotalPriceValue());
+				cpStepInfoParamVo.setUnitType(cpStepInfoNew.getUnitType());
+			}
 		}
+		//5.add cpStepInfo
+		productParamVo.setCpStepInfoParamVo(cpStepInfoParamVo);
 		//
+		CpPackageInfoParamVo cpPackageInfoParamVo = new CpPackageInfoParamVo();
+		CpPackageInfo cpPackageInfoNew = null;
 		if(!StringUtil.isBlank(chargeType) && chargeType.equals(CHARGE_TYPE_PACKAGE)){
 			CpPackageInfo cpPackageInfo = new CpPackageInfo();
 			cpPackageInfo.setDetailCode(cpPriceDetailNew.getDetailCode());
 			//
-			this.cpPackageInfoBusi.getCpPackageInfoByDetailCode(cpPackageInfo);
+			cpPackageInfoNew = this.cpPackageInfoBusi.getCpPackageInfoByDetailCode(cpPackageInfo);
+			if(null != cpPackageInfoNew){
+				cpPackageInfoParamVo.setAmount(cpPackageInfoNew.getAmount());
+				cpPackageInfoParamVo.setDetailCode(cpPackageInfoNew.getDetailCode());
+				cpPackageInfoParamVo.setExceedType(cpPackageInfoNew.getExceedType());
+				cpPackageInfoParamVo.setExtCode(cpPackageInfoNew.getExtCode());
+				cpPackageInfoParamVo.setFactorCode(cpPackageInfoNew.getFactorCode());
+				cpPackageInfoParamVo.setPackageId(cpPackageInfoNew.getPackageId());
+				cpPackageInfoParamVo.setPriceValue(cpPackageInfoNew.getPriceValue());
+				cpPackageInfoParamVo.setTotalPriceValue(cpPackageInfoNew.getTotalPriceValue());
+				cpPackageInfoParamVo.setUnitCode(cpPackageInfoNew.getUnitCode());
+				cpPackageInfoParamVo.setUnitpriceCode(cpPackageInfoNew.getUnitpriceCode());
+				cpPackageInfoParamVo.setUnitType(cpPackageInfoNew.getUnitType());
+			}
 		}
-		return null;
+		//add cpPackageInfo
+		productParamVo.setCpPackageInfoParamVo(cpPackageInfoParamVo);
+		//
+		return productParamVo;
+		
 	}
 
 }

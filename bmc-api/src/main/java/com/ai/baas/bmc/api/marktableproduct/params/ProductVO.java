@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.api.marketbleproduct.params;
+package com.ai.baas.bmc.api.marktableproduct.params;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.ai.baas.bmc.api.marketbleproduct.interfaces.IProductManageSV;
+import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 
 /**

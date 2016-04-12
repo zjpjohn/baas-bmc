@@ -1,7 +1,7 @@
-package com.ai.baas.bmc.api.marketbleproduct.interfaces;
+package com.ai.baas.bmc.api.marktableproduct.interfaces;
 
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductInfo;
-import com.ai.baas.bmc.api.marketbleproduct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;

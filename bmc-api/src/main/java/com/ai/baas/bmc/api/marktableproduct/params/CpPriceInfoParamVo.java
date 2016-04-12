@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.api.marketbleproduct.params;
+package com.ai.baas.bmc.api.marktableproduct.params;
 
 import java.sql.Timestamp;
 

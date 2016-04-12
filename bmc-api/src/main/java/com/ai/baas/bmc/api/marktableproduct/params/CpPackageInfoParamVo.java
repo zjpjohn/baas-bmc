@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.api.marketbleproduct.params;
+package com.ai.baas.bmc.api.marktableproduct.params;
 
 public class CpPackageInfoParamVo {
 	private Long packageId;

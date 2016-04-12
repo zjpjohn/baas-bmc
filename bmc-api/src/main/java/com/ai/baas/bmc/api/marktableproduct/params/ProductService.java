@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.api.marketbleproduct.params;
+package com.ai.baas.bmc.api.marktableproduct.params;
 
 import java.math.BigDecimal;
 import java.util.List;

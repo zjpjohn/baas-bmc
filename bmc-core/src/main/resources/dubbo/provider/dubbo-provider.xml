@@ -25,7 +25,7 @@
 		address="${dubbo.registry.address}" file="${dubbo.registry.file}" />
 
 	<dubbo:protocol name="${dubbo.protocol}" port="${baas.bmc.dubbo.port}" />
-	<dubbo:provider filter="DubboRequestTrackFilter" timeout="${dubbo.provider.timeout}" retries="0" threads="300" />
+	<dubbo:provider timeout="${dubbo.provider.timeout}" retries="0" threads="300" />
 
 	<dubbo:annotation package="com.ai.baas.bmc.api" />
 

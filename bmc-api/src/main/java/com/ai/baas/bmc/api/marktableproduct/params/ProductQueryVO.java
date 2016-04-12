@@ -1,11 +1,11 @@
-package com.ai.baas.bmc.api.marketbleproduct.params;
+package com.ai.baas.bmc.api.marktableproduct.params;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.validation.constraints.NotNull;
 
-import com.ai.baas.bmc.api.marketbleproduct.interfaces.IQueryProductSV;
+import com.ai.baas.bmc.api.marktableproduct.interfaces.IQueryProductSV;
 import com.ai.opt.base.vo.BaseInfo;
 /**
  * 可销售产品查询入参
