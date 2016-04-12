@@ -34,7 +34,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 产品Id
 	 */
-	@NotBlank(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private Long productId;
 	
 	/**
@@ -69,13 +69,13 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 生效日期，必填
 	 */
-	@NotBlank(message="生效日期不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="生效日期不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private Timestamp activeDate;
 	
 	/**
 	 * 失效时间，必填
 	 */
-	@NotBlank(message=" 失效时间不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message=" 失效时间不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private Timestamp invalidDate;
 	/**
 	 * 备注

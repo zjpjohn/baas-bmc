@@ -2,6 +2,8 @@ package com.ai.baas.bmc.api.proferentialprocuct.params;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.opt.base.vo.BaseInfo;
 
 public class RelatedVO extends BaseInfo {
@@ -17,6 +19,7 @@ public class RelatedVO extends BaseInfo {
 	/**
 	 * 租户Id
 	 */
+	@NotBlank(message="租户Id不能为空")
 	private String tenantId;
 	
 	/**

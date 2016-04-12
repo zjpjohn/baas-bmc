@@ -42,7 +42,7 @@ public interface IQueryProferProductSV {
 	 * @ApiCode
 	 */
 	SingleProductInfo  getProductById(ProductQueryParam param) throws BusinessException, SystemException;	
-	
+	@interface GetProductById{}
 	/**
 	 * 查询关联费用
 	 * @param vo
@@ -52,4 +52,5 @@ public interface IQueryProferProductSV {
 	 * @ApiCode
 	 */
 	RelatedResponse getRelatedAccount(RelatedVO vo);
+	@interface GetRelatedAccount{}
 }

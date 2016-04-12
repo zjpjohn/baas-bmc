@@ -24,7 +24,7 @@ public class ActiveProductVO extends BaseInfo {
 	/**
 	 * 产品Id
 	 */
-	@NotBlank(message="产品Id不能为空")
+	@NotNull(message="产品Id不能为空")
 	private Long productId;
 	/**
 	 * 负责状态

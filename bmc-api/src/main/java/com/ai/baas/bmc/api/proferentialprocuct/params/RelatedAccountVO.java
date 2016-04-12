@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.opt.base.vo.BaseInfo;
 
 public class RelatedAccountVO extends BaseInfo {
@@ -13,12 +15,13 @@ public class RelatedAccountVO extends BaseInfo {
 	/**
 	 * 租户Id
 	 */
+	@NotBlank(message="租户Id不能为空")
 	private String tenantId;
 	/**
      * 消息流水<br>
      * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
      */
-	@NotNull(message="消息流水号不能为空")
+	@NotBlank(message="消息流水号不能为空")
 	private String tradeSeq;
 	/**
 	 * 关联费用列表

@@ -22,7 +22,6 @@ public class SingleProductInfo extends BaseResponse {
      * 消息流水<br>
      * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
      */
-	@NotNull(message="消息流水号不能为空")
 	private String tradeSeq;
 
 	/**
@@ -33,48 +32,40 @@ public class SingleProductInfo extends BaseResponse {
 	/**
 	 * 产品Id
 	 */
-	@NotNull(message="产品Id不能为空")
 	private Long productId;
 	
 	/**
 	 * 优惠产品类型，必填
 	 */
-	@NotNull(message="优惠产品类型不能为空")
 	private String productType;
 	
 	
 	/**
 	 * 优惠活动名称
 	 */
-	@NotNull(message="优惠活动名称不能为空")
 	private String programName;
 	
 	/**
 	 * 规则金额
 	 */
-	@NotNull(message="优惠规则不能为空")
 	private double ruleAmount;
 	/**
 	 * 规则单位
 	 */
-	@NotNull(message="优惠单位不能为空")
 	private String ruleUnit;
 	/**
 	 * 满减金额
 	 */
-	@NotNull(message="满减金额不能为空")
 	private double reduceAmount;
 	
 	/**
 	 * 生效日期，必填
 	 */
-	@NotNull(message="生效日期不能为空")
 	private Timestamp activeDate;
 	
 	/**
 	 * 失效时间，必填
 	 */
-	@NotNull(message=" 失效时间不能为空")
 	private Timestamp invalidDate;
 	/**
 	 * 备注
