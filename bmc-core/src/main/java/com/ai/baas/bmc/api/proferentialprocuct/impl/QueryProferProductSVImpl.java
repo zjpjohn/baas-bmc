@@ -11,6 +11,7 @@ import com.ai.baas.bmc.api.proferentialprocuct.params.FullPresent;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductInfo;
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.SingleProductInfo;
@@ -45,7 +46,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 	private ICpFullReduceBusi iCpFullReduceBusi;
 
 	@Override
-	public PageInfo<ProferProductInfo> getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException {
+	public ProferProductResponse getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException {
 		List<CpPriceInfo> priceInfoList = iCpPriceInfoBusi.getCpPriceInfo(vo);
 
 		PageInfo<ProferProductInfo> page = new PageInfo<ProferProductInfo>();
@@ -121,7 +122,11 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 			list.add(productInfo);
 		}
 		page.setResult(list);
-		return page;
+		ProferProductResponse responses=new ProferProductResponse();
+		ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
+		responses.setPageInfo(page);
+		responses.setResponseHeader(responseHeader);
+		return responses;
 	}
 
 	@Override
