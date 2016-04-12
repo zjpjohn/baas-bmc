@@ -135,7 +135,7 @@ public class StandardPriceInfoParams extends BaseInfo {
      * VARCHAR(32)
      */
     @NotNull(message = "更新标识不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+    @Size(max = 32)
     private String updateId;
 
     public String getTradeSeq() {

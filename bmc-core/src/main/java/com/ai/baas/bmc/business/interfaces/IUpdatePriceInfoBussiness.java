@@ -18,7 +18,13 @@ public interface IUpdatePriceInfoBussiness {
     public boolean dupCheck(StandardPriceInfoParams param) throws IOException;
     
     /**
-     * mysql写入
+     * mysql写入，更新
      */
     public void writeData(StandardPriceInfoParams param);
+    
+    /**
+     * mysql删除，更改生效状态
+     * 
+     */
+    public void deleteData(StandardPriceInfoParams param);
 }

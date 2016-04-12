@@ -77,6 +77,7 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
     @Override
     public void writeData(StandardPriceInfoParams param) {
         if ("UPDATE".equals(param.getUpdateId())) {
+           
             // *******************更新cp_price_info表*******************
             CpPriceInfo priceInfo = new CpPriceInfo();
             priceInfo.setTenantId(param.getTenantId());
@@ -140,6 +141,7 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             }
             // *************************end****************************
         } else if ("CREATE".equals(param.getUpdateId())) {
+
             // ************插入cp_price_info表********************
             CpPriceInfo priceInfo = new CpPriceInfo();
             priceInfo.setTenantId(param.getTenantId());
@@ -244,5 +246,77 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             // *************************end****************************
         }
     }
+
+    @Override
+    public void deleteData(StandardPriceInfoParams param) {
+        //只更新状态字段：生效，待生效
+        if ("UPDATE".equals(param.getUpdateId())) {
+            
+            //通过cp_price_info 得到detail_code
+            CpPriceInfo priceInfo = new CpPriceInfo();
+
+            CpPriceInfoCriteria priceInfoC = new CpPriceInfoCriteria();
+            priceInfoC.createCriteria().andPriceCodeEqualTo(param.getStandardId());
+            priceInfo = aCpPriceInfoMapper.selectByExample(priceInfoC).get(0);
+            
+            // 通过price_code得到cp_price_detail
+            CpPriceDetail priceDetail = new CpPriceDetail();
+            CpPriceDetailCriteria priceDetailC = new CpPriceDetailCriteria();
+            priceDetailC.createCriteria().andPriceCodeEqualTo(priceInfo.getPriceCode());
+ 
+            priceDetail = aCpPriceDetailMapper.selectByExample(priceDetailC).get(0);
+
+            // 通过price_detail得到cp_unitprice_info
+            CpUnitpriceInfo unitpriceInfo;
+            CpUnitpriceInfoCriteria unitpriceInfoC = new CpUnitpriceInfoCriteria();
+            unitpriceInfoC.createCriteria().andUnitPriceCodeEqualTo(priceDetail.getDetailCode());
+            unitpriceInfo = aCpUnitpriceInfoMapper.selectByExample(unitpriceInfoC).get(0);
+            //通过fee_item_code得到cp_unitprice_item
+
+            CpUnitpriceItem unitpriceItem = new CpUnitpriceItem();
+            //更新状态字段
+            unitpriceItem.setActiveStatus(param.getStatus());
+            CpUnitpriceItemCriteria unitpriceItemC = new CpUnitpriceItemCriteria();
+            unitpriceItemC.createCriteria().andFeeItemCodeEqualTo(unitpriceInfo.getFeeItemCode());
+            if (aCpUnitpriceItemMapper.updateByExampleSelective(unitpriceItem,
+                    unitpriceItemC) < 1) {
+                throw new BusinessException("BaaS-000001", "cp_unitprice_item表没有相关信息，无法更新");
+            }
+                
+        } else if ("DELETE".equals(param.getUpdateId())) {
+         // *******************删除cp_price_info表*******************
+            CpPriceInfoCriteria priceInfoC = new CpPriceInfoCriteria();
+            priceInfoC.createCriteria().andPriceCodeEqualTo(param.getStandardId());
+            CpPriceInfo priceInfo = aCpPriceInfoMapper.selectByExample(priceInfoC).get(0);
+            aCpPriceInfoMapper.deleteByExample(priceInfoC);
+            // *************************end****************************
+            // *******************删除cp_price_detail表*******************
+            CpPriceDetailCriteria priceDetailC = new CpPriceDetailCriteria();
+            priceDetailC.createCriteria().andPriceCodeEqualTo(priceInfo.getPriceCode());
+            CpPriceDetail priceDetail = aCpPriceDetailMapper.selectByExample(priceDetailC).get(0);
+            aCpPriceDetailMapper.deleteByExample(priceDetailC);
+            // *************************end****************************
+            // *******************删除cp_unitprice_info表*******************
+            CpUnitpriceInfoCriteria unitpriceInfoC = new CpUnitpriceInfoCriteria();
+            unitpriceInfoC.createCriteria().andUnitPriceCodeEqualTo(priceDetail.getPriceCode());
+            CpUnitpriceInfo unitpriceInfo = aCpUnitpriceInfoMapper.selectByExample(unitpriceInfoC).get(0);
+            aCpUnitpriceInfoMapper.deleteByExample(unitpriceInfoC);
+            // *************************end****************************
+            // ^^目前只有一条数据
+//            StanderdPriceInfoUsage u = param.getUsageList().get(0);
+            // *******************删除cp_unitprice_item表*******************
+            CpUnitpriceItemCriteria unitpriceItemC = new CpUnitpriceItemCriteria();
+            unitpriceItemC.createCriteria().andFeeItemCodeEqualTo(unitpriceInfo.getFeeItemCode());
+            aCpUnitpriceItemMapper.deleteByExample(unitpriceItemC);
+            // *************************end****************************
+            // *******************删除cp_factor_info表*******************
+            CpFactorInfoCriteria factorInfoC = new CpFactorInfoCriteria();
+            factorInfoC.createCriteria().andFactorCodeEqualTo(unitpriceInfo.getFactorCode())
+                    .andTenantIdEqualTo(param.getTenantId()).andFactorNameEqualTo("subServiceType");
+            aCpFactorInfoMapper.deleteByExample(factorInfoC);
+            // *************************end****************************
+        }
+    }
+
 
 }

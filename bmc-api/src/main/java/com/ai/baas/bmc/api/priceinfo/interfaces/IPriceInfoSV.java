@@ -10,19 +10,19 @@ import com.ai.opt.base.vo.BaseResponse;
 
 public interface IPriceInfoSV {
     
-    @interface GetPriceInfo{}
+    
      /**
       * 标准资费查询接口
       * @param QueryInfoParams
       * @return BMC-000000成功；其他失败
       * @throws BusinessException
       * @throws SystemException
-      * @author wangkai
+      * @author wangkai16
       * @ApiCode BaaS-00002
       */
      public ResponseMessage getPriceInfo(QueryInfoParams record)throws BusinessException,SystemException;
+     @interface GetPriceInfo{}
      
-     @interface UpdatePriceInfo{}
      /**
       * 标准资费更新接口
       * @param StandardPriceInfoParams
@@ -33,4 +33,16 @@ public interface IPriceInfoSV {
       * @ApiCode BaaS-00003
       */
      public BaseResponse updatePriceInfo(StandardPriceInfoParams record)throws BusinessException,SystemException;
+     @interface UpdatePriceInfo{}
+     /**
+      * 标准资费删除接口
+      * @param StandardPriceInfoParams
+      * @return BMC-000000成功；其他失败
+      * @throws BusinessException
+      * @throws SystemException
+      * @author caoyf
+      * @ApiCode BaaS-00003
+      */
+     public BaseResponse deletePriceInfo(StandardPriceInfoParams record)throws BusinessException,SystemException;
+     @interface DeletePriceInfo{}
 }

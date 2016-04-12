@@ -50,12 +50,23 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
             result.setResponseHeader(new ResponseHeader(false, "000000", "幂等性判断判断失败请联系管理员"));
             return result;
         }
-        if (("UPDATE".equals(record.getUpdateId()) || "UPDATE".equals(record.getUpdateId()))
-                && StringUtil.isBlank(record.getStandardId())) {
-            result.setResponseHeader(new ResponseHeader(false, "000000", "删除或更新时updateId不能为0"));
+        if (("UPDATE".equals(record.getUpdateId()))&& StringUtil.isBlank(record.getStandardId())) {
+            result.setResponseHeader(new ResponseHeader(false, "000000", "更新时StandarId不能为0"));
             return result;
         }
         aIUpdatePriceInfoBussiness.writeData(record);
+        result.setResponseHeader(new ResponseHeader(true, "BMC-000000", "成功"));
+        return result;
+    }
+
+    @Override
+    public BaseResponse deletePriceInfo(StandardPriceInfoParams record) throws BusinessException, SystemException {
+        BaseResponse result = new BaseResponse();
+        if (("UPDATE".equals(record.getUpdateId()) || "DELETE".equals(record.getUpdateId()))&&StringUtil.isBlank(record.getStandardId())) {
+            result.setResponseHeader(new ResponseHeader(false, "000000", "删除和更改状态字段时StandarId不能为0"));
+            return result;
+        }
+        aIUpdatePriceInfoBussiness.deleteData(record);
         result.setResponseHeader(new ResponseHeader(true, "BMC-000000", "成功"));
         return result;
     }

@@ -21,7 +21,7 @@ import com.ai.opt.base.exception.SystemException;
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IOrderInfoSV {
-    @interface OrderInfo{}
+    
     /**
      * 订购信息接口 
      * @param OrderInfoParams
@@ -33,4 +33,5 @@ public interface IOrderInfoSV {
     @Path("/sync/orderinfo")
     @POST
     public String orderInfo(OrderInfoParams record) throws BusinessException,SystemException;
+    @interface OrderInfo{}
 }
