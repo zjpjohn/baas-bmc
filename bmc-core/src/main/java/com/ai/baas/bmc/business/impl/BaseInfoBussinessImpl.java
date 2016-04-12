@@ -41,7 +41,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 			}
 
 		}
-		if(!TenantId.PUB.equals(param)){
+		if(!(TenantId.PUB).equals(param.getTenantId())){
 			BmcBasedataCodeCriteria sql = new BmcBasedataCodeCriteria();
 			BmcBasedataCodeCriteria.Criteria Criteria = sql.or();
 			Criteria.andTenantIdEqualTo(param.getTenantId()).andParamTypeEqualTo(param.getParamType());

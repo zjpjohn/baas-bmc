@@ -30,8 +30,8 @@ public class BaseInfoTest {
 	    @Test
 	  public  void test(){
 	    	QueryInfoParams query=new QueryInfoParams();
-	    	query.setParamType("UNIT");
-	    	query.setTenantId("BYD");
+	    	query.setParamType("SERVICE_TYPE");
+	    	query.setTenantId("PUB");
 	    	query.setTradeSeq("BYD160323090000130123456789");
 	    	System.out.println(JSON.toJSON(query));
 	    	BaseCodeInfo bi=iBaseInfoSV.getBaseInfo(query);
