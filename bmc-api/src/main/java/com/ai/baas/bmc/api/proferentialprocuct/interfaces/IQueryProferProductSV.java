@@ -3,6 +3,7 @@ package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductInfo;
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.SingleProductInfo;
@@ -29,7 +30,7 @@ public interface IQueryProferProductSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00008
 	 */
-	PageInfo<ProferProductInfo> getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
+	ProferProductResponse getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
 	@interface GetProductInfo{}
 	/**
 	 * 查询单个产品
@@ -53,4 +54,6 @@ public interface IQueryProferProductSV {
 	 */
 	RelatedResponse getRelatedAccount(RelatedVO vo);
 	@interface GetRelatedAccount{}
+	
+	
 }
