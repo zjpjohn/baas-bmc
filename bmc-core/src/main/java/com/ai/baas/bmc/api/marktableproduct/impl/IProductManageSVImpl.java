@@ -10,14 +10,13 @@ import org.springframework.stereotype.Component;
 import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
-import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
-import com.ai.baas.bmc.business.interfaces.IProductManageBusi;
 import com.ai.baas.bmc.business.interfaces.IProductManageBusiness;
 import com.ai.baas.bmc.context.ErrorCode;
+import com.ai.baas.bmc.service.business.interfaces.IProductManageBusi;
 import com.ai.baas.bmc.util.InCheckUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.opt.base.exception.BusinessException;
@@ -231,6 +230,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 			iProductManageBusiness.addproduct(vo);
 			log.info("-------------->添加成功！！！");
 		} catch (Exception e) {
+			e.printStackTrace();
 			ResponseHeader responseHeader = new ResponseHeader(true,
 					ErrorCode.FALSE, "失败");
 			response.setResponseHeader(responseHeader);
@@ -269,6 +269,11 @@ public class IProductManageSVImpl implements IProductManageSV {
 	public ProductParamVo editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException {
 		return this.iProductManageBusi.editProduct(vo);
 		
+	}
+
+	@Override
+	public ProcductResponse insertProduct(ProductParamVo vo) throws BusinessException, SystemException {
+		return this.iProductManageBusi.insertProduct(vo);
 	}
 
 }

@@ -28,4 +28,12 @@ public interface ICpStepInfoBusi {
 	 * @ApiCode
 	 */
 	public CpStepInfo getCpStepInfoByDetailCode(CpStepInfo info);
+	/**
+	 * 添加cpstepinfo信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public void addCpStepInfo(CpStepInfo info);
 }

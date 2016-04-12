@@ -29,7 +29,7 @@ dependencies {
     //compile 'com.ai.runner.center.dshm:dshmprocess:1.0.1-SNAPSHOT'
     
     compile 'com.ai.baas:baas-dshm-sdk:1.0.7-SNAPSHOT'
-    compile 'com.ai.opt.sdk:opt-sdk:1.0.2-SNAPSHOT'
+    compile 'com.ai.opt.sdk:opt-sdk:1.0.3-SNAPSHOT'
     compile 'com.ai.opt.dshm:dshmprocess:1.0.0-SNAPSHOT'
     compile 'com.ai.runner.center.dshm:dshmservice:1.0.1-SNAPSHOT'
     compile 'org.hibernate:hibernate-validator:4.2.0.Final'

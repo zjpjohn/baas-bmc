@@ -48,4 +48,10 @@ public class CpStepInfoBusiImpl implements ICpStepInfoBusi {
 		return cpStepInfo;
 		
 	}
+
+	@Override
+	public void addCpStepInfo(CpStepInfo info) {
+		this.cpStepInfoMapper.insertSelective(info);
+		
+	}
 }

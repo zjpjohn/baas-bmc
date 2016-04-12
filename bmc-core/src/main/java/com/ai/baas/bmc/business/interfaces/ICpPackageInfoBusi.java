@@ -35,4 +35,12 @@ public interface ICpPackageInfoBusi {
 	 * @ApiCode
 	 */
 	public CpPackageInfo getCpPackageInfoByDetailCode(CpPackageInfo info);
+	/**
+	 * 添加cppackageinfo信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public void addCpPackageInfo(CpPackageInfo info);
 }

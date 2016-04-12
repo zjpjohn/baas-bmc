@@ -55,4 +55,10 @@ public class CpPackageInfoBusiImpl implements ICpPackageInfoBusi {
 		}
 		return cpPackageInfo;
 	}
+
+	@Override
+	public void addCpPackageInfo(CpPackageInfo info) {
+
+		this.cpPackageInfoMapper.insertSelective(info);
+	}
 }

@@ -100,26 +100,29 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
-		
-		cpPriceInfoMapper.insert(cpPriceInfo);
-		//插入共享内存
-		DshmUtil.getIdshmSV().initLoader("cp_price_info",
-				priceinfobject.toString(), 0);
-		long stepSeq = 0;
-		for (ServiceVO s : vo.getMajorProductAmount()) {
-			//序列生成DETAIL_CODE
-			String detailCode = aISysSequenceSvc.terrigerSysSequence(
-					"DETAIL_CODE", 1).get(0);
-			CpPriceDetail(priceCode, vo, s, detailCode);
-			if (vo.getBillingType().equals("STEP")) {
-				//阶梯类型
-				stepSeq++;
-				CpStepInfo(detailCode, s, stepSeq, vo);
-			} else {
-				//标准类型
-				CpPackageInfo(detailCode, s, vo);
-
+		try{
+			cpPriceInfoMapper.insert(cpPriceInfo);
+			//插入共享内存
+			DshmUtil.getIdshmSV().initLoader("cp_price_info",
+					priceinfobject.toString(), 0);
+			long stepSeq = 0;
+			for (ServiceVO s : vo.getMajorProductAmount()) {
+				//序列生成DETAIL_CODE
+				String detailCode = aISysSequenceSvc.terrigerSysSequence(
+						"DETAIL_CODE", 1).get(0);
+				CpPriceDetail(priceCode, vo, s, detailCode);
+				if (vo.getBillingType().equals("STEP")) {
+					//阶梯类型
+					stepSeq++;
+					CpStepInfo(detailCode, s, stepSeq, vo);
+				} else {
+					//标准类型
+					CpPackageInfo(detailCode, s, vo);
+	
+				}
 			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		System.out.println("---------------添加成功！！！！");
 	}

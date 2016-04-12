@@ -1,7 +1,6 @@
 package com.ai.baas.bmc.api.marktableproduct.params;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class ProductParamVo implements Serializable {
 	/**
@@ -13,18 +12,9 @@ public class ProductParamVo implements Serializable {
 	//
 	private CpPriceInfoParamVo cpPriceInfoParamVo;
 	private CpPriceDetailParamVo cpPriceDetailParamVo;
-	private List<CpPriceDetailParamVo> cpPriceDetailParamVoList = null;
-	
 	private CpStepInfoParamVo cpStepInfoParamVo;
 	private CpPackageInfoParamVo cpPackageInfoParamVo;
-	public List<CpPriceDetailParamVo> getCpPriceDetailParamVoList() {
-		return cpPriceDetailParamVoList;
-	}
-
-	public void setCpPriceDetailParamVoList(List<CpPriceDetailParamVo> cpPriceDetailParamVoList) {
-		this.cpPriceDetailParamVoList = cpPriceDetailParamVoList;
-	}
-
+	
 	public String getPriceCode() {
 		return priceCode;
 	}
