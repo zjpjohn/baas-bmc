@@ -78,4 +78,18 @@ public interface IProductManageSV {
 	 * @ApiCode
 	 */
 	ProductParamVo editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException;
+
+	/**
+	 * 添加产品信息
+	 * @param vo
+	 * @return
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	@interface insertProduct{}
+	ProcductResponse insertProduct(ProductParamVo vo) throws BusinessException, SystemException;
+	
 }

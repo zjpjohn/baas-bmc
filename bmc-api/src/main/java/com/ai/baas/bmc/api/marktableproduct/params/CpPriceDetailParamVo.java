@@ -20,6 +20,25 @@ public class CpPriceDetailParamVo {
     private String comments;
 
     private String serviceType;
+    
+    private CpStepInfoParamVo cpStepInfoParamVo;
+	public CpStepInfoParamVo getCpStepInfoParamVo() {
+		return cpStepInfoParamVo;
+	}
+
+	public void setCpStepInfoParamVo(CpStepInfoParamVo cpStepInfoParamVo) {
+		this.cpStepInfoParamVo = cpStepInfoParamVo;
+	}
+
+	public CpPackageInfoParamVo getCpPackageInfoParamVo() {
+		return cpPackageInfoParamVo;
+	}
+
+	public void setCpPackageInfoParamVo(CpPackageInfoParamVo cpPackageInfoParamVo) {
+		this.cpPackageInfoParamVo = cpPackageInfoParamVo;
+	}
+
+	private CpPackageInfoParamVo cpPackageInfoParamVo;
 
     public Long getDetailId() {
         return detailId;
