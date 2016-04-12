@@ -8,5 +8,5 @@ public interface IProductManageBusiness {
 	
 	 public void addproduct(ProductVO vo);
 
-	boolean hasSeq(ProductVO vo) throws IOException;
+	String hasSeq(ProductVO vo) throws IOException;
 }

@@ -57,8 +57,9 @@ public class IProductManageSVImpl implements IProductManageSV {
 		ProcductResponse response = new ProcductResponse();
 		//判重
 		try {
-			if (iProductManageBusiness.hasSeq(vo)) {
-
+			String returnFlag = iProductManageBusiness.hasSeq(vo);
+			if (returnFlag.equals("exit")) {
+				System.out.println("-----init-----");
 				ResponseHeader responseHeader = new ResponseHeader(false,
 						ErrorCode.EXIST, "tradeSeq已使用");
 				response.setResponseHeader(responseHeader);
@@ -228,7 +229,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 		//数据库操作
 		try {
 			iProductManageBusiness.addproduct(vo);
-
+			log.info("-------------->添加成功！！！");
 		} catch (Exception e) {
 			ResponseHeader responseHeader = new ResponseHeader(true,
 					ErrorCode.FALSE, "失败");

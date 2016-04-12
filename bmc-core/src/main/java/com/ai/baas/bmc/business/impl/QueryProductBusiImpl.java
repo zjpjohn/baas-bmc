@@ -120,6 +120,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 product.setResponseHeader(responseHeader);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			ResponseHeader responseHeader = new ResponseHeader(false, ErrorCode.FALSE, "失败");
 			 product.setResponseHeader(responseHeader);
 			 pro_list.add(product);

@@ -45,13 +45,16 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 	private CpPackageInfoMapper cpPackageInfoMapper;
 
 	@Override
-	public boolean hasSeq(ProductVO vo) throws IOException {
+	public String hasSeq(ProductVO vo) throws IOException {
+		String flag = "noexit";
+		try{
 		String rowkey = vo.getTenantId() + Context.SPLIT
 				+ Context.AddProduct + Context.SPLIT + vo.getTradeSeq();
 		Table table = MyHbaseUtil.getTable(TableCon.TRADE_SEQ_LOG);
-
+		System.out.println("-------hasSeq:"+table+"--->"+rowkey);
 		if (MyHbaseUtil.hasExists(table, rowkey)) {
-			return true;
+			flag="exit";
+			return flag;
 		}
 		MyHbaseUtil.addData(table,rowkey,
 						CellTemp.inst(ConTradeSeqLog.TENANT_ID,
@@ -64,7 +67,10 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 								DateUtil.getDateString(DateUtil.YYYYMMDDHHMMSS)),
 						CellTemp.inst(ConTradeSeqLog.MSG_CONTENT,
 								MyJsonUtil.toJson(vo)));
-		return false;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return flag;
 
 	}
 
@@ -94,7 +100,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
-
+		
 		cpPriceInfoMapper.insert(cpPriceInfo);
 		//插入共享内存
 		DshmUtil.getIdshmSV().initLoader("cp_price_info",
@@ -115,7 +121,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 
 			}
 		}
-
+		System.out.println("---------------添加成功！！！！");
 	}
 //CpPriceDetail
 	private void CpPriceDetail(String priceCode, ProductVO vo, ServiceVO s,

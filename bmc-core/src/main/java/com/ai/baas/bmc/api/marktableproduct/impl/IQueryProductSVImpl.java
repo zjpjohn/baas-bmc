@@ -14,6 +14,7 @@ import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
@@ -39,6 +40,16 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 		PageInfo<ProductInfo> page=new PageInfo();
 		
 		List<ProductInfo>  pro= iQueryProductBusiImpl.Product(vo);
+		
+		page.setPageNo(vo.getPageNo());
+		page.setPageSize(vo.getPageSize());
+		if(CollectionUtil.isEmpty(pro)){
+			page.setCount(0);
+		}
+		else{
+			page.setCount(pro.size());
+			
+		}
 	
 		page.setResult(pro);
 		
