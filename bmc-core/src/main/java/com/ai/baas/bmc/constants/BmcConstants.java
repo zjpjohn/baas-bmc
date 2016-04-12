@@ -37,7 +37,7 @@ public final class BmcConstants {
         public static final class TenantId {
             private TenantId() {
             }
-            public static final String ALL = "all";
+            public static final String PUB = "PUB";
         }
 
         public static final class CacheNS{
