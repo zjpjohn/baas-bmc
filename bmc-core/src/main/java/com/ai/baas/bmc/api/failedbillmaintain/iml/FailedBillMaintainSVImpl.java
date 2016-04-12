@@ -34,9 +34,9 @@ public class FailedBillMaintainSVImpl implements IFailedBillMaintainSV {
             List<FailedBill> result = failedBillMaintainBusi.queryFailedBills(criteria);
             hBasePager.setResult(result);
         } catch (BusinessException e) {
-            throw new BusinessException("", "");
+            throw e;
         } catch (Exception e) {
-            throw new SystemException("", e);
+            throw new SystemException("查询错单出错", e);
         }
 
         return hBasePager;
@@ -48,9 +48,9 @@ public class FailedBillMaintainSVImpl implements IFailedBillMaintainSV {
             param.validate();
             return failedBillMaintainBusi.queryFailedBillById(param.buildFailedBillRowKey());
         } catch (BusinessException e) {
-            throw new BusinessException("", "");
+            throw e;
         } catch (Exception e) {
-            throw new SystemException("", e);
+            throw new SystemException("查询单条错单出错", e);
         }
     }
 
@@ -60,9 +60,9 @@ public class FailedBillMaintainSVImpl implements IFailedBillMaintainSV {
             param.validate();
             failedBillMaintainBusi.doResendFailedBill(param);
         } catch (BusinessException e) {
-
+            throw e;
         } catch (Exception e) {
-
+            throw new SystemException("重发单条错单出错", e);
         }
     }
 }
