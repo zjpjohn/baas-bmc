@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 /**
@@ -26,54 +28,54 @@ public class ProferProductVO extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="消息流水号不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private String tradeSeq;
 	
 	/**
 	 * 产品Id
 	 */
-	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private Long productId;
 	
 	/**
 	 * 优惠产品类型，必填
 	 */
-	@NotNull(message="优惠产品类型不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="优惠产品类型不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private String productType;
 	
 	
 	/**
 	 * 优惠活动名称
 	 */
-	@NotNull(message="优惠活动名称不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="优惠活动名称不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private String programName;
 	
 	/**
 	 * 规则金额
 	 */
-	@NotNull(message="优惠规则不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="优惠规则不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private double ruleAmount;
 	/**
 	 * 规则单位
 	 */
-	@NotNull(message="优惠单位不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="优惠单位不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private String ruleUnit;
 	/**
 	 * 满减金额
 	 */
-	@NotNull(message="满减金额不能为空",groups={IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="满减金额不能为空",groups={IProferProductManageSV.AddDiscontProduct.class})
 	private double reduceAmount;
 	
 	/**
 	 * 生效日期，必填
 	 */
-	@NotNull(message="生效日期不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="生效日期不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private Timestamp activeDate;
 	
 	/**
 	 * 失效时间，必填
 	 */
-	@NotNull(message=" 失效时间不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message=" 失效时间不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private Timestamp invalidDate;
 	/**
 	 * 备注
