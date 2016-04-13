@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.service.atom.interfaces;
 
+import java.util.List;
+
 import com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo;
 
 /**
@@ -34,7 +36,7 @@ public interface ICpPackageInfoAtom {
 	 * @ApiDocMethod
 	 * @ApiCode
 	 */
-	public CpPackageInfo getCpPackageInfoByDetailCode(CpPackageInfo info);
+	public List<CpPackageInfo> getCpPackageInfoByDetailCode(CpPackageInfo info);
 	/**
 	 * 添加cppackageinfo信息
 	 * @param info

@@ -1,19 +1,25 @@
 package com.ai.baas.bmc.service.business.impl;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.hadoop.hbase.client.Table;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ai.baas.bmc.api.marktableproduct.params.CpPackageInfoParamVo;
-import com.ai.baas.bmc.api.marktableproduct.params.CpPriceDetailParamVo;
-import com.ai.baas.bmc.api.marktableproduct.params.CpPriceInfoParamVo;
-import com.ai.baas.bmc.api.marktableproduct.params.CpStepInfoParamVo;
-import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
-import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
+import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
+import com.ai.baas.bmc.context.Context;
+import com.ai.baas.bmc.context.TableCon;
+import com.ai.baas.bmc.context.TableCon.ConTradeSeqLog;
 import com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
@@ -23,321 +29,541 @@ import com.ai.baas.bmc.service.atom.interfaces.ICpPriceDetailAtom;
 import com.ai.baas.bmc.service.atom.interfaces.ICpPriceInfoAtom;
 import com.ai.baas.bmc.service.atom.interfaces.ICpStepInfoAtom;
 import com.ai.baas.bmc.service.business.interfaces.IProductManageBusi;
+import com.ai.baas.bmc.util.DshmUtil;
+import com.ai.baas.bmc.util.MyHbaseUtil;
+import com.ai.baas.bmc.util.MyJsonUtil;
+import com.ai.baas.bmc.util.MyHbaseUtil.CellTemp;
 import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
+
+import net.sf.json.JSONObject;
+
 /**
  * (修改产品信息/删除产品信息) 类
  *
  * Date: 2016年4月11日 <br>
  * Copyright (c) 2016 asiainfo.com <br>
+ * 
  * @author zhangzd
  */
 @Service
 @Transactional
 public class ProductManageBusiImpl implements IProductManageBusi {
-
+	private static final Logger log = LogManager
+			.getLogger(ProductManageBusiImpl.class);
+	
+	@Autowired
+	private ISysSequenceSvc aISysSequenceSvc;
 	@Autowired
 	private ICpPriceInfoAtom cpPriceInfoAtom;
 	@Autowired
-	private ICpPriceDetailAtom cpPriceDetailAtom; 
+	private ICpPriceDetailAtom cpPriceDetailAtom;
 	@Autowired
 	private ICpPackageInfoAtom cpPackageInfoAtom;
 	@Autowired
-	private ICpStepInfoAtom cpStepInfoAtom; 
-	
+	private ICpStepInfoAtom cpStepInfoAtom;
+
 	public static final String CHARGE_TYPE_STEP = "STEP";
 	public static final String CHARGE_TYPE_PACKAGE = "PACKAGE";
-	
+	/**
+	 * 修改产品信息
+	 */
 	@Override
-	public void updateProduct(ProductParamVo vo) {
+	public void updateProduct(ProductVO vo) {
+		JSONObject priceinfobject = new JSONObject();
+		String priceCode = aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0);
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
-		cpPriceInfo.setTenantId(vo.getCpPriceInfoParamVo().getTenantId());
-		cpPriceInfo.setProductType(vo.getCpPriceInfoParamVo().getProductType());
-		cpPriceInfo.setPriceName(vo.getCpPriceInfoParamVo().getPriceName());
-		cpPriceInfo.setPriceInfoId(vo.getCpPriceInfoParamVo().getPriceInfoId());
-		cpPriceInfo.setPriceCode(vo.getPriceCode());
-		cpPriceInfo.setOperatorId(vo.getCpPriceInfoParamVo().getOperatorId());
-		cpPriceInfo.setActiveTime(vo.getCpPriceInfoParamVo().getActiveTime());
-		cpPriceInfo.setInactiveTime(vo.getCpPriceInfoParamVo().getInactiveTime());
-		cpPriceInfo.setComments(vo.getCpPriceInfoParamVo().getComments());
-		cpPriceInfo.setActiveStatus(vo.getCpPriceInfoParamVo().getActiveStatus());
-		//
-		this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
-		List<CpPriceDetailParamVo> cpPriceDetailParamVoList = new ArrayList<CpPriceDetailParamVo>();
-		cpPriceDetailParamVoList = vo.getCpPriceDetailParamVoList();
-		if(cpPriceDetailParamVoList.size()>0){
-			for(CpPriceDetailParamVo cpPriceDetailParamVo : cpPriceDetailParamVoList){
-				//
-				CpPriceDetail cpPriceDetail = new CpPriceDetail();
-				cpPriceDetail.setActiveTime(cpPriceDetailParamVo.getActiveTime());
-				cpPriceDetail.setChargeType(cpPriceDetailParamVo.getChargeType());
-				cpPriceDetail.setComments(cpPriceDetailParamVo.getComments());
-				cpPriceDetail.setDetailCode(cpPriceDetailParamVo.getDetailCode());
-				cpPriceDetail.setDetailId(cpPriceDetailParamVo.getDetailId());
-				cpPriceDetail.setDetailName(cpPriceDetailParamVo.getDetailName());
-				cpPriceDetail.setInactiveTime(cpPriceDetailParamVo.getInactiveTime());
-				cpPriceDetail.setPriceCode(cpPriceDetailParamVo.getPriceCode());
-				cpPriceDetail.setServiceType(cpPriceDetailParamVo.getServiceType());
-				//
-				this.cpPriceDetailAtom.updatePriceDetailByPriceCode(cpPriceDetail);
-				
+		cpPriceInfo.setActiveTime(vo.getActiveDate());
+		priceinfobject.put("ACTIVE_TIME", vo.getActiveDate());
+
+		cpPriceInfo.setCreateTime(DateUtil.getTimestamp(System.currentTimeMillis()));
+		priceinfobject.put("CREATE_TIME", DateUtil.getTimestamp(System.currentTimeMillis()));
+
+		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
+		priceinfobject.put("INACTIVE_TIME", vo.getInvalidDate());
+
+		cpPriceInfo.setTenantId(vo.getTenantId());
+		priceinfobject.put("TENANT_ID", vo.getTenantId());
+
+		cpPriceInfo.setPriceCode(priceCode);
+		priceinfobject.put("PRICE_CODE", priceCode);
+
+		cpPriceInfo.setPriceName(vo.getProductName());
+		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		try {
+			this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
+			log.info("修改cpPriceInfo信息完毕！！！");
+			// 插入共享内存
+			DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 0);
+			long stepSeq = 0;
+			//序列生成DETAIL_CODE
+			CpPriceDetail cpPriceDetail = new CpPriceDetail();
+			//
+			cpPriceDetail.setPriceCode(vo.getProductId());
+			CpPriceDetail detailDb = this.cpPriceDetailAtom.getCpPriceDetailByPriceCode(cpPriceDetail);//aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0);
+			String detailCode = detailDb.getDetailCode();
+			log.info("序列生成DETAIL_CODE:"+detailCode);
 			
-				String chargeType = vo.getChargeType();
-				//
-				if(!StringUtil.isBlank(cpPriceDetailParamVo.getChargeType()) && chargeType.equals(CHARGE_TYPE_STEP)){
-					CpStepInfo cpStepInfo = new CpStepInfo();
-					cpStepInfo.setDetailCode(new Long(cpPriceDetail.getDetailCode()));
-					cpStepInfo.setExtCode(cpPriceDetailParamVo.getCpStepInfoParamVo().getExtCode());
-					cpStepInfo.setFactorCode(cpPriceDetailParamVo.getCpStepInfoParamVo().getFactorCode());
-					cpStepInfo.setPriceValue(cpPriceDetailParamVo.getCpStepInfoParamVo().getPriceValue());
-					cpStepInfo.setSectionA(cpPriceDetailParamVo.getCpStepInfoParamVo().getSectionA());
-					cpStepInfo.setSectionB(cpPriceDetailParamVo.getCpStepInfoParamVo().getSectionB());
-					cpStepInfo.setSetpId(cpPriceDetailParamVo.getCpStepInfoParamVo().getSetpId());
-					cpStepInfo.setStepSeq(cpPriceDetailParamVo.getCpStepInfoParamVo().getStepSeq());
-					cpStepInfo.setTotalPriceValue(cpPriceDetailParamVo.getCpStepInfoParamVo().getTotalPriceValue());
-					cpStepInfo.setUnitType(cpPriceDetailParamVo.getCpStepInfoParamVo().getUnitType());
-					//
-					this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
-				}
+			this.toUpdateCpPriceDetail(priceCode, vo, detailCode);
+			for (ServiceVO s : vo.getMajorProductAmount()) {
 				
-				if(!StringUtil.isBlank(cpPriceDetailParamVo.getChargeType()) && chargeType.equals(CHARGE_TYPE_PACKAGE)){
-					CpPackageInfo cpPackageInfo = new CpPackageInfo();
-					cpPackageInfo.setAmount(cpPriceDetailParamVo.getCpPackageInfoParamVo().getAmount());
-					cpPackageInfo.setDetailCode(cpPriceDetail.getDetailCode());
-					cpPackageInfo.setExceedType(cpPriceDetailParamVo.getCpPackageInfoParamVo().getExceedType());
-					cpPackageInfo.setExtCode(cpPriceDetailParamVo.getCpPackageInfoParamVo().getExtCode());
-					cpPackageInfo.setFactorCode(cpPriceDetailParamVo.getCpPackageInfoParamVo().getFactorCode());
-					cpPackageInfo.setPackageId(cpPriceDetailParamVo.getCpPackageInfoParamVo().getPackageId());
-					cpPackageInfo.setPriceValue(cpPriceDetailParamVo.getCpPackageInfoParamVo().getPriceValue());
-					cpPackageInfo.setTotalPriceValue(cpPriceDetailParamVo.getCpPackageInfoParamVo().getTotalPriceValue());
-					cpPackageInfo.setUnitCode(cpPriceDetailParamVo.getCpPackageInfoParamVo().getUnitCode());
-					cpPackageInfo.setUnitpriceCode(cpPriceDetailParamVo.getCpPackageInfoParamVo().getUnitpriceCode());
-					cpPackageInfo.setUnitType(cpPriceDetailParamVo.getCpPackageInfoParamVo().getUnitType());
-					//
-					this.cpPackageInfoAtom.updateCpPackageInfoByDetailCode(cpPackageInfo);
+				// 阶梯类型
+				if (vo.getBillingType().equals(CHARGE_TYPE_STEP)) {
 					
+					stepSeq++;
+					this.toUpdateCpStepInfo(detailCode, s, stepSeq, vo);
+				} 
+				// 标准类型
+				if(vo.getBillingType().equals(CHARGE_TYPE_PACKAGE)){
+					
+					this.toUpdateCpPackageInfo(detailCode, s, vo);
+
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
-
 	@Override
-	public void deleteProduct(ProductParamKeyVo vo) {
+	public void deleteProduct(ProductDelVO vo) {
+		String billingType = vo.getBillingType();
+		String productId = vo.getProductId();
+		
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
-		cpPriceInfo.setPriceCode(vo.getPriceCode());
+		cpPriceInfo.setPriceCode(productId);
 		//
 		this.cpPriceInfoAtom.deletePriceInfoByPriceCode(cpPriceInfo);
 		//
 		CpPriceDetail cpPriceDetail = new CpPriceDetail();
-		cpPriceDetail.setPriceCode(vo.getPriceCode());
+		cpPriceDetail.setPriceCode(productId);
+		//
+		cpPriceDetail = this.cpPriceDetailAtom.getCpPriceDetailByPriceCode(cpPriceDetail);
 		//
 		this.cpPriceDetailAtom.deletePriceDetailByPriceCode(cpPriceDetail);
 		//
-		CpPriceDetail cpPriceDetailDb = this.cpPriceDetailAtom.getCpPriceDetailByPriceCode(cpPriceDetail);
-		//
-				String chargeType = vo.getChargeType();
-				//
-				if(!StringUtil.isBlank(chargeType) && chargeType.equals(CHARGE_TYPE_STEP)){
-					CpStepInfo cpStepInfo = new CpStepInfo();
-					cpStepInfo.setDetailCode(new Long(cpPriceDetailDb.getDetailCode()));
-					//
-					this.cpStepInfoAtom.deleteCpStepInfoByDetailCode(cpStepInfo);
-				}
-				//
-				if(!StringUtil.isBlank(chargeType) && chargeType.equals(CHARGE_TYPE_PACKAGE)){
-					CpPackageInfo cpPackageInfo = new CpPackageInfo();
-					cpPackageInfo.setDetailCode(cpPriceDetailDb.getDetailCode());
-					//
-					this.cpPackageInfoAtom.deleteCpPackageInfoByDetailCode(cpPackageInfo);
-					
-				}
-			
-	}
-
-
-	@Override
-	public ProductParamVo editProduct(ProductParamKeyVo vo) {
-		ProductParamVo productParamVo = new ProductParamVo();
-		//1.add priceCode
-		productParamVo.setPriceCode(vo.getPriceCode());
-		//2.add chargeType
-		productParamVo.setChargeType(vo.getChargeType());
-		//
-		CpPriceInfo cpPriceInfo = new CpPriceInfo();
-		cpPriceInfo.setPriceCode(vo.getPriceCode());
-		//
-		CpPriceInfo cpPriceInfoNew = this.cpPriceInfoAtom.getCpPriceInfoByPriceCode(cpPriceInfo);
-		//
-		CpPriceInfoParamVo cpPriceInfoParamVo = new CpPriceInfoParamVo();
-		if(null != cpPriceInfoNew){
-			cpPriceInfoParamVo.setActiveStatus(cpPriceInfoNew.getActiveStatus());
-			cpPriceInfoParamVo.setActiveTime(cpPriceInfoNew.getActiveTime());
-			cpPriceInfoParamVo.setComments(cpPriceInfoNew.getComments());
-			cpPriceInfoParamVo.setCreateTime(cpPriceInfoNew.getCreateTime());
-			cpPriceInfoParamVo.setInactiveTime(cpPriceInfoNew.getInactiveTime());
-			cpPriceInfoParamVo.setOperatorId(cpPriceInfoNew.getOperatorId());
-			cpPriceInfoParamVo.setPriceCode(cpPriceInfoNew.getPriceCode());
-			cpPriceInfoParamVo.setPriceInfoId(cpPriceInfoNew.getPriceInfoId());
-			cpPriceInfoParamVo.setPriceName(cpPriceInfoNew.getPriceName());
-			cpPriceInfoParamVo.setProductType(cpPriceInfoNew.getProductType());
-			cpPriceInfoParamVo.setTenantId(cpPriceInfoNew.getTenantId());
+		if((CHARGE_TYPE_STEP).equals(billingType)){
+			CpStepInfo cpStepInfo = new CpStepInfo();
+			cpStepInfo.setDetailCode(new Long(cpPriceDetail.getDetailCode()));
+			//
+			this.cpStepInfoAtom.deleteCpStepInfoByDetailCode(cpStepInfo);
 		}
-		//3.add cpPriceInfo
-		productParamVo.setCpPriceInfoParamVo(cpPriceInfoParamVo);
+		if((CHARGE_TYPE_PACKAGE).equals(billingType)){
+			CpPackageInfo cpPackageInfo = new CpPackageInfo();
+			cpPackageInfo.setDetailCode(cpPriceDetail.getDetailCode());
+			//
+			this.cpPackageInfoAtom.updateCpPackageInfoByDetailCode(cpPackageInfo);
+		}
+
+	}
+	/**
+	 * 编辑信息 根据productId和billingType
+	 */
+	@Override
+	public ProductVO editProduct(ProductParamKeyVo vo) {
+		String billingType = vo.getBillingType();
+		String productId = vo.getProductId();
+		ProductVO productVo = new ProductVO();
+		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		cpPriceInfo.setPriceCode(vo.getProductId());
+		//
+		cpPriceInfo = this.cpPriceInfoAtom.getCpPriceInfoByPriceCode(cpPriceInfo);
+		//
+		productVo.setActiveDate(cpPriceInfo.getActiveTime());
+		//productVo.setActiveDateTag();
+		productVo.setBillingType(billingType);
+		productVo.setInvalidDate(cpPriceInfo.getInactiveTime());
+		//productVo.setIsPriceEqual(isPriceEqual);
+		productVo.setProductId(productId);
+		productVo.setProductName(cpPriceInfo.getPriceName());
+		//productVo.setStandardPriceType();
+		productVo.setTenantId(cpPriceInfo.getTenantId());
 		
 		//
 		CpPriceDetail cpPriceDetail = new CpPriceDetail();
-		cpPriceDetail.setPriceCode(vo.getPriceCode());
+		cpPriceDetail.setPriceCode(vo.getProductId());
 		//
-		CpPriceDetail cpPriceDetailNew = this.cpPriceDetailAtom.getCpPriceDetailByPriceCode(cpPriceDetail);
+		cpPriceDetail = this.cpPriceDetailAtom.getCpPriceDetailByPriceCode(cpPriceDetail);
 		//
-		CpPriceDetailParamVo cpPriceDetailParamVo = new CpPriceDetailParamVo();
-		if(null != cpPriceDetailNew){
-			cpPriceDetailParamVo.setActiveTime(cpPriceDetailNew.getActiveTime());
-			cpPriceDetailParamVo.setChargeType(cpPriceDetailNew.getChargeType());
-			cpPriceDetailParamVo.setComments(cpPriceDetailNew.getComments());
-			cpPriceDetailParamVo.setDetailCode(cpPriceDetailNew.getDetailCode());
-			cpPriceDetailParamVo.setDetailId(cpPriceDetailNew.getDetailId());
-			cpPriceDetailParamVo.setDetailName(cpPriceDetailNew.getDetailName());
-			cpPriceDetailParamVo.setInactiveTime(cpPriceDetailNew.getInactiveTime());
-			cpPriceDetailParamVo.setPriceCode(cpPriceDetailNew.getPriceCode());
-			cpPriceDetailParamVo.setServiceType(cpPriceDetailNew.getServiceType());
-			
-		}
-		//4.add cpPriceDetail
-		productParamVo.setCpPriceDetailParamVo(cpPriceDetailParamVo);
+		List<ServiceVO> serviceVOList = new ArrayList<ServiceVO>();
+		ServiceVO serviceVo = null;
 		//
-		String chargeType = vo.getChargeType();
-		CpStepInfoParamVo cpStepInfoParamVo = new CpStepInfoParamVo();
-		CpStepInfo cpStepInfoNew = null;
-		if(!StringUtil.isBlank(chargeType) && chargeType.equals(CHARGE_TYPE_STEP)){
+		if((CHARGE_TYPE_STEP).equals(billingType)){
 			CpStepInfo cpStepInfo = new CpStepInfo();
-			cpStepInfo.setDetailCode(new Long(cpPriceDetailNew.getDetailCode()));
+			cpStepInfo.setDetailCode(new Long(cpPriceDetail.getDetailCode()));
 			//
-			cpStepInfoNew = this.cpStepInfoAtom.getCpStepInfoByDetailCode(cpStepInfo);
-			//
-			if(null != cpStepInfoNew){
-				cpStepInfoParamVo.setDetailCode(cpStepInfoNew.getDetailCode());
-				cpStepInfoParamVo.setExtCode(cpStepInfoNew.getExtCode());
-				cpStepInfoParamVo.setFactorCode(cpStepInfoNew.getFactorCode());
-				cpStepInfoParamVo.setPriceValue(cpStepInfoNew.getPriceValue());
-				cpStepInfoParamVo.setSectionA(cpStepInfoNew.getSectionA());
-				cpStepInfoParamVo.setSectionB(cpStepInfoNew.getSectionB());
-				cpStepInfoParamVo.setSetpId(cpStepInfoNew.getSetpId());
-				cpStepInfoParamVo.setStepSeq(cpStepInfoNew.getStepSeq());
-				cpStepInfoParamVo.setTotalPriceValue(cpStepInfoNew.getTotalPriceValue());
-				cpStepInfoParamVo.setUnitType(cpStepInfoNew.getUnitType());
+			List<CpStepInfo> cpStepInfoList = this.cpStepInfoAtom.getCpStepInfoByDetailCode(cpStepInfo);
+			
+			for(CpStepInfo cpStepInfoNew : cpStepInfoList){
+				serviceVo = new ServiceVO();
+				serviceVo.setPrice(new BigDecimal(cpStepInfoNew.getPriceValue()));
+				serviceVo.setAmountStart(cpStepInfoNew.getSectionA());
+				serviceVo.setAmountEnd(cpStepInfoNew.getSectionB());
+				serviceVo.setUnit(cpStepInfoNew.getUnitType());
+				serviceVo.setServiceTypeDetail(cpStepInfoNew.getFactorCode().toString());
+				serviceVo.setServiceType(cpStepInfoNew.getServiceType());
+				//
+				serviceVOList.add(serviceVo);
 			}
 		}
-		//5.add cpStepInfo
-		productParamVo.setCpStepInfoParamVo(cpStepInfoParamVo);
-		//
-		CpPackageInfoParamVo cpPackageInfoParamVo = new CpPackageInfoParamVo();
-		CpPackageInfo cpPackageInfoNew = null;
-		if(!StringUtil.isBlank(chargeType) && chargeType.equals(CHARGE_TYPE_PACKAGE)){
+		if((CHARGE_TYPE_PACKAGE).equals(billingType)){
 			CpPackageInfo cpPackageInfo = new CpPackageInfo();
-			cpPackageInfo.setDetailCode(cpPriceDetailNew.getDetailCode());
+			cpPackageInfo.setDetailCode(cpPriceDetail.getDetailCode());
 			//
-			cpPackageInfoNew = this.cpPackageInfoAtom.getCpPackageInfoByDetailCode(cpPackageInfo);
-			if(null != cpPackageInfoNew){
-				cpPackageInfoParamVo.setAmount(cpPackageInfoNew.getAmount());
-				cpPackageInfoParamVo.setDetailCode(cpPackageInfoNew.getDetailCode());
-				cpPackageInfoParamVo.setExceedType(cpPackageInfoNew.getExceedType());
-				cpPackageInfoParamVo.setExtCode(cpPackageInfoNew.getExtCode());
-				cpPackageInfoParamVo.setFactorCode(cpPackageInfoNew.getFactorCode());
-				cpPackageInfoParamVo.setPackageId(cpPackageInfoNew.getPackageId());
-				cpPackageInfoParamVo.setPriceValue(cpPackageInfoNew.getPriceValue());
-				cpPackageInfoParamVo.setTotalPriceValue(cpPackageInfoNew.getTotalPriceValue());
-				cpPackageInfoParamVo.setUnitCode(cpPackageInfoNew.getUnitCode());
-				cpPackageInfoParamVo.setUnitpriceCode(cpPackageInfoNew.getUnitpriceCode());
-				cpPackageInfoParamVo.setUnitType(cpPackageInfoNew.getUnitType());
+			List<CpPackageInfo> cpPackageInfoList = this.cpPackageInfoAtom.getCpPackageInfoByDetailCode(cpPackageInfo);
+			
+			for(CpPackageInfo cpPackageInfoNew : cpPackageInfoList){
+				serviceVo = new ServiceVO();
+				serviceVo.setAmountEnd(cpPackageInfoNew.getAmount());
+				serviceVo.setUnit(cpPackageInfoNew.getUnitType());
+				serviceVo.setPrice(new BigDecimal(cpPackageInfoNew.getPriceValue()));
+				serviceVo.setServiceTypeDetail(cpPackageInfoNew.getFactorCode());
+				serviceVo.setServiceType(cpPackageInfoNew.getServiceType());
+				serviceVo.setUnit(cpPackageInfoNew.getUnitCode());
+				//
+				serviceVOList.add(serviceVo);
 			}
 		}
-		//add cpPackageInfo
-		productParamVo.setCpPackageInfoParamVo(cpPackageInfoParamVo);
+		productVo.setMajorProductAmount(serviceVOList);
 		//
-		return productParamVo;
-		
+		return productVo;
+
 	}
 
-
-	@Override
-	@Transactional
-	public ProcductResponse insertProduct(ProductParamVo vo) {
-		CpPriceInfo cpPriceInfo = new CpPriceInfo();
-		cpPriceInfo.setTenantId(vo.getCpPriceInfoParamVo().getTenantId());
-		cpPriceInfo.setProductType(vo.getCpPriceInfoParamVo().getProductType());
-		cpPriceInfo.setPriceName(vo.getCpPriceInfoParamVo().getPriceName());
-		cpPriceInfo.setPriceInfoId(vo.getCpPriceInfoParamVo().getPriceInfoId());
-		cpPriceInfo.setPriceCode(vo.getCpPriceInfoParamVo().getPriceCode());
-		cpPriceInfo.setOperatorId(vo.getCpPriceInfoParamVo().getOperatorId());
-		cpPriceInfo.setActiveTime(vo.getCpPriceInfoParamVo().getActiveTime());
-		cpPriceInfo.setInactiveTime(vo.getCpPriceInfoParamVo().getInactiveTime());
-		cpPriceInfo.setComments(vo.getCpPriceInfoParamVo().getComments());
-		cpPriceInfo.setActiveStatus(vo.getCpPriceInfoParamVo().getActiveStatus());
-		try{
-			//1.add cpPriceInfo
-			this.cpPriceInfoAtom.addCpPriceInfo(cpPriceInfo);
-			//
-			List<CpPriceDetailParamVo> cpPriceDetailParamVoList = new ArrayList<CpPriceDetailParamVo>();
-			cpPriceDetailParamVoList = vo.getCpPriceDetailParamVoList();
-			if(cpPriceDetailParamVoList.size()>0){
-				CpPriceDetail cpPriceDetail = null;
-				for(CpPriceDetailParamVo cpPriceDetailParamVo : cpPriceDetailParamVoList){
-					cpPriceDetail = new CpPriceDetail();
-					cpPriceDetail.setActiveTime(cpPriceDetailParamVo.getActiveTime());
-					cpPriceDetail.setChargeType(cpPriceDetailParamVo.getChargeType());
-					cpPriceDetail.setComments(cpPriceDetailParamVo.getComments());
-					cpPriceDetail.setDetailCode(cpPriceDetailParamVo.getDetailCode());
-					cpPriceDetail.setDetailId(cpPriceDetailParamVo.getDetailId());
-					cpPriceDetail.setDetailName(cpPriceDetailParamVo.getDetailName());
-					cpPriceDetail.setInactiveTime(cpPriceDetailParamVo.getInactiveTime());
-					cpPriceDetail.setPriceCode(cpPriceDetailParamVo.getPriceCode());
-					cpPriceDetail.setServiceType(cpPriceDetailParamVo.getServiceType());
-					this.cpPriceDetailAtom.addCpPriceDetail(cpPriceDetail);
-					//
-					String chargeType = vo.getChargeType();
-					
-					if(!StringUtil.isBlank(cpPriceDetailParamVo.getChargeType()) && chargeType.equals(CHARGE_TYPE_STEP)){
-						CpStepInfo cpStepInfo = new CpStepInfo();
-						cpStepInfo.setDetailCode(new Long(cpPriceDetail.getDetailCode()));
-						cpStepInfo.setExtCode(cpPriceDetailParamVo.getCpStepInfoParamVo().getExtCode());
-						cpStepInfo.setFactorCode(cpPriceDetailParamVo.getCpStepInfoParamVo().getFactorCode());
-						cpStepInfo.setPriceValue(cpPriceDetailParamVo.getCpStepInfoParamVo().getPriceValue());
-						cpStepInfo.setSectionA(cpPriceDetailParamVo.getCpStepInfoParamVo().getSectionA());
-						cpStepInfo.setSectionB(cpPriceDetailParamVo.getCpStepInfoParamVo().getSectionB());
-						cpStepInfo.setSetpId(cpPriceDetailParamVo.getCpStepInfoParamVo().getSetpId());
-						cpStepInfo.setStepSeq(cpPriceDetailParamVo.getCpStepInfoParamVo().getStepSeq());
-						cpStepInfo.setTotalPriceValue(cpPriceDetailParamVo.getCpStepInfoParamVo().getTotalPriceValue());
-						cpStepInfo.setUnitType(cpPriceDetailParamVo.getCpStepInfoParamVo().getUnitType());
-						//
-						this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
-					}
-					if(!StringUtil.isBlank(cpPriceDetailParamVo.getChargeType()) && chargeType.equals(CHARGE_TYPE_PACKAGE)){
-						CpPackageInfo cpPackageInfo = new CpPackageInfo();
-						cpPackageInfo.setAmount(cpPriceDetailParamVo.getCpPackageInfoParamVo().getAmount());
-						cpPackageInfo.setDetailCode(cpPriceDetail.getDetailCode());
-						cpPackageInfo.setExceedType(cpPriceDetailParamVo.getCpPackageInfoParamVo().getExceedType());
-						cpPackageInfo.setExtCode(vo.getCpPackageInfoParamVo().getExtCode());
-						cpPackageInfo.setFactorCode(cpPriceDetailParamVo.getCpPackageInfoParamVo().getFactorCode());
-						cpPackageInfo.setPackageId(cpPriceDetailParamVo.getCpPackageInfoParamVo().getPackageId());
-						cpPackageInfo.setPriceValue(cpPriceDetailParamVo.getCpPackageInfoParamVo().getPriceValue());
-						cpPackageInfo.setTotalPriceValue(cpPriceDetailParamVo.getCpPackageInfoParamVo().getTotalPriceValue());
-						cpPackageInfo.setUnitCode(cpPriceDetailParamVo.getCpPackageInfoParamVo().getUnitCode());
-						cpPackageInfo.setUnitpriceCode(cpPriceDetailParamVo.getCpPackageInfoParamVo().getUnitpriceCode());
-						cpPackageInfo.setUnitType(cpPriceDetailParamVo.getCpPackageInfoParamVo().getUnitType());
-						//
-						this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
-					}
-				}
+	// ---------------------------------************-------------------------------------
+	// ---------------------------------************-------------------------------------
+	// ---------------------------------************-------------------------------------
+	/**
+	 * 判断序列号是否存在
+	 * 
+	 * @param vo
+	 * @return
+	 * @throws IOException
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public String hasSeq(ProductVO vo) throws IOException {
+		String flag = "noexit";
+		try {
+			String rowkey = vo.getTenantId() + Context.SPLIT + Context.AddProduct + Context.SPLIT + vo.getTradeSeq();
+			Table table = MyHbaseUtil.getTable(TableCon.TRADE_SEQ_LOG);
+			System.out.println("-------hasSeq:" + table + "--->" + rowkey);
+			if (MyHbaseUtil.hasExists(table, rowkey)) {
+				flag = "exit";
+				return flag;
 			}
-				
-			
-		}catch(Exception e){
+			MyHbaseUtil.addData(table, rowkey, CellTemp.inst(ConTradeSeqLog.TENANT_ID, vo.getTenantId()),
+					CellTemp.inst(ConTradeSeqLog.INTERFACE_CODE, Context.AddProduct),
+					CellTemp.inst(ConTradeSeqLog.TRADE_SEQ, vo.getTradeSeq()),
+					CellTemp.inst(ConTradeSeqLog.RECEIVE_TIME, DateUtil.getDateString(DateUtil.YYYYMMDDHHMMSS)),
+					CellTemp.inst(ConTradeSeqLog.MSG_CONTENT, MyJsonUtil.toJson(vo)));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return flag;
+
 	}
 
+	/**
+	 * 添加产品信息
+	 */
+	@Override
+	public void addProduct(ProductVO vo) {
+		JSONObject priceinfobject = new JSONObject();
+		String priceCode = aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0);
+		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		cpPriceInfo.setActiveTime(vo.getActiveDate());
+		priceinfobject.put("ACTIVE_TIME", vo.getActiveDate());
+
+		cpPriceInfo.setCreateTime(DateUtil.getTimestamp(System.currentTimeMillis()));
+		priceinfobject.put("CREATE_TIME", DateUtil.getTimestamp(System.currentTimeMillis()));
+
+		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
+		priceinfobject.put("INACTIVE_TIME", vo.getInvalidDate());
+
+		cpPriceInfo.setTenantId(vo.getTenantId());
+		priceinfobject.put("TENANT_ID", vo.getTenantId());
+
+		cpPriceInfo.setPriceCode(priceCode);
+		priceinfobject.put("PRICE_CODE", priceCode);
+
+		cpPriceInfo.setPriceName(vo.getProductName());
+		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		try {
+			this.cpPriceInfoAtom.addCpPriceInfo(cpPriceInfo);
+			log.info("添加cpPriceInfo信息完毕！！！");
+			// 插入共享内存
+			DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 1);
+			long stepSeq = 0;
+			//序列生成DETAIL_CODE
+			String detailCode = aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0);
+			log.info("序列生成DETAIL_CODE:"+detailCode);
+			this.toAddCpPriceDetail(priceCode, vo, detailCode);
+			for (ServiceVO s : vo.getMajorProductAmount()) {
+				
+				// 阶梯类型
+				if (vo.getBillingType().equals(CHARGE_TYPE_STEP)) {
+					
+					stepSeq++;
+					this.toAddCpStepInfo(detailCode, s, stepSeq, vo);
+				} 
+				// 标准类型
+				if(vo.getBillingType().equals(CHARGE_TYPE_PACKAGE)){
+					
+					this.toAddCpPackageInfo(detailCode, s, vo);
+
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	/**
+	 * 添加价格详单表
+	 * @param priceCode
+	 * @param vo
+	 * @param detailCode
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	private void toAddCpPriceDetail(String priceCode, ProductVO vo, String detailCode) {
+		JSONObject detailobject = new JSONObject();
+		CpPriceDetail cpPriceDetail = new CpPriceDetail();
+		cpPriceDetail.setActiveTime(vo.getActiveDate());
+		detailobject.put("ACTIVE_TIME", vo.getActiveDate());
+
+		cpPriceDetail.setChargeType(vo.getBillingType());
+		detailobject.put("CHARGE_TYPE", vo.getBillingType());
+
+		cpPriceDetail.setDetailCode(detailCode);
+		detailobject.put("DETAIL_CODE", detailCode);
+
+		cpPriceDetail.setInactiveTime(vo.getInvalidDate());
+		detailobject.put("INACTIVE_TIME", vo.getInvalidDate());
+
+		cpPriceDetail.setDetailName(vo.getProductName());
+		detailobject.put("DETAIL_NAME", vo.getProductName());
+
+		cpPriceDetail.setPriceCode(priceCode);
+		detailobject.put("PRICE_CODE", priceCode);
+
+		// cpPriceDetail.setServiceType(s.getServiceType());
+		// detailobject.put("SERVICE_TYPE", s.getServiceType());
+
+		this.cpPriceDetailAtom.addCpPriceDetail(cpPriceDetail);
+		DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 1);
+	}
+	/**
+	 * 添加阶梯组合表信息
+	 * @param detailCode
+	 * @param serviceVO
+	 * @param stepSeq
+	 * @param vo
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	private void toAddCpStepInfo(String detailCode, ServiceVO serviceVO, long stepSeq, ProductVO vo) {
+		CpStepInfo cpStepInfo = new CpStepInfo();
+		JSONObject stepobject = new JSONObject();
+		cpStepInfo.setDetailCode(Long.valueOf(detailCode));
+		stepobject.put("DETAIL_CODE", detailCode);
+		// cpStepInfo.setExtCode(extCode);
+		// cpStepInfo.setFactorCode(factorCode);
+		cpStepInfo.setPriceValue(serviceVO.getPrice().doubleValue());
+		stepobject.put("PRICE_VALUE", serviceVO.getPrice());
+
+		cpStepInfo.setSectionA(serviceVO.getAmountStart());
+		stepobject.put("SECTION_A", serviceVO.getAmountStart());
+
+		cpStepInfo.setSectionB(serviceVO.getAmountEnd());
+		stepobject.put("SECTION_B", serviceVO.getAmountEnd());
+
+		cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
+		stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+
+		cpStepInfo.setStepSeq(stepSeq);
+		stepobject.put("STEP_SEQ", Long.toString(stepSeq));
+
+		cpStepInfo.setUnitType(serviceVO.getUnit());
+		stepobject.put("UNIT_TYPE", serviceVO.getUnit());
+
+		cpStepInfo.setFactorCode(Long.valueOf(serviceVO.getServiceTypeDetail()));
+		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
+
+		cpStepInfo.setServiceType(serviceVO.getServiceType());
+		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
+		
+		this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
+		DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 1);
+	}
+
+	/**
+	 * 添加标准组合表信息
+	 * @param detailCode
+	 * @param serviceVO
+	 * @param vo
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	private void toAddCpPackageInfo(String detailCode, ServiceVO serviceVO, ProductVO vo) {
+		CpPackageInfo cpPackageInfo = new CpPackageInfo();
+		JSONObject packageobject = new JSONObject();
+
+		cpPackageInfo.setAmount(serviceVO.getAmountEnd());
+		packageobject.put("AMOUNT", serviceVO.getAmountEnd());
+
+		cpPackageInfo.setDetailCode(detailCode);
+		packageobject.put("DETAIL_CODE", detailCode);
+
+		cpPackageInfo.setUnitType(serviceVO.getUnit());
+		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
+
+		cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue());
+		packageobject.put("PRICE_VALUE", serviceVO.getPrice());
+
+		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
+		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+
+		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
+		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
+
+		cpPackageInfo.setServiceType(serviceVO.getServiceType());
+		packageobject.put("SERVICE_TYPE", serviceVO.getServiceType());
+		
+		cpPackageInfo.setUnitCode(serviceVO.getUnit());
+		packageobject.put("UNIT_CODE", serviceVO.getUnit());
+		
+		this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
+		DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 1);
+	}
+	
+	//-------------------------修改相关表信息-----------------------------
+	
+	/**
+	 * 修改价格详单表
+	 * @param priceCode
+	 * @param vo
+	 * @param detailCode
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	private void toUpdateCpPriceDetail(String priceCode, ProductVO vo, String detailCode) {
+		JSONObject detailobject = new JSONObject();
+		CpPriceDetail cpPriceDetail = new CpPriceDetail();
+		cpPriceDetail.setActiveTime(vo.getActiveDate());
+		detailobject.put("ACTIVE_TIME", vo.getActiveDate());
+
+		cpPriceDetail.setChargeType(vo.getBillingType());
+		detailobject.put("CHARGE_TYPE", vo.getBillingType());
+
+		cpPriceDetail.setDetailCode(detailCode);
+		detailobject.put("DETAIL_CODE", detailCode);
+
+		cpPriceDetail.setInactiveTime(vo.getInvalidDate());
+		detailobject.put("INACTIVE_TIME", vo.getInvalidDate());
+
+		cpPriceDetail.setDetailName(vo.getProductName());
+		detailobject.put("DETAIL_NAME", vo.getProductName());
+
+		cpPriceDetail.setPriceCode(priceCode);
+		detailobject.put("PRICE_CODE", priceCode);
+
+		// cpPriceDetail.setServiceType(s.getServiceType());
+		// detailobject.put("SERVICE_TYPE", s.getServiceType());
+
+		this.cpPriceDetailAtom.updatePriceDetailByPriceCode(cpPriceDetail);
+		DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 0);
+	}
+	/**
+	 * 修改阶梯组合表信息
+	 * @param detailCode
+	 * @param serviceVO
+	 * @param stepSeq
+	 * @param vo
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	private void toUpdateCpStepInfo(String detailCode, ServiceVO serviceVO, long stepSeq, ProductVO vo) {
+		CpStepInfo cpStepInfo = new CpStepInfo();
+		JSONObject stepobject = new JSONObject();
+		cpStepInfo.setDetailCode(Long.valueOf(detailCode));
+		stepobject.put("DETAIL_CODE", detailCode);
+		// cpStepInfo.setExtCode(extCode);
+		// cpStepInfo.setFactorCode(factorCode);
+		cpStepInfo.setPriceValue(serviceVO.getPrice().doubleValue());
+		stepobject.put("PRICE_VALUE", serviceVO.getPrice());
+
+		cpStepInfo.setSectionA(serviceVO.getAmountStart());
+		stepobject.put("SECTION_A", serviceVO.getAmountStart());
+
+		cpStepInfo.setSectionB(serviceVO.getAmountEnd());
+		stepobject.put("SECTION_B", serviceVO.getAmountEnd());
+
+		cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
+		stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+
+		cpStepInfo.setStepSeq(stepSeq);
+		stepobject.put("STEP_SEQ", Long.toString(stepSeq));
+
+		cpStepInfo.setUnitType(serviceVO.getUnit());
+		stepobject.put("UNIT_TYPE", serviceVO.getUnit());
+
+		cpStepInfo.setFactorCode(Long.valueOf(serviceVO.getServiceTypeDetail()));
+		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
+
+		cpStepInfo.setServiceType(serviceVO.getServiceType());
+		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
+		
+		this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
+		DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 0);
+	}
+
+	/**
+	 * 修改标准组合表信息
+	 * @param detailCode
+	 * @param serviceVO
+	 * @param vo
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	private void toUpdateCpPackageInfo(String detailCode, ServiceVO serviceVO, ProductVO vo) {
+		CpPackageInfo cpPackageInfo = new CpPackageInfo();
+		JSONObject packageobject = new JSONObject();
+
+		cpPackageInfo.setAmount(serviceVO.getAmountEnd());
+		packageobject.put("AMOUNT", serviceVO.getAmountEnd());
+
+		cpPackageInfo.setDetailCode(detailCode);
+		packageobject.put("DETAIL_CODE", detailCode);
+
+		cpPackageInfo.setUnitType(serviceVO.getUnit());
+		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
+
+		cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue());
+		packageobject.put("PRICE_VALUE", serviceVO.getPrice());
+
+		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
+		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+
+		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
+		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
+
+		cpPackageInfo.setServiceType(serviceVO.getServiceType());
+		packageobject.put("SERVICE_TYPE", serviceVO.getServiceType());
+		
+		cpPackageInfo.setUnitCode(serviceVO.getUnit());
+		packageobject.put("UNIT_CODE", serviceVO.getUnit());
+		
+		this.cpPackageInfoAtom.updateCpPackageInfoByDetailCode(cpPackageInfo);
+		DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 0);
+	}
 }

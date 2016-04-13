@@ -1,17 +1,21 @@
 package com.ai.baas.bmc.service.business.interfaces;
 
-import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
+import java.io.IOException;
+
+import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
-import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
-import com.ai.opt.base.exception.BusinessException;
-import com.ai.opt.base.exception.SystemException;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 
 public interface IProductManageBusi {
-	public void updateProduct(ProductParamVo vo);
+	public void updateProduct(ProductVO vo);
 	
-	public void deleteProduct(ProductParamKeyVo vo);
+	public void deleteProduct(ProductDelVO vo);
 	
-	public ProductParamVo editProduct(ProductParamKeyVo vo);
+	public ProductVO editProduct(ProductParamKeyVo vo);
 	
-	public ProcductResponse insertProduct(ProductParamVo vo);
+	
+	public String hasSeq(ProductVO vo) throws IOException;
+	
+	public void addProduct(ProductVO vo);
+	
 }

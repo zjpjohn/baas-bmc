@@ -108,7 +108,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 			long stepSeq = 0;
 			String detailCode = aISysSequenceSvc.terrigerSysSequence(
 					"DETAIL_CODE", 1).get(0);
-			//CpPriceDetail(priceCode, vo, s, detailCode);
+			CpPriceDetail(priceCode, vo, detailCode);
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				//序列生成DETAIL_CODE
 				
@@ -128,7 +128,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		System.out.println("---------------添加成功！！！！");
 	}
 //CpPriceDetail
-	private void CpPriceDetail(String priceCode, ProductVO vo, ServiceVO s,
+	private void CpPriceDetail(String priceCode, ProductVO vo,
 			String detailCode) {
 		JSONObject detailobject = new JSONObject();
 		CpPriceDetail cpPriceDetail = new CpPriceDetail();
@@ -150,15 +150,15 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		cpPriceDetail.setPriceCode(priceCode);
 		detailobject.put("PRICE_CODE", priceCode);
 
-		cpPriceDetail.setServiceType(s.getServiceType());
-		detailobject.put("SERVICE_TYPE", s.getServiceType());
+		//cpPriceDetail.setServiceType(s.getServiceType());
+		//detailobject.put("SERVICE_TYPE", s.getServiceType());
 
 		cpPriceDetailMapper.insert(cpPriceDetail);
 		DshmUtil.getIdshmSV().initLoader("cp_price_detail",
 				detailobject.toString(), 0);
 	}
 //CpStepInfo
-	private void CpStepInfo(String detailCode, ServiceVO serviceVO,
+	private void CpStepInfo(String detailCode,ServiceVO serviceVO,
 			long stepSeq, ProductVO vo) {
 		CpStepInfo cpStepInfo = new CpStepInfo();
 		JSONObject stepobject = new JSONObject();

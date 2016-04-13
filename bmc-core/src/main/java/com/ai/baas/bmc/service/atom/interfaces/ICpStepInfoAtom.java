@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.service.atom.interfaces;
 
+import java.util.List;
+
 import com.ai.baas.bmc.dao.mapper.bo.CpStepInfo;
 
 public interface ICpStepInfoAtom {
@@ -27,7 +29,7 @@ public interface ICpStepInfoAtom {
 	 * @ApiDocMethod
 	 * @ApiCode
 	 */
-	public CpStepInfo getCpStepInfoByDetailCode(CpStepInfo info);
+	public List<CpStepInfo> getCpStepInfoByDetailCode(CpStepInfo info);
 	/**
 	 * 添加cpstepinfo信息
 	 * @param info

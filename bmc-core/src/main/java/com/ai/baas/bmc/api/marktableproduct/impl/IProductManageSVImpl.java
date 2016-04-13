@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
-import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
 import com.ai.baas.bmc.business.interfaces.IProductManageBusiness;
@@ -38,8 +38,8 @@ public class IProductManageSVImpl implements IProductManageSV {
 	private static final Logger log = LogManager
 			.getLogger(IProductManageSVImpl.class);
 
-	@Autowired
-	private IProductManageBusiness iProductManageBusiness;
+//	@Autowired
+//	private IProductManageBusiness iProductManageBusiness;
 	
 	@Autowired
 	private IProductManageBusi iProductManageBusi;
@@ -47,16 +47,16 @@ public class IProductManageSVImpl implements IProductManageSV {
 	@Override
 	public ProcductResponse addProduct(ProductVO vo) throws BusinessException,
 			SystemException {
-		if (vo == null) {
-			log.debug("addProduct() vo = [null]");
+		if (null == vo) {
+			log.debug("------>>>addProduct() vo = [null]");
 			return null;
 		} else {
-			log.debug("addProduct() vo = " + vo.toString() + "]");
+			log.debug("------>>>addProduct() vo = " + vo.toString() + "]");
 		}
 		ProcductResponse response = new ProcductResponse();
 		//判重
 		try {
-			String returnFlag = iProductManageBusiness.hasSeq(vo);
+			String returnFlag = this.iProductManageBusi.hasSeq(vo);
 			if (returnFlag.equals("exit")) {
 				System.out.println("-----init-----");
 				ResponseHeader responseHeader = new ResponseHeader(false,
@@ -65,10 +65,12 @@ public class IProductManageSVImpl implements IProductManageSV {
 				return response;
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			LoggerUtil.log.error(e.getStackTrace());
 			throw new SystemException(e.getMessage());
 		}
-       //数据校验
+		/*
+		//数据校验
 		ProcductResponse resultCode = InCheckUtil.check(vo.getActiveDate(),
 				"activeDate", false, 0);
 		if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
@@ -174,60 +176,11 @@ public class IProductManageSVImpl implements IProductManageSV {
 				return resultCode;
 			}
 
-		}
-		/*if (!(vo.getRelatedProductAmount().isEmpty() || vo
-				.getRelatedProductAmount() == null)) {
-			for (ServiceVO s : vo.getMajorProductAmount()) {
-				resultCode = InCheckUtil.check(s.getCycleId(), "cycleId",
-						false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-				resultCode = InCheckUtil.check(s.getAmountEnd(), "amountEnd",
-						false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-				resultCode = InCheckUtil.check(s.getAmountStart(),
-						"amountStart", false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-				resultCode = InCheckUtil.check(s.getCycleAmount(),
-						"cycleAmount", false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-				resultCode = InCheckUtil.check(s.getCycleType(), "cycleType",
-						false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-				resultCode = InCheckUtil.check(s.getPrice(), "", false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-				resultCode = InCheckUtil.check(s.getServiceType(),
-						"serviceType", false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-				resultCode = InCheckUtil.check(s.getServiceTypeDetail(),
-						"serviceTypeDetail", false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-				resultCode = InCheckUtil.check(s.getUnit(), "unit", false, 0);
-				if (!ErrorCode.SUCCESS.equals(resultCode.getResponseHeader())) {
-					return resultCode;
-				}
-
-			}
-
 		}*/
+		
 		//数据库操作
 		try {
-			iProductManageBusiness.addproduct(vo);
+			this.iProductManageBusi.addProduct(vo);
 			log.info("-------------->添加成功！！！");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -253,27 +206,22 @@ public class IProductManageSVImpl implements IProductManageSV {
 	}
 
 	@Override
-	public void delProduct(ProductParamKeyVo vo) throws BusinessException,
+	public void delProduct(ProductDelVO vo) throws BusinessException,
 			SystemException {
 		this.iProductManageBusi.deleteProduct(vo);
 		
 	}
 
 	@Override
-	public void updateProduct(ProductParamVo vo) throws BusinessException,
+	public void updateProduct(ProductVO vo) throws BusinessException,
 			SystemException {
 		this.iProductManageBusi.updateProduct(vo);
 	}
 
 	@Override
-	public ProductParamVo editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException {
+	public ProductVO editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException {
 		return this.iProductManageBusi.editProduct(vo);
 		
-	}
-
-	@Override
-	public ProcductResponse insertProduct(ProductParamVo vo) throws BusinessException, SystemException {
-		return this.iProductManageBusi.insertProduct(vo);
 	}
 
 }

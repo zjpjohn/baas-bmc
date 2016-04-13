@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.service.atom.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +41,15 @@ public class CpPackageInfoAtomImpl implements ICpPackageInfoAtom {
 		this.cpPackageInfoMapper.deleteByExample(sql);
 	}
 	@Override
-	public CpPackageInfo getCpPackageInfoByDetailCode(CpPackageInfo info) {
+	public List<CpPackageInfo> getCpPackageInfoByDetailCode(CpPackageInfo info) {
 		CpPackageInfoCriteria sql = new CpPackageInfoCriteria();
 		CpPackageInfoCriteria.Criteria criteria = sql.createCriteria();
 		criteria.andDetailCodeEqualTo(info.getDetailCode());
-		List<CpPackageInfo> cpPackageInfoList = this.cpPackageInfoMapper.selectByExample(sql);
-		CpPackageInfo cpPackageInfo = new CpPackageInfo();
+		List<CpPackageInfo> cpPackageInfoList = new ArrayList<CpPackageInfo>();
 		
-		if(null != cpPackageInfoList){
-			cpPackageInfo = cpPackageInfoList.get(0);
-		}
-		return cpPackageInfo;
+		cpPackageInfoList = this.cpPackageInfoMapper.selectByExample(sql);
+		
+		return cpPackageInfoList;
 	}
 
 	@Override

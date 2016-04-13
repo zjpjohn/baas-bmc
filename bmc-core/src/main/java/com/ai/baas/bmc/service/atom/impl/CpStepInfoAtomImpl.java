@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.service.atom.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,15 @@ public class CpStepInfoAtomImpl implements ICpStepInfoAtom {
 		
 	}
 	@Override
-	public CpStepInfo getCpStepInfoByDetailCode(CpStepInfo info) {
+	public List<CpStepInfo> getCpStepInfoByDetailCode(CpStepInfo info) {
 		CpStepInfoCriteria sql = new CpStepInfoCriteria();
 		CpStepInfoCriteria.Criteria criteria = sql.createCriteria();
 		criteria.andDetailCodeEqualTo(info.getDetailCode());
 		//
-		List<CpStepInfo> cpStepInfoList = this.cpStepInfoMapper.selectByExample(sql);
-		CpStepInfo cpStepInfo = new CpStepInfo();
-		if(null != cpStepInfoList){
-			cpStepInfo = cpStepInfoList.get(0);
-		}
-		return cpStepInfo;
+		List<CpStepInfo> cpStepInfoList = new ArrayList<CpStepInfo>();
+		cpStepInfoList = this.cpStepInfoMapper.selectByExample(sql);
+		
+		return cpStepInfoList;
 		
 	}
 
