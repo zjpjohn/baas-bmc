@@ -74,7 +74,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 		BaseCodeInfo baseCodeInfo = new BaseCodeInfo();
 		BmcBasedataCodeCriteria pubsql = new BmcBasedataCodeCriteria();
 		BmcBasedataCodeCriteria.Criteria pubCriteria = pubsql.or();
-		pubCriteria.andTenantIdEqualTo(TenantId.PUB).andParamTypeEqualTo(request.getParentCode());
+		pubCriteria.andTenantIdEqualTo(TenantId.PUB).andParamCodeEqualTo(request.getParentCode());
 		List<BmcBasedataCode> pubList = bmcBasedataCodeMapper.selectByExample(pubsql);
 		if (!CollectionUtil.isEmpty(pubList)) {
 			for (BmcBasedataCode bmcBaseCode : pubList) {
@@ -87,7 +87,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 		if(!(TenantId.PUB).equals(request.getTenantId())){
 			BmcBasedataCodeCriteria sql = new BmcBasedataCodeCriteria();
 			BmcBasedataCodeCriteria.Criteria Criteria = sql.or();
-			Criteria.andTenantIdEqualTo(request.getTenantId()).andParamTypeEqualTo(request.getParentCode());
+			Criteria.andTenantIdEqualTo(request.getTenantId()).andParamCodeEqualTo(request.getParentCode());
 			List<BmcBasedataCode> list = bmcBasedataCodeMapper.selectByExample(sql);
 			// 非pub查询
 			if (!CollectionUtil.isEmpty(list)) {
