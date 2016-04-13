@@ -71,7 +71,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 	@Override
 	public ChildeCodeResponse getChildCode(QueryChildCodeRequest request) {
 		List<BaseCode> baseCodeList = new ArrayList<BaseCode>();
-		BaseCodeInfo baseCodeInfo = new BaseCodeInfo();
+		ChildeCodeResponse baseCodeInfo = new ChildeCodeResponse();
 		BmcBasedataCodeCriteria pubsql = new BmcBasedataCodeCriteria();
 		BmcBasedataCodeCriteria.Criteria pubCriteria = pubsql.or();
 		pubCriteria.andTenantIdEqualTo(TenantId.PUB).andParentCodeEqualTo(request.getParentCode());
@@ -109,7 +109,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 		baseCodeInfo.setTenantId(request.getTenantId());
 		
 		baseCodeInfo.setParamList(baseCodeList);
-		return null;
+		return baseCodeInfo;
 	}
 
 	
