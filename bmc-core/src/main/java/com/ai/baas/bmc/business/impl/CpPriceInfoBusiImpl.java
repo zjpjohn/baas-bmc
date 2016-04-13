@@ -63,6 +63,10 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
 		criteria.andActiveStatusNotEqualTo("DEL");
+		if(vo.getProductId()!=null){
+			criteria.andPriceInfoIdEqualTo(vo.getProductId());
+		}
+	
 		if(vo.getActiveDate()!=null){
 			criteria.andActiveTimeEqualTo(vo.getActiveDate());
 		}
@@ -89,6 +93,10 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
 		criteria.andActiveStatusNotEqualTo("DEL");
+		if(vo.getProductId()!=null){
+			criteria.andPriceInfoIdEqualTo(vo.getProductId());
+		}
+	
 		if(vo.getActiveDate()!=null){
 			criteria.andActiveTimeEqualTo(vo.getActiveDate());
 		}

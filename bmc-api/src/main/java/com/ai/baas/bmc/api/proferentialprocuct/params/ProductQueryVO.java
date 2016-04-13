@@ -22,7 +22,7 @@ public class ProductQueryVO extends BaseInfo {
 	 * 优惠产品Id
 	 */
 	
-	private String productId;
+	private Long productId;
 	
 	/**
 	 * 优惠产品名称
@@ -53,10 +53,11 @@ public class ProductQueryVO extends BaseInfo {
      */
     private Integer pageSize;
 	
-	public String getProductId() {
+	
+	public Long getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 	public String getProductName() {
