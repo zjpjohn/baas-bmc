@@ -49,11 +49,11 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			product.setActiveDate(vo.getActiveDate());
 			product.setInvalidDate(vo.getInvalidDate());
 			product.setBillingType(vo.getBillingType());
-			product.setProcuctName(vo.getProductName());
+			product.setProductName(vo.getProductName());
 			product.setTenantId( vo.getTenantId());
 			product.setTradeSeq(vo.getTenantPwd());
 			
-			 CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
+			CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
 			cpPriceInfoCriteria.createCriteria()
 					 .andActiveTimeEqualTo(vo.getActiveDate())
 					 .andInactiveTimeEqualTo(vo.getInvalidDate())

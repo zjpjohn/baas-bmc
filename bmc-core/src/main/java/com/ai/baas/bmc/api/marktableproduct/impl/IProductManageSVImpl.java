@@ -43,6 +43,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 	
 	@Autowired
 	private IProductManageBusi iProductManageBusi;
+	
 	//新建产品
 	@Override
 	public ProcductResponse addProduct(ProductVO vo) throws BusinessException,
@@ -199,10 +200,25 @@ public class IProductManageSVImpl implements IProductManageSV {
 	}
 
 	@Override
-	public void updateProductStatus(ProductActiveVO vo)
+	public ProcductResponse updateProductStatus(ProductActiveVO vo)
 			throws BusinessException, SystemException {
-		// TODO Auto-generated method stub
+		ProcductResponse response = new ProcductResponse();
+		
+		
+		try {
+			this.iProductManageBusi.updateProductStatus(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ResponseHeader responseHeader = new ResponseHeader(true,
+					ErrorCode.FALSE, "失败");
+			response.setResponseHeader(responseHeader);
+			return response;
 
+		}
+		ResponseHeader responseHeader = new ResponseHeader(true,
+				ErrorCode.SUCCESS, "成功");
+		response.setResponseHeader(responseHeader);
+		return response;
 	}
 
 	@Override

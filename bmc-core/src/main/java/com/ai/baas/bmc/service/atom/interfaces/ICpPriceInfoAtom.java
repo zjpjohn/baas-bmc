@@ -51,4 +51,12 @@ public interface ICpPriceInfoAtom {
 	 * @ApiCode
 	 */
 	CpPriceInfo getCpPriceInfoByPriceCode(CpPriceInfo info);
+	/**
+	 * 修改产品状态根据priceCode
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	void updateProductStatus(CpPriceInfo info);
 }

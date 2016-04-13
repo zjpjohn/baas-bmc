@@ -173,5 +173,17 @@ public class CpPriceInfoAtomImpl implements ICpPriceInfoAtom {
 		}
 		return cpPriceInfo;
 	}
+
+
+
+	@Override
+	public void updateProductStatus(CpPriceInfo info) {
+		CpPriceInfoCriteria sql=new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
+		criteria.andPriceCodeEqualTo(info.getPriceCode());
+		
+		this.cpPriceInfoMapper.updateByExampleSelective(info, sql);
+		
+	}
 }
 

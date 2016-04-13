@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
@@ -565,5 +566,15 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		
 		this.cpPackageInfoAtom.updateCpPackageInfoByDetailCode(cpPackageInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 0);
+	}
+
+	@Override
+	public void updateProductStatus(ProductActiveVO vo) {
+		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		cpPriceInfo.setPriceCode(vo.getProductId());
+		cpPriceInfo.setActiveStatus(vo.getStatus());
+		//
+		this.cpPriceInfoAtom.updateProductStatus(cpPriceInfo);
+		
 	}
 }
