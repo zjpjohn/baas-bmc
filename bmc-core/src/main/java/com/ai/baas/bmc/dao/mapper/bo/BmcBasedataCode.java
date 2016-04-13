@@ -1,7 +1,7 @@
 package com.ai.baas.bmc.dao.mapper.bo;
 
 public class BmcBasedataCode {
-    private Integer id;
+    private Long id;
 
     private String tenantId;
 
@@ -15,11 +15,13 @@ public class BmcBasedataCode {
 
     private String comments;
 
-    public Integer getId() {
+    private String parentCode;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,5 +71,13 @@ public class BmcBasedataCode {
 
     public void setComments(String comments) {
         this.comments = comments == null ? null : comments.trim();
+    }
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode == null ? null : parentCode.trim();
     }
 }

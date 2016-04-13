@@ -1,6 +1,8 @@
 package com.ai.baas.bmc.api.baseInfo.interfaces;
 
 import com.ai.baas.bmc.api.baseInfo.params.BaseCodeInfo;
+import com.ai.baas.bmc.api.baseInfo.params.ChildeCodeResponse;
+import com.ai.baas.bmc.api.baseInfo.params.QueryChildCodeRequest;
 import com.ai.baas.bmc.api.baseInfo.params.QueryInfoParams;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -23,7 +25,19 @@ public interface IBaseInfoSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00001
 	 */
+	
+	BaseCodeInfo getBaseInfo(QueryInfoParams param) throws BusinessException,SystemException;
 	@interface GetBaseInfo{}
-	BaseCodeInfo getBaseInfo(QueryInfoParams param) throws BusinessException,
-    SystemException;
+	/**
+	 * 根据parentCode查询编码
+	 * @param request
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	ChildeCodeResponse getChildCode(QueryChildCodeRequest request) throws BusinessException,SystemException;
+	@interface GetChildCode{}
+	
 }

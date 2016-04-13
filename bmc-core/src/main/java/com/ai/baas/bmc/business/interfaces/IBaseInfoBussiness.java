@@ -1,6 +1,8 @@
 package com.ai.baas.bmc.business.interfaces;
 
 import com.ai.baas.bmc.api.baseInfo.params.BaseCodeInfo;
+import com.ai.baas.bmc.api.baseInfo.params.ChildeCodeResponse;
+import com.ai.baas.bmc.api.baseInfo.params.QueryChildCodeRequest;
 import com.ai.baas.bmc.api.baseInfo.params.QueryInfoParams;
 
 /**
@@ -13,4 +15,6 @@ import com.ai.baas.bmc.api.baseInfo.params.QueryInfoParams;
 public interface IBaseInfoBussiness {
 
 	BaseCodeInfo getBaseInfo(QueryInfoParams param);
+	
+	ChildeCodeResponse getChildCode(QueryChildCodeRequest request);
 }

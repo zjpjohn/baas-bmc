@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.baas.bmc.api.baseInfo.params.BaseCode;
 import com.ai.baas.bmc.api.baseInfo.params.BaseCodeInfo;
+import com.ai.baas.bmc.api.baseInfo.params.ChildeCodeResponse;
+import com.ai.baas.bmc.api.baseInfo.params.QueryChildCodeRequest;
 import com.ai.baas.bmc.api.baseInfo.params.QueryInfoParams;
 import com.ai.baas.bmc.business.interfaces.IBaseInfoBussiness;
 import com.ai.baas.bmc.constants.BmcConstants.TenantId;
@@ -66,4 +68,49 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 		return baseCodeInfo;
 	}
 
+	@Override
+	public ChildeCodeResponse getChildCode(QueryChildCodeRequest request) {
+		List<BaseCode> baseCodeList = new ArrayList<BaseCode>();
+		BaseCodeInfo baseCodeInfo = new BaseCodeInfo();
+		BmcBasedataCodeCriteria pubsql = new BmcBasedataCodeCriteria();
+		BmcBasedataCodeCriteria.Criteria pubCriteria = pubsql.or();
+		pubCriteria.andTenantIdEqualTo(TenantId.PUB).andParamTypeEqualTo(request.getParentCode());
+		List<BmcBasedataCode> pubList = bmcBasedataCodeMapper.selectByExample(pubsql);
+		if (!CollectionUtil.isEmpty(pubList)) {
+			for (BmcBasedataCode bmcBaseCode : pubList) {
+				BaseCode baseCode = new BaseCode();
+				BeanUtils.copyProperties(baseCode, bmcBaseCode);
+				baseCodeList.add(baseCode);
+			}
+
+		}
+		if(!(TenantId.PUB).equals(request.getTenantId())){
+			BmcBasedataCodeCriteria sql = new BmcBasedataCodeCriteria();
+			BmcBasedataCodeCriteria.Criteria Criteria = sql.or();
+			Criteria.andTenantIdEqualTo(request.getTenantId()).andParamTypeEqualTo(request.getParentCode());
+			List<BmcBasedataCode> list = bmcBasedataCodeMapper.selectByExample(sql);
+			// 非pub查询
+			if (!CollectionUtil.isEmpty(list)) {
+				baseCodeInfo.setParamType(list.get(0).getParamType());
+				for (BmcBasedataCode bmcBaseCode : list) {
+					BaseCode baseCode = new BaseCode();
+					BeanUtils.copyProperties(baseCode, bmcBaseCode);
+					baseCodeList.add(baseCode);
+				}
+
+			}else{
+				baseCodeInfo.setParamType("");
+			}
+		}
+
+
+		
+		baseCodeInfo.setTradeSeq(request.getTradeSeq());
+		baseCodeInfo.setTenantId(request.getTenantId());
+		
+		baseCodeInfo.setParamList(baseCodeList);
+		return null;
+	}
+
+	
 }

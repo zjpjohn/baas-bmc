@@ -13,6 +13,10 @@ public class BaseCode implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	/**
+	 * 编码Id
+	 */
+	private Long id;
+	/**
 	 * 参数编码
 	 */
 	private String paramCode;
@@ -52,6 +56,13 @@ public class BaseCode implements Serializable{
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	
 	
 }

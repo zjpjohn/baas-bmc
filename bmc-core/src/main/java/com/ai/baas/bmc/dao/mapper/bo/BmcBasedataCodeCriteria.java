@@ -134,52 +134,52 @@ public class BmcBasedataCodeCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -601,6 +601,76 @@ public class BmcBasedataCodeCriteria {
 
         public Criteria andCommentsNotBetween(String value1, String value2) {
             addCriterion("comments not between", value1, value2, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeIsNull() {
+            addCriterion("parent_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeIsNotNull() {
+            addCriterion("parent_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeEqualTo(String value) {
+            addCriterion("parent_code =", value, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeNotEqualTo(String value) {
+            addCriterion("parent_code <>", value, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeGreaterThan(String value) {
+            addCriterion("parent_code >", value, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("parent_code >=", value, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeLessThan(String value) {
+            addCriterion("parent_code <", value, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeLessThanOrEqualTo(String value) {
+            addCriterion("parent_code <=", value, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeLike(String value) {
+            addCriterion("parent_code like", value, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeNotLike(String value) {
+            addCriterion("parent_code not like", value, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeIn(List<String> values) {
+            addCriterion("parent_code in", values, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeNotIn(List<String> values) {
+            addCriterion("parent_code not in", values, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeBetween(String value1, String value2) {
+            addCriterion("parent_code between", value1, value2, "parentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentCodeNotBetween(String value1, String value2) {
+            addCriterion("parent_code not between", value1, value2, "parentCode");
             return (Criteria) this;
         }
     }
