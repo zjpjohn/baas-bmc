@@ -50,7 +50,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 		List<CpPriceInfo> priceInfoList = iCpPriceInfoBusi.getCpPriceInfo(vo);
 
 		PageInfo<ProferProductInfo> page = new PageInfo<ProferProductInfo>();
-		page.setCount(priceInfoList.size()); // 得到总条数
+		//page.setCount(iCpPriceInfoBusi.get.size()); // 得到总条数
 		page.setPageNo(vo.getPageNo());
 		page.setPageSize(vo.getPageSize());
 		List<ProferProductInfo> list = new ArrayList<ProferProductInfo>();

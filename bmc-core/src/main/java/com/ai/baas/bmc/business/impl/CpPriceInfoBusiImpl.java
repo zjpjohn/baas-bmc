@@ -82,7 +82,28 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		
 		return cpPriceInfoMapper.selectByExample(example);
 	}
+	@Override
+	public int getCpPriceInfoCount(ProductQueryVO vo){
 
+		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteria = example.or();
+		criteria.andTenantIdEqualTo(vo.getTenantId());
+		criteria.andActiveStatusNotEqualTo("DEL");
+		if(vo.getActiveDate()!=null){
+			criteria.andActiveTimeEqualTo(vo.getActiveDate());
+		}
+		if(vo.getInvalidDate()!=null){
+			criteria.andInactiveTimeEqualTo(vo.getInvalidDate());
+		}
+		if(vo.getProductName()!=null){
+			criteria.andPriceNameEqualTo(vo.getProductName());
+		}
+		if(vo.getProferType()!=null){
+			criteria.andProductTypeEqualTo(vo.getProferType());
+		}
+		
+		return cpPriceInfoMapper.countByExample(example);
+	}
 
 
 	@Override

@@ -51,4 +51,5 @@ public interface ICpPriceInfoBusi {
 	 * @ApiCode
 	 */
 	CpPriceInfo getCpPriceInfoByPriceCode(CpPriceInfo info);
+	 int getCpPriceInfoCount(ProductQueryVO vo);
 }
