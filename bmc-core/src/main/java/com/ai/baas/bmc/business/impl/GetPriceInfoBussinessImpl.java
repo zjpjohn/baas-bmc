@@ -49,8 +49,8 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
     public ResponseMessage getPriceInfo(QueryInfoParams record) {
 
         ResponseMessage responseMessage = new ResponseMessage();
-        StandardList standards = new StandardList();
-        UsageList usages =new UsageList();
+        //StandardList standards = new StandardList();
+        //UsageList usages =new UsageList();
         List<StandardList> standardList = new ArrayList<StandardList>( );
         List<UsageList> usageList = new ArrayList<>();
         
@@ -151,11 +151,16 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            
            responseMessage.setTradeSeq(record.getTradeSeq());//TradeSeq 交易流水
            responseMessage.setTenantId(cpPriceInfo.getTenantId());//TenantId 租户ID
+           StandardList standards = new StandardList();
            standards.setPriceName(cpPriceInfo.getPriceName());//PriceName 资费名称
            standards.setComments(cpPriceInfo.getComments());//Comments 资费描述
            standards.setStandardId(cpPriceInfo.getPriceCode());//StandardId 资费ID
            standards.setServiceType(cpPriceDetail.getServiceType());//ServiceType 业务类型
            standards.setPrice(cpUnitpriceItem.getPriceValue());//Price 价格
+           
+           standards.setStatus(cpUnitpriceItem.getActiveStatus());//新增状态
+           
+           UsageList usages =new UsageList();
            usages.setAmount(cpUnitpriceItem.getUnitTypeValue());//使用量
            usages.setSubServiceType(cpFactorInfo.getFactorValue());//SubServiceType 业务类型细分
            usages.setUnit(cpUnitpriceItem.getUnitType());//Unit 单位
@@ -165,7 +170,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            
            //CpUnitpriceItem
            //目前list.size() = 1
-        }
+        }// end for
         resultPage.setResult(standardList);
         responseMessage.setStandardList(resultPage);
         responseMessage.setReturnCode("BMC-000000");

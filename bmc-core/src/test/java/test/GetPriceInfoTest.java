@@ -30,7 +30,7 @@ public class GetPriceInfoTest {
         QueryInfoParams queryInfoParams = new QueryInfoParams();
         queryInfoParams.setTenantId("test");
         queryInfoParams.setTradeSeq("123456693");
-        queryInfoParams.setStandardId("13");
+        queryInfoParams.setStandardId("");
         queryInfoParams.setPriceName("");
 //        queryInfoParams.setServiceType(null);
 //        queryInfoParams.setPriceState(null);
