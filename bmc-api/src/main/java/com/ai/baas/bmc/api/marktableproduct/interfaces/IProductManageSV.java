@@ -40,7 +40,7 @@ public interface IProductManageSV {
 	 * @ApiCode bmc-00006
 	 */
 	
-	void updateProductStatus(ProductActiveVO vo) throws BusinessException, SystemException;
+	ProcductResponse updateProductStatus(ProductActiveVO vo) throws BusinessException, SystemException;
 	@interface UpdateProductStatus{}
 	
 	/**

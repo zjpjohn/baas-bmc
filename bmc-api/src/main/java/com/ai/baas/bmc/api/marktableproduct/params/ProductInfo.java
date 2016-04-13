@@ -32,8 +32,9 @@ public class ProductInfo extends BaseResponse{
 	/**
 	 * 产品（包）名称
 	 */
-	private String procuctName;
+	private String productName;
 	
+
 	/**
 	 * 产品计费类型
 	 */
@@ -62,7 +63,13 @@ public class ProductInfo extends BaseResponse{
 	 * 总价
 	 */
 	private BigDecimal totalPrice;
+	public String getProductName() {
+		return productName;
+	}
 
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
@@ -79,13 +86,7 @@ public class ProductInfo extends BaseResponse{
 		this.productId = productId;
 	}
 
-	public String getProcuctName() {
-		return procuctName;
-	}
-
-	public void setProcuctName(String procuctName) {
-		this.procuctName = procuctName;
-	}
+	
 
 	public String getBillingType() {
 		return billingType;
