@@ -5,7 +5,8 @@ import java.util.List;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
+import com.ai.opt.base.vo.PageInfo;
 
 public interface IQueryProductBusi {
-	public List<ProductInfo> Product(ProductQueryVO vo);
+	public PageInfo<ProductInfo> Product(ProductQueryVO vo);
 }

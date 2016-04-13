@@ -35,25 +35,9 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 			log.debug("addProduct() vo = " + vo.toString() + "]");
 		}
 		
+		return iQueryProductBusiImpl.Product(vo);
 		
-		
-		PageInfo<ProductInfo> page=new PageInfo();
-		
-		List<ProductInfo>  pro= iQueryProductBusiImpl.Product(vo);
-		
-		page.setPageNo(vo.getPageNo());
-		page.setPageSize(vo.getPageSize());
-		if(CollectionUtil.isEmpty(pro)){
-			page.setCount(0);
-		}
-		else{
-			page.setCount(pro.size());
-			
-		}
 	
-		page.setResult(pro);
-		
-		return page;
 	}
 
 }

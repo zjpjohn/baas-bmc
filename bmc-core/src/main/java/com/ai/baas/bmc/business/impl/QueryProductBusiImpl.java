@@ -24,7 +24,11 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpStepInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria;
+import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.paas.ipaas.util.StringUtil;
+import com.esotericsoftware.minlog.Log;
 
 @Service
 @Transactional
@@ -39,129 +43,148 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 	private CpPackageInfoMapper cpPackageInfoMapper;
 	
 	@Override
-	public List<ProductInfo> Product(ProductQueryVO vo) {
-		List<ProductInfo> pro_list =new ArrayList<ProductInfo>();
-		List<ProductInfo> list =new ArrayList<ProductInfo>();
-		ProductInfo product = new ProductInfo();
+	public PageInfo<ProductInfo> Product(ProductQueryVO vo) {
+		PageInfo<ProductInfo> productInfoPageInfo =new PageInfo<ProductInfo>();
 	        
 		try {
-			product.setProductId(vo.getProductId());
-			product.setActiveDate(vo.getActiveDate());
-			product.setInvalidDate(vo.getInvalidDate());
-			product.setBillingType(vo.getBillingType());
-			product.setProductName(vo.getProductName());
-			product.setTenantId( vo.getTenantId());
-			product.setTradeSeq(vo.getTenantPwd());
 			
 			CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
-			cpPriceInfoCriteria.createCriteria()
-					 .andActiveTimeEqualTo(vo.getActiveDate())
-					 .andInactiveTimeEqualTo(vo.getInvalidDate())
-					 .andTenantIdEqualTo(vo.getTenantId());
-//			totalCount += cpPriceInfoMapper.countByExample(cpPriceInfoCriteria);
-			 List<CpPriceInfo> cpPriceInfo = cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria);
-			 for(CpPriceInfo c:cpPriceInfo){
+			CpPriceInfoCriteria.Criteria criteriaCpPriceInfo= cpPriceInfoCriteria.createCriteria();
+			 if (null != vo.getActiveDate()) {
+				 criteriaCpPriceInfo.andActiveTimeEqualTo(vo.getActiveDate());
+			 }		
+			 if (null != vo.getInvalidDate()) {
+				 criteriaCpPriceInfo.andInactiveTimeEqualTo(vo.getInvalidDate());
+			 }	
+			 if (vo.getPageNo() != null && vo.getPageSize() != null) {
+				 cpPriceInfoCriteria.setLimitStart((vo.getPageNo() - 1) * vo.getPageSize());
+				 cpPriceInfoCriteria.setLimitEnd(vo.getPageSize());
+		     }
+			 
+			 PageInfo<CpPriceInfo> pageInfo = new PageInfo<CpPriceInfo>();
+			 
+			 
+			 pageInfo.setResult(cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria));
+	         pageInfo.setCount(cpPriceInfoMapper.countByExample(cpPriceInfoCriteria));
+	         pageInfo.setPageNo(vo.getPageNo());
+	         pageInfo.setPageSize(vo.getPageSize());
+		        
+	        
+	         //
+	         List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
+	         
+	         ProductInfo productInfo = null;
+			 for(CpPriceInfo c : pageInfo.getResult()){
+				 productInfo = new ProductInfo();
+				 //
+				 productInfo.setActiveDate(c.getActiveTime());
+				 productInfo.setInvalidDate(c.getInactiveTime());
+				 productInfo.setProductId(c.getPriceCode());
+				 productInfo.setProductName(c.getPriceName());
+				 productInfo.setStatus(c.getActiveStatus());
+				 productInfo.setTenantId(c.getTenantId());
+				 //
 				 List<ServiceVO> usageList = new ArrayList<ServiceVO>();
-				 ServiceVO serv = new ServiceVO();
-				 product.setStatus(c.getActiveStatus());
-//				 String priceCode = c.getPriceCode();
+				 ServiceVO serv = null;
 				 
 				 CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
-				 cpPriceDetailCriteria.createCriteria().andActiveTimeEqualTo(vo.getActiveDate())
-				 .andServiceTypeEqualTo( vo.getServiceType())
-				 .andChargeTypeEqualTo(vo.getBillingType());
-				 
-//				 totalCount += cpPriceDetailMapper.countByExample(cpPriceDetailCriteria);
+				 CpPriceDetailCriteria.Criteria criteriaCpPriceDetail = cpPriceDetailCriteria.createCriteria();
+				 if(null != vo.getActiveDate()){
+					 criteriaCpPriceDetail.andActiveTimeEqualTo(vo.getActiveDate());
+				 }
+				 if(!StringUtil.isBlank(vo.getServiceType())){
+					 criteriaCpPriceDetail.andServiceTypeEqualTo(vo.getServiceType());
+				 }
+				 if(!StringUtil.isBlank(vo.getBillingType())){
+					 criteriaCpPriceDetail.andChargeTypeEqualTo(vo.getBillingType());
+				 }
+				 //
+				 criteriaCpPriceDetail.andPriceCodeEqualTo(c.getPriceCode());
+				 //
 				 List<CpPriceDetail> cpPriceDetail = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
-				 for(CpPriceDetail d:cpPriceDetail){
-					 String detailCode = d.getDetailCode();
-					 serv.setServiceType(d.getServiceType());
-					
-					 if(vo.getBillingType().equals("STEP")){
+				 CpPriceDetail cpPriceDetailNew = new CpPriceDetail();
+				 if(!CollectionUtil.isEmpty(cpPriceDetail)){
+					 System.out.println("打印信息 cpPriceDetail.size()："+cpPriceDetail.size());
+					 cpPriceDetailNew = cpPriceDetail.get(0);
+				 }
+				 //
+				 String detailCode = cpPriceDetailNew.getDetailCode();
+				 if(!StringUtil.isBlank(detailCode)){
+					 if(null != vo.getBillingType() && vo.getBillingType().equals("STEP")){
+						 productInfo.setBillingType("STEP");
 						 //阶梯组合
 						 CpStepInfoCriteria cpStepInfoCriteria = new CpStepInfoCriteria();
-						 cpStepInfoCriteria.createCriteria().andDetailCodeEqualTo(Long.valueOf(detailCode)).andTotalPriceValueNotBetween(vo.getPriceStart(), vo.getPriceEnd());
+						 CpStepInfoCriteria.Criteria criteriaCpStepInfo = cpStepInfoCriteria.createCriteria();
 						 
-//						 totalCount += cpStepInfoMapper.countByExample(cpStepInfoCriteria);
+						 criteriaCpStepInfo.andDetailCodeEqualTo(Long.valueOf(detailCode));
+						 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
+							 criteriaCpStepInfo.andTotalPriceValueNotBetween(vo.getPriceStart(), vo.getPriceEnd());
+						 }
+						 
+						 
+						 
 						 List<CpStepInfo> cpStepInfo =cpStepInfoMapper.selectByExample(cpStepInfoCriteria);
-						 for(CpStepInfo s:cpStepInfo){
+						 for(CpStepInfo s : cpStepInfo){
+							 serv = new ServiceVO();
 							 serv.setAmountStart(s.getSectionA());
 							 serv.setAmountEnd(s.getSectionB());
 							 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()));
 							 serv.setServiceTypeDetail(s.getFactorCode().toString());
 							 serv.setUnit(s.getUnitType());
-								        
+							 serv.setServiceType(cpPriceDetailNew.getServiceType());
+							 
+							 usageList.add(serv);	        
 						 }
 						 
-					 }else{
+					 }
+					 if(null != vo.getBillingType() && vo.getBillingType().equals("PACKAGE")){
+						 productInfo.setBillingType("PACKAGE");
 						 //标准组合
 						 CpPackageInfoCriteria cpPackageInfoCriteria =new CpPackageInfoCriteria();
-						 cpPackageInfoCriteria.createCriteria().andDetailCodeEqualTo(detailCode).andTotalPriceValueBetween(vo.getPriceStart(), vo.getPriceEnd());
-//						 totalCount += cpPackageInfoMapper.countByExample(cpPackageInfoCriteria);
+						 CpPackageInfoCriteria.Criteria criteriaCpPackageInfo = cpPackageInfoCriteria.createCriteria();
+						 
+						 criteriaCpPackageInfo.andDetailCodeEqualTo(detailCode);
+						 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
+							 criteriaCpPackageInfo.andTotalPriceValueBetween(vo.getPriceStart(), vo.getPriceEnd());
+						 }
+						 
 						 List<CpPackageInfo> packageInfo = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteria);
-						 for(CpPackageInfo p:packageInfo){
-					
+						 System.out.println("packageInfoList.Size:"+packageInfo.size());
+						 for(CpPackageInfo p : packageInfo){
+							 serv = new ServiceVO();
 							 serv.setAmountStart(0);
 							 serv.setAmountEnd(p.getAmount());
 							 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()));
 							 serv.setServiceTypeDetail(p.getFactorCode());
 							 serv.setUnit(p.getUnitType());
-							 
+							 serv.setServiceType(cpPriceDetailNew.getServiceType());
+							 usageList.add(serv);
 						 }
 					 }
+				}
 						 
-					 
-				 }
-				 
-				 usageList.add(serv);
-				 product.setUsageList(usageList);
+				 productInfo.setUsageList(usageList);
+				 productInfoList.add(productInfo);
 			 }
-			 ResponseHeader responseHeader = new ResponseHeader(true, ErrorCode.SUCCESS, "成功");
-			 product.setResponseHeader(responseHeader);
+			 
+			 //
+			 productInfoPageInfo.setResult(productInfoList);
+	         productInfoPageInfo.setCount(pageInfo.getCount());
+	         productInfoPageInfo.setPageNo(pageInfo.getPageNo());
+	         productInfoPageInfo.setPageSize(pageInfo.getPageSize());
+//			 ResponseHeader responseHeader = new ResponseHeader(true, ErrorCode.SUCCESS, "成功");
+//			 product.setResponseHeader(responseHeader);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			ResponseHeader responseHeader = new ResponseHeader(false, ErrorCode.FALSE, "失败");
-			 product.setResponseHeader(responseHeader);
-			 pro_list.add(product);
-			 return pro_list;
+//			 product.setResponseHeader(responseHeader);
+			 //pro_list.add(product);
+			 //return pro_list;
 		}
-		Integer pageNum = vo.getPageNo();
-		Integer pagecountNum = vo.getPageSize();
-		int startIndex =0;
-		int endIndex=0;
-		 startIndex = (pageNum - 1) * pagecountNum;
-		 endIndex = (pageNum - 1) * pagecountNum + pagecountNum;
-		 list.add(product);
-		 if(startIndex<pro_list.size()){
-	        	//输出页超出总条数
-	        	return pro_list;
-	        }
-		 //偏移量
-	        int offsetBL = 0;
-	        int end_flag=0;
-	        
-				for(ProductInfo p:list){
-					if (offsetBL < startIndex) {
-						// 循环直到,到当前页的第一条记录
-						offsetBL++;
-						continue;
-					}
-					
-					pro_list.add(p);
-					if (offsetBL == endIndex) {
-						// 到达当前页的最后一条，退出循环
-						end_flag=1;
-						break;
-					}
-				}
-					
-			return pro_list;
+		 
+		return productInfoPageInfo;
 		
-
-		
-//		pro_list.add(product);
-//		return pro_list;
 	}
 
 

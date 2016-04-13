@@ -22,13 +22,14 @@ public class QueryProductSvTest {
 	@Test
 	public void testPageSearch(){
 		ProductQueryVO vo = new ProductQueryVO();
+		
 		vo.setPageNo(1);
-		vo.setPageSize(3);
-		vo.setActiveDate(Timestamp.valueOf("2016-04-08 15:28:34"));
-		vo.setInvalidDate(Timestamp.valueOf("2016-04-08 15:28:34"));
-		vo.setTenantId("BYD");
-		vo.setServiceType("1");
-		vo.setBillingType("STEP");
+		vo.setPageSize(27);
+//		vo.setActiveDate(Timestamp.valueOf("2016-04-13 11:48:54"));
+//		vo.setInvalidDate(Timestamp.valueOf("2016-04-13 11:48:54"));
+//		vo.setTenantId("11111533");
+//		vo.setServiceType("1");
+		vo.setBillingType("PACKAGE");
 		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getProductInfo(vo);
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
 	}
