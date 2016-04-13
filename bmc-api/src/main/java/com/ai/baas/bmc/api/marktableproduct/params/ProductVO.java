@@ -85,7 +85,7 @@ public class ProductVO extends BaseInfo{
 	 * 产品总价
 	 */
 	@NotNull(message="产品总价",groups={IProductManageSV.AddProduct.class})
-	private BigDecimal TotalPrice;
+	private BigDecimal totalPrice;
 	
 	
 	public String getBillingType() {
@@ -152,10 +152,10 @@ public class ProductVO extends BaseInfo{
 		this.activeDateTag = activeDateTag;
 	}
 	public BigDecimal getTotalPrice() {
-		return TotalPrice;
+		return totalPrice;
 	}
 	public void setTotalPrice(BigDecimal totalPrice) {
-		TotalPrice = totalPrice;
+		this.totalPrice = totalPrice;
 	}
 	
 	
