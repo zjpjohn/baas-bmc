@@ -219,7 +219,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	@Override
 	public BaseResponse delProferProduct(productDelVO vo) throws BusinessException, SystemException {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
-		cpPriceInfo.setPriceInfoId(vo.getProdutId());
+		cpPriceInfo.setPriceInfoId(vo.getProductId());
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfo.setActiveStatus("DEL"); // 设置状态为删除
 		int count = cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
