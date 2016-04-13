@@ -95,8 +95,8 @@ public class CpPriceDetailAtomImpl implements ICpPriceDetailAtom {
 		criteria.andPriceCodeEqualTo(info.getPriceCode());
 		//
 		List<CpPriceDetail> cpPriceDetailList = this.cpPriceDetailMapper.selectByExample(sql);
-		CpPriceDetail cpPriceDetail = new CpPriceDetail();
-		if(null != cpPriceDetailList){
+		CpPriceDetail cpPriceDetail = new CpPriceDetail(); 
+		if(!CollectionUtil.isEmpty(cpPriceDetailList)){
 			cpPriceDetail = cpPriceDetailList.get(0);
 		}
 		return cpPriceDetail;

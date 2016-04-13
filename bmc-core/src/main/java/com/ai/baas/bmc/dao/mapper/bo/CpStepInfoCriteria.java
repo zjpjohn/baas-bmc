@@ -733,6 +733,146 @@ public class CpStepInfoCriteria {
             addCriterion("EXT_CODE not between", value1, value2, "extCode");
             return (Criteria) this;
         }
+
+        public Criteria andSubjectCodeIsNull() {
+            addCriterion("SUBJECT_CODE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeIsNotNull() {
+            addCriterion("SUBJECT_CODE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeEqualTo(String value) {
+            addCriterion("SUBJECT_CODE =", value, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeNotEqualTo(String value) {
+            addCriterion("SUBJECT_CODE <>", value, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeGreaterThan(String value) {
+            addCriterion("SUBJECT_CODE >", value, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("SUBJECT_CODE >=", value, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeLessThan(String value) {
+            addCriterion("SUBJECT_CODE <", value, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeLessThanOrEqualTo(String value) {
+            addCriterion("SUBJECT_CODE <=", value, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeLike(String value) {
+            addCriterion("SUBJECT_CODE like", value, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeNotLike(String value) {
+            addCriterion("SUBJECT_CODE not like", value, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeIn(List<String> values) {
+            addCriterion("SUBJECT_CODE in", values, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeNotIn(List<String> values) {
+            addCriterion("SUBJECT_CODE not in", values, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeBetween(String value1, String value2) {
+            addCriterion("SUBJECT_CODE between", value1, value2, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectCodeNotBetween(String value1, String value2) {
+            addCriterion("SUBJECT_CODE not between", value1, value2, "subjectCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeIsNull() {
+            addCriterion("SERVICE_TYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeIsNotNull() {
+            addCriterion("SERVICE_TYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeEqualTo(String value) {
+            addCriterion("SERVICE_TYPE =", value, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeNotEqualTo(String value) {
+            addCriterion("SERVICE_TYPE <>", value, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeGreaterThan(String value) {
+            addCriterion("SERVICE_TYPE >", value, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("SERVICE_TYPE >=", value, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeLessThan(String value) {
+            addCriterion("SERVICE_TYPE <", value, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeLessThanOrEqualTo(String value) {
+            addCriterion("SERVICE_TYPE <=", value, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeLike(String value) {
+            addCriterion("SERVICE_TYPE like", value, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeNotLike(String value) {
+            addCriterion("SERVICE_TYPE not like", value, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeIn(List<String> values) {
+            addCriterion("SERVICE_TYPE in", values, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeNotIn(List<String> values) {
+            addCriterion("SERVICE_TYPE not in", values, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeBetween(String value1, String value2) {
+            addCriterion("SERVICE_TYPE between", value1, value2, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceTypeNotBetween(String value1, String value2) {
+            addCriterion("SERVICE_TYPE not between", value1, value2, "serviceType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

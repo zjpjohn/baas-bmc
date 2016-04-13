@@ -106,11 +106,12 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 			DshmUtil.getIdshmSV().initLoader("cp_price_info",
 					priceinfobject.toString(), 0);
 			long stepSeq = 0;
+			String detailCode = aISysSequenceSvc.terrigerSysSequence(
+					"DETAIL_CODE", 1).get(0);
+			//CpPriceDetail(priceCode, vo, s, detailCode);
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				//序列生成DETAIL_CODE
-				String detailCode = aISysSequenceSvc.terrigerSysSequence(
-						"DETAIL_CODE", 1).get(0);
-				CpPriceDetail(priceCode, vo, s, detailCode);
+				
 				if (vo.getBillingType().equals("STEP")) {
 					//阶梯类型
 					stepSeq++;

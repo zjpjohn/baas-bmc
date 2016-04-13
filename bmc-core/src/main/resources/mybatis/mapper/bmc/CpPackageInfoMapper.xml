@@ -13,6 +13,8 @@
     <result column="EXCEED_TYPE" property="exceedType" jdbcType="VARCHAR" />
     <result column="UNITPRICE_CODE" property="unitpriceCode" jdbcType="VARCHAR" />
     <result column="EXT_CODE" property="extCode" jdbcType="VARCHAR" />
+    <result column="SUBJECT_CODE" property="subjectCode" jdbcType="VARCHAR" />
+    <result column="SERVICE_TYPE" property="serviceType" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    PACKAGE_ID, DETAIL_CODE, AMOUNT, UNIT_CODE, UNIT_TYPE, FACTOR_CODE, EXCEED_TYPE, 
-    UNITPRICE_CODE, EXT_CODE
+    PACKAGE_ID, DETAIL_CODE, AMOUNT, PRICE_VALUE, TOTAL_PRICE_VALUE, UNIT_CODE, UNIT_TYPE, 
+    FACTOR_CODE, EXCEED_TYPE, UNITPRICE_CODE, EXT_CODE, SUBJECT_CODE, SERVICE_TYPE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfoCriteria" >
     select
@@ -115,11 +117,13 @@
     insert into cp_package_info (PACKAGE_ID, DETAIL_CODE, AMOUNT, 
       PRICE_VALUE, TOTAL_PRICE_VALUE, UNIT_CODE, 
       UNIT_TYPE, FACTOR_CODE, EXCEED_TYPE, 
-      UNITPRICE_CODE, EXT_CODE)
+      UNITPRICE_CODE, EXT_CODE, SUBJECT_CODE, 
+      SERVICE_TYPE)
     values (#{packageId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE}, 
       #{priceValue,jdbcType=DOUBLE}, #{totalPriceValue,jdbcType=DOUBLE}, #{unitCode,jdbcType=VARCHAR}, 
       #{unitType,jdbcType=VARCHAR}, #{factorCode,jdbcType=VARCHAR}, #{exceedType,jdbcType=VARCHAR}, 
-      #{unitpriceCode,jdbcType=VARCHAR}, #{extCode,jdbcType=VARCHAR})
+      #{unitpriceCode,jdbcType=VARCHAR}, #{extCode,jdbcType=VARCHAR}, #{subjectCode,jdbcType=VARCHAR}, 
+      #{serviceType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo" >
     insert into cp_package_info
@@ -157,6 +161,12 @@
       <if test="extCode != null" >
         EXT_CODE,
       </if>
+      <if test="subjectCode != null" >
+        SUBJECT_CODE,
+      </if>
+      <if test="serviceType != null" >
+        SERVICE_TYPE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="packageId != null" >
@@ -191,6 +201,12 @@
       </if>
       <if test="extCode != null" >
         #{extCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectCode != null" >
+        #{subjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -236,6 +252,12 @@
       <if test="record.extCode != null" >
         EXT_CODE = #{record.extCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.subjectCode != null" >
+        SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceType != null" >
+        SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -253,7 +275,9 @@
       FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
       EXCEED_TYPE = #{record.exceedType,jdbcType=VARCHAR},
       UNITPRICE_CODE = #{record.unitpriceCode,jdbcType=VARCHAR},
-      EXT_CODE = #{record.extCode,jdbcType=VARCHAR}
+      EXT_CODE = #{record.extCode,jdbcType=VARCHAR},
+      SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
+      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -288,6 +312,12 @@
       <if test="extCode != null" >
         EXT_CODE = #{extCode,jdbcType=VARCHAR},
       </if>
+      <if test="subjectCode != null" >
+        SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      </if>
     </set>
     where PACKAGE_ID = #{packageId,jdbcType=BIGINT}
       and DETAIL_CODE = #{detailCode,jdbcType=VARCHAR}
@@ -302,7 +332,9 @@
       FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
       EXCEED_TYPE = #{exceedType,jdbcType=VARCHAR},
       UNITPRICE_CODE = #{unitpriceCode,jdbcType=VARCHAR},
-      EXT_CODE = #{extCode,jdbcType=VARCHAR}
+      EXT_CODE = #{extCode,jdbcType=VARCHAR},
+      SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
+      SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR}
     where PACKAGE_ID = #{packageId,jdbcType=BIGINT}
       and DETAIL_CODE = #{detailCode,jdbcType=VARCHAR}
   </update>

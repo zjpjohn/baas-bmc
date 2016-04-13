@@ -19,6 +19,10 @@ public class CpPackageInfo extends CpPackageInfoKey {
 
     private String extCode;
 
+    private String subjectCode;
+
+    private String serviceType;
+
     public Double getAmount() {
         return amount;
     }
@@ -89,5 +93,21 @@ public class CpPackageInfo extends CpPackageInfoKey {
 
     public void setExtCode(String extCode) {
         this.extCode = extCode == null ? null : extCode.trim();
+    }
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode == null ? null : subjectCode.trim();
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType == null ? null : serviceType.trim();
     }
 }

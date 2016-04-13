@@ -175,7 +175,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 			}
 
 		}
-		if (!(vo.getRelatedProductAmount().isEmpty() || vo
+		/*if (!(vo.getRelatedProductAmount().isEmpty() || vo
 				.getRelatedProductAmount() == null)) {
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				resultCode = InCheckUtil.check(s.getCycleId(), "cycleId",
@@ -224,7 +224,7 @@ public class IProductManageSVImpl implements IProductManageSV {
 
 			}
 
-		}
+		}*/
 		//数据库操作
 		try {
 			iProductManageBusiness.addproduct(vo);

@@ -21,6 +21,10 @@ public class CpStepInfo {
 
     private Long extCode;
 
+    private String subjectCode;
+
+    private String serviceType;
+
     public Long getSetpId() {
         return setpId;
     }
@@ -99,5 +103,21 @@ public class CpStepInfo {
 
     public void setExtCode(Long extCode) {
         this.extCode = extCode;
+    }
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode == null ? null : subjectCode.trim();
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType == null ? null : serviceType.trim();
     }
 }
