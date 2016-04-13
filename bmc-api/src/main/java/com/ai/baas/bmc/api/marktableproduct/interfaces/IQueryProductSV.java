@@ -11,7 +11,7 @@ import com.ai.opt.base.vo.PageInfo;
  *
  * Date: 2016年3月28日 <br>
  * Copyright (c) 2016 asiainfo.com <br>
- * @author gaogang
+ * @author zhangzd
  */
 public interface IQueryProductSV {
 
@@ -21,7 +21,7 @@ public interface IQueryProductSV {
 	 * @return
 	 * @throws BusinessException
      * @throws SystemException
-	 * @author gaogang
+	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00004
 	 */

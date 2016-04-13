@@ -13,7 +13,7 @@ import com.ai.opt.base.exception.SystemException;
  *
  * Date: 2016年3月28日 <br>
  * Copyright (c) 2016 asiainfo.com <br>
- * @author gaogang
+ * @author zhangzd
  */
 public interface IProductManageSV {
 
@@ -23,7 +23,7 @@ public interface IProductManageSV {
 	 * @return
 	 * @throws BusinessException
      * @throws SystemException
-	 * @author gaogang
+	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00005
 	 */
@@ -35,7 +35,7 @@ public interface IProductManageSV {
 	 * @param vo
 	 * @throws BusinessException
      * @throws SystemException
-	 * @author gaogang
+	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00006
 	 */
@@ -48,7 +48,7 @@ public interface IProductManageSV {
 	 * @param vo
 	 * @throws BusinessException
      * @throws SystemException
-	 * @author gaogang
+	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00011
 	 */
@@ -62,7 +62,7 @@ public interface IProductManageSV {
 	 * @param vo
 	 * @throws BusinessException
 	 * @throws SystemException
-	 * @author gaogang
+	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00012
 	 */
