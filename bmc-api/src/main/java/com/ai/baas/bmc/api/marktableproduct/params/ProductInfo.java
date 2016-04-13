@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.api.marktableproduct.params;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -57,6 +58,18 @@ public class ProductInfo extends BaseResponse{
 	 * 状态
 	 */
 	private String status;
+	/**
+	 * 总价
+	 */
+	private BigDecimal totalPrice;
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	public String getProductId() {
 		return productId;

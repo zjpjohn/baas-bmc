@@ -4,7 +4,6 @@ import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
-import com.ai.baas.bmc.api.marktableproduct.params.ProductParamVo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -28,9 +27,9 @@ public interface IProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00005
 	 */
-	@interface AddProduct{}
-	ProcductResponse addProduct(ProductVO vo) throws BusinessException, SystemException;
 	
+	ProcductResponse addProduct(ProductVO vo) throws BusinessException, SystemException;
+	@interface AddProduct{}
 	/**
 	 * 修改产品状态
 	 * @param vo
@@ -40,8 +39,10 @@ public interface IProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00006
 	 */
-	@interface UpdateProductStatus{}
+	
 	void updateProductStatus(ProductActiveVO vo) throws BusinessException, SystemException;
+	@interface UpdateProductStatus{}
+	
 	/**
 	 * 删除可销售产品
 	 * @param vo
@@ -51,9 +52,9 @@ public interface IProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00011
 	 */
-	@interface DelProduct{}
-	void delProduct(ProductParamKeyVo vo) throws BusinessException, SystemException;
 	
+	void delProduct(ProductDelVO vo) throws BusinessException, SystemException;
+	@interface DelProduct{}
 
 	
 	/**
@@ -65,8 +66,9 @@ public interface IProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00012
 	 */
+	
+	void updateProduct(ProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProduct{}
-	void updateProduct(ProductParamVo vo) throws BusinessException, SystemException;
 	/**
 	 * 根据priceCode编辑信息
 	 * @param vo
@@ -77,19 +79,6 @@ public interface IProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode
 	 */
-	ProductParamVo editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException;
-
-	/**
-	 * 添加产品信息
-	 * @param vo
-	 * @return
-	 * @throws BusinessException
-	 * @throws SystemException
-	 * @author zhangzd
-	 * @ApiDocMethod
-	 * @ApiCode
-	 */
-	@interface insertProduct{}
-	ProcductResponse insertProduct(ProductParamVo vo) throws BusinessException, SystemException;
-	
+	ProductVO editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException;
+	@interface EditProduct{}
 }

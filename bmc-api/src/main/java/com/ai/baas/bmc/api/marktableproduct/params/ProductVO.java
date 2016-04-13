@@ -47,7 +47,7 @@ public class ProductVO extends BaseInfo{
 	@NotNull(message="产品（包）名称不能为空",groups={IProductManageSV.AddProduct.class})
 	private String productName;
 	/**
-	 * 主产品使用量，必填
+	 * 产品使用量，必填
 	 */
 	@NotNull(message="主产品列表不能为空",groups={IProductManageSV.AddProduct.class})
 	private List<ServiceVO> majorProductAmount;
@@ -55,7 +55,7 @@ public class ProductVO extends BaseInfo{
 	/**
 	 * 关联产品使用量
 	 */
-	private List<ServiceVO> relatedProductAmount;
+	//private List<ServiceVO> relatedProductAmount;
 	/**
 	 * 阶梯价格是否相同
 	 */
@@ -107,12 +107,7 @@ public class ProductVO extends BaseInfo{
 	public void setMajorProductAmount(List<ServiceVO> majorProductAmount) {
 		this.majorProductAmount = majorProductAmount;
 	}
-	public List<ServiceVO> getRelatedProductAmount() {
-		return relatedProductAmount;
-	}
-	public void setRelatedProductAmount(List<ServiceVO> relatedProductAmount) {
-		this.relatedProductAmount = relatedProductAmount;
-	}
+	
 	public String getStandardPriceType() {
 		return standardPriceType;
 	}

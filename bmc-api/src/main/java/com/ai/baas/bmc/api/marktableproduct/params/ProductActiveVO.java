@@ -15,14 +15,6 @@ public class ProductActiveVO extends BaseInfo {
 
 	
 	private static final long serialVersionUID = 1L;
-	 /**
-     * 消息流水<br>
-     * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
-     * 必填<br>
-     * VARCHAR(32)
-     */
-	@NotNull(message="消息流水号不能为空",groups={IProductManageSV.UpdateProductStatus.class})
-	private String tradeSeq;
 	/**
 	 * 产品Id
 	 */
@@ -44,12 +36,6 @@ public class ProductActiveVO extends BaseInfo {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public String getTradeSeq() {
-		return tradeSeq;
-	}
-	public void setTradeSeq(String tradeSeq) {
-		this.tradeSeq = tradeSeq;
 	}
 	
 }

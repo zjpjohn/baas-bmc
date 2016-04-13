@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.api.marktableproduct.params;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 
 import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
@@ -11,39 +13,35 @@ import com.ai.opt.base.vo.BaseInfo;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
-public class ProductDelVO extends BaseInfo {
+public class ProductDelVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	 /**
-     * 消息流水<br>
-     * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
-     * 必填<br>
-     * VARCHAR(32)
-     */
-	@NotNull(message="消息流水号不能为空",groups={IProductManageSV.DelProduct.class})
-	private String tradeSeq;
 	/**
 	 * 产品Id
 	 */
 	@NotNull(message="产品Id不能为空",groups={IProductManageSV.DelProduct.class})
-	private String producntId;
+	private String productId;
+	
+	@NotNull(message="计费类型不能为空",groups={IProductManageSV.DelProduct.class})
+	private String billingType;
 
-	public String getProducntId() {
-		return producntId;
+	public String getProductId() {
+		return productId;
 	}
 
-	public void setProducntId(String producntId) {
-		this.producntId = producntId;
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 
-	public String getTradeSeq() {
-		return tradeSeq;
+	public String getBillingType() {
+		return billingType;
 	}
 
-	public void setTradeSeq(String tradeSeq) {
-		this.tradeSeq = tradeSeq;
+	public void setBillingType(String billingType) {
+		this.billingType = billingType;
 	}
+
 	
 	
 }
