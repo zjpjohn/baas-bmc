@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseResponse;
 
 /**
  * 订购信息接口<br>
@@ -32,6 +33,6 @@ public interface IOrderInfoSV {
      */
     @Path("/sync/orderinfo")
     @POST
-    public String orderInfo(OrderInfoParams record) throws BusinessException,SystemException;
+    public BaseResponse orderInfo(OrderInfoParams record) throws BusinessException,SystemException;
     @interface OrderInfo{}
 }

@@ -136,7 +136,7 @@ public class OrderInfoParams extends BaseInfo {
      * 备注<br>
      * varchar(1024)
      */
-    @Size(max=14,groups={IOrderInfoSV.OrderInfo.class})
+    @Size(max=1024,groups={IOrderInfoSV.OrderInfo.class})
     private String remark;
 
     /**
