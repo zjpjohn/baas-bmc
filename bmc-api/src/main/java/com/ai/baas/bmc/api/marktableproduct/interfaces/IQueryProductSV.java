@@ -15,18 +15,18 @@ import com.ai.opt.base.vo.PageInfo;
  */
 public interface IQueryProductSV {
 
+	
 	/**
-	 * 可销售产品列表
+	 * 分页查询产品信息信息
 	 * @param vo
 	 * @return
 	 * @throws BusinessException
-     * @throws SystemException
+	 * @throws SystemException
 	 * @author zhangzd
 	 * @ApiDocMethod
-	 * @ApiCode bmc-00004
+	 * @ApiCode
 	 */
-	@interface GetProductInfo{}
 	PageInfo<ProductInfo> getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
-	
+	@interface GetProductInfo{}
 	
 }
