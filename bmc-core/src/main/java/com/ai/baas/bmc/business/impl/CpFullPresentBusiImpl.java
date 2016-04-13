@@ -56,20 +56,20 @@ public class CpFullPresentBusiImpl implements ICpFullPresentBusi {
 	}
 
 	@Override
-	public void updateFullPresent(CpFullPresent present) {
+	public Integer updateFullPresent(CpFullPresent present) {
 		CpFullPresentCriteria example = new CpFullPresentCriteria();
 		Criteria criteria = example.createCriteria();
 		criteria.andPresentIdEqualTo(present.getPresentId());
-		cpFullPresentMapper.updateByExampleSelective(present, example);
+		return cpFullPresentMapper.updateByExampleSelective(present, example);
 
 	}
 
 	@Override
-	public void deleteFullPresent(String detailCode) {
+	public Integer deleteFullPresent(String detailCode) {
 		CpFullPresentCriteria example = new CpFullPresentCriteria();
 		Criteria criteria = example.createCriteria();
 		criteria.andDetailCodeEqualTo(detailCode);
-		cpFullPresentMapper.deleteByExample(example);
+		return cpFullPresentMapper.deleteByExample(example);
 	}
 
 }

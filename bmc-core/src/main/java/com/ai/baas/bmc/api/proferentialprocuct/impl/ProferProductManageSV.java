@@ -191,8 +191,8 @@ public class ProferProductManageSV implements IProferProductManageSV {
 
 	@Override
 	public BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
-		if(StringUtil.isBlank(vo.getTenantId())){
-			 throw new BusinessException("88888888", "[租户Id]不能为空");
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("88888888", "[租户Id]不能为空");
 		}
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
@@ -217,18 +217,31 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	}
 
 	@Override
-	public void delProferProduct(productDelVO vo) throws BusinessException, SystemException {
+	public BaseResponse delProferProduct(productDelVO vo) throws BusinessException, SystemException {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProdutId());
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfo.setActiveStatus("DEL"); // 设置状态为删除
-		cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
+		int count = cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
+		ResponseHeader responseHeader = new ResponseHeader();
+		if (count > 0) {
+			responseHeader.setIsSuccess(true);
+			responseHeader.setResultCode(ResultCode.SUCCESS_CODE);
+			responseHeader.setResultMessage("数据更新成功");
+		} else {
+			responseHeader.setIsSuccess(false);
+			responseHeader.setResultCode(ResultCode.FAIL_CODE);
+			responseHeader.setResultMessage("数据更新不成功");
+		}
+		BaseResponse baseResponse = new BaseResponse();
+		baseResponse.setResponseHeader(responseHeader);
+		return baseResponse;
 	}
 
 	@Override
-	public void updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException {
+	public BaseResponse updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException {
 
-		// TODO 暂时不处理更新操作
+		
 		/**
 		 * 更新资费信息表 cp_price_info
 		 */
@@ -245,9 +258,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceInfo.setPriceName(vo.getProgramName());
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
 		// cpPriceInfo.setProductType(vo.getProductType()); 暂时不填写
-
-		// cpPriceInfo.setStatus("INOPERATIVE"); //inoperative 待生效
-		// TODO 改成update
+		
 		cpPriceInfoBusi.updatePriceInfo(cpPriceInfo);
 		/**
 		 * 更新资费计划明细表 cp_price_detail
@@ -296,11 +307,15 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			reduce.setReduceId(vo.getReduceId());
 			cpFullReduceBusi.updateFullReduce(reduce);
 		}
-
+		ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
+		BaseResponse baseResponse = new BaseResponse();
+		baseResponse.setResponseHeader(responseHeader);
+		return baseResponse;
 	}
 
 	@Override
-	public void relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException {
+	public BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException {
+		int  count=0;
 		// 满赠
 		if ("PRESENT".equals(vo.getChargeType())) {
 			List<Long> pIds = vo.getFullIds();
@@ -309,7 +324,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 
 				p.setAccountType(vo.getAccountType());
 				p.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
-				cpFullPresentBusi.updateFullPresent(p);
+				count=cpFullPresentBusi.updateFullPresent(p);
 			}
 
 		}
@@ -318,17 +333,29 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			Long rId = vo.getFullIds().get(0);
 			CpFullReduce r = cpFullReduceBusi.getFullReduce(rId);
 			if (r != null) {
-				System.out.println("-------" + JSON.toJSONString(vo.getFullIds()));
+			
 
 				CpFullReduce cfr = new CpFullReduce();
 				cfr.setRelatedAccount(JSON.toJSONString(vo.getFullIds()));
 				cfr.setAccountType(vo.getAccountType());
 				cfr.setReduceId(r.getReduceId());
-				cpFullReduceBusi.updateFullReduce(cfr);
+				count=cpFullReduceBusi.updateFullReduce(cfr);
 			}
 
 		}
-
+		ResponseHeader responseHeader = new ResponseHeader();
+		if (count > 0) {
+			responseHeader.setIsSuccess(true);
+			responseHeader.setResultCode(ResultCode.SUCCESS_CODE);
+			responseHeader.setResultMessage("关联成功");
+		} else {
+			responseHeader.setIsSuccess(false);
+			responseHeader.setResultCode(ResultCode.FAIL_CODE);
+			responseHeader.setResultMessage("关联失败");
+		}
+		BaseResponse baseResponse = new BaseResponse();
+		baseResponse.setResponseHeader(responseHeader);
+		return baseResponse;
 	}
 
 }

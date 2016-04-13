@@ -11,6 +11,6 @@ public interface ICpFullPresentBusi {
 	//通过detailcode 获取满赠数据列表
 	List<CpFullPresent> getFullPresents(String detailCode);
 	CpFullPresent getFullPresent(Long presentId);
-	void updateFullPresent(CpFullPresent present);
-	void deleteFullPresent(String detailCode);
+	Integer updateFullPresent(CpFullPresent present);
+	Integer deleteFullPresent(String detailCode);
 }

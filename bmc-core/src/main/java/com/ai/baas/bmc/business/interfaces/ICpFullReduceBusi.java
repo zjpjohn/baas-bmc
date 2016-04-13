@@ -24,7 +24,7 @@ public interface ICpFullReduceBusi {
 	 * @ApiDocMethod
 	 * @ApiCode
 	 */
-	void updateFullReduce(CpFullReduce present);
+	Integer updateFullReduce(CpFullReduce present);
 	
 
 }

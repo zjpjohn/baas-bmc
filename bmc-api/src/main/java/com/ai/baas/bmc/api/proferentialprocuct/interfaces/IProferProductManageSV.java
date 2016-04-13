@@ -63,7 +63,7 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00010
 	 */
-	void delProferProduct(productDelVO vo) throws BusinessException, SystemException;
+	BaseResponse delProferProduct(productDelVO vo) throws BusinessException, SystemException;
 	@interface DelProferProduct{}
 	/**
 	 * 更新优惠产品
@@ -73,7 +73,7 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00013
 	 */
-	void updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	BaseResponse updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProferProduct{}
 	
 	/**
@@ -85,6 +85,6 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode
 	 */
-	void relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException;
+	BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException;
 	
 }
