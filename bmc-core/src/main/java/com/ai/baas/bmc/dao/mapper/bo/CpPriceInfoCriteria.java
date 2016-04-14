@@ -854,6 +854,76 @@ public class CpPriceInfoCriteria {
             addCriterion("ACTIVE_STATUS not between", value1, value2, "activeStatus");
             return (Criteria) this;
         }
+
+        public Criteria andChargeTypeIsNull() {
+            addCriterion("CHARGE_TYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeIsNotNull() {
+            addCriterion("CHARGE_TYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeEqualTo(String value) {
+            addCriterion("CHARGE_TYPE =", value, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeNotEqualTo(String value) {
+            addCriterion("CHARGE_TYPE <>", value, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeGreaterThan(String value) {
+            addCriterion("CHARGE_TYPE >", value, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("CHARGE_TYPE >=", value, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeLessThan(String value) {
+            addCriterion("CHARGE_TYPE <", value, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeLessThanOrEqualTo(String value) {
+            addCriterion("CHARGE_TYPE <=", value, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeLike(String value) {
+            addCriterion("CHARGE_TYPE like", value, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeNotLike(String value) {
+            addCriterion("CHARGE_TYPE not like", value, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeIn(List<String> values) {
+            addCriterion("CHARGE_TYPE in", values, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeNotIn(List<String> values) {
+            addCriterion("CHARGE_TYPE not in", values, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeBetween(String value1, String value2) {
+            addCriterion("CHARGE_TYPE between", value1, value2, "chargeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeTypeNotBetween(String value1, String value2) {
+            addCriterion("CHARGE_TYPE not between", value1, value2, "chargeType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
