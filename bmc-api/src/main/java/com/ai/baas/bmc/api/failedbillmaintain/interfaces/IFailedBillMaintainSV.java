@@ -5,7 +5,10 @@ import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillCriteria;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillParam;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.HBasePager;
+
+import java.util.List;
 
 /**
  * Created by xin on 16-4-11.
@@ -50,5 +53,20 @@ public interface IFailedBillMaintainSV {
      * @ApiDocMethod
      * @ApiCode bmc-failedbill-00003
      */
-    void resendFailedBill(FailedBillParam param);
+    BaseResponse resendFailedBill(FailedBillParam param);
+
+
+    /**
+     * 批量重发错单
+     *
+     * @param params
+     * @return
+     * @throws BusinessException
+     * @throws SystemException
+     * @author zhangxin
+     * @ApiDocMethod
+     * @ApiCode bmc-failedbill-00003
+     */
+    BaseResponse batchResendFailedBill(List<FailedBillParam> params);
+
 }

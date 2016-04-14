@@ -126,14 +126,14 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         stringBuilder.append(param.getSource() + "\1");
         stringBuilder.append(param.getBsn() + "\1");
         stringBuilder.append(param.getSn() + "\1");
-        stringBuilder.append(param.getArrival_time() + "\1");
-        stringBuilder.append(param.getAccount_period() + "\1");
+        stringBuilder.append(param.getArrivalTime() + "\1");
+        stringBuilder.append(param.getAccountPeriod() + "\1");
 
         for (BmcRecordFmt bmcRecordFmt : bmcRecordFmts) {
-            String value = param.getFail_packet().get(bmcRecordFmt.getFieldName());
+            String value = param.getFailPacket().get(bmcRecordFmt.getFieldName());
             if (value == null || value.length() == 0)
                 throw new BusinessException("400", bmcRecordFmt.getFieldName() + " 不能被找到或者值为空");
-            stringBuilder.append(param.getAccount_period() + "\1");
+            stringBuilder.append(param.getAccountPeriod() + "\1");
         }
 
         return stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
@@ -156,7 +156,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
     private void fillAccountPeriodValue(FailedBill failedBill, Result result) {
         Cell cell = result.getColumnLatestCell("failure_bill".getBytes(), "account_period".getBytes());
         if (cell != null) {
-            failedBill.setAccount_period(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setAccountPeriod(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
 
 
@@ -183,7 +183,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "tenant_id".getBytes());
         if (cell != null) {
-            failedBill.setTenant_id(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setTenantId(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -255,7 +255,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "arrival_time".getBytes());
         if (cell != null) {
-            failedBill.setArrival_time(Bytes.toLong(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setArrivalTime(Bytes.toLong(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 }

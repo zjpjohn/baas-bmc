@@ -1,17 +1,20 @@
 package com.ai.baas.bmc.api.failedbillmaintain.params;
 
+import com.ai.opt.base.vo.BaseResponse;
+
 import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Created by xin on 16-4-11.
  */
-public class FailedBill implements Serializable {
+public class FailedBill extends BaseResponse implements Serializable {
     private String bsn;
     /**
      * 错单编码
      */
     private String failCode;
+    private String tenantId;
     private long failDate;
     private String failReason;
     /**
@@ -23,10 +26,9 @@ public class FailedBill implements Serializable {
      */
     private String serviceId;
     private String sn;
-    private String tenant_id;
     private String source;
-    private String account_period;
-    private long arrival_time;
+    private String accountPeriod;
+    private long arrivalTime;
     /**
      * 错单记录
      */
@@ -60,20 +62,20 @@ public class FailedBill implements Serializable {
         return sn;
     }
 
-    public String getTenant_id() {
-        return tenant_id;
+    public String getTenantId() {
+        return tenantId;
     }
 
     public String getSource() {
         return source;
     }
 
-    public String getAccount_period() {
-        return account_period;
+    public String getAccountPeriod() {
+        return accountPeriod;
     }
 
-    public long getArrival_time() {
-        return arrival_time;
+    public long getArrivalTime() {
+        return arrivalTime;
     }
 
     public Map<String, String> getFail_packet() {
@@ -108,20 +110,20 @@ public class FailedBill implements Serializable {
         this.sn = sn;
     }
 
-    public void setTenant_id(String tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 
     public void setSource(String source) {
         this.source = source;
     }
 
-    public void setAccount_period(String account_period) {
-        this.account_period = account_period;
+    public void setAccountPeriod(String accountPeriod) {
+        this.accountPeriod = accountPeriod;
     }
 
-    public void setArrival_time(long arrival_time) {
-        this.arrival_time = arrival_time;
+    public void setArrivalTime(long arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
     public void setFail_packet(Map<String, String> fail_packet) {
