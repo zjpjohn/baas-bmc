@@ -52,8 +52,6 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         //StandardList standards = new StandardList();
         //UsageList usages =new UsageList();
         List<StandardList> standardList = new ArrayList<StandardList>( );
-        List<UsageList> usageList = new ArrayList<>();
-        
         
         //基于StandardId 和 PriceName 模糊查询
         CpPriceDetailMapper cpPriceDetailMapper = sqlSessionTemplate.getMapper(CpPriceDetailMapper.class);
@@ -64,8 +62,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         CpUnitpriceItemCriteria cpUnitpriceItemCriteria = new CpUnitpriceItemCriteria();
         CpFactorInfoMapper cpFactorInfoMapper = sqlSessionTemplate.getMapper(CpFactorInfoMapper.class);
         CpFactorInfoCriteria cpFactorInfoCriteria = new CpFactorInfoCriteria();
-        CpPriceInfoMapper  cpPriceInfoMapper = sqlSessionTemplate.getMapper(CpPriceInfoMapper.class);
-        
+        CpPriceInfoMapper  cpPriceInfoMapper = sqlSessionTemplate.getMapper(CpPriceInfoMapper.class); 
         CpPriceInfoCriteria cpPriceInfoCriteria=new CpPriceInfoCriteria();
         //判断是否需要分页
         if(record.getPageSize()!=null&&record.getPageNo()!=null){
@@ -81,10 +78,13 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         code = record.getStandardId();
         name = record.getPriceName();
         if(!StringUtil.isBlank(code)){
-            cpPriceInfoCriteria.or().andPriceCodeLike(code);
+            //code = "%"+record.getStandardId()+"%";
+            cpPriceInfoCriteria.or().andPriceCodeLike("%"+code+"%");
         }
         if(!StringUtil.isBlank(name)){
-            cpPriceInfoCriteria.or().andPriceNameLike(name);
+            //name = "%"+record.getPriceName()+"%";
+            cpPriceInfoCriteria.or().andPriceNameLike("%"+name+"%");
+           
         }
         List<CpPriceInfo>  cpPriceInfoList=cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria);
         PageInfo<StandardList> resultPage=new PageInfo<StandardList>();
@@ -102,7 +102,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         if(cpPriceInfoList.size() == 0)return null;
        
         for(CpPriceInfo cpPriceInfo : cpPriceInfoList){
-          
+            List<UsageList> usageList = new ArrayList<>();
            //查询CpPriceDetail
            price_code = cpPriceInfo.getPriceCode();
            System.out.println("price_code"+price_code);
