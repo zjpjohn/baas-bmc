@@ -68,13 +68,13 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		}
 	
 		if(vo.getActiveDate()!=null){
-			criteria.andActiveTimeEqualTo(vo.getActiveDate());
+			criteria.andActiveTimeGreaterThan(vo.getActiveDate());
 		}
 		if(vo.getInvalidDate()!=null){
-			criteria.andInactiveTimeEqualTo(vo.getInvalidDate());
+			criteria.andActiveTimeGreaterThan(vo.getInvalidDate());
 		}
 		if(vo.getProductName()!=null){
-			criteria.andPriceNameEqualTo(vo.getProductName());
+			criteria.andPriceNameLike("%"+vo.getProductName()+"%");
 		}
 		if(vo.getProferType()!=null){
 			criteria.andProductTypeEqualTo(vo.getProferType());
