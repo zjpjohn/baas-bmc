@@ -34,7 +34,9 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 		} else {
 			log.debug("addProduct() vo = " + vo.toString() + "]");
 		}
-		
+		if(null == vo.getTenantId()){
+			throw new BusinessException("tenantId is not null", "租户id不能为空");
+		}
 		return iQueryProductBusiImpl.Product(vo);
 		
 	
