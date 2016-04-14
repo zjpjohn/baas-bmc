@@ -27,6 +27,8 @@ public class CpPriceInfo {
 
     private String chargeType;
 
+    private String serviceType;
+
     public Long getPriceInfoId() {
         return priceInfoId;
     }
@@ -121,5 +123,13 @@ public class CpPriceInfo {
 
     public void setChargeType(String chargeType) {
         this.chargeType = chargeType == null ? null : chargeType.trim();
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType == null ? null : serviceType.trim();
     }
 }

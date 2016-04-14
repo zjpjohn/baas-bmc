@@ -84,6 +84,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 productInfo.setProductName(c.getPriceName());
 				 productInfo.setStatus(c.getActiveStatus());
 				 productInfo.setTenantId(c.getTenantId());
+				 
 				 //
 				 List<ServiceVO> usageList = new ArrayList<ServiceVO>();
 				 ServiceVO serv = null;
