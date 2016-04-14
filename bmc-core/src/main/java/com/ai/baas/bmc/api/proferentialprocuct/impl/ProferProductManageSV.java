@@ -64,6 +64,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
 		cpPriceInfo.setPriceName(vo.getProgramName());
 		// cpPriceInfo.setProductType(vo.getProductType()); 暂时不启用
+		cpPriceInfo.setChargeType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfo.setActiveStatus("INOPERATIVE"); // inoperative 待生效
 		// TODO 有返回值，后期注意处理
@@ -136,7 +137,8 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceInfo.setOperatorId(vo.getOperatorId());
 		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
 		cpPriceInfo.setPriceName(vo.getProgramName());
-		cpPriceInfo.setProductType(vo.getProductType());
+		//cpPriceInfo.setProductType(vo.getProductType());
+		cpPriceInfo.setChargeType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfo.setActiveStatus("INOPERATIVE"); // inoperative 待生效
 		// TODO 有返回值，后期注意处理

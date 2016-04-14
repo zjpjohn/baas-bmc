@@ -77,7 +77,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 			criteria.andPriceNameLike("%"+vo.getProductName()+"%");
 		}
 		if(vo.getProferType()!=null){
-			criteria.andProductTypeEqualTo(vo.getProferType());
+			criteria.andChargeTypeEqualTo(vo.getProferType());
 		}
 		if(vo.getPageNo()!=null&&vo.getPageSize()!=null){
 			example.setLimitStart((vo.getPageNo()-1)*vo.getPageSize());
