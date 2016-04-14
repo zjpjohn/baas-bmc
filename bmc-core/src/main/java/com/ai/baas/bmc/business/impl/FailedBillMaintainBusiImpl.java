@@ -207,7 +207,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "service_id".getBytes());
         if (cell != null) {
-            failedBill.setService_id(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setServiceId(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -215,7 +215,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_step".getBytes());
         if (cell != null) {
-            failedBill.setFail_step(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setFailStep(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -223,7 +223,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_reason".getBytes());
         if (cell != null) {
-            failedBill.setFail_reason(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setFailReason(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -231,7 +231,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_date".getBytes());
         if (cell != null) {
-            failedBill.setFail_date(Bytes.toLong(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setFailDate(Bytes.toLong(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -239,7 +239,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_code".getBytes());
         if (cell != null) {
-            failedBill.setFail_code(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setFailCode(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 

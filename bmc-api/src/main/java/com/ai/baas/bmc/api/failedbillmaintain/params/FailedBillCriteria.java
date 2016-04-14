@@ -9,8 +9,14 @@ import com.ai.opt.base.vo.HBasePager;
 public class FailedBillCriteria extends BaseInfo {
     private HBasePager<FailedBill> pager;
 
+    /**
+     * 业务类型
+     */
     private String serviceType;
 
+    /**
+     * 错单编码
+     */
     private String errorCode;
 
     public String getServiceType() {

@@ -8,40 +8,52 @@ import java.util.Map;
  */
 public class FailedBill implements Serializable {
     private String bsn;
-    private String fail_code;
-    private long fail_date;
-    private String fail_reason;
-    private String fail_step;
-    private String service_id;
+    /**
+     * 错单编码
+     */
+    private String failCode;
+    private long failDate;
+    private String failReason;
+    /**
+     * 错单处理断点
+     */
+    private String failStep;
+    /**
+     * 业务类型
+     */
+    private String serviceId;
     private String sn;
     private String tenant_id;
     private String source;
     private String account_period;
     private long arrival_time;
+    /**
+     * 错单记录
+     */
     private Map<String, String> fail_packet;
 
     public String getBsn() {
         return bsn;
     }
 
-    public String getFail_code() {
-        return fail_code;
+    public String getFailCode() {
+        return failCode;
     }
 
-    public long getFail_date() {
-        return fail_date;
+    public long getFailDate() {
+        return failDate;
     }
 
-    public String getFail_reason() {
-        return fail_reason;
+    public String getFailReason() {
+        return failReason;
     }
 
-    public String getFail_step() {
-        return fail_step;
+    public String getFailStep() {
+        return failStep;
     }
 
-    public String getService_id() {
-        return service_id;
+    public String getServiceId() {
+        return serviceId;
     }
 
     public String getSn() {
@@ -72,24 +84,24 @@ public class FailedBill implements Serializable {
         this.bsn = bsn;
     }
 
-    public void setFail_code(String fail_code) {
-        this.fail_code = fail_code;
+    public void setFailCode(String failCode) {
+        this.failCode = failCode;
     }
 
-    public void setFail_date(long fail_date) {
-        this.fail_date = fail_date;
+    public void setFailDate(long failDate) {
+        this.failDate = failDate;
     }
 
-    public void setFail_reason(String fail_reason) {
-        this.fail_reason = fail_reason;
+    public void setFailReason(String failReason) {
+        this.failReason = failReason;
     }
 
-    public void setFail_step(String fail_step) {
-        this.fail_step = fail_step;
+    public void setFailStep(String failStep) {
+        this.failStep = failStep;
     }
 
-    public void setService_id(String service_id) {
-        this.service_id = service_id;
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 
     public void setSn(String sn) {
