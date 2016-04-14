@@ -31,6 +31,7 @@ public class QueryProductSvTest {
 //		vo.setServiceType("1");
 		vo.setBillingType("PACKAGE");
 		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getProductInfo(vo);
+		System.out.println("-----param:"+JSON.toJSONString(vo));
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
 	}
 }

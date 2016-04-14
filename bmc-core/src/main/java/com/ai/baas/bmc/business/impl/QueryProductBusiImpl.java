@@ -57,8 +57,8 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 criteriaCpPriceInfo.andInactiveTimeEqualTo(vo.getInvalidDate());
 			 }	
 			 if (vo.getPageNo() != null && vo.getPageSize() != null) {
-				 cpPriceInfoCriteria.setLimitStart((vo.getPageNo() - 1) * vo.getPageSize());
-				 cpPriceInfoCriteria.setLimitEnd(vo.getPageSize());
+				 //cpPriceInfoCriteria.setLimitStart((vo.getPageNo() - 1) * vo.getPageSize());
+				 //cpPriceInfoCriteria.setLimitEnd(vo.getPageSize());
 		     }
 			 
 			 PageInfo<CpPriceInfo> pageInfo = new PageInfo<CpPriceInfo>();
@@ -111,65 +111,49 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 String detailCode = cpPriceDetailNew.getDetailCode();
 				 if(!StringUtil.isBlank(detailCode)){
 					 if(null != vo.getBillingType() && vo.getBillingType().equals("STEP")){
-						 productInfo.setBillingType("STEP");
-						 //阶梯组合
-						 CpStepInfoCriteria cpStepInfoCriteria = new CpStepInfoCriteria();
-						 CpStepInfoCriteria.Criteria criteriaCpStepInfo = cpStepInfoCriteria.createCriteria();
-						 
-						 criteriaCpStepInfo.andDetailCodeEqualTo(Long.valueOf(detailCode));
-						 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
-							 criteriaCpStepInfo.andTotalPriceValueNotBetween(vo.getPriceStart(), vo.getPriceEnd());
-						 }
-						 
-						 
-						 
-						 List<CpStepInfo> cpStepInfo =cpStepInfoMapper.selectByExample(cpStepInfoCriteria);
-						 for(CpStepInfo s : cpStepInfo){
-							 serv = new ServiceVO();
-							 serv.setAmountStart(s.getSectionA());
-							 serv.setAmountEnd(s.getSectionB());
-							 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()));
-							 serv.setServiceTypeDetail(s.getFactorCode().toString());
-							 serv.setUnit(s.getUnitType());
-							 serv.setServiceType(cpPriceDetailNew.getServiceType());
-							 
-							 usageList.add(serv);	        
-						 }
-						 
-					 }
-					 if(null != vo.getBillingType() && vo.getBillingType().equals("PACKAGE")){
-						 productInfo.setBillingType("PACKAGE");
-						 //标准组合
-						 CpPackageInfoCriteria cpPackageInfoCriteria =new CpPackageInfoCriteria();
-						 CpPackageInfoCriteria.Criteria criteriaCpPackageInfo = cpPackageInfoCriteria.createCriteria();
-						 
-						 criteriaCpPackageInfo.andDetailCodeEqualTo(detailCode);
-						 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
-							 criteriaCpPackageInfo.andTotalPriceValueBetween(vo.getPriceStart(), vo.getPriceEnd());
-						 }
-						 
-						 List<CpPackageInfo> packageInfo = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteria);
-						 System.out.println("packageInfoList.Size:"+packageInfo.size());
-						 for(CpPackageInfo p : packageInfo){
-							 serv = new ServiceVO();
-							 serv.setAmountStart(0);
-							 serv.setAmountEnd(p.getAmount());
-							 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()));
-							 serv.setServiceTypeDetail(p.getFactorCode());
-							 serv.setUnit(p.getUnitType());
-							 serv.setServiceType(cpPriceDetailNew.getServiceType());
-							 usageList.add(serv);
-						 }
+						 //stepInfo
+						 this.stepMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
+					 
+					 } else if(null != vo.getBillingType() && vo.getBillingType().equals("PACKAGE")){
+						//packageInfo
+						this.packageMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
+						
+					 }else if(null == vo.getBillingType()){
+						
+						this.stepMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
+						this.packageMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
+					 
 					 }
 				}
 						 
 				 productInfo.setUsageList(usageList);
 				 productInfoList.add(productInfo);
+				 //如果billingType 是 阶梯类型  只查阶梯类型不为空的数据
+				 if(null != vo.getBillingType() && vo.getBillingType().equals("STEP")){
+					 
+					 if(StringUtil.isBlank(productInfo.getBillingType()) || "PACKAGE".equals(productInfo.getBillingType())){
+						 productInfoList.remove(productInfo);
+					 }
+				 //如果billingType 是 基本类型 只查基本类型不为空的数据
+				 }else if(null != vo.getBillingType() && vo.getBillingType().equals("PACKAGE")){
+					 
+					 if(StringUtil.isBlank(productInfo.getBillingType()) || "STEP".equals(productInfo.getBillingType())){
+						 productInfoList.remove(productInfo);
+					 }
+				 }
+				
 			 }
-			 
+			 List<ProductInfo> productInfoListNew = new ArrayList<ProductInfo>();
 			 //
-			 productInfoPageInfo.setResult(productInfoList);
-	         productInfoPageInfo.setCount(pageInfo.getCount());
+			 int startRowIndex = 0;
+			 if(pageInfo.getStartRowIndex()>productInfoList.size()){
+				 productInfoListNew = new ArrayList<ProductInfo>();
+			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
+				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size());
+			 }
+			 //
+			 productInfoPageInfo.setResult(productInfoListNew);
+	         productInfoPageInfo.setCount(productInfoList.size());
 	         productInfoPageInfo.setPageNo(pageInfo.getPageNo());
 	         productInfoPageInfo.setPageSize(pageInfo.getPageSize());
 //			 ResponseHeader responseHeader = new ResponseHeader(true, ErrorCode.SUCCESS, "成功");
@@ -186,6 +170,61 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		return productInfoPageInfo;
 		
 	}
-
+	
+	private void stepMethod(String detailCode,ServiceVO serv,List<ServiceVO> usageList,ProductQueryVO vo,ProductInfo productInfo,CpPriceDetail cpPriceDetailNew){
+		//阶梯组合
+		 CpStepInfoCriteria cpStepInfoCriteria = new CpStepInfoCriteria();
+		 CpStepInfoCriteria.Criteria criteriaCpStepInfo = cpStepInfoCriteria.createCriteria();
+		 
+		 criteriaCpStepInfo.andDetailCodeEqualTo(Long.valueOf(detailCode));
+		 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
+			 criteriaCpStepInfo.andTotalPriceValueNotBetween(vo.getPriceStart(), vo.getPriceEnd());
+		 }
+		 
+		 
+		 
+		 List<CpStepInfo> cpStepInfo =cpStepInfoMapper.selectByExample(cpStepInfoCriteria);
+		 for(CpStepInfo s : cpStepInfo){
+			 serv = new ServiceVO();
+			 serv.setAmountStart(s.getSectionA());
+			 serv.setAmountEnd(s.getSectionB());
+			 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()));
+			 serv.setServiceTypeDetail(s.getFactorCode().toString());
+			 serv.setUnit(s.getUnitType());
+			 serv.setServiceType(cpPriceDetailNew.getServiceType());
+			 
+			 usageList.add(serv);	        
+		 }
+		 if(!CollectionUtil.isEmpty(cpStepInfo)){
+			 productInfo.setBillingType("STEP"); 
+		 }
+	}
+	
+	private void packageMethod(String detailCode,ServiceVO serv,List<ServiceVO> usageList,ProductQueryVO vo,ProductInfo productInfo,CpPriceDetail cpPriceDetailNew){
+		//标准组合
+		 CpPackageInfoCriteria cpPackageInfoCriteria =new CpPackageInfoCriteria();
+		 CpPackageInfoCriteria.Criteria criteriaCpPackageInfo = cpPackageInfoCriteria.createCriteria();
+		 
+		 criteriaCpPackageInfo.andDetailCodeEqualTo(detailCode);
+		 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
+			 criteriaCpPackageInfo.andTotalPriceValueBetween(vo.getPriceStart(), vo.getPriceEnd());
+		 }
+		 
+		 List<CpPackageInfo> packageInfo = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteria);
+		 System.out.println("packageInfoList.Size:"+packageInfo.size());
+		 for(CpPackageInfo p : packageInfo){
+			 serv = new ServiceVO();
+			 serv.setAmountStart(0);
+			 serv.setAmountEnd(p.getAmount());
+			 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()));
+			 serv.setServiceTypeDetail(p.getFactorCode());
+			 serv.setUnit(p.getUnitType());
+			 serv.setServiceType(cpPriceDetailNew.getServiceType());
+			 usageList.add(serv);
+		 }
+		 if(!CollectionUtil.isEmpty(packageInfo)){
+			 productInfo.setBillingType("PACKAGE"); 
+		 }
+	}
 
 }
