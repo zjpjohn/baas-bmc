@@ -37,4 +37,6 @@ dependencies {
             "org.springframework:spring-test:4.1.7.RELEASE",
             "junit:junit:4.12"
     )
+
+    compile 'com.ai:paas-mds-ex-auth:1.2.2-SNAPSHOT'
 }
