@@ -9,19 +9,9 @@ import com.ai.opt.base.vo.HBasePager;
 public class FailedBillCriteria extends BaseInfo {
     private HBasePager<FailedBill> pager;
 
-    private String tenantId;
-
     private String serviceType;
 
     private String errorCode;
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
 
     public String getServiceType() {
         return serviceType;

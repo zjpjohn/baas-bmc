@@ -9,7 +9,6 @@ import java.util.Map;
  * Created by xin on 16-4-12.
  */
 public class FailedBillParam extends BaseInfo {
-    private String tenantId;
     private String service_id;
     private String source;
     private String bsn;
@@ -22,7 +21,7 @@ public class FailedBillParam extends BaseInfo {
     private Map<String, String> fail_packet;
 
     public void validate() {
-        if (isBlank(tenantId)) {
+        if (isBlank(getTenantId())) {
             throw new BusinessException("400", "tenantId不能为空");
         }
         if (isBlank(service_id)) {
@@ -56,7 +55,7 @@ public class FailedBillParam extends BaseInfo {
 
 
     public String buildFailedBillRowKey() {
-        StringBuilder stringBuilder = new StringBuilder(tenantId + "\1");
+        StringBuilder stringBuilder = new StringBuilder(getTenantId() + "\1");
         stringBuilder.append(service_id + "\1");
         stringBuilder.append(source + "\1");
         stringBuilder.append(bsn + "\1");
@@ -64,16 +63,6 @@ public class FailedBillParam extends BaseInfo {
         stringBuilder.append(fail_step + "\1");
         stringBuilder.append(fail_date);
         return stringBuilder.toString();
-    }
-
-    @Override
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    @Override
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
     }
 
     public String getService_id() {
