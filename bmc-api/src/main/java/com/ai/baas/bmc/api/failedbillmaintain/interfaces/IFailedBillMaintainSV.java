@@ -1,12 +1,9 @@
 package com.ai.baas.bmc.api.failedbillmaintain.interfaces;
 
-import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBill;
-import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillCriteria;
-import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillParam;
+import com.ai.baas.bmc.api.failedbillmaintain.params.*;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
-import com.ai.opt.base.vo.HBasePager;
 
 import java.util.List;
 
@@ -26,7 +23,7 @@ public interface IFailedBillMaintainSV {
      * @ApiDocMethod
      * @ApiCode bmc-failedbill-00001
      */
-    HBasePager<FailedBill> queryFailedBills(FailedBillCriteria criteria);
+    FailedBillPagerResponse queryFailedBills(FailedBillCriteria criteria);
 
     /**
      * 查询单个错单
@@ -39,7 +36,7 @@ public interface IFailedBillMaintainSV {
      * @ApiDocMethod
      * @ApiCode bmc-failedbill-00002
      */
-    FailedBill queryFailedBillsById(FailedBillParam param);
+    FailedBillResponse queryFailedBillsById(FailedBillParam param);
 
 
     /**

@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by xin on 16-4-11.
  */
-public class FailedBill extends BaseResponse implements Serializable {
+public class FailedBill implements Serializable {
     private String bsn;
     /**
      * 错单编码
