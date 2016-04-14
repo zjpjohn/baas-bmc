@@ -24,7 +24,7 @@ public class ProductQueryVO extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空",groups={IQueryProductSV.GetProductInfo.class})
+	//@NotNull(message="消息流水号不能为空",groups={IQueryProductSV.GetProductInfo.class})
 	private String tradeSeq;
 	
 	/**
