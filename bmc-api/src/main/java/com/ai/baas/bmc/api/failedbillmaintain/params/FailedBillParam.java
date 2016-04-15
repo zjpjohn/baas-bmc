@@ -9,14 +9,41 @@ import java.util.Map;
  * Created by xin on 16-4-12.
  */
 public class FailedBillParam extends BaseInfo {
+    /**
+     * 业务类型（不能为空）
+     */
     private String serviceId;
+    /**
+     * 来源（不能为空）
+     */
     private String source;
+    /**
+     * 批次号（不能为空）
+     */
     private String bsn;
+    /**
+     * 错误编码（不能为空）
+     */
     private String failedCode;
+    /**
+     * 业务流水（不能为空）
+     */
     private String sn;
+    /**
+     * 错误步骤（不能为空）
+     */
     private String failStep;
+    /**
+     * 错误时间（不能为空）
+     */
     private String failDate;
+    /**
+     * 账期
+     */
     private String accountPeriod;
+    /**
+     * 到达时间
+     */
     private String arrivalTime;
 
     private Map<String, String> failPacket;
