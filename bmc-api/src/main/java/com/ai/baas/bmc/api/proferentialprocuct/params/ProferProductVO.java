@@ -53,7 +53,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 规则金额
 	 */
-	@NotBlank(message="优惠规则不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="优惠规则不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private double ruleAmount;
 	/**
 	 * 规则单位
@@ -63,7 +63,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 满减金额
 	 */
-	@NotBlank(message="满减金额不能为空",groups={IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="满减金额不能为空",groups={IProferProductManageSV.AddDiscontProduct.class})
 	private double reduceAmount;
 	
 	/**
