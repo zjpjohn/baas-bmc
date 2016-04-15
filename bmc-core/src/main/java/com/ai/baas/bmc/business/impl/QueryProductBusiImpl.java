@@ -84,7 +84,6 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 productInfo.setProductName(c.getPriceName());
 				 productInfo.setStatus(c.getActiveStatus());
 				 productInfo.setTenantId(c.getTenantId());
-				 
 				 //
 				 List<ServiceVO> usageList = new ArrayList<ServiceVO>();
 				 ServiceVO serv = null;
@@ -193,7 +192,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()));
 			 serv.setServiceTypeDetail(s.getFactorCode().toString());
 			 serv.setUnit(s.getUnitType());
-			 serv.setServiceType(cpPriceDetailNew.getServiceType());
+			 serv.setServiceType(s.getServiceType());
 			 
 			 usageList.add(serv);	        
 		 }
@@ -221,7 +220,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()));
 			 serv.setServiceTypeDetail(p.getFactorCode());
 			 serv.setUnit(p.getUnitType());
-			 serv.setServiceType(cpPriceDetailNew.getServiceType());
+			 serv.setServiceType(p.getServiceType());
 			 usageList.add(serv);
 		 }
 		 if(!CollectionUtil.isEmpty(packageInfo)){

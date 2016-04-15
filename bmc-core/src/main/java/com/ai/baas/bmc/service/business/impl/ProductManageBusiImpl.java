@@ -92,6 +92,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		
 		try {
 			this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
 			log.info("修改cpPriceInfo信息完毕！！！");
@@ -292,6 +293,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		
 		try {
 			this.cpPriceInfoAtom.addCpPriceInfo(cpPriceInfo);
 			log.info("添加cpPriceInfo信息完毕！！！");
