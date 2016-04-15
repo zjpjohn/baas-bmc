@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.api.proferentialprocuct.params;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 /**
@@ -9,7 +10,10 @@ import java.util.List;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
-public class FullPresent {
+public class FullPresent implements Serializable{
+
+	
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Id
