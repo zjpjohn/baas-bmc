@@ -120,7 +120,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		custobject.put("CUST_GRADE", custInfo.getCustGrade());
 		
 		blCustinfo.setCustType(custInfo.getCustType());
-		custobject.put("CUST-TYPE", custInfo.getCustType());
+		custobject.put("CUST_TYPE", custInfo.getCustType());
 		
 		blCustinfo.setRemark(custInfo.getRemark());
 		custobject.put("REMARK", custInfo.getRemark());
