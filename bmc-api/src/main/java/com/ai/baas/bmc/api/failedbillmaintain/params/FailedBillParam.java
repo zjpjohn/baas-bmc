@@ -9,14 +9,41 @@ import java.util.Map;
  * Created by xin on 16-4-12.
  */
 public class FailedBillParam extends BaseInfo {
+    /**
+     * 业务类型（不能为空）
+     */
     private String serviceId;
+    /**
+     * 来源（不能为空）
+     */
     private String source;
+    /**
+     * 批次号（不能为空）
+     */
     private String bsn;
-
+    /**
+     * 错误编码（不能为空）
+     */
+    private String failedCode;
+    /**
+     * 业务流水（不能为空）
+     */
     private String sn;
+    /**
+     * 错误步骤（不能为空）
+     */
     private String failStep;
+    /**
+     * 错误时间（不能为空）
+     */
     private String failDate;
+    /**
+     * 账期
+     */
     private String accountPeriod;
+    /**
+     * 到达时间
+     */
     private String arrivalTime;
 
     private Map<String, String> failPacket;
@@ -43,6 +70,9 @@ public class FailedBillParam extends BaseInfo {
         if (isBlank(failDate)) {
             throw new BusinessException("400", "fail_date不能为空");
         }
+        if (isBlank(failedCode)){
+            throw new BusinessException("400", "failedCode不能为空");
+        }
     }
 
     private boolean isBlank(String value){
@@ -60,6 +90,7 @@ public class FailedBillParam extends BaseInfo {
         stringBuilder.append(bsn + "\1");
         stringBuilder.append(sn + "\1");
         stringBuilder.append(failStep + "\1");
+        stringBuilder.append(failedCode + "\1");
         stringBuilder.append(failDate);
         return stringBuilder.toString();
     }
@@ -143,5 +174,21 @@ public class FailedBillParam extends BaseInfo {
 
     public void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
+    }
+
+    public String getFailedCode() {
+        return failedCode;
+    }
+
+    public void setFailedCode(String failedCode) {
+        this.failedCode = failedCode;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 }

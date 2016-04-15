@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 /**
- * 满减表的相关信息
+ * 满赠表的相关信息
  *
  * Date: 2016年4月6日 <br>
  * Copyright (c) 2016 asiainfo.com <br>
@@ -41,6 +41,11 @@ public class FullPresent implements Serializable{
 	 *参与赠品产品列表
 	 */
 	private List<Long> giftProList;
+	/**
+	 * 生效方式标记：
+	 */
+	private String activeTag;
+	
 	public String getGiftType() {
 		return giftType;
 	}
@@ -77,6 +82,12 @@ public class FullPresent implements Serializable{
 	}
 	public void setPresentId(Long presentId) {
 		this.presentId = presentId;
+	}
+	public String getActiveTag() {
+		return activeTag;
+	}
+	public void setActiveTag(String activeTag) {
+		this.activeTag = activeTag;
 	}
 	
 	
