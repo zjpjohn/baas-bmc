@@ -84,7 +84,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 已选择的产品列表,必填
 	 */
-	private List<Integer> productList;
+	private List<Long> productList;
 
 	/**
 	 * 操作员Id
@@ -166,13 +166,14 @@ public class ProferProductVO extends BaseInfo {
 	public void setTradeSeq(String tradeSeq) {
 		this.tradeSeq = tradeSeq;
 	}
-	public List<Integer> getProductList() {
+	
+	
+	public List<Long> getProductList() {
 		return productList;
 	}
-	public void setProductList(List<Integer> productList) {
+	public void setProductList(List<Long> productList) {
 		this.productList = productList;
 	}
-	
 	public String getOperatorId() {
 		return operatorId;
 	}

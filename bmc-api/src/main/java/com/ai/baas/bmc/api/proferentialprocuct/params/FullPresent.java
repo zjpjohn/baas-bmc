@@ -36,7 +36,7 @@ public class FullPresent {
 	/**
 	 *参与赠品产品列表
 	 */
-	private List<Integer> giftProList;
+	private List<Long> giftProList;
 	public String getGiftType() {
 		return giftType;
 	}
@@ -61,10 +61,11 @@ public class FullPresent {
 	public void setGiftInvalidDate(Timestamp giftInvalidDate) {
 		this.giftInvalidDate = giftInvalidDate;
 	}
-	public List<Integer> getGiftProList() {
+	
+	public List<Long> getGiftProList() {
 		return giftProList;
 	}
-	public void setGiftProList(List<Integer> giftProList) {
+	public void setGiftProList(List<Long> giftProList) {
 		this.giftProList = giftProList;
 	}
 	public Long getPresentId() {
