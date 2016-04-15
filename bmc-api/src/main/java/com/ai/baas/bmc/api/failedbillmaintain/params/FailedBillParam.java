@@ -12,7 +12,7 @@ public class FailedBillParam extends BaseInfo {
     private String serviceId;
     private String source;
     private String bsn;
-
+    private String failedCode;
     private String sn;
     private String failStep;
     private String failDate;
@@ -43,6 +43,9 @@ public class FailedBillParam extends BaseInfo {
         if (isBlank(failDate)) {
             throw new BusinessException("400", "fail_date不能为空");
         }
+        if (isBlank(failedCode)){
+            throw new BusinessException("400", "failedCode不能为空");
+        }
     }
 
     private boolean isBlank(String value){
@@ -60,6 +63,7 @@ public class FailedBillParam extends BaseInfo {
         stringBuilder.append(bsn + "\1");
         stringBuilder.append(sn + "\1");
         stringBuilder.append(failStep + "\1");
+        stringBuilder.append(failedCode + "\1");
         stringBuilder.append(failDate);
         return stringBuilder.toString();
     }
@@ -143,5 +147,21 @@ public class FailedBillParam extends BaseInfo {
 
     public void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
+    }
+
+    public String getFailedCode() {
+        return failedCode;
+    }
+
+    public void setFailedCode(String failedCode) {
+        this.failedCode = failedCode;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 }
