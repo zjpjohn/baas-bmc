@@ -86,8 +86,6 @@ public class ProductVO extends BaseInfo{
 	 */
 	@NotNull(message="产品总价",groups={IProductManageSV.AddProduct.class})
 	private BigDecimal totalPrice;
-	
-	
 	public String getBillingType() {
 		return billingType;
 	}
