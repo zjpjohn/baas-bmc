@@ -203,6 +203,15 @@ public class IProductManageSVImpl implements IProductManageSV {
 	public ProcductResponse updateProductStatus(ProductActiveVO vo)
 			throws BusinessException, SystemException {
 		ProcductResponse response = new ProcductResponse();
+		if(null == vo.getTenantId()){
+			throw new BusinessException("tenantId is not null","租户id不能为空");
+		}
+		if(null == vo.getProductId()){
+			throw new BusinessException("productId is not null","产品id不能为空");
+		}
+		if(null == vo.getStatus()){
+			throw new BusinessException("status is not null","状态不能为空");
+		}
 		
 		
 		try {

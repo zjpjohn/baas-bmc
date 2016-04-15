@@ -583,6 +583,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	@Override
 	public void updateProductStatus(ProductActiveVO vo) {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfo.setPriceCode(vo.getProductId());
 		cpPriceInfo.setActiveStatus(vo.getStatus());
 		//
