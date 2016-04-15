@@ -411,6 +411,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setServiceType(serviceVO.getServiceType());
 		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
 		
+		cpStepInfo.setFactorCode(new Long(serviceVO.getServiceTypeDetail()));
+		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
+		
 		this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 1);
 	}
@@ -451,6 +454,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		
 		cpPackageInfo.setUnitCode(serviceVO.getUnit());
 		packageobject.put("UNIT_CODE", serviceVO.getUnit());
+		
+		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
+		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
 		
 		this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 1);
