@@ -298,6 +298,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		if(vo.getInvalidDate().compareTo(DateUtil.getSysDate()) > 0){
 			cpPriceInfo.setActiveStatus("1");
 			priceinfobject.put("ACTIVE_STATUS", 1);
+		}else{
+			cpPriceInfo.setActiveStatus("0");
+			priceinfobject.put("ACTIVE_STATUS", 0);
 		}
 		
 		
