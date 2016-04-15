@@ -56,7 +56,13 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 }		
 			 if (null != vo.getInvalidDate()) {
 				 criteriaCpPriceInfo.andInactiveTimeEqualTo(vo.getInvalidDate());
-			 }	
+			 }
+			 if(null != vo.getProductId()){
+				 criteriaCpPriceInfo.andPriceCodeEqualTo(vo.getProductId());
+			 }
+			 if(null != vo.getProductName()){
+				 criteriaCpPriceInfo.andPriceNameLike("%"+vo.getProductName()+"%");
+			 }
 			 if (vo.getPageNo() != null && vo.getPageSize() != null) {
 				 //cpPriceInfoCriteria.setLimitStart((vo.getPageNo() - 1) * vo.getPageSize());
 				 //cpPriceInfoCriteria.setLimitEnd(vo.getPageSize());
