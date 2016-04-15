@@ -65,11 +65,13 @@ public class ProductQueryVO extends BaseInfo {
 	 /**
      * 当前第几页,必填
      */
+	@NotNull(message="页码不能为空",groups={IQueryProductSV.GetProductInfo.class})
     private Integer pageNo;
 
     /**
      * 每页数据条数,必填
      */
+	@NotNull(message="数据条数不能为空",groups={IQueryProductSV.GetProductInfo.class})
     private Integer pageSize;
 	
 	public String getProductId() {
