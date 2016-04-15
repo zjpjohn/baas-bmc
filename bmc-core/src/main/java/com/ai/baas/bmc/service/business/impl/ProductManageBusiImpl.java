@@ -92,6 +92,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		
 		try {
 			this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
 			log.info("修改cpPriceInfo信息完毕！！！");
@@ -292,6 +293,17 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		
+		//如果失效日期大于当前系统日期 那么为有效状态 1：有效 ；0：失效
+		if(vo.getInvalidDate().compareTo(DateUtil.getSysDate()) > 0){
+			cpPriceInfo.setActiveStatus("1");
+			priceinfobject.put("ACTIVE_STATUS", 1);
+		}else{
+			cpPriceInfo.setActiveStatus("0");
+			priceinfobject.put("ACTIVE_STATUS", 0);
+		}
+		
+		
 		try {
 			this.cpPriceInfoAtom.addCpPriceInfo(cpPriceInfo);
 			log.info("添加cpPriceInfo信息完毕！！！");
@@ -571,6 +583,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	@Override
 	public void updateProductStatus(ProductActiveVO vo) {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfo.setPriceCode(vo.getProductId());
 		cpPriceInfo.setActiveStatus(vo.getStatus());
 		//

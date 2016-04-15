@@ -28,7 +28,7 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 	@Override
 	public PageInfo<ProductInfo> getProductInfo(ProductQueryVO vo)
 			throws BusinessException, SystemException {
-		if (vo == null) {
+		if (null == vo) {
 			log.debug("addProduct() vo = [null]");
 			return null;
 		} else {

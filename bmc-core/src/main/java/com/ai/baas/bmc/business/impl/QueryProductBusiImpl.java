@@ -56,7 +56,13 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 }		
 			 if (null != vo.getInvalidDate()) {
 				 criteriaCpPriceInfo.andInactiveTimeEqualTo(vo.getInvalidDate());
-			 }	
+			 }
+			 if(null != vo.getProductId()){
+				 criteriaCpPriceInfo.andPriceCodeEqualTo(vo.getProductId());
+			 }
+			 if(null != vo.getProductName()){
+				 criteriaCpPriceInfo.andPriceNameLike("%"+vo.getProductName()+"%");
+			 }
 			 if (vo.getPageNo() != null && vo.getPageSize() != null) {
 				 //cpPriceInfoCriteria.setLimitStart((vo.getPageNo() - 1) * vo.getPageSize());
 				 //cpPriceInfoCriteria.setLimitEnd(vo.getPageSize());
@@ -192,7 +198,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()));
 			 serv.setServiceTypeDetail(s.getFactorCode().toString());
 			 serv.setUnit(s.getUnitType());
-			 serv.setServiceType(cpPriceDetailNew.getServiceType());
+			 serv.setServiceType(s.getServiceType());
 			 
 			 usageList.add(serv);	        
 		 }
@@ -220,7 +226,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()));
 			 serv.setServiceTypeDetail(p.getFactorCode());
 			 serv.setUnit(p.getUnitType());
-			 serv.setServiceType(cpPriceDetailNew.getServiceType());
+			 serv.setServiceType(p.getServiceType());
 			 usageList.add(serv);
 		 }
 		 if(!CollectionUtil.isEmpty(packageInfo)){

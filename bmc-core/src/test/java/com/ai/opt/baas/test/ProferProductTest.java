@@ -52,10 +52,10 @@ public class ProferProductTest {
 		FullPresent fp=new FullPresent();
 		fp.setGiftActiveDate(DateUtil.getSysDate());
 		fp.setGiftInvalidDate(DateUtil.getSysDate());
-		List<Integer> list1=new ArrayList<Integer>();
-		list1.add(1);
-		list1.add(2);
-		list1.add(3);
+		List<Long> list1=new ArrayList<Long>();
+		list1.add(1L);
+		list1.add(2L);
+		list1.add(3L);
 		fp.setGiftProList(list1);
 		fp.setGiftType("SERVICETYPE");
 		list.add(fp);
@@ -105,10 +105,10 @@ public class ProferProductTest {
 			List<FullPresent> list=new ArrayList<FullPresent>();
 			
 			
-			List<Integer> list1=new ArrayList<Integer>();
-			list1.add(1);
-			list1.add(2);
-			list1.add(3);
+			List<Long> list1=new ArrayList<Long>();
+			list1.add(1L);
+			list1.add(2L);
+			list1.add(3L);
 			
 			vo.setPresentList(list);
 			
@@ -138,10 +138,10 @@ public class ProferProductTest {
 		vo.setOperatorId("BYD001");
 	
 		//产品列表
-		List<Integer> list1=new ArrayList<Integer>();
-		list1.add(1);
-		list1.add(2);
-		list1.add(3);
+		List<Long> list1=new ArrayList<Long>();
+		list1.add(1L);
+		list1.add(2L);
+		list1.add(3L);
 		vo.setProductList(list1);
 		
 		
@@ -182,10 +182,10 @@ public class ProferProductTest {
 				FullPresent fp=new FullPresent();
 				fp.setGiftActiveDate(DateUtil.getSysDate());
 				fp.setGiftInvalidDate(DateUtil.getSysDate());
-				List<Integer> list1=new ArrayList<Integer>();
-				list1.add(4);
-				list1.add(5);
-				list1.add(6);
+				List<Long> list1=new ArrayList<Long>();
+				list1.add(4L);
+				list1.add(5L);
+				list1.add(6L);
 				fp.setGiftProList(list1);
 				fp.setGiftType("SERVICETYPE");
 				list.add(fp);
@@ -233,10 +233,10 @@ public class ProferProductTest {
 				vo.setPriceCode("0000000202");
 			
 				
-				List<Integer> list1=new ArrayList<Integer>();
-				list1.add(4);
-				list1.add(5);
-				list1.add(6);
+				List<Long> list1=new ArrayList<Long>();
+				list1.add(4L);
+				list1.add(5L);
+				list1.add(6L);
 			
 		
 				vo.setProductList(list1);

@@ -82,7 +82,6 @@
     <if test="distinct" >
       distinct
     </if>
-    'false' as QUERYID,
     <include refid="Base_Column_List" />
     from cp_price_info
     <if test="_parameter != null" >

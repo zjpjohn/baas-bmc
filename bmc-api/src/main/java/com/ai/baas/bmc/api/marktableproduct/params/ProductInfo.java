@@ -63,6 +63,7 @@ public class ProductInfo extends BaseResponse{
 	 * 总价
 	 */
 	private BigDecimal totalPrice;
+	
 	public String getProductName() {
 		return productName;
 	}

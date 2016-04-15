@@ -120,7 +120,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		custobject.put("CUST_GRADE", custInfo.getCustGrade());
 		
 		blCustinfo.setCustType(custInfo.getCustType());
-		custobject.put("CUST-TYPE", custInfo.getCustType());
+		custobject.put("CUST_TYPE", custInfo.getCustType());
 		
 		blCustinfo.setRemark(custInfo.getRemark());
 		custobject.put("REMARK", custInfo.getRemark());
@@ -138,6 +138,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		Map<String, String> params = new TreeMap<String, String>();
         params.put("EXT_CUST_ID", custInfo.getExtCustId());
         params.put("TENANT_ID", custInfo.getTenantId());
+        
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
                 .executeQuery(DshmUtil.getCacheClient());
         //获得缓存中第一条有效数据
@@ -145,7 +146,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
         if(!(result==null||result.isEmpty())){
             for(Map<String, String> r : result){
                 if(!r.isEmpty()){
-                    custId = r.get("cust_id");
+                    custId = r.get("CUST_ID");
                     blCustinfo.setCustId(custId);
                     custobject.put("CUST_ID", custId);
                     bool = false;
@@ -177,7 +178,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		aBlCustinfoMapper.insert(blCustinfo);
 		
 //		DshmUtil.getIdshmSV().initdel("bl_custinfo", custobject.toString());
-        DshmUtil.getIdshmSV().initLoader("bl_custinfo", custobject.toString(),1);
+        DshmUtil.getIdshmSV().initLoader("bl_custinfo", custobject.toString(),0);
 		
 	}
 	private void writeBlCustinfoExt(String custId, ExtInfo extInfo) {

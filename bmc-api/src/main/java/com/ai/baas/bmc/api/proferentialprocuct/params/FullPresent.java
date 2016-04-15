@@ -1,15 +1,19 @@
 package com.ai.baas.bmc.api.proferentialprocuct.params;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 /**
- * 满减表的相关信息
+ * 满赠表的相关信息
  *
  * Date: 2016年4月6日 <br>
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
-public class FullPresent {
+public class FullPresent implements Serializable{
+
+	
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Id
@@ -36,7 +40,12 @@ public class FullPresent {
 	/**
 	 *参与赠品产品列表
 	 */
-	private List<Integer> giftProList;
+	private List<Long> giftProList;
+	/**
+	 * 生效方式标记：
+	 */
+	private String activeTag;
+	
 	public String getGiftType() {
 		return giftType;
 	}
@@ -61,10 +70,11 @@ public class FullPresent {
 	public void setGiftInvalidDate(Timestamp giftInvalidDate) {
 		this.giftInvalidDate = giftInvalidDate;
 	}
-	public List<Integer> getGiftProList() {
+	
+	public List<Long> getGiftProList() {
 		return giftProList;
 	}
-	public void setGiftProList(List<Integer> giftProList) {
+	public void setGiftProList(List<Long> giftProList) {
 		this.giftProList = giftProList;
 	}
 	public Long getPresentId() {
@@ -72,6 +82,12 @@ public class FullPresent {
 	}
 	public void setPresentId(Long presentId) {
 		this.presentId = presentId;
+	}
+	public String getActiveTag() {
+		return activeTag;
+	}
+	public void setActiveTag(String activeTag) {
+		this.activeTag = activeTag;
 	}
 	
 	
