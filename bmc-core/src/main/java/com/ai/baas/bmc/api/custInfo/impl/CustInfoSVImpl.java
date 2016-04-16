@@ -131,6 +131,7 @@ public class CustInfoSVImpl implements ICustInfoSV {
             
 		
         try {
+        	log.info("--------------------start custInfo operation");
             iCustinfoBusiness.writeData(custInfo);
         	
         } catch (BusinessException e){

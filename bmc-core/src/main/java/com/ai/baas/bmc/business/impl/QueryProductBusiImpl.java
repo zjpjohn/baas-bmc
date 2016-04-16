@@ -57,10 +57,10 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 if (null != vo.getInvalidDate()) {
 				 criteriaCpPriceInfo.andInactiveTimeEqualTo(vo.getInvalidDate());
 			 }
-			 if(null != vo.getProductId()){
+			 if(StringUtil.isBlank(vo.getProductId())){
 				 criteriaCpPriceInfo.andPriceCodeEqualTo(vo.getProductId());
 			 }
-			 if(null != vo.getProductName()){
+			 if(StringUtil.isBlank(vo.getProductName())){
 				 criteriaCpPriceInfo.andPriceNameLike("%"+vo.getProductName()+"%");
 			 }
 			 if (vo.getPageNo() != null && vo.getPageSize() != null) {

@@ -1,10 +1,13 @@
 package com.ai.baas.bmc.business.impl;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.client.Table;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +33,11 @@ import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil.CellTemp;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.runner.base.exception.CallerException;
+import com.alibaba.fastjson.JSON;
 
 import net.sf.json.JSONObject;
 
@@ -48,7 +53,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	private BlCustinfoMapper aBlCustinfoMapper;
 	@Autowired
 	private ISysSequenceSvc aISysSequenceSvc;
-
+	private static final Log log = LogFactory.getLog(ICustinfoBusinessImpl.class);
 	@Override
 	public boolean hasSeq(CustInfoParams custInfo) throws IOException {
 		 String rowkey = custInfo.getTenantId() + Context.SPLIT + Context.CUST_INFO_CODE
@@ -75,7 +80,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	public void writeData(CustInfoParams custInfo) {
 		JSONObject custobject = new JSONObject();
 		BlCustinfo blCustinfo = new BlCustinfo();
-		System.err.println("*******************************");
+		log.info("*******************************");
 		if (!StringUtil.isBlank(custInfo.getState())) {
 			if (custInfo.getState().length() <= 4) {
 				blCustinfo.setState(custInfo.getState());
@@ -141,12 +146,13 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
         
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
                 .executeQuery(DshmUtil.getCacheClient());
+        log.info("dshm custInfo---->>>:"+JSON.toJSONString(result));
         //获得缓存中第一条有效数据
         boolean bool = true;
         if(!(result==null||result.isEmpty())){
             for(Map<String, String> r : result){
                 if(!r.isEmpty()){
-                    custId = r.get("CUST_ID");
+                    custId = r.get("cust_id");
                     blCustinfo.setCustId(custId);
                     custobject.put("CUST_ID", custId);
                     bool = false;
@@ -174,11 +180,37 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		    .andTenantIdEqualTo(custInfo.getTenantId())
 		    .andCustIdEqualTo(custId);
 		
-		aBlCustinfoMapper.deleteByExample(blCustinfoCriteria);
-		aBlCustinfoMapper.insert(blCustinfo);
-		
-//		DshmUtil.getIdshmSV().initdel("bl_custinfo", custobject.toString());
-        DshmUtil.getIdshmSV().initLoader("bl_custinfo", custobject.toString(),0);
+		List<BlCustinfo> blCustInfoList = aBlCustinfoMapper.selectByExample(blCustinfoCriteria);
+		//如果信息不存在 就添加信息
+		if(CollectionUtil.isEmpty(blCustInfoList)){
+			aBlCustinfoMapper.insert(blCustinfo);
+			DshmUtil.getIdshmSV().initLoader("bl_custinfo", JSON.toJSONString(custobject),1);
+		}else{
+			//如果信息存在就修改信息
+			BlCustinfo blCustInfoUpdate = new BlCustinfo();
+			blCustInfoUpdate.setCityCode(custInfo.getCityCode());
+			blCustInfoUpdate.setContactNo(custInfo.getContactNo());
+			blCustInfoUpdate.setCustAddress(custInfo.getCustAddress());
+			blCustInfoUpdate.setCustGrade(custInfo.getCustGrade());
+			blCustInfoUpdate.setCustName(custInfo.getCustName());
+			blCustInfoUpdate.setCustType(custInfo.getCustType());
+			blCustInfoUpdate.setEmail(custInfo.getEmail());
+			blCustInfoUpdate.setExtCustId(custInfo.getExtCustId());
+			blCustInfoUpdate.setProvinceCode(custInfo.getProvinceCode());
+			blCustInfoUpdate.setRemark(custInfo.getRemark());
+			blCustInfoUpdate.setState(custInfo.getState());
+			blCustInfoUpdate.setStateChgTime(Timestamp.valueOf(custInfo.getStateChgTime()));
+			blCustInfoUpdate.setTenantId(custInfo.getTenantId());
+			//
+			BlCustinfoCriteria blCustinfoCriteriaUpdate = new BlCustinfoCriteria();
+			blCustinfoCriteriaUpdate.createCriteria()
+			    .andTenantIdEqualTo(custInfo.getTenantId())
+			    .andCustIdEqualTo(custId);
+			
+			aBlCustinfoMapper.updateByExampleSelective(blCustInfoUpdate, blCustinfoCriteriaUpdate);
+			//
+			DshmUtil.getIdshmSV().initLoader("bl_custinfo", JSON.toJSONString(custobject),0);
+		}
 		
 	}
 	private void writeBlCustinfoExt(String custId, ExtInfo extInfo) {
@@ -214,7 +246,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
 	            	
 //	                DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
-	                DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),0);
+	                DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),1);
 	             
 	            } catch (NullPointerException e) {
 	                throw new BusinessException(ErrorCode.NULL, "用户扩展信息不在表中，无法更新");
