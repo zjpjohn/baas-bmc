@@ -256,7 +256,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
             if(CollectionUtil.isEmpty(blCustinfoExtList)){
             	try{
             	blCustinfoExtMapper.insert(blCustinfoExt);
-            	DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(blCustinfoExtMapper.selectByExample(example).get(0)),1);
+            	DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", MyJsonUtil.toJson(blCustinfoExtMapper.selectByExample(example).get(0)),1);
             	}catch(Exception e){
             		e.printStackTrace();
             	}
@@ -275,7 +275,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            	blCustinfoExtMapper.updateByExampleSelective(blCustinfoExt, example);
 	            	List<BlCustinfoExt> blCustinfoExtList = blCustinfoExtMapper.selectByExample(example);
 	            	if(!CollectionUtil.isEmpty(blCustinfoExtList)){
-	            		DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(blCustinfoExtList.get(0)),0);
+	            		DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", MyJsonUtil.toJson(blCustinfoExtList.get(0)),0);
 	            	}
 	             
 	            } catch (NullPointerException e) {
@@ -293,7 +293,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            	List<BlCustinfoExt> blCustInfoExtList = blCustinfoExtMapper.selectByExample(example);
 	            	if(!CollectionUtil.isEmpty(blCustInfoExtList)){
 	            		blCustinfoExtMapper.deleteByExample(example);
-	            		DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(blCustInfoExtList.get(0)));
+	            		DshmUtil.getIdshmSV().initdel("bl_custinfo_ext", MyJsonUtil.toJson(blCustInfoExtList.get(0)));
 	            	}
 	            	
 	            	
