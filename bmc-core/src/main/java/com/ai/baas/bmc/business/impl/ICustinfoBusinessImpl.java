@@ -259,7 +259,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
             	//
             	BlCustinfoExt blCustInfoExtNew = blCustinfoExtMapper.selectByExample(example).get(0);
             	log.info("------ insert ext info---->>>:"+MyJsonUtil.toJson(blCustInfoExtNew));
-            	DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", MyJsonUtil.toJson(blCustInfoExtNew),1);
+            	DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", JSON.toJSONString(blCustInfoExtNew),1);
             	}catch(Exception e){
             		e.printStackTrace();
             	}
