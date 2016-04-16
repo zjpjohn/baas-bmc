@@ -65,8 +65,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	@Autowired
 	private ICpStepInfoAtom cpStepInfoAtom;
 
-	public static final String CHARGE_TYPE_STEP = "STEP";
-	public static final String CHARGE_TYPE_PACKAGE = "PACKAGE";
+	public static final String CHARGE_TYPE_STEP = "step_group_type";
+	public static final String CHARGE_TYPE_PACKAGE = "standard_group_type";
 	/**
 	 * 修改产品信息
 	 */
