@@ -235,7 +235,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	}
 	private void writeBlCustinfoExt(String custId, ExtInfo extInfo) {
 		BlCustinfoExt blCustinfoExt = new BlCustinfoExt();
-//		JSONObject extobject = new JSONObject();
+		JSONObject extobject = new JSONObject();
 		
 		if (extInfo.getUpdateFlag().equals("N")){
 			blCustinfoExt.setExtName(extInfo.getExtName());
@@ -258,8 +258,12 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
             	blCustinfoExtMapper.insert(blCustinfoExt);
             	//
             	BlCustinfoExt blCustInfoExtNew = blCustinfoExtMapper.selectByExample(example).get(0);
+            	extobject.put("EXT_ID", blCustInfoExtNew.getExtId());
+            	extobject.put("EXT_NAME", blCustInfoExtNew.getExtName());
+            	extobject.put("EXT_VALUE", blCustInfoExtNew.getExtValue());
+            	extobject.put("CUST_ID", blCustInfoExtNew.getCustId());
             	log.info("------ insert ext info---->>>:"+MyJsonUtil.toJson(blCustInfoExtNew));
-            	DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", JSON.toJSONString(blCustInfoExtNew),1);
+            	DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", JSON.toJSONString(extobject),1);
             	}catch(Exception e){
             		e.printStackTrace();
             	}
@@ -278,7 +282,13 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            	blCustinfoExtMapper.updateByExampleSelective(blCustinfoExt, example);
 	            	List<BlCustinfoExt> blCustinfoExtList = blCustinfoExtMapper.selectByExample(example);
 	            	if(!CollectionUtil.isEmpty(blCustinfoExtList)){
-	            		DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", MyJsonUtil.toJson(blCustinfoExtList.get(0)),0);
+	            		BlCustinfoExt blCustInfoExtNew = blCustinfoExtList.get(0);
+	            		extobject.put("EXT_ID", blCustInfoExtNew.getExtId());
+	                	extobject.put("EXT_NAME", blCustInfoExtNew.getExtName());
+	                	extobject.put("EXT_VALUE", blCustInfoExtNew.getExtValue());
+	                	extobject.put("CUST_ID", blCustInfoExtNew.getCustId());
+	                	
+	            		DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", JSON.toJSONString(extobject),0);
 	            	}
 	             
 	            } catch (NullPointerException e) {
@@ -294,9 +304,16 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	            
 	            try {
 	            	List<BlCustinfoExt> blCustInfoExtList = blCustinfoExtMapper.selectByExample(example);
+	            	
 	            	if(!CollectionUtil.isEmpty(blCustInfoExtList)){
+	            		BlCustinfoExt blCustInfoExtNew = blCustInfoExtList.get(0);
+	            		extobject.put("EXT_ID", blCustInfoExtNew.getExtId());
+	                	extobject.put("EXT_NAME", blCustInfoExtNew.getExtName());
+	                	extobject.put("EXT_VALUE", blCustInfoExtNew.getExtValue());
+	                	extobject.put("CUST_ID", blCustInfoExtNew.getCustId());
+	                	//
 	            		blCustinfoExtMapper.deleteByExample(example);
-	            		DshmUtil.getIdshmSV().initdel("bl_custinfo_ext", MyJsonUtil.toJson(blCustInfoExtList.get(0)));
+	            		DshmUtil.getIdshmSV().initdel("bl_custinfo_ext", JSON.toJSONString(extobject));
 	            	}
 	            	
 	            	
