@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.api.marktableproduct.params;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -9,8 +10,12 @@ import java.math.BigDecimal;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
-public class ServiceVO {
+public class ServiceVO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 业务类型
 	 */
