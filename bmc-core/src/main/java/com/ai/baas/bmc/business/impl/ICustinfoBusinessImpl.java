@@ -210,6 +210,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 			aBlCustinfoMapper.updateByExampleSelective(blCustInfoUpdate, blCustinfoCriteriaUpdate);
 			//
 			DshmUtil.getIdshmSV().initLoader("bl_custinfo", JSON.toJSONString(custobject),0);
+			log.info("------------update custInfo:修改客户信息完毕！");
 		}
 		
 	}
