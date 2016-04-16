@@ -2,6 +2,9 @@ package com.ai.baas.bmc.business.impl;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -170,6 +173,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 //        blCustinfo.setCustId(custId);
 		if (custInfo.getExtInfoList() != null) {
 			for (ExtInfo e : custInfo.getExtInfoList()) {
+				log.info("extinfo.extValue--->>>:"+e.getExtValue());
 				writeBlCustinfoExt(custId,e);
 
 			}
@@ -183,34 +187,49 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		List<BlCustinfo> blCustInfoList = aBlCustinfoMapper.selectByExample(blCustinfoCriteria);
 		//如果信息不存在 就添加信息
 		if(CollectionUtil.isEmpty(blCustInfoList)){
+			log.info("---------------custInfo not exist------------------");
 			aBlCustinfoMapper.insert(blCustinfo);
 			DshmUtil.getIdshmSV().initLoader("bl_custinfo", JSON.toJSONString(custobject),1);
 		}else{
-			//如果信息存在就修改信息
-			BlCustinfo blCustInfoUpdate = new BlCustinfo();
-			blCustInfoUpdate.setCityCode(custInfo.getCityCode());
-			blCustInfoUpdate.setContactNo(custInfo.getContactNo());
-			blCustInfoUpdate.setCustAddress(custInfo.getCustAddress());
-			blCustInfoUpdate.setCustGrade(custInfo.getCustGrade());
-			blCustInfoUpdate.setCustName(custInfo.getCustName());
-			blCustInfoUpdate.setCustType(custInfo.getCustType());
-			blCustInfoUpdate.setEmail(custInfo.getEmail());
-			blCustInfoUpdate.setExtCustId(custInfo.getExtCustId());
-			blCustInfoUpdate.setProvinceCode(custInfo.getProvinceCode());
-			blCustInfoUpdate.setRemark(custInfo.getRemark());
-			blCustInfoUpdate.setState(custInfo.getState());
-			blCustInfoUpdate.setStateChgTime(Timestamp.valueOf(custInfo.getStateChgTime()));
-			blCustInfoUpdate.setTenantId(custInfo.getTenantId());
-			//
-			BlCustinfoCriteria blCustinfoCriteriaUpdate = new BlCustinfoCriteria();
-			blCustinfoCriteriaUpdate.createCriteria()
-			    .andTenantIdEqualTo(custInfo.getTenantId())
-			    .andCustIdEqualTo(custId);
-			
-			aBlCustinfoMapper.updateByExampleSelective(blCustInfoUpdate, blCustinfoCriteriaUpdate);
-			//
-			DshmUtil.getIdshmSV().initLoader("bl_custinfo", JSON.toJSONString(custobject),0);
-			log.info("------------update custInfo:修改客户信息完毕！");
+			try{
+				log.info("---------------custInfo exist------------------");
+				//如果信息存在就修改信息
+				BlCustinfo blCustInfoUpdate = new BlCustinfo();
+				blCustInfoUpdate.setCityCode(custInfo.getCityCode());
+				blCustInfoUpdate.setContactNo(custInfo.getContactNo());
+				blCustInfoUpdate.setCustAddress(custInfo.getCustAddress());
+				blCustInfoUpdate.setCustGrade(custInfo.getCustGrade());
+				blCustInfoUpdate.setCustName(custInfo.getCustName());
+				blCustInfoUpdate.setCustType(custInfo.getCustType());
+				blCustInfoUpdate.setEmail(custInfo.getEmail());
+				blCustInfoUpdate.setExtCustId(custInfo.getExtCustId());
+				blCustInfoUpdate.setProvinceCode(custInfo.getProvinceCode());
+				blCustInfoUpdate.setRemark(custInfo.getRemark());
+				blCustInfoUpdate.setState(custInfo.getState());
+				//
+//				SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			    Date date = df1.parse(custInfo.getStateChgTime());
+//			    String time = df1.format(date);
+//			    Timestamp ts = Timestamp.valueOf(time);
+//				log.info("-----timestamp:"+ts);
+				
+				blCustInfoUpdate.setStateChgTime(DateUtil.getSysDate());//(DateUtil.getSysDate());
+				
+				blCustInfoUpdate.setTenantId(custInfo.getTenantId());
+				//
+				BlCustinfoCriteria blCustinfoCriteriaUpdate = new BlCustinfoCriteria();
+				blCustinfoCriteriaUpdate.createCriteria()
+				    .andTenantIdEqualTo(custInfo.getTenantId())
+				    .andCustIdEqualTo(custId);
+				
+				aBlCustinfoMapper.updateByExampleSelective(blCustInfoUpdate, blCustinfoCriteriaUpdate);
+				//
+				DshmUtil.getIdshmSV().initLoader("bl_custinfo", JSON.toJSONString(custobject),0);
+				log.info("------------update custInfo:修改客户信息完毕！");
+			}catch(Exception e){
+				log.info("------------update custInfo exception-------------------");
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -228,43 +247,56 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 			blCustinfoExt.setCustId(custId);
 //			extobject.put("CUST_ID", custId);
 			
-			blCustinfoExtMapper.insert(blCustinfoExt);
-			 BlCustinfoExtCriteria example = new BlCustinfoExtCriteria();
-	            example.createCriteria().andExtNameEqualTo(extInfo.getExtName())
-	            .andCustIdEqualTo(custId);
+			
+			BlCustinfoExtCriteria example = new BlCustinfoExtCriteria();
+            example.createCriteria().andExtNameEqualTo(extInfo.getExtName())
+            .andCustIdEqualTo(custId);
+            
+            List<BlCustinfoExt> blCustinfoExtList = blCustinfoExtMapper.selectByExample(example);
+            if(CollectionUtil.isEmpty(blCustinfoExtList)){
+            	try{
+            	blCustinfoExtMapper.insert(blCustinfoExt);
+            	DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(blCustinfoExtMapper.selectByExample(example).get(0)),1);
+            	}catch(Exception e){
+            		e.printStackTrace();
+            	}
+            }
 	            
-	            BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
-	            DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),1);
 
 		}else if(extInfo.getUpdateFlag().equals("U")){
 			 blCustinfoExt.setExtValue(extInfo.getExtValue());
+			 
 			 BlCustinfoExtCriteria example = new BlCustinfoExtCriteria();
-	            example.createCriteria().andCustIdEqualTo(custId)
-	                    .andExtNameEqualTo(extInfo.getExtName());
+	            example.createCriteria()
+	            .andCustIdEqualTo(custId)
+	            .andExtNameEqualTo(extInfo.getExtName());
 	            try {
 	            	
 	            	blCustinfoExtMapper.updateByExampleSelective(blCustinfoExt, example);
-	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
-	            	
-//	                DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
-	                DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),1);
+	            	List<BlCustinfoExt> blCustinfoExtList = blCustinfoExtMapper.selectByExample(example);
+	            	if(!CollectionUtil.isEmpty(blCustinfoExtList)){
+	            		DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(blCustinfoExtList.get(0)),0);
+	            	}
 	             
 	            } catch (NullPointerException e) {
 	                throw new BusinessException(ErrorCode.NULL, "用户扩展信息不在表中，无法更新");
 	            }
 			
-			
-//			DshmUtil.getIdshmSV().initDel("bl_custinfo_ext", extobject.toString());
-			
 		}else if(extInfo.getUpdateFlag().equals("D")){
-//			 blCustinfoExt.setExtValue(extInfo.getExtValue());
 			 BlCustinfoExtCriteria example = new BlCustinfoExtCriteria();
-	            example.createCriteria().andCustIdEqualTo(custId).andExtValueEqualTo(extInfo.getExtValue())
-	                    .andExtNameEqualTo(extInfo.getExtName());
+	            example.createCriteria()
+	            .andCustIdEqualTo(custId)
+	            .andExtNameEqualTo(extInfo.getExtName());
+	            //.andExtValueEqualTo(extInfo.getExtValue())
+	            
 	            try {
-	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
-	            	blCustinfoExtMapper.deleteByExample(example);
-	            	DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
+	            	List<BlCustinfoExt> blCustInfoExtList = blCustinfoExtMapper.selectByExample(example);
+	            	if(!CollectionUtil.isEmpty(blCustInfoExtList)){
+	            		blCustinfoExtMapper.deleteByExample(example);
+	            		DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(blCustInfoExtList.get(0)));
+	            	}
+	            	
+	            	
 	            } catch (NullPointerException e) {
 	                throw new BusinessException(ErrorCode.NULL, "用户扩展信息不在表中，无法删除");
 	            }
