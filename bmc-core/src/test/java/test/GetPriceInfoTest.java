@@ -26,9 +26,9 @@ public class GetPriceInfoTest {
     
     @Test
     public void test(){
-        PageInfo<StandardList> resultPage=new PageInfo<StandardList>();; 
+        PageInfo<StandardList> resultPage=new PageInfo<StandardList>();
         QueryInfoParams queryInfoParams = new QueryInfoParams();
-        queryInfoParams.setTenantId("test");
+        queryInfoParams.setTenantId("test22222");
         queryInfoParams.setTradeSeq("123456693");
         queryInfoParams.setStandardId("3");
         queryInfoParams.setPriceName("");

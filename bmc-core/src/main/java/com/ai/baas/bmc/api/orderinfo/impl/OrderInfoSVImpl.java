@@ -74,16 +74,16 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         LoggerUtil.log.debug("校验成功！");
         
         // 幂等性判断（判重）
-//        try {
-//            if (business.hasSeq(record)) {
-//                resultCode.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
-//                return resultCode;
-//            }
-//        } catch (IOException e) {
-//            LoggerUtil.log.error(e);
-//            resultCode.setResponseHeader(new ResponseHeader(false, "000001", "幂等性判断失败"));
-//            return resultCode;
-//        }
+        try {
+            if (business.hasSeq(record)) {
+                resultCode.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
+                return resultCode;
+            }
+        } catch (IOException e) {
+            LoggerUtil.log.error(e);
+            resultCode.setResponseHeader(new ResponseHeader(false, "000001", "幂等性判断失败"));
+            return resultCode;
+        }
         
         
         // 写入MySQL表中
@@ -96,7 +96,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         // catch (Exception e1) {
         // return "请联系管理员";
         // }
-        resultCode.setResponseHeader(new ResponseHeader(false, "000000", "成功"));
+        resultCode.setResponseHeader(new ResponseHeader(true, "000000", "成功"));
         return resultCode;
     }
 

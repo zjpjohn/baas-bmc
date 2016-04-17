@@ -1,11 +1,16 @@
 package com.ai.baas.bmc.business.impl;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.zookeeper.KeeperException.SystemErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +43,7 @@ import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil.CellTemp;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.fastjson.JSON;
@@ -138,20 +144,47 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
     private BlUserinfo writeBlUserinfo(OrderInfoParams orderInfoParams, String custId, String subsId, String acctId) {
         // 设置插入用户表模板
         BlUserinfo aBluserinfo = new BlUserinfo();
+        // 刷新用户的内存表
+        JSONObject json = new JSONObject();
+        
         aBluserinfo.setCustId(custId);
         aBluserinfo.setTenantId(orderInfoParams.getTenantId());
-        aBluserinfo.setActiveTime(
-                DateUtil.getTimestamp(orderInfoParams.getActiveTime(), DateUtil.YYYYMMDDHHMMSS));
+        
+        Date dDate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        try{
+            dDate = sdf.parse(orderInfoParams.getActiveTime());
+            Timestamp actTime = new Timestamp(dDate.getTime());
+            System.out.println("actTime = [" + actTime + "]");
+            aBluserinfo.setActiveTime(actTime);
+            
+            dDate = sdf.parse(orderInfoParams.getInactiveTime());
+            Timestamp inactTime = new Timestamp(dDate.getTime());
+            System.out.println("inactTime = [" + inactTime + "]");
+            aBluserinfo.setInactiveTime(inactTime);
+            
+            dDate = sdf.parse(orderInfoParams.getOrderTime());
+            Timestamp dealTime = new Timestamp(dDate.getTime());
+            System.out.println("dealTime = [" + dealTime + "]");
+            aBluserinfo.setDealTime(dealTime);
+            
+            json.put("active_time", actTime.toString());
+            json.put("deal_time", dealTime.toString());
+            json.put("inactive_time", inactTime.toString());
+        }catch (ParseException e){
+            throw new SystemException("时间格式转换异常");
+        }
+
+        //aBluserinfo.setActiveTime(DateUtil.getTimestamp(orderInfoParams.getActiveTime(), DateUtil.YYYYMMDDHHMMSS));
         aBluserinfo.setServiceId(orderInfoParams.getServiceId());
         // 受理时间设为订购时间
-        aBluserinfo
-                .setDealTime(DateUtil.getTimestamp(orderInfoParams.getOrderTime(), DateUtil.YYYYMMDDHHMMSS));
+        //aBluserinfo.setDealTime(DateUtil.getTimestamp(orderInfoParams.getOrderTime(), DateUtil.YYYYMMDDHHMMSS));
+       
         aBluserinfo.setProvinceCode(orderInfoParams.getProvinceCode());
         aBluserinfo.setCityCode(orderInfoParams.getCityCode());
         aBluserinfo.setChlId(orderInfoParams.getChlId());
         aBluserinfo.setDevId(orderInfoParams.getDevId());
-        aBluserinfo.setInactiveTime(
-                DateUtil.getTimestamp(orderInfoParams.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS));
+        //aBluserinfo.setInactiveTime( DateUtil.getTimestamp(orderInfoParams.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS));
         aBluserinfo.setRemark(orderInfoParams.getRemark());
         aBluserinfo.setUserType(orderInfoParams.getUsetype());
         aBluserinfo.setUserState(orderInfoParams.getState());
@@ -173,20 +206,24 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             aBluserinfo.setAcctId(acctId);
             aBlUserinfoMapper.updateByPrimaryKeySelective(aBluserinfo);
         }
-        // 刷新用户的内存表
-        JSONObject json = new JSONObject();
+   
+//        Date dDate = null;
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//
+//        dDate = sdf.parse(aBluserinfo.getActiveTime());
+//        Timestamp st = new Timestamp(dDate.getTime());
+//        System.out.println("st = [" + st + "]");
+//        json.put("active_time", st.toString().substring(0,19));
+
         json.put("tenant_id", aBluserinfo.getTenantId());
-        json.put("subs_id", aBluserinfo.getSubsId());
-        json.put("active_time", aBluserinfo.getActiveTime().toString());
+        json.put("subs_id", aBluserinfo.getSubsId());       
         json.put("cust_id", aBluserinfo.getCustId());
         json.put("acct_id", aBluserinfo.getAcctId());
-        json.put("service_id", aBluserinfo.getServiceId());
-        json.put("deal_time", aBluserinfo.getDealTime().toString());
+        json.put("service_id", aBluserinfo.getServiceId());        
         json.put("province_code", aBluserinfo.getProvinceCode());
         json.put("city_code", aBluserinfo.getCityCode());
         json.put("chl_id", aBluserinfo.getChlId());
         json.put("dev_id", aBluserinfo.getDevId());
-        json.put("inactive_time", aBluserinfo.getInactiveTime().toString());
         json.put("remark", aBluserinfo.getRemark());
         json.put("serv_type", aBluserinfo.getServType());
         json.put("user_type", aBluserinfo.getUserType());
@@ -309,26 +346,44 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         System.err.println("BlSubsComm有 "+product.getProductNumber()+" 个相同的产品");
         for (int i = 0; i < product.getProductNumber(); i++) {
             BlSubsComm aBlSubsComm = new BlSubsComm();
+            JSONObject json = new JSONObject();
+            //时间格式转换
+            Date dDate = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            try{
+                dDate = sdf.parse(product.getActiveTime());
+                Timestamp actTime = new Timestamp(dDate.getTime());
+                System.out.println("actTime = [" + actTime + "]");
+                aBlSubsComm.setActiveTime(actTime);
+                
+                dDate = sdf.parse(product.getInactiveTime());
+                Timestamp inactTime = new Timestamp(dDate.getTime());
+                System.out.println("inactTime = [" + inactTime + "]");
+                aBlSubsComm.setInactiveTime(inactTime);
+                     
+                json.put("active_time", actTime.toString());
+                json.put("inactive_time", inactTime.toString());
+            }catch (ParseException e){
+                throw new SystemException("时间格式转换异常");
+            }
             aBlSubsComm.setSubsId(userInfo.getSubsId());
             aBlSubsComm.setSubsProductId(
                     aISysSequenceSvc.terrigerSysSequence("SUBS_PRODUCT_ID", 1).get(0));
-            aBlSubsComm.setActiveTime(
-                    DateUtil.getTimestamp(product.getActiveTime(), DateUtil.YYYYMMDDHHMMSS));
+            // aBlSubsComm.setActiveTime(DateUtil.getTimestamp(product.getActiveTime(), DateUtil.YYYYMMDDHHMMSS));
             aBlSubsComm.setProductId(product.getProductId());
             aBlSubsComm.setResBonusFlag(product.getResBonusFlag());
-            aBlSubsComm.setInactiveTime(
-                    DateUtil.getTimestamp(product.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS));
+            //aBlSubsComm.setInactiveTime( DateUtil.getTimestamp(product.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS));
             aBlSubsComm.setTenantId(userInfo.getTenantId());
             aBlSubsComm.setCustId(userInfo.getCustId());
             aBlSubsCommMapper.insertSelective(aBlSubsComm);
             // 刷新产品订购信息的内存表
-            JSONObject json = new JSONObject();
+
             json.put("subs_id", aBlSubsComm.getSubsId());
             json.put("subs_product_id", aBlSubsComm.getSubsProductId());
-            json.put("active_time", aBlSubsComm.getActiveTime());
+//            json.put("active_time", aBlSubsComm.getActiveTime());
             json.put("product_id", aBlSubsComm.getProductId());
             json.put("res_bonus_flag", aBlSubsComm.getResBonusFlag());
-            json.put("inactive_time", aBlSubsComm.getInactiveTime());
+//            json.put("inactive_time", aBlSubsComm.getInactiveTime());
             json.put("tenant_id", aBlSubsComm.getTenantId());
             json.put("cust_id", aBlSubsComm.getCustId());
 //            DshmUtil.getIdshmSV().initdel(TableCon.BL_SUBS_COMM, json.toString());
