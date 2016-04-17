@@ -34,7 +34,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 产品Id
 	 */
-	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class})
 	private Long productId;
 	
 	/**
