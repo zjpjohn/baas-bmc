@@ -27,11 +27,13 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetailCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
+import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria.Criteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfoCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria;
 import com.ai.opt.base.vo.PageInfo;
+import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.StringUtil;
 @Service
 @Transactional
@@ -77,15 +79,18 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         String name = null;
         code = record.getStandardId();
         name = record.getPriceName();
+        Criteria criteria=cpPriceInfoCriteria.or();
         if(!StringUtil.isBlank(code)){
             //code = "%"+record.getStandardId()+"%";
-            cpPriceInfoCriteria.or().andPriceCodeLike("%"+code+"%");
+            criteria.andPriceCodeLike("%"+code+"%");
         }
         if(!StringUtil.isBlank(name)){
             //name = "%"+record.getPriceName()+"%";
-            cpPriceInfoCriteria.or().andPriceNameLike("%"+name+"%");
-           
+            criteria.andPriceNameLike("%"+name+"%");         
         }
+        //租户ID也需要作为查询条件
+        criteria.andTenantIdEqualTo(record.getTenantId());
+        
         List<CpPriceInfo>  cpPriceInfoList=cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria);
         PageInfo<StandardList> resultPage=new PageInfo<StandardList>();
         resultPage.setCount(cpPriceInfoList.size());
@@ -99,7 +104,10 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         }
         
         System.out.println("获得"+cpPriceInfoList.size()+"条资费信息");
-        if(cpPriceInfoList.size() == 0)return null;
+        if(cpPriceInfoList.size() == 0){
+            responseMessage.setResponseHeader(new ResponseHeader(false, "000000", "cp_price_info表中未找到数据"));
+            return responseMessage;
+        }
        
         for(CpPriceInfo cpPriceInfo : cpPriceInfoList){
             List<UsageList> usageList = new ArrayList<>();
