@@ -74,7 +74,7 @@ public class ProductVO extends BaseInfo{
 	/**
 	 * 产品生效日期标识
 	 */
-	@NotNull(message="生效日期标识不能为空",groups={IProductManageSV.AddProduct.class})
+	//@NotNull(message="生效日期标识不能为空",groups={IProductManageSV.AddProduct.class})
 	private String activeDateTag;
 	/**
 	 * 产品失效日期
@@ -86,8 +86,6 @@ public class ProductVO extends BaseInfo{
 	 */
 	@NotNull(message="产品总价",groups={IProductManageSV.AddProduct.class})
 	private BigDecimal totalPrice;
-	
-	
 	public String getBillingType() {
 		return billingType;
 	}

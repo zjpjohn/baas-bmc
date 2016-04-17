@@ -110,7 +110,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         }
        
         for(CpPriceInfo cpPriceInfo : cpPriceInfoList){
-            List<UsageList> usageList = new ArrayList<>();
+            List<UsageList> usageList = new ArrayList<UsageList>();
            //查询CpPriceDetail
            price_code = cpPriceInfo.getPriceCode();
            System.out.println("price_code"+price_code);

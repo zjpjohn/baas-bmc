@@ -28,13 +28,15 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 	@Override
 	public PageInfo<ProductInfo> getProductInfo(ProductQueryVO vo)
 			throws BusinessException, SystemException {
-		if (vo == null) {
+		if (null == vo) {
 			log.debug("addProduct() vo = [null]");
 			return null;
 		} else {
 			log.debug("addProduct() vo = " + vo.toString() + "]");
 		}
-		
+		if(null == vo.getTenantId()){
+			throw new BusinessException("tenantId is not null", "租户id不能为空");
+		}
 		return iQueryProductBusiImpl.Product(vo);
 		
 	

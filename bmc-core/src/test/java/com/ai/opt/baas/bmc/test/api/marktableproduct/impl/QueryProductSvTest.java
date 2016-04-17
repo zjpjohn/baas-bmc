@@ -29,8 +29,9 @@ public class QueryProductSvTest {
 //		vo.setInvalidDate(Timestamp.valueOf("2016-04-13 11:48:54"));
 //		vo.setTenantId("11111533");
 //		vo.setServiceType("1");
-		vo.setBillingType("PACKAGE");
+		//vo.setBillingType("PACKAGE");
 		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getProductInfo(vo);
+		System.out.println("-----param:"+JSON.toJSONString(vo));
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
 	}
 }

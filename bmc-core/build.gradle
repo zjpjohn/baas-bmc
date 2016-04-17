@@ -28,7 +28,7 @@ dependencies {
     
     //compile 'com.ai.runner.center.dshm:dshmprocess:1.0.1-SNAPSHOT'
     
-    compile 'com.ai.baas:baas-dshm-sdk:1.0.7-SNAPSHOT'
+    compile 'com.ai.baas:baas-dshm-sdk:1.0.8-SNAPSHOT'
     compile 'com.ai.opt.sdk:opt-sdk:1.0.3-SNAPSHOT'
     compile 'com.ai.opt.dshm:dshmprocess:1.0.0-SNAPSHOT'
     compile 'com.ai.runner.center.dshm:dshmservice:1.0.1-SNAPSHOT'
@@ -37,4 +37,6 @@ dependencies {
             "org.springframework:spring-test:4.1.7.RELEASE",
             "junit:junit:4.12"
     )
+
+    compile 'com.ai:paas-mds-ex-auth:1.2.2-SNAPSHOT'
 }

@@ -1,10 +1,16 @@
 package com.ai.baas.bmc.business.impl;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.client.Table;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +36,11 @@ import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil.CellTemp;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.runner.base.exception.CallerException;
+import com.alibaba.fastjson.JSON;
 
 import net.sf.json.JSONObject;
 
@@ -48,7 +56,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	private BlCustinfoMapper aBlCustinfoMapper;
 	@Autowired
 	private ISysSequenceSvc aISysSequenceSvc;
-
+	private static final Log log = LogFactory.getLog(ICustinfoBusinessImpl.class);
 	@Override
 	public boolean hasSeq(CustInfoParams custInfo) throws IOException {
 		 String rowkey = custInfo.getTenantId() + Context.SPLIT + Context.CUST_INFO_CODE
@@ -75,7 +83,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 	public void writeData(CustInfoParams custInfo) {
 		JSONObject custobject = new JSONObject();
 		BlCustinfo blCustinfo = new BlCustinfo();
-		System.err.println("*******************************");
+		log.info("*******************************");
 		if (!StringUtil.isBlank(custInfo.getState())) {
 			if (custInfo.getState().length() <= 4) {
 				blCustinfo.setState(custInfo.getState());
@@ -120,7 +128,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		custobject.put("CUST_GRADE", custInfo.getCustGrade());
 		
 		blCustinfo.setCustType(custInfo.getCustType());
-		custobject.put("CUST-TYPE", custInfo.getCustType());
+		custobject.put("CUST_TYPE", custInfo.getCustType());
 		
 		blCustinfo.setRemark(custInfo.getRemark());
 		custobject.put("REMARK", custInfo.getRemark());
@@ -138,8 +146,10 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		Map<String, String> params = new TreeMap<String, String>();
         params.put("EXT_CUST_ID", custInfo.getExtCustId());
         params.put("TENANT_ID", custInfo.getTenantId());
+        
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
                 .executeQuery(DshmUtil.getCacheClient());
+        log.info("dshm custInfo---->>>:"+JSON.toJSONString(result));
         //获得缓存中第一条有效数据
         boolean bool = true;
         if(!(result==null||result.isEmpty())){
@@ -163,6 +173,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 //        blCustinfo.setCustId(custId);
 		if (custInfo.getExtInfoList() != null) {
 			for (ExtInfo e : custInfo.getExtInfoList()) {
+				log.info("extinfo.extValue--->>>:"+e.getExtValue());
 				writeBlCustinfoExt(custId,e);
 
 			}
@@ -173,16 +184,58 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		    .andTenantIdEqualTo(custInfo.getTenantId())
 		    .andCustIdEqualTo(custId);
 		
-		aBlCustinfoMapper.deleteByExample(blCustinfoCriteria);
-		aBlCustinfoMapper.insert(blCustinfo);
-		
-//		DshmUtil.getIdshmSV().initdel("bl_custinfo", custobject.toString());
-        DshmUtil.getIdshmSV().initLoader("bl_custinfo", custobject.toString(),1);
+		List<BlCustinfo> blCustInfoList = aBlCustinfoMapper.selectByExample(blCustinfoCriteria);
+		//如果信息不存在 就添加信息
+		if(CollectionUtil.isEmpty(blCustInfoList)){
+			log.info("---------------custInfo not exist------------------");
+			aBlCustinfoMapper.insert(blCustinfo);
+			DshmUtil.getIdshmSV().initLoader("bl_custinfo", JSON.toJSONString(custobject),1);
+		}else{
+			try{
+				log.info("---------------custInfo exist------------------");
+				//如果信息存在就修改信息
+				BlCustinfo blCustInfoUpdate = new BlCustinfo();
+				blCustInfoUpdate.setCityCode(custInfo.getCityCode());
+				blCustInfoUpdate.setContactNo(custInfo.getContactNo());
+				blCustInfoUpdate.setCustAddress(custInfo.getCustAddress());
+				blCustInfoUpdate.setCustGrade(custInfo.getCustGrade());
+				blCustInfoUpdate.setCustName(custInfo.getCustName());
+				blCustInfoUpdate.setCustType(custInfo.getCustType());
+				blCustInfoUpdate.setEmail(custInfo.getEmail());
+				blCustInfoUpdate.setExtCustId(custInfo.getExtCustId());
+				blCustInfoUpdate.setProvinceCode(custInfo.getProvinceCode());
+				blCustInfoUpdate.setRemark(custInfo.getRemark());
+				blCustInfoUpdate.setState(custInfo.getState());
+				//
+//				SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			    Date date = df1.parse(custInfo.getStateChgTime());
+//			    String time = df1.format(date);
+//			    Timestamp ts = Timestamp.valueOf(time);
+//				log.info("-----timestamp:"+ts);
+				
+				blCustInfoUpdate.setStateChgTime(DateUtil.getSysDate());//(DateUtil.getSysDate());
+				
+				blCustInfoUpdate.setTenantId(custInfo.getTenantId());
+				//
+				BlCustinfoCriteria blCustinfoCriteriaUpdate = new BlCustinfoCriteria();
+				blCustinfoCriteriaUpdate.createCriteria()
+				    .andTenantIdEqualTo(custInfo.getTenantId())
+				    .andCustIdEqualTo(custId);
+				
+				aBlCustinfoMapper.updateByExampleSelective(blCustInfoUpdate, blCustinfoCriteriaUpdate);
+				//
+				DshmUtil.getIdshmSV().initLoader("bl_custinfo", JSON.toJSONString(custobject),0);
+				log.info("------------update custInfo:修改客户信息完毕！");
+			}catch(Exception e){
+				log.info("------------update custInfo exception-------------------");
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	private void writeBlCustinfoExt(String custId, ExtInfo extInfo) {
 		BlCustinfoExt blCustinfoExt = new BlCustinfoExt();
-//		JSONObject extobject = new JSONObject();
+		JSONObject extobject = new JSONObject();
 		
 		if (extInfo.getUpdateFlag().equals("N")){
 			blCustinfoExt.setExtName(extInfo.getExtName());
@@ -194,43 +247,76 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 			blCustinfoExt.setCustId(custId);
 //			extobject.put("CUST_ID", custId);
 			
-			blCustinfoExtMapper.insert(blCustinfoExt);
-			 BlCustinfoExtCriteria example = new BlCustinfoExtCriteria();
-	            example.createCriteria().andExtNameEqualTo(extInfo.getExtName())
-	            .andCustIdEqualTo(custId);
+			
+			BlCustinfoExtCriteria example = new BlCustinfoExtCriteria();
+            example.createCriteria().andExtNameEqualTo(extInfo.getExtName())
+            .andCustIdEqualTo(custId);
+            
+            List<BlCustinfoExt> blCustinfoExtList = blCustinfoExtMapper.selectByExample(example);
+            if(CollectionUtil.isEmpty(blCustinfoExtList)){
+            	try{
+            	blCustinfoExtMapper.insert(blCustinfoExt);
+            	//
+            	BlCustinfoExt blCustInfoExtNew = blCustinfoExtMapper.selectByExample(example).get(0);
+            	extobject.put("EXT_ID", blCustInfoExtNew.getExtId());
+            	extobject.put("EXT_NAME", blCustInfoExtNew.getExtName());
+            	extobject.put("EXT_VALUE", blCustInfoExtNew.getExtValue());
+            	extobject.put("CUST_ID", blCustInfoExtNew.getCustId());
+            	log.info("------ insert ext info---->>>:"+MyJsonUtil.toJson(blCustInfoExtNew));
+            	DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", JSON.toJSONString(extobject),1);
+            	}catch(Exception e){
+            		e.printStackTrace();
+            	}
+            }
 	            
-	            BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
-	            DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),1);
 
 		}else if(extInfo.getUpdateFlag().equals("U")){
 			 blCustinfoExt.setExtValue(extInfo.getExtValue());
+			 
 			 BlCustinfoExtCriteria example = new BlCustinfoExtCriteria();
-	            example.createCriteria().andCustIdEqualTo(custId)
-	                    .andExtNameEqualTo(extInfo.getExtName());
+	            example.createCriteria()
+	            .andCustIdEqualTo(custId)
+	            .andExtNameEqualTo(extInfo.getExtName());
 	            try {
 	            	
 	            	blCustinfoExtMapper.updateByExampleSelective(blCustinfoExt, example);
-	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
-	            	
-//	                DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
-	                DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", MyJsonUtil.toJson(temp),0);
+	            	List<BlCustinfoExt> blCustinfoExtList = blCustinfoExtMapper.selectByExample(example);
+	            	if(!CollectionUtil.isEmpty(blCustinfoExtList)){
+	            		BlCustinfoExt blCustInfoExtNew = blCustinfoExtList.get(0);
+	            		extobject.put("EXT_ID", blCustInfoExtNew.getExtId());
+	                	extobject.put("EXT_NAME", blCustInfoExtNew.getExtName());
+	                	extobject.put("EXT_VALUE", blCustInfoExtNew.getExtValue());
+	                	extobject.put("CUST_ID", blCustInfoExtNew.getCustId());
+	                	
+	            		DshmUtil.getIdshmSV().initLoader("bl_custinfo_ext", JSON.toJSONString(extobject),0);
+	            	}
 	             
 	            } catch (NullPointerException e) {
 	                throw new BusinessException(ErrorCode.NULL, "用户扩展信息不在表中，无法更新");
 	            }
 			
-			
-//			DshmUtil.getIdshmSV().initDel("bl_custinfo_ext", extobject.toString());
-			
 		}else if(extInfo.getUpdateFlag().equals("D")){
-//			 blCustinfoExt.setExtValue(extInfo.getExtValue());
 			 BlCustinfoExtCriteria example = new BlCustinfoExtCriteria();
-	            example.createCriteria().andCustIdEqualTo(custId).andExtValueEqualTo(extInfo.getExtValue())
-	                    .andExtNameEqualTo(extInfo.getExtName());
+	            example.createCriteria()
+	            .andCustIdEqualTo(custId)
+	            .andExtNameEqualTo(extInfo.getExtName());
+	            //.andExtValueEqualTo(extInfo.getExtValue())
+	            
 	            try {
-	            	BlCustinfoExt temp = blCustinfoExtMapper.selectByExample(example).get(0);
-	            	blCustinfoExtMapper.deleteByExample(example);
-	            	DshmUtil.getIdshmSV().initdel("bl_userinfo_ext", MyJsonUtil.toJson(temp));
+	            	List<BlCustinfoExt> blCustInfoExtList = blCustinfoExtMapper.selectByExample(example);
+	            	
+	            	if(!CollectionUtil.isEmpty(blCustInfoExtList)){
+	            		BlCustinfoExt blCustInfoExtNew = blCustInfoExtList.get(0);
+	            		extobject.put("EXT_ID", blCustInfoExtNew.getExtId());
+	                	extobject.put("EXT_NAME", blCustInfoExtNew.getExtName());
+	                	extobject.put("EXT_VALUE", blCustInfoExtNew.getExtValue());
+	                	extobject.put("CUST_ID", blCustInfoExtNew.getCustId());
+	                	//
+	            		blCustinfoExtMapper.deleteByExample(example);
+	            		DshmUtil.getIdshmSV().initdel("bl_custinfo_ext", JSON.toJSONString(extobject));
+	            	}
+	            	
+	            	
 	            } catch (NullPointerException e) {
 	                throw new BusinessException(ErrorCode.NULL, "用户扩展信息不在表中，无法删除");
 	            }

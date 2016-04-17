@@ -65,8 +65,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	@Autowired
 	private ICpStepInfoAtom cpStepInfoAtom;
 
-	public static final String CHARGE_TYPE_STEP = "STEP";
-	public static final String CHARGE_TYPE_PACKAGE = "PACKAGE";
+	public static final String CHARGE_TYPE_STEP = "step_group_type";
+	public static final String CHARGE_TYPE_PACKAGE = "standard_group_type";
 	/**
 	 * 修改产品信息
 	 */
@@ -92,6 +92,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		
 		try {
 			this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
 			log.info("修改cpPriceInfo信息完毕！！！");
@@ -292,6 +293,17 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		
+		//如果失效日期大于当前系统日期 那么为有效状态 1：有效 ；0：失效
+		if(vo.getInvalidDate().compareTo(DateUtil.getSysDate()) > 0){
+			cpPriceInfo.setActiveStatus("1");
+			priceinfobject.put("ACTIVE_STATUS", 1);
+		}else{
+			cpPriceInfo.setActiveStatus("0");
+			priceinfobject.put("ACTIVE_STATUS", 0);
+		}
+		
+		
 		try {
 			this.cpPriceInfoAtom.addCpPriceInfo(cpPriceInfo);
 			log.info("添加cpPriceInfo信息完毕！！！");
@@ -399,6 +411,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setServiceType(serviceVO.getServiceType());
 		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
 		
+		cpStepInfo.setFactorCode(new Long(serviceVO.getServiceTypeDetail()));
+		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
+		
 		this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 1);
 	}
@@ -439,6 +454,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		
 		cpPackageInfo.setUnitCode(serviceVO.getUnit());
 		packageobject.put("UNIT_CODE", serviceVO.getUnit());
+		
+		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
+		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
 		
 		this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 1);
@@ -571,6 +589,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	@Override
 	public void updateProductStatus(ProductActiveVO vo) {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfo.setPriceCode(vo.getProductId());
 		cpPriceInfo.setActiveStatus(vo.getStatus());
 		//

@@ -160,7 +160,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 				fp.setGiftActiveDate(present.getActiveTime());
 				fp.setGiftInvalidDate(present.getInactiveTime());
 
-				fp.setGiftProList(JSON.parseArray(present.getProductGiftIds(), Integer.class));
+				fp.setGiftProList(JSON.parseArray(present.getProductGiftIds(), Long.class));
 				fp.setGiftType(present.getPresentType());
 				fp.setGitfAmount(present.getPresentAmount());
 				singlePro.setRuleAmount(present.getReachAmount());
