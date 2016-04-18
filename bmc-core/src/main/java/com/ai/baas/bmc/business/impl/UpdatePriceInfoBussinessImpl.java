@@ -101,7 +101,7 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             CpPriceDetailCriteria priceDetailC = new CpPriceDetailCriteria();
             priceDetailC.createCriteria().andPriceCodeEqualTo(priceInfo.getPriceCode());
             if (aCpPriceDetailMapper.updateByExampleSelective(priceDetail, priceDetailC) < 1) {
-                throw new BusinessException("BaaS-000001", "cp_price_info表没有相关信息，无法更新");
+                throw new BusinessException("BaaS-000001", "cp_price_detail表没有相关信息，无法更新");
             }
             priceDetail = aCpPriceDetailMapper.selectByExample(priceDetailC).get(0);
             // *************************end****************************
@@ -305,7 +305,7 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             // *************************end****************************
             // *******************删除cp_unitprice_info表*******************
             CpUnitpriceInfoCriteria unitpriceInfoC = new CpUnitpriceInfoCriteria();
-            unitpriceInfoC.createCriteria().andUnitPriceCodeEqualTo(priceDetail.getPriceCode());
+            unitpriceInfoC.createCriteria().andUnitPriceCodeEqualTo(priceDetail.getDetailCode());
             CpUnitpriceInfo unitpriceInfo = aCpUnitpriceInfoMapper.selectByExample(unitpriceInfoC).get(0);
             aCpUnitpriceInfoMapper.deleteByExample(unitpriceInfoC);
             // *************************end****************************
