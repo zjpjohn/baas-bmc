@@ -111,13 +111,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				
 				// 阶梯类型
-				if (vo.getBillingType().equals(CHARGE_TYPE_STEP)) {
+				if (vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)) {
 					
 					stepSeq++;
 					this.toUpdateCpStepInfo(detailCode, s, stepSeq, vo);
 				} 
 				// 标准类型
-				if(vo.getBillingType().equals(CHARGE_TYPE_PACKAGE)){
+				if(vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
 					
 					this.toUpdateCpPackageInfo(detailCode, s, vo);
 
@@ -145,13 +145,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		//
 		this.cpPriceDetailAtom.deletePriceDetailByPriceCode(cpPriceDetail);
 		//
-		if((CHARGE_TYPE_STEP).equals(billingType)){
+		if((CHARGE_TYPE_STEP).equalsIgnoreCase(billingType)){
 			CpStepInfo cpStepInfo = new CpStepInfo();
 			cpStepInfo.setDetailCode(new Long(cpPriceDetail.getDetailCode()));
 			//
 			this.cpStepInfoAtom.deleteCpStepInfoByDetailCode(cpStepInfo);
 		}
-		if((CHARGE_TYPE_PACKAGE).equals(billingType)){
+		if((CHARGE_TYPE_PACKAGE).equalsIgnoreCase(billingType)){
 			CpPackageInfo cpPackageInfo = new CpPackageInfo();
 			cpPackageInfo.setDetailCode(cpPriceDetail.getDetailCode());
 			//
@@ -191,7 +191,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		List<ServiceVO> serviceVOList = new ArrayList<ServiceVO>();
 		ServiceVO serviceVo = null;
 		//
-		if((CHARGE_TYPE_STEP).equals(billingType)){
+		if((CHARGE_TYPE_STEP).equalsIgnoreCase(billingType)){
 			CpStepInfo cpStepInfo = new CpStepInfo();
 			cpStepInfo.setDetailCode(new Long(cpPriceDetail.getDetailCode()));
 			//
@@ -209,7 +209,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVOList.add(serviceVo);
 			}
 		}
-		if((CHARGE_TYPE_PACKAGE).equals(billingType)){
+		if((CHARGE_TYPE_PACKAGE).equalsIgnoreCase(billingType)){
 			CpPackageInfo cpPackageInfo = new CpPackageInfo();
 			cpPackageInfo.setDetailCode(cpPriceDetail.getDetailCode());
 			//
@@ -317,13 +317,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				
 				// 阶梯类型
-				if (vo.getBillingType().equals(CHARGE_TYPE_STEP)) {
+				if (vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)) {
 					
 					stepSeq++;
 					this.toAddCpStepInfo(detailCode, s, stepSeq, vo);
 				} 
 				// 标准类型
-				if(vo.getBillingType().equals(CHARGE_TYPE_PACKAGE)){
+				if(vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
 					
 					this.toAddCpPackageInfo(detailCode, s, vo);
 
