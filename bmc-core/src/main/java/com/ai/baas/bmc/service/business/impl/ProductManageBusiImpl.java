@@ -296,13 +296,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
 		
 		//如果失效日期大于当前系统日期 那么为有效状态 1：有效 ；0：失效
-		if(vo.getInvalidDate().compareTo(DateUtil.getSysDate()) > 0){
-			cpPriceInfo.setActiveStatus("1");
-			priceinfobject.put("ACTIVE_STATUS", 1);
-		}else{
+//		if(vo.getInvalidDate().compareTo(DateUtil.getSysDate()) > 0){
+//			cpPriceInfo.setActiveStatus("1");
+//			priceinfobject.put("ACTIVE_STATUS", 1);
+//		}else{
 			cpPriceInfo.setActiveStatus("0");
 			priceinfobject.put("ACTIVE_STATUS", 0);
-		}
+//		}
 		
 		
 		try {
