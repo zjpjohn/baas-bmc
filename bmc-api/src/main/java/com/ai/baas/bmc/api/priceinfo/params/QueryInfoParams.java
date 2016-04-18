@@ -25,7 +25,7 @@ public class QueryInfoParams extends BaseInfo {
      * VARCHAR(32)
      */
     @NotNull(message="消息流水不能为空")
-   @Size(max=32)
+   //@Size(max=32)
     private String tradeSeq;
     
     /**

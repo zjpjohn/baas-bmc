@@ -23,7 +23,7 @@ public class StandardPriceInfoParams extends BaseInfo {
      * VARCHAR(32)
      */
     @NotNull(message = "交易流水不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+    //@Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String tradeSeq;
 
     /**
@@ -116,7 +116,7 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 每新建一个标准资费时需要进行描述说明<br>
      * VARCHAR(32)
      */
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+    @Size(max = 1024,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String comments;
 
     /**

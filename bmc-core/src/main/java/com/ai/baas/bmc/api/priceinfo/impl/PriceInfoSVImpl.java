@@ -42,16 +42,20 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
         // 幂等性判断（判重）
         try {
             if (aIUpdatePriceInfoBussiness.dupCheck(record)) {
-                result.setResponseHeader(new ResponseHeader(false, "000000", "tradeSeq已存在"));
+                result.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
                 return result;
             }
         } catch (IOException e) {
             LoggerUtil.log.error(e);
-            result.setResponseHeader(new ResponseHeader(false, "000000", "幂等性判断判断失败请联系管理员"));
+            result.setResponseHeader(new ResponseHeader(false, "000001", "幂等性判断判断失败请联系管理员"));
+            return result;
+        }
+        if(StringUtil.isBlank(record.getTenantId())){
+            result.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，查询失败"));
             return result;
         }
         if (("UPDATE".equals(record.getUpdateId()))&& StringUtil.isBlank(record.getStandardId())) {
-            result.setResponseHeader(new ResponseHeader(false, "000000", "更新时StandarId不能为0"));
+            result.setResponseHeader(new ResponseHeader(false, "000001", "更新时StandarId不能为0"));
             return result;
         }
         aIUpdatePriceInfoBussiness.writeData(record);
@@ -63,7 +67,7 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
     public BaseResponse deletePriceInfo(StandardPriceInfoParams record) throws BusinessException, SystemException {
         BaseResponse result = new BaseResponse();
         if (("UPDATE".equals(record.getUpdateId()) || "DELETE".equals(record.getUpdateId()))&&StringUtil.isBlank(record.getStandardId())) {
-            result.setResponseHeader(new ResponseHeader(false, "000000", "删除和更改状态字段时StandarId不能为0"));
+            result.setResponseHeader(new ResponseHeader(false, "000001", "删除和更改状态字段时StandarId不能为0"));
             return result;
         }
         aIUpdatePriceInfoBussiness.deleteData(record);
