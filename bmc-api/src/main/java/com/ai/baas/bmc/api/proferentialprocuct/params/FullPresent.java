@@ -48,7 +48,7 @@ public class FullPresent implements Serializable{
 	/**
 	 * 生效方式标记：
 	 */
-	private String activeTag;
+	private String activeFlag;
 	
 	public String getGiftType() {
 		return giftType;
@@ -87,11 +87,12 @@ public class FullPresent implements Serializable{
 	public void setPresentId(Long presentId) {
 		this.presentId = presentId;
 	}
-	public String getActiveTag() {
-		return activeTag;
+	
+	public String getActiveFlag() {
+		return activeFlag;
 	}
-	public void setActiveTag(String activeTag) {
-		this.activeTag = activeTag;
+	public void setActiveFlag(String activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 	public String getActiveCycle() {
 		return activeCycle;

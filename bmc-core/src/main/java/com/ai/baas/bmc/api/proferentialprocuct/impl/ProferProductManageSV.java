@@ -113,6 +113,8 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			present.setReachAmount(vo.getRuleAmount());
 			present.setPresentAmount(p.getGitfAmount());
 			present.setUnit(vo.getRuleUnit());
+			present.setActiveCycle(p.getActiveCycle());
+			present.setActiveFlag(p.getActiveFlag());
 			cpFullPresentBusi.addFullPresent(present);
 		}
 		ProductResponse response = new ProductResponse();
