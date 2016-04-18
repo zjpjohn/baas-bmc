@@ -55,7 +55,7 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
             return result;
         }
         if (("UPDATE".equals(record.getUpdateId()))&& StringUtil.isBlank(record.getStandardId())) {
-            result.setResponseHeader(new ResponseHeader(false, "000001", "更新时StandarId不能为0"));
+            result.setResponseHeader(new ResponseHeader(false, "000001", "更新时StandarId不能为空"));
             return result;
         }
         aIUpdatePriceInfoBussiness.writeData(record);
@@ -67,7 +67,7 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
     public BaseResponse deletePriceInfo(StandardPriceInfoParams record) throws BusinessException, SystemException {
         BaseResponse result = new BaseResponse();
         if (("UPDATE".equals(record.getUpdateId()) || "DELETE".equals(record.getUpdateId()))&&StringUtil.isBlank(record.getStandardId())) {
-            result.setResponseHeader(new ResponseHeader(false, "000001", "删除和更改状态字段时StandarId不能为0"));
+            result.setResponseHeader(new ResponseHeader(false, "000001", "删除和更改状态字段时StandarId不能为空"));
             return result;
         }
         aIUpdatePriceInfoBussiness.deleteData(record);
