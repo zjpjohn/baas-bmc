@@ -52,6 +52,8 @@ public class ProferProductTest {
 		FullPresent fp=new FullPresent();
 		fp.setGiftActiveDate(DateUtil.getSysDate());
 		fp.setGiftInvalidDate(DateUtil.getSysDate());
+		fp.setActiveCycle("THREE_MONTH");
+		fp.setActiveFlag("NOW");
 		List<Long> list1=new ArrayList<Long>();
 		list1.add(1L);
 		list1.add(2L);
