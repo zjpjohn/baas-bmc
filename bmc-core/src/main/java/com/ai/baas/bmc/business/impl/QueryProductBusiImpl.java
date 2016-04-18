@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.business.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -233,6 +234,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 }
 		 if(!CollectionUtil.isEmpty(packageInfo)){
 			 productInfo.setBillingType(CHARGE_TYPE_PACKAGE); 
+			 productInfo.setTotalPrice(new BigDecimal(packageInfo.get(0).getTotalPriceValue()));
 		 }
 	}
 
