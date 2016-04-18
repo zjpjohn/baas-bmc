@@ -227,8 +227,12 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				//
 				serviceVOList.add(serviceVo);
 			}
+			if(!CollectionUtil.isEmpty(cpPackageInfoList)){
+				productVo.setTotalPrice(new BigDecimal(cpPackageInfoList.get(0).getTotalPriceValue()));
+			}
 		}
 		productVo.setMajorProductAmount(serviceVOList);
+		
 		//
 		return productVo;
 
