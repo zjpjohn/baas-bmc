@@ -84,7 +84,7 @@ public class CustInfoSVImpl implements ICustInfoSV {
             return resultCode;
         }
      
-        resultCode = CheckUtil.check(custInfo.getCustGrade(), "custGrade", true, 1,"A","B","C","D");
+        resultCode = CheckUtil.check(custInfo.getCustGrade(), "custGrade", true, 1,"A","B","C","D","E");
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
             return resultCode;
         }
