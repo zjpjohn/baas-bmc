@@ -57,24 +57,27 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         
         //基于StandardId 和 PriceName 模糊查询
         CpPriceDetailMapper cpPriceDetailMapper = sqlSessionTemplate.getMapper(CpPriceDetailMapper.class);
-        CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
+        
         CpUnitpriceInfoMapper cpUnitpriceInfoMapper = sqlSessionTemplate.getMapper(CpUnitpriceInfoMapper.class);
-        CpUnitpriceInfoCriteria cpUnitpriceInfoCriteria = new CpUnitpriceInfoCriteria();
+        
         CpUnitpriceItemMapper cpUnitpriceItemMapper = sqlSessionTemplate.getMapper(CpUnitpriceItemMapper.class);
-        CpUnitpriceItemCriteria cpUnitpriceItemCriteria = new CpUnitpriceItemCriteria();
+        
         CpFactorInfoMapper cpFactorInfoMapper = sqlSessionTemplate.getMapper(CpFactorInfoMapper.class);
-        CpFactorInfoCriteria cpFactorInfoCriteria = new CpFactorInfoCriteria();
+        
         CpPriceInfoMapper  cpPriceInfoMapper = sqlSessionTemplate.getMapper(CpPriceInfoMapper.class); 
         CpPriceInfoCriteria cpPriceInfoCriteria=new CpPriceInfoCriteria();
-        //判断是否需要分页
-        if(record.getPageSize()!=null&&record.getPageNo()!=null){
-            //pageSize
-            int pageSize=record.getPageSize();        
-            //pageNo
-            int pageNo=record.getPageNo();
-            cpPriceInfoCriteria.setLimitStart((pageNo-1)*pageSize);
-            cpPriceInfoCriteria.setLimitEnd(pageSize);            
-        }        
+        
+        //判断是否需要分页   ,因为数据库结构问题，暂时通过内存分页
+        
+//        if(record.getPageSize()!=null&&record.getPageNo()!=null){
+//            //pageSize
+//            int pageSize=record.getPageSize();        
+//            //pageNo
+//            int pageNo=record.getPageNo();
+//            cpPriceInfoCriteria.setLimitStart((pageNo-1)*pageSize);
+//            cpPriceInfoCriteria.setLimitEnd(pageSize);            
+//        }        
+        
         String code = null;
         String name = null;
         code = record.getStandardId();
@@ -88,24 +91,29 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
             //name = "%"+record.getPriceName()+"%";
             criteria.andPriceNameLike("%"+name+"%");         
         }
+        if(StringUtil.isBlank(record.getTenantId())){
+            responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，查询失败"));
+            return responseMessage;
+        }
         //租户ID也需要作为查询条件
         criteria.andTenantIdEqualTo(record.getTenantId());
         
         List<CpPriceInfo>  cpPriceInfoList=cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria);
         PageInfo<StandardList> resultPage=new PageInfo<StandardList>();
-        resultPage.setCount(cpPriceInfoList.size());
-        if(record.getPageSize()!=null&&record.getPageNo()!=null){
-            resultPage.setPageSize(record.getPageSize());
-            resultPage.setPageNo(record.getPageNo());
-        }
-        else{
-            resultPage.setPageSize(cpPriceInfoList.size());
-            resultPage.setPageNo(1);
-        }
+//        resultPage.setCount(cpPriceInfoList.size());
+//        
+//        if(record.getPageSize()!=null&&record.getPageNo()!=null){
+//            resultPage.setPageSize(record.getPageSize());
+//            resultPage.setPageNo(record.getPageNo());
+//        }
+//        else{
+//            resultPage.setPageSize(cpPriceInfoList.size());
+//            resultPage.setPageNo(1);
+//        }
         
         System.out.println("获得"+cpPriceInfoList.size()+"条资费信息");
         if(cpPriceInfoList.size() == 0){
-            responseMessage.setResponseHeader(new ResponseHeader(false, "000000", "cp_price_info表中未找到数据"));
+            responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "cp_price_info表中未找到数据"));
             return responseMessage;
         }
        
@@ -114,6 +122,8 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            //查询CpPriceDetail
            price_code = cpPriceInfo.getPriceCode();
            System.out.println("price_code"+price_code);
+           CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
+           
            cpPriceDetailCriteria.createCriteria()
              .andPriceCodeEqualTo(price_code);
            List<CpPriceDetail> cpPriceDetailList = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
@@ -125,6 +135,8 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            CpPriceDetail cpPriceDetail = cpPriceDetailList.get(0);
            //查询CpUnitpriceInfo    获得factor_code fee_item_code
            detail_code = cpPriceDetail.getDetailCode();
+           CpUnitpriceInfoCriteria cpUnitpriceInfoCriteria = new CpUnitpriceInfoCriteria();
+           
            cpUnitpriceInfoCriteria.createCriteria()
              .andUnitPriceCodeEqualTo(detail_code);
            //判空
@@ -136,6 +148,8 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            CpUnitpriceInfo cpUnitpriceInfo = cpUnitpriceInfoList.get(0);
            //查询CpUnitpriceItem
            fee_item_code = cpUnitpriceInfo.getFeeItemCode();
+           CpUnitpriceItemCriteria cpUnitpriceItemCriteria = new CpUnitpriceItemCriteria();
+           
            cpUnitpriceItemCriteria.createCriteria()
              .andFeeItemCodeEqualTo(fee_item_code);
            List<CpUnitpriceItem> cpUnitpriceItemList =  cpUnitpriceItemMapper.selectByExample(cpUnitpriceItemCriteria);
@@ -146,6 +160,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            CpUnitpriceItem cpUnitpriceItem = cpUnitpriceItemList.get(0);
            //查询CpFactorInfo
            factor_code = cpUnitpriceInfo.getFactorCode();
+           CpFactorInfoCriteria cpFactorInfoCriteria = new CpFactorInfoCriteria();
            cpFactorInfoCriteria.createCriteria()
             .andFactorCodeEqualTo(factor_code)
             .andFactorNameEqualTo("subServiceType");
@@ -179,7 +194,37 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            //CpUnitpriceItem
            //目前list.size() = 1
         }// end for
-        resultPage.setResult(standardList);
+        int sum = standardList.size();
+        List<StandardList> standardSubList = new ArrayList<StandardList>();
+        //内存分页
+        if(record.getPageSize()!=null&&record.getPageNo()!=null){
+
+            int pageSize=record.getPageSize();
+            int pageNo=record.getPageNo(); 
+            int fromIndex = (pageNo-1)*pageSize;
+            int toIndex = pageNo*pageSize;
+            
+            if(standardList.size()<toIndex){
+                standardSubList = standardList.subList(fromIndex,standardList.size());
+            }else{
+                standardSubList = standardList.subList(fromIndex,toIndex);
+            } 
+        }else {
+            System.out.println("不分页");
+            standardSubList = standardList;
+        }
+        //分页信息
+        resultPage.setCount(sum);
+        if(record.getPageSize()!=null&&record.getPageNo()!=null){
+            resultPage.setPageSize(record.getPageSize());
+            resultPage.setPageNo(record.getPageNo());
+        }
+        else{
+            resultPage.setPageSize(sum);
+            resultPage.setPageNo(1);
+        }
+        
+        resultPage.setResult(standardSubList);
         responseMessage.setStandardList(resultPage);
         responseMessage.setReturnCode("BMC-000000");
         return responseMessage;
