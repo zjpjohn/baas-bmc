@@ -163,6 +163,8 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 				fp.setGiftProList(JSON.parseArray(present.getProductGiftIds(), Long.class));
 				fp.setGiftType(present.getPresentType());
 				fp.setGitfAmount(present.getPresentAmount());
+				fp.setActiveCycle(present.getActiveCycle());
+				fp.setActiveFlag(present.getActiveFlag());
 				singlePro.setRuleAmount(present.getReachAmount());
 				singlePro.setRuleUnit(present.getUnit());
 				list.add(fp);
