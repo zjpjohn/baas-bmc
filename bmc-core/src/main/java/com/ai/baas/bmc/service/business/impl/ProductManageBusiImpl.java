@@ -34,6 +34,7 @@ import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil.CellTemp;
+import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
@@ -330,7 +331,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new BusinessException("error", "操作失败");
 		}
 
 	}
