@@ -20,7 +20,6 @@ public class StandardPriceInfoParams extends BaseInfo {
     /**
      * 交易流水<br>
      * 必填<br>
-     * VARCHAR(32)
      */
     @NotNull(message = "交易流水不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
     //@Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })

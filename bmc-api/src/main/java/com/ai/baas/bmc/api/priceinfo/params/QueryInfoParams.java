@@ -22,7 +22,6 @@ public class QueryInfoParams extends BaseInfo {
      * 消息流水<br>
      * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
      * 必填<br>
-     * VARCHAR(32)
      */
     @NotNull(message="消息流水不能为空")
    //@Size(max=32)
