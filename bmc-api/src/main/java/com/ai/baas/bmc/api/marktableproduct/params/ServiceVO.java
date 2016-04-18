@@ -17,6 +17,11 @@ public class ServiceVO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
+	 * 编码id
+	 */
+	private String serviceId;
+
+	/**
 	 * 业务类型
 	 */
 	private String serviceType;
@@ -54,7 +59,14 @@ public class ServiceVO implements Serializable {
 	 * 单价
 	 */
 	private BigDecimal price;
+	
+	public String getServiceId() {
+		return serviceId;
+	}
 
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
+	}
 	public String getServiceType() {
 		return serviceType;
 	}
