@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.business.impl;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.hadoop.hbase.client.Table;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +109,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             CpUnitpriceInfo unitpriceInfo;
 
             CpUnitpriceInfoCriteria unitpriceInfoC = new CpUnitpriceInfoCriteria();
-            unitpriceInfoC.createCriteria().andUnitPriceCodeEqualTo(priceDetail.getPriceCode());
+            unitpriceInfoC.createCriteria()
+                .andUnitPriceCodeEqualTo(priceDetail.getDetailCode());
             // if(aCpUnitpriceInfoMapper.updateByExampleSelective(unitpriceInfo,unitpriceInfoC)<1){
             // throw new BusinessException("BaaS-000001", "cp_price_info表没有相关信息，无法更新");
             // }
@@ -257,7 +259,12 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
 
             CpPriceInfoCriteria priceInfoC = new CpPriceInfoCriteria();
             priceInfoC.createCriteria().andPriceCodeEqualTo(param.getStandardId());
-            priceInfo = aCpPriceInfoMapper.selectByExample(priceInfoC).get(0);
+            
+            List<CpPriceInfo>priceInfoList = aCpPriceInfoMapper.selectByExample(priceInfoC);
+            if (priceInfoList.size()==0) {
+                throw new BusinessException("BaaS-000001", "CpPriceInfo表没有相关信息，无法更改状态");
+            }
+            priceInfo = priceInfoList.get(0);
             
             // 通过price_code得到cp_price_detail
             CpPriceDetail priceDetail = new CpPriceDetail();
