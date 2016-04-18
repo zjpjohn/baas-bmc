@@ -164,6 +164,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 				fp.setGiftType(present.getPresentType());
 				fp.setGitfAmount(present.getPresentAmount());
 				singlePro.setRuleAmount(present.getReachAmount());
+				singlePro.setRuleUnit(present.getUnit());
 				list.add(fp);
 
 			}
