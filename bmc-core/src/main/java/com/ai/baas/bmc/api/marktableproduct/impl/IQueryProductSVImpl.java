@@ -15,6 +15,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.paas.ipaas.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
@@ -34,7 +35,7 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 		} else {
 			log.debug("addProduct() vo = " + vo.toString() + "]");
 		}
-		if(null == vo.getTenantId()){
+		if(null == vo.getTenantId() || StringUtil.isBlank(vo.getTenantId())){
 			throw new BusinessException("tenantId is not null", "租户id不能为空");
 		}
 		return iQueryProductBusiImpl.Product(vo);

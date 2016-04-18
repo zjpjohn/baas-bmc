@@ -34,6 +34,7 @@ import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil.CellTemp;
+import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
@@ -111,13 +112,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				
 				// 阶梯类型
-				if (vo.getBillingType().equals(CHARGE_TYPE_STEP)) {
+				if (vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)) {
 					
 					stepSeq++;
 					this.toUpdateCpStepInfo(detailCode, s, stepSeq, vo);
 				} 
 				// 标准类型
-				if(vo.getBillingType().equals(CHARGE_TYPE_PACKAGE)){
+				if(vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
 					
 					this.toUpdateCpPackageInfo(detailCode, s, vo);
 
@@ -145,13 +146,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		//
 		this.cpPriceDetailAtom.deletePriceDetailByPriceCode(cpPriceDetail);
 		//
-		if((CHARGE_TYPE_STEP).equals(billingType)){
+		if((CHARGE_TYPE_STEP).equalsIgnoreCase(billingType)){
 			CpStepInfo cpStepInfo = new CpStepInfo();
 			cpStepInfo.setDetailCode(new Long(cpPriceDetail.getDetailCode()));
 			//
 			this.cpStepInfoAtom.deleteCpStepInfoByDetailCode(cpStepInfo);
 		}
-		if((CHARGE_TYPE_PACKAGE).equals(billingType)){
+		if((CHARGE_TYPE_PACKAGE).equalsIgnoreCase(billingType)){
 			CpPackageInfo cpPackageInfo = new CpPackageInfo();
 			cpPackageInfo.setDetailCode(cpPriceDetail.getDetailCode());
 			//
@@ -191,7 +192,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		List<ServiceVO> serviceVOList = new ArrayList<ServiceVO>();
 		ServiceVO serviceVo = null;
 		//
-		if((CHARGE_TYPE_STEP).equals(billingType)){
+		if((CHARGE_TYPE_STEP).equalsIgnoreCase(billingType)){
 			CpStepInfo cpStepInfo = new CpStepInfo();
 			cpStepInfo.setDetailCode(new Long(cpPriceDetail.getDetailCode()));
 			//
@@ -209,7 +210,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVOList.add(serviceVo);
 			}
 		}
-		if((CHARGE_TYPE_PACKAGE).equals(billingType)){
+		if((CHARGE_TYPE_PACKAGE).equalsIgnoreCase(billingType)){
 			CpPackageInfo cpPackageInfo = new CpPackageInfo();
 			cpPackageInfo.setDetailCode(cpPriceDetail.getDetailCode());
 			//
@@ -317,20 +318,21 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				
 				// 阶梯类型
-				if (vo.getBillingType().equals(CHARGE_TYPE_STEP)) {
+				if (vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)) {
 					
 					stepSeq++;
 					this.toAddCpStepInfo(detailCode, s, stepSeq, vo);
 				} 
 				// 标准类型
-				if(vo.getBillingType().equals(CHARGE_TYPE_PACKAGE)){
+				if(vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
 					
 					this.toAddCpPackageInfo(detailCode, s, vo);
 
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new BusinessException("error", "操作失败");
 		}
 
 	}
@@ -440,8 +442,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPackageInfo.setUnitType(serviceVO.getUnit());
 		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
 
-		cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue());
-		packageobject.put("PRICE_VALUE", serviceVO.getPrice());
+		cpPackageInfo.setPriceValue(0.0);//(serviceVO.getPrice().doubleValue());
+		packageobject.put("PRICE_VALUE", "0.0");
 
 		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
 		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());

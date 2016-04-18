@@ -119,11 +119,11 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 //
 				 String detailCode = cpPriceDetailNew.getDetailCode();
 				 if(!StringUtil.isBlank(detailCode)){
-					 if(null != vo.getBillingType() && vo.getBillingType().equals(CHARGE_TYPE_STEP)){
+					 if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)){
 						 //stepInfo
 						 this.stepMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
 					 
-					 } else if(null != vo.getBillingType() && vo.getBillingType().equals(CHARGE_TYPE_PACKAGE)){
+					 } else if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
 						//packageInfo
 						this.packageMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
 						
@@ -138,15 +138,15 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 productInfo.setUsageList(usageList);
 				 productInfoList.add(productInfo);
 				 //如果billingType 是 阶梯类型  只查阶梯类型不为空的数据
-				 if(null != vo.getBillingType() && vo.getBillingType().equals(CHARGE_TYPE_STEP)){
+				 if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)){
 					 
-					 if(StringUtil.isBlank(productInfo.getBillingType()) || CHARGE_TYPE_PACKAGE.equals(productInfo.getBillingType())){
+					 if(StringUtil.isBlank(productInfo.getBillingType()) || CHARGE_TYPE_PACKAGE.equalsIgnoreCase(productInfo.getBillingType())){
 						 productInfoList.remove(productInfo);
 					 }
 				 //如果billingType 是 基本类型 只查基本类型不为空的数据
-				 }else if(null != vo.getBillingType() && vo.getBillingType().equals(CHARGE_TYPE_PACKAGE)){
+				 }else if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
 					 
-					 if(StringUtil.isBlank(productInfo.getBillingType()) || CHARGE_TYPE_STEP.equals(productInfo.getBillingType())){
+					 if(StringUtil.isBlank(productInfo.getBillingType()) || CHARGE_TYPE_STEP.equalsIgnoreCase(productInfo.getBillingType())){
 						 productInfoList.remove(productInfo);
 					 }
 				 }
