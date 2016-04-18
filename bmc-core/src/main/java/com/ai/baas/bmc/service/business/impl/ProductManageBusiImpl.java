@@ -200,6 +200,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			
 			for(CpStepInfo cpStepInfoNew : cpStepInfoList){
 				serviceVo = new ServiceVO();
+				serviceVo.setServiceId(cpStepInfoNew.getSetpId().toString());
 				serviceVo.setPrice(new BigDecimal(cpStepInfoNew.getPriceValue()));
 				serviceVo.setAmountStart(cpStepInfoNew.getSectionA());
 				serviceVo.setAmountEnd(cpStepInfoNew.getSectionB());
@@ -218,6 +219,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			
 			for(CpPackageInfo cpPackageInfoNew : cpPackageInfoList){
 				serviceVo = new ServiceVO();
+				serviceVo.setServiceId(cpPackageInfoNew.getPackageId().toString());
 				serviceVo.setAmountEnd(cpPackageInfoNew.getAmount());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitType());
 				serviceVo.setPrice(new BigDecimal(cpPackageInfoNew.getPriceValue()));
