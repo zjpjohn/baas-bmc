@@ -29,6 +29,10 @@ public class CpFullPresent {
 
     private String relatedAccount;
 
+    private String activeFlag;
+
+    private String activeCycle;
+
     public Long getPresentId() {
         return presentId;
     }
@@ -131,5 +135,21 @@ public class CpFullPresent {
 
     public void setRelatedAccount(String relatedAccount) {
         this.relatedAccount = relatedAccount == null ? null : relatedAccount.trim();
+    }
+
+    public String getActiveFlag() {
+        return activeFlag;
+    }
+
+    public void setActiveFlag(String activeFlag) {
+        this.activeFlag = activeFlag == null ? null : activeFlag.trim();
+    }
+
+    public String getActiveCycle() {
+        return activeCycle;
+    }
+
+    public void setActiveCycle(String activeCycle) {
+        this.activeCycle = activeCycle == null ? null : activeCycle.trim();
     }
 }

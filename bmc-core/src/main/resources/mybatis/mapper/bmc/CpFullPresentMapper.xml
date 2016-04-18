@@ -15,6 +15,8 @@
     <result column="UNIT" property="unit" jdbcType="VARCHAR" />
     <result column="ACCOUNT_TYPE" property="accountType" jdbcType="VARCHAR" />
     <result column="RELATED_ACCOUNT" property="relatedAccount" jdbcType="VARCHAR" />
+    <result column="ACTIVE_FLAG" property="activeFlag" jdbcType="VARCHAR" />
+    <result column="ACTIVE_CYCLE" property="activeCycle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -76,7 +78,8 @@
   </sql>
   <sql id="Base_Column_List" >
     PRESENT_ID, DETAIL_CODE, PRESENT_TYPE, PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
-    PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE, REACH_AMOUNT, UNIT, ACCOUNT_TYPE, RELATED_ACCOUNT
+    PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE, REACH_AMOUNT, UNIT, ACCOUNT_TYPE, RELATED_ACCOUNT, 
+    ACTIVE_FLAG, ACTIVE_CYCLE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria" >
     select
@@ -117,12 +120,14 @@
       PRESENT_AMOUNT, ACTIVE_TIME, INACTIVE_TIME, 
       PRODUCT_IDS, PRODUCT_GIFT_IDS, PRESENT_CODE, 
       REACH_AMOUNT, UNIT, ACCOUNT_TYPE, 
-      RELATED_ACCOUNT)
+      RELATED_ACCOUNT, ACTIVE_FLAG, ACTIVE_CYCLE
+      )
     values (#{presentId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{presentType,jdbcType=VARCHAR}, 
       #{presentAmount,jdbcType=DOUBLE}, #{activeTime,jdbcType=DATE}, #{inactiveTime,jdbcType=DATE}, 
       #{productIds,jdbcType=VARCHAR}, #{productGiftIds,jdbcType=VARCHAR}, #{presentCode,jdbcType=VARCHAR}, 
       #{reachAmount,jdbcType=DOUBLE}, #{unit,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR}, 
-      #{relatedAccount,jdbcType=VARCHAR})
+      #{relatedAccount,jdbcType=VARCHAR}, #{activeFlag,jdbcType=VARCHAR}, #{activeCycle,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpFullPresent" >
     insert into cp_full_present
@@ -166,6 +171,12 @@
       <if test="relatedAccount != null" >
         RELATED_ACCOUNT,
       </if>
+      <if test="activeFlag != null" >
+        ACTIVE_FLAG,
+      </if>
+      <if test="activeCycle != null" >
+        ACTIVE_CYCLE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="presentId != null" >
@@ -206,6 +217,12 @@
       </if>
       <if test="relatedAccount != null" >
         #{relatedAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="activeFlag != null" >
+        #{activeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="activeCycle != null" >
+        #{activeCycle,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -257,6 +274,12 @@
       <if test="record.relatedAccount != null" >
         RELATED_ACCOUNT = #{record.relatedAccount,jdbcType=VARCHAR},
       </if>
+      <if test="record.activeFlag != null" >
+        ACTIVE_FLAG = #{record.activeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activeCycle != null" >
+        ACTIVE_CYCLE = #{record.activeCycle,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -276,7 +299,9 @@
       REACH_AMOUNT = #{record.reachAmount,jdbcType=DOUBLE},
       UNIT = #{record.unit,jdbcType=VARCHAR},
       ACCOUNT_TYPE = #{record.accountType,jdbcType=VARCHAR},
-      RELATED_ACCOUNT = #{record.relatedAccount,jdbcType=VARCHAR}
+      RELATED_ACCOUNT = #{record.relatedAccount,jdbcType=VARCHAR},
+      ACTIVE_FLAG = #{record.activeFlag,jdbcType=VARCHAR},
+      ACTIVE_CYCLE = #{record.activeCycle,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -320,6 +345,12 @@
       <if test="relatedAccount != null" >
         RELATED_ACCOUNT = #{relatedAccount,jdbcType=VARCHAR},
       </if>
+      <if test="activeFlag != null" >
+        ACTIVE_FLAG = #{activeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="activeCycle != null" >
+        ACTIVE_CYCLE = #{activeCycle,jdbcType=VARCHAR},
+      </if>
     </set>
     where PRESENT_ID = #{presentId,jdbcType=BIGINT}
   </update>
@@ -336,7 +367,9 @@
       REACH_AMOUNT = #{reachAmount,jdbcType=DOUBLE},
       UNIT = #{unit,jdbcType=VARCHAR},
       ACCOUNT_TYPE = #{accountType,jdbcType=VARCHAR},
-      RELATED_ACCOUNT = #{relatedAccount,jdbcType=VARCHAR}
+      RELATED_ACCOUNT = #{relatedAccount,jdbcType=VARCHAR},
+      ACTIVE_FLAG = #{activeFlag,jdbcType=VARCHAR},
+      ACTIVE_CYCLE = #{activeCycle,jdbcType=VARCHAR}
     where PRESENT_ID = #{presentId,jdbcType=BIGINT}
   </update>
 </mapper>

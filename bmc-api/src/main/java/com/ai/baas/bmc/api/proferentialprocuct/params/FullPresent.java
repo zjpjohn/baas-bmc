@@ -42,6 +42,10 @@ public class FullPresent implements Serializable{
 	 */
 	private List<Long> giftProList;
 	/**
+	 * 赠送业务周期
+	 */
+	private String activeCycle;
+	/**
 	 * 生效方式标记：
 	 */
 	private String activeTag;
@@ -88,6 +92,12 @@ public class FullPresent implements Serializable{
 	}
 	public void setActiveTag(String activeTag) {
 		this.activeTag = activeTag;
+	}
+	public String getActiveCycle() {
+		return activeCycle;
+	}
+	public void setActiveCycle(String activeCycle) {
+		this.activeCycle = activeCycle;
 	}
 	
 	

@@ -984,6 +984,146 @@ public class CpFullPresentCriteria {
             addCriterion("RELATED_ACCOUNT not between", value1, value2, "relatedAccount");
             return (Criteria) this;
         }
+
+        public Criteria andActiveFlagIsNull() {
+            addCriterion("ACTIVE_FLAG is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagIsNotNull() {
+            addCriterion("ACTIVE_FLAG is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagEqualTo(String value) {
+            addCriterion("ACTIVE_FLAG =", value, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagNotEqualTo(String value) {
+            addCriterion("ACTIVE_FLAG <>", value, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagGreaterThan(String value) {
+            addCriterion("ACTIVE_FLAG >", value, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagGreaterThanOrEqualTo(String value) {
+            addCriterion("ACTIVE_FLAG >=", value, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagLessThan(String value) {
+            addCriterion("ACTIVE_FLAG <", value, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagLessThanOrEqualTo(String value) {
+            addCriterion("ACTIVE_FLAG <=", value, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagLike(String value) {
+            addCriterion("ACTIVE_FLAG like", value, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagNotLike(String value) {
+            addCriterion("ACTIVE_FLAG not like", value, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagIn(List<String> values) {
+            addCriterion("ACTIVE_FLAG in", values, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagNotIn(List<String> values) {
+            addCriterion("ACTIVE_FLAG not in", values, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagBetween(String value1, String value2) {
+            addCriterion("ACTIVE_FLAG between", value1, value2, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveFlagNotBetween(String value1, String value2) {
+            addCriterion("ACTIVE_FLAG not between", value1, value2, "activeFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleIsNull() {
+            addCriterion("ACTIVE_CYCLE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleIsNotNull() {
+            addCriterion("ACTIVE_CYCLE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleEqualTo(String value) {
+            addCriterion("ACTIVE_CYCLE =", value, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleNotEqualTo(String value) {
+            addCriterion("ACTIVE_CYCLE <>", value, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleGreaterThan(String value) {
+            addCriterion("ACTIVE_CYCLE >", value, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleGreaterThanOrEqualTo(String value) {
+            addCriterion("ACTIVE_CYCLE >=", value, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleLessThan(String value) {
+            addCriterion("ACTIVE_CYCLE <", value, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleLessThanOrEqualTo(String value) {
+            addCriterion("ACTIVE_CYCLE <=", value, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleLike(String value) {
+            addCriterion("ACTIVE_CYCLE like", value, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleNotLike(String value) {
+            addCriterion("ACTIVE_CYCLE not like", value, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleIn(List<String> values) {
+            addCriterion("ACTIVE_CYCLE in", values, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleNotIn(List<String> values) {
+            addCriterion("ACTIVE_CYCLE not in", values, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleBetween(String value1, String value2) {
+            addCriterion("ACTIVE_CYCLE between", value1, value2, "activeCycle");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveCycleNotBetween(String value1, String value2) {
+            addCriterion("ACTIVE_CYCLE not between", value1, value2, "activeCycle");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
