@@ -241,8 +241,88 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 
 	@Override
 	public PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		PageInfo<ProductInfo> productInfoPageInfo =new PageInfo<ProductInfo>();
+        
+		try {
+			
+			CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
+			CpPriceInfoCriteria.Criteria criteriaCpPriceInfo= cpPriceInfoCriteria.createCriteria();
+			criteriaCpPriceInfo.andTenantIdEqualTo(vo.getTenantId());
+			
+			 
+			 PageInfo<CpPriceInfo> pageInfo = new PageInfo<CpPriceInfo>();
+			 
+			 
+			 pageInfo.setResult(cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria));
+	         pageInfo.setCount(cpPriceInfoMapper.countByExample(cpPriceInfoCriteria));
+		        
+	        
+	         //
+	         List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
+	         
+	         ProductInfo productInfo = null;
+			 for(CpPriceInfo c : pageInfo.getResult()){
+				 productInfo = new ProductInfo();
+				 //
+				 productInfo.setActiveDate(c.getActiveTime());
+				 productInfo.setInvalidDate(c.getInactiveTime());
+				 productInfo.setProductId(c.getPriceCode());
+				 productInfo.setProductName(c.getPriceName());
+				 productInfo.setStatus(c.getActiveStatus());
+				 productInfo.setTenantId(c.getTenantId());
+				 //
+				 List<ServiceVO> usageList = new ArrayList<ServiceVO>();
+				 ServiceVO serv = null;
+				 
+				 CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
+				 CpPriceDetailCriteria.Criteria criteriaCpPriceDetail = cpPriceDetailCriteria.createCriteria();
+				 
+				 //
+				 criteriaCpPriceDetail.andPriceCodeEqualTo(c.getPriceCode());
+				 //
+				 List<CpPriceDetail> cpPriceDetail = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
+				 CpPriceDetail cpPriceDetailNew = new CpPriceDetail();
+				 if(!CollectionUtil.isEmpty(cpPriceDetail)){
+					 System.out.println("打印信息 cpPriceDetail.size()："+cpPriceDetail.size());
+					 cpPriceDetailNew = cpPriceDetail.get(0);
+				 }
+				 //
+				 String detailCode = cpPriceDetailNew.getDetailCode();
+				 if(!StringUtil.isBlank(detailCode)){
+				 	ProductQueryVO productQueryVO = new ProductQueryVO();
+				 	
+				 	//
+					this.stepMethod(detailCode, serv, usageList, productQueryVO, productInfo, cpPriceDetailNew);
+					this.packageMethod(detailCode, serv, usageList, productQueryVO, productInfo, cpPriceDetailNew);
+					 
+				}
+						 
+				 productInfo.setUsageList(usageList);
+				 productInfoList.add(productInfo);
+				
+				
+			 }
+			 List<ProductInfo> productInfoListNew = new ArrayList<ProductInfo>();
+			 //
+			 int startRowIndex = 0;
+			 if(pageInfo.getStartRowIndex()>productInfoList.size()){
+				 productInfoListNew = new ArrayList<ProductInfo>();
+			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
+				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size());
+			 }
+			 //
+			 productInfoPageInfo.setResult(productInfoListNew);
+	         productInfoPageInfo.setCount(productInfoList.size());
+	         productInfoPageInfo.setPageNo(pageInfo.getPageNo());
+	         productInfoPageInfo.setPageSize(pageInfo.getPageSize());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			ResponseHeader responseHeader = new ResponseHeader(false, ErrorCode.FALSE, "失败");
+		}
+		 
+		return productInfoPageInfo;
+		
 	}
 
 }
