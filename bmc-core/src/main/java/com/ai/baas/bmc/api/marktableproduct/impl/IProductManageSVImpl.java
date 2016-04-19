@@ -22,6 +22,7 @@ import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 /**
@@ -53,6 +54,21 @@ public class IProductManageSVImpl implements IProductManageSV {
 			return null;
 		} else {
 			log.debug("------>>>addProduct() vo = " + vo.toString() + "]");
+		}
+		if(StringUtil.isBlank(vo.getTenantId())){
+			throw new BusinessException("empty","租户id不能为空");
+		}
+		if(StringUtil.isBlank(vo.getTradeSeq())){
+			throw new BusinessException("empty","消息流水不能为空");
+		}
+		if(StringUtil.isBlank(vo.getBillingType())){
+			throw new BusinessException("empty","计费类型不能为空");
+		}
+		if(StringUtil.isBlank(vo.getProductName())){
+			throw new BusinessException("empty","产品包名不能为空");
+		}
+		if(vo.getProductName().length() > 64){
+			throw new BusinessException("productName is max length 64","产品名称长度不能超过64位");
 		}
 		ProcductResponse response = new ProcductResponse();
 		//判重
@@ -203,13 +219,13 @@ public class IProductManageSVImpl implements IProductManageSV {
 	public ProcductResponse updateProductStatus(ProductActiveVO vo)
 			throws BusinessException, SystemException {
 		ProcductResponse response = new ProcductResponse();
-		if(null == vo.getTenantId()){
+		if(StringUtil.isBlank(vo.getTenantId())){
 			throw new BusinessException("tenantId is not null","租户id不能为空");
 		}
-		if(null == vo.getProductId()){
+		if(StringUtil.isBlank(vo.getProductId())){
 			throw new BusinessException("productId is not null","产品id不能为空");
 		}
-		if(null == vo.getStatus()){
+		if(StringUtil.isBlank(vo.getStatus())){
 			throw new BusinessException("status is not null","状态不能为空");
 		}
 		
@@ -240,11 +256,33 @@ public class IProductManageSVImpl implements IProductManageSV {
 	@Override
 	public void updateProduct(ProductVO vo) throws BusinessException,
 			SystemException {
+		if(StringUtil.isBlank(vo.getTenantId())){
+			throw new BusinessException("empty","租户id不能为空");
+		}
+		if(StringUtil.isBlank(vo.getTradeSeq())){
+			throw new BusinessException("empty","消息流水不能为空");
+		}
+		if(StringUtil.isBlank(vo.getBillingType())){
+			throw new BusinessException("empty","计费类型不能为空");
+		}
+		if(StringUtil.isBlank(vo.getProductName())){
+			throw new BusinessException("empty","产品包名不能为空");
+		}
+		if(vo.getProductName().length() > 64){
+			throw new BusinessException("productName is max length 64","产品名称长度不能超过64位");
+		}
 		this.iProductManageBusi.updateProduct(vo);
 	}
 
 	@Override
 	public ProductVO editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException {
+
+		if(StringUtil.isBlank(vo.getProductId())){
+			throw new BusinessException("empty","产品id不能为空");
+		}
+		if(StringUtil.isBlank(vo.getBillingType())){
+			throw new BusinessException("empty","计费类型不能为空");
+		}
 		return this.iProductManageBusi.editProduct(vo);
 		
 	}
