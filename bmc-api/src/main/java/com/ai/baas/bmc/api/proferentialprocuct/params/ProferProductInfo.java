@@ -55,6 +55,8 @@ public class ProferProductInfo extends BaseResponse {
 	 */
 	private String status;
 	
+	private String priceCode;
+	
 	public Long getProductId() {
 		return productId;
 	}
@@ -108,6 +110,12 @@ public class ProferProductInfo extends BaseResponse {
 	}
 	public void setTenantId(String tenantId) {
 		this.tenantId = tenantId;
+	}
+	public String getPriceCode() {
+		return priceCode;
+	}
+	public void setPriceCode(String priceCode) {
+		this.priceCode = priceCode;
 	}
 	
 	
