@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
 
 /**
@@ -23,7 +25,7 @@ public class Product implements Serializable {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message="产品ID不能为空",groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message="产品ID不能为空",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=32,groups={IOrderInfoSV.OrderInfo.class})
     private String productId;
 
@@ -33,7 +35,7 @@ public class Product implements Serializable {
      * 必填<br>
      * NUMBER(9)
      */
-    @NotNull(message="产品数量不能为空",groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message="产品数量不能为空",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=9,groups={IOrderInfoSV.OrderInfo.class})
     private Integer productNumber;
 
@@ -42,7 +44,7 @@ public class Product implements Serializable {
      * 标识该产品是否为一个赠送的产品。取值范围：Y：是赠送；N：不是赠送。<br>
      * VARCHAR(1)
      */
-    @NotNull(message="赠送标识不能为空",groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message="赠送标识不能为空",groups={IOrderInfoSV.OrderInfo.class})
 //    @Pattern(regexp="^[Y|N]$",message="取值范围：Y：是赠送；N：不是赠送",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=1,groups={IOrderInfoSV.OrderInfo.class})
     private String resBonusFlag;
@@ -53,7 +55,7 @@ public class Product implements Serializable {
      * 必填<br>
      * VARCHAR(14)
      */
-    @NotNull(message="生效日期不能为空",groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message="生效日期不能为空",groups={IOrderInfoSV.OrderInfo.class})
     @Size(min=14,max=14,groups={IOrderInfoSV.OrderInfo.class})
     private String activeTime;
 
@@ -63,7 +65,7 @@ public class Product implements Serializable {
      * 必填<br>
      * VARCHAR(14)
      */
-    @NotNull(message="失效日期不能为空",groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message="失效日期不能为空",groups={IOrderInfoSV.OrderInfo.class})
     @Size(min=14,max=14,groups={IOrderInfoSV.OrderInfo.class})
     private String inactiveTime;
 

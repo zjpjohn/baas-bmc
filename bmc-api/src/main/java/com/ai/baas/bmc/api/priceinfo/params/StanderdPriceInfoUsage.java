@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 
 /**
@@ -32,7 +34,7 @@ public class StanderdPriceInfoUsage implements Serializable {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message = "业务类型细分不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+    @NotBlank(message = "业务类型细分不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
     @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String subServiceType;
 
@@ -42,7 +44,7 @@ public class StanderdPriceInfoUsage implements Serializable {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message = "单位不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+    @NotBlank(message = "单位不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
     @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class })
     private String unit;
 
