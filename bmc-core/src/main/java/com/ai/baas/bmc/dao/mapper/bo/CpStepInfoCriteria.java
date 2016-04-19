@@ -434,52 +434,62 @@ public class CpStepInfoCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeEqualTo(Long value) {
+        public Criteria andFactorCodeEqualTo(String value) {
             addCriterion("FACTOR_CODE =", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeNotEqualTo(Long value) {
+        public Criteria andFactorCodeNotEqualTo(String value) {
             addCriterion("FACTOR_CODE <>", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeGreaterThan(Long value) {
+        public Criteria andFactorCodeGreaterThan(String value) {
             addCriterion("FACTOR_CODE >", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeGreaterThanOrEqualTo(Long value) {
+        public Criteria andFactorCodeGreaterThanOrEqualTo(String value) {
             addCriterion("FACTOR_CODE >=", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeLessThan(Long value) {
+        public Criteria andFactorCodeLessThan(String value) {
             addCriterion("FACTOR_CODE <", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeLessThanOrEqualTo(Long value) {
+        public Criteria andFactorCodeLessThanOrEqualTo(String value) {
             addCriterion("FACTOR_CODE <=", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeIn(List<Long> values) {
+        public Criteria andFactorCodeLike(String value) {
+            addCriterion("FACTOR_CODE like", value, "factorCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactorCodeNotLike(String value) {
+            addCriterion("FACTOR_CODE not like", value, "factorCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactorCodeIn(List<String> values) {
             addCriterion("FACTOR_CODE in", values, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeNotIn(List<Long> values) {
+        public Criteria andFactorCodeNotIn(List<String> values) {
             addCriterion("FACTOR_CODE not in", values, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeBetween(Long value1, Long value2) {
+        public Criteria andFactorCodeBetween(String value1, String value2) {
             addCriterion("FACTOR_CODE between", value1, value2, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeNotBetween(Long value1, Long value2) {
+        public Criteria andFactorCodeNotBetween(String value1, String value2) {
             addCriterion("FACTOR_CODE not between", value1, value2, "factorCode");
             return (Criteria) this;
         }
