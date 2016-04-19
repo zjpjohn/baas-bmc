@@ -423,6 +423,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
 		
+		cpStepInfo.setIsPriceEqual(vo.getIsPriceEqual());
+		stepobject.put("IS_PRICE_EQUAL", vo.getIsPriceEqual());
+		
 		this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 1);
 	}
