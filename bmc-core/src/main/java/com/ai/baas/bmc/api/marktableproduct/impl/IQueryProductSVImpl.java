@@ -47,8 +47,7 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 	@Override
 	public PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo)
 			throws BusinessException, SystemException {
-		
-		return null;
+		return this.iQueryProductBusiImpl.getProductInfoByProductIdList(vo);
 	}
 
 }
