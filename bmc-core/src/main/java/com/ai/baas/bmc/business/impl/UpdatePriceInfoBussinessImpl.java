@@ -79,7 +79,7 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
     public void writeData(StandardPriceInfoParams param) {
         if ("UPDATE".equals(param.getUpdateId())) {
            
-            // *******************更新cp_price_info表*******************
+            // 更新cp_price_info表
             CpPriceInfo priceInfo = new CpPriceInfo();
             priceInfo.setTenantId(param.getTenantId());
             priceInfo.setPriceName(param.getPriceName());
@@ -92,8 +92,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
                 throw new BusinessException("BaaS-000001", "cp_price_info表没有相关信息，无法更新");
             }
             priceInfo = aCpPriceInfoMapper.selectByExample(priceInfoC).get(0);
-            // *************************end****************************
-            // *******************更新cp_price_detail表*******************
+
+            // 更新cp_price_detail表
             CpPriceDetail priceDetail = new CpPriceDetail();
             priceDetail.setServiceType(param.getServiceType());
             // ^^明细项名称为空，计费类型为空，说明为空
@@ -104,8 +104,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
                 throw new BusinessException("BaaS-000001", "cp_price_detail表没有相关信息，无法更新");
             }
             priceDetail = aCpPriceDetailMapper.selectByExample(priceDetailC).get(0);
-            // *************************end****************************
-            // *******************更新cp_unitprice_info表*******************
+
+            // 更新cp_unitprice_info表
             CpUnitpriceInfo unitpriceInfo;
 
             CpUnitpriceInfoCriteria unitpriceInfoC = new CpUnitpriceInfoCriteria();
@@ -115,10 +115,15 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             // throw new BusinessException("BaaS-000001", "cp_price_info表没有相关信息，无法更新");
             // }
             unitpriceInfo = aCpUnitpriceInfoMapper.selectByExample(unitpriceInfoC).get(0);
-            // *************************end****************************
-            // ^^目前只有一条数据
+
+            // 目前只有一条数据
+            List<StanderdPriceInfoUsage> standerdPriceInfoUsageList = param.getUsageList();
+            if(standerdPriceInfoUsageList.size()== 0 ){
+                throw new BusinessException("BaaS-000001", "usageList不能为空");
+            }
+            
             StanderdPriceInfoUsage u = param.getUsageList().get(0);
-            // *******************更新cp_unitprice_item表*******************
+            // 更新cp_unitprice_item表
             CpUnitpriceItem unitpriceItem = new CpUnitpriceItem();
             unitpriceItem.setPriceValue(param.getPrice());
             unitpriceItem.setUnitTypeValue(u.getAmount());
@@ -130,8 +135,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
                     unitpriceItemC) < 1) {
                 throw new BusinessException("BaaS-000001", "cp_unitprice_item表没有相关信息，无法更新");
             }
-            // *************************end****************************
-            // *******************更新cp_factor_info表*******************
+
+            // 更新cp_factor_info表
             CpFactorInfo factorInfo = new CpFactorInfo();
             factorInfo.setFactorValue(u.getSubServiceType());
 
@@ -141,10 +146,10 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             if(aCpFactorInfoMapper.updateByExampleSelective(factorInfo, factorInfoC)<1){
                 throw new BusinessException("BaaS-000001", "cp_factor_info表没有相关信息，无法更新");
             }
-            // *************************end****************************
+            // end
         } else if ("CREATE".equals(param.getUpdateId())) {
 
-            // ************插入cp_price_info表********************
+            // 插入cp_price_info表
             CpPriceInfo priceInfo = new CpPriceInfo();
             priceInfo.setTenantId(param.getTenantId());
             priceInfo.setPriceCode(aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0));
@@ -157,11 +162,11 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             // ^^操作员和产品类型为空
 
             aCpPriceInfoMapper.insertSelective(priceInfo);
-            // *******************end***************************
+            // end
             // 目前只有一条数据
             StanderdPriceInfoUsage u = param.getUsageList().get(0);
             // for (StanderdPriceInfoUsage u : param.getUsageList()) {
-            // ************插入cp_price_detail表********************
+            // 插入cp_price_detail表
             CpPriceDetail priceDetail = new CpPriceDetail();
             priceDetail.setPriceCode(priceInfo.getPriceCode());
             priceDetail.setServiceType(param.getServiceType());
@@ -173,8 +178,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             // ^^明细项名称为空，计费类型为空，说明为空
 
             aCpPriceDetailMapper.insertSelective(priceDetail);
-            // *******************end***************************
-            // ************插入cp_unitprice_info表********************
+            // end
+            // 插入cp_unitprice_info表
             CpUnitpriceInfo unitpriceInfo = new CpUnitpriceInfo();
             unitpriceInfo.setUnitPriceCode(priceDetail.getDetailCode());
             unitpriceInfo.setFeeItemCode(
@@ -184,8 +189,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             // ^^明细的名称为空
 
             aCpUnitpriceInfoMapper.insertSelective(unitpriceInfo);
-            // *******************end***************************
-            // ************插入cp_unitprice_item表********************
+            // end
+            //插入cp_unitprice_item表
             CpUnitpriceItem unitpriceItem = new CpUnitpriceItem();
             unitpriceItem.setFeeItemCode(unitpriceInfo.getFeeItemCode());
             unitpriceItem.setPriceValue(param.getPrice());
@@ -198,8 +203,8 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             unitpriceItem.setInactiveTime(DateUtil.getTimestamp("20300101", DateUtil.YYYYMMDD));
 
             aCpUnitpriceItemMapper.insertSelective(unitpriceItem);
-            // *******************end***************************
-            // ************插入cp_factor_info表********************
+
+            // 插入cp_factor_info表
             CpFactorInfo factorInfo = new CpFactorInfo();
             factorInfo.setFactorCode(unitpriceInfo.getFactorCode());
             factorInfo.setTenantId(param.getTenantId());
