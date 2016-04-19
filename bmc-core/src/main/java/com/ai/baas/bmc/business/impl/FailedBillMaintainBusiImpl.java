@@ -18,6 +18,8 @@ import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,7 @@ import java.util.Map;
  */
 @Service
 public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
+    private Logger logger = LogManager.getLogger(FailedBillMaintainBusiImpl.class);
 
     private final String tableName = "bmc_failure_bill";
     @Autowired
@@ -40,24 +43,30 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
     @Override
     public List<FailedBill> queryFailedBills(FailedBillCriteria criteria) throws IOException {
         Table table = MyHbaseUtil.getTable(tableName);
-        StringBuilder stringBuilder = new StringBuilder("[.\n]*");
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
         if (criteria.getTenantId() != null && criteria.getTenantId().length() > 0) {
-            stringBuilder.append("[" + criteria.getTenantId() + "]*");
+            Filter filter = new SingleColumnValueFilter("failure_bill".getBytes(), "tenant_id".getBytes(),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getTenantId().getBytes()));
+            filterList.addFilter(filter);
         }
         if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
-            stringBuilder.append("[" + criteria.getServiceType() + "]*");
+            Filter filter = new SingleColumnValueFilter("failure_bill".getBytes(), "service_id".getBytes(),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getServiceType().getBytes()));
+            filterList.addFilter(filter);
         }
         if (criteria.getErrorCode() != null && criteria.getErrorCode().length() > 0) {
-            stringBuilder.append("[" + criteria.getErrorCode() + "*]");
+            Filter filter = new SingleColumnValueFilter("failure_bill".getBytes(), "fail_code".getBytes(),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getErrorCode().getBytes()));
+            filterList.addFilter(filter);
         }
 
         HBasePager<FailedBill> pager = criteria.getPager();
         Scan scan = new Scan();
-        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
-        Filter filter = new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(stringBuilder.toString()));
+
+        //Filter filter = new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(stringBuilder.toString()));
         Filter columnFilter = new SingleColumnValueFilter("failure_bill".getBytes(), "fail_step".getBytes(),
                 CompareFilter.CompareOp.EQUAL, new RegexStringComparator("BMC*"));
-        filterList.addFilter(filter);
+
         filterList.addFilter(columnFilter);
         if (pager != null) {
             //查询第一页
@@ -95,6 +104,15 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
             failedBills.add(failedBill);
         }
         return failedBills;
+    }
+
+    public static void main(String[] args) throws IOException {
+        FailedBillMaintainBusiImpl failedBillMaintainBusi = new FailedBillMaintainBusiImpl();
+        FailedBillCriteria criteria = new FailedBillCriteria();
+        criteria.setErrorCode("BMC-B0001");
+        criteria.setServiceType("VOICE");
+        criteria.setTenantId("TR");
+        failedBillMaintainBusi.queryFailedBills(criteria);
     }
 
     @Override
@@ -149,6 +167,9 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_packet".getBytes());
         if (cell != null) {
+            logger.debug("failedPacket : " + Bytes.toString(cell.getValueArray(),
+                    cell.getValueOffset(),
+                    cell.getValueLength()));
             Map<String, String> failedPacket = new Gson().fromJson(
                     Bytes.toString(cell.getValueArray(),
                             cell.getValueOffset(),
