@@ -1,40 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpStepInfoMapper">
-  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
-    <id column="SETP_ID" jdbcType="BIGINT" property="setpId" />
-    <result column="DETAIL_CODE" jdbcType="BIGINT" property="detailCode" />
-    <result column="STEP_SEQ" jdbcType="BIGINT" property="stepSeq" />
-    <result column="SECTION_A" jdbcType="DOUBLE" property="sectionA" />
-    <result column="SECTION_B" jdbcType="DOUBLE" property="sectionB" />
-    <result column="FACTOR_CODE" jdbcType="VARCHAR" property="factorCode" />
-    <result column="PRICE_VALUE" jdbcType="DOUBLE" property="priceValue" />
-    <result column="UNIT_TYPE" jdbcType="VARCHAR" property="unitType" />
-    <result column="TOTAL_PRICE_VALUE" jdbcType="DOUBLE" property="totalPriceValue" />
-    <result column="EXT_CODE" jdbcType="BIGINT" property="extCode" />
-    <result column="SUBJECT_CODE" jdbcType="VARCHAR" property="subjectCode" />
-    <result column="SERVICE_TYPE" jdbcType="VARCHAR" property="serviceType" />
-    <result column="IS_PRICE_EQUAL" jdbcType="VARCHAR" property="isPriceEqual" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpStepInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo" >
+    <id column="SETP_ID" property="setpId" jdbcType="BIGINT" />
+    <result column="DETAIL_CODE" property="detailCode" jdbcType="BIGINT" />
+    <result column="STEP_SEQ" property="stepSeq" jdbcType="BIGINT" />
+    <result column="SECTION_A" property="sectionA" jdbcType="DOUBLE" />
+    <result column="SECTION_B" property="sectionB" jdbcType="DOUBLE" />
+    <result column="FACTOR_CODE" property="factorCode" jdbcType="VARCHAR" />
+    <result column="PRICE_VALUE" property="priceValue" jdbcType="DOUBLE" />
+    <result column="UNIT_TYPE" property="unitType" jdbcType="VARCHAR" />
+    <result column="TOTAL_PRICE_VALUE" property="totalPriceValue" jdbcType="DOUBLE" />
+    <result column="EXT_CODE" property="extCode" jdbcType="BIGINT" />
+    <result column="SUBJECT_CODE" property="subjectCode" jdbcType="VARCHAR" />
+    <result column="SERVICE_TYPE" property="serviceType" jdbcType="VARCHAR" />
+    <result column="IS_PRICE_EQUAL" property="isPriceEqual" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -45,25 +45,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -74,44 +74,44 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     SETP_ID, DETAIL_CODE, STEP_SEQ, SECTION_A, SECTION_B, FACTOR_CODE, PRICE_VALUE, UNIT_TYPE, 
     TOTAL_PRICE_VALUE, EXT_CODE, SUBJECT_CODE, SERVICE_TYPE, IS_PRICE_EQUAL
   </sql>
-  <select id="selectByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from cp_step_info
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    <if test="limitStart != null and limitStart&gt;=0">
+    <if test="limitStart != null and limitStart>=0" >
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Long" >
     select 
     <include refid="Base_Column_List" />
     from cp_step_info
     where SETP_ID = #{setpId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="Long">
+  <delete id="deleteByPrimaryKey" parameterType="Long" >
     delete from cp_step_info
     where SETP_ID = #{setpId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria">
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria" >
     delete from cp_step_info
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo" >
     insert into cp_step_info (SETP_ID, DETAIL_CODE, STEP_SEQ, 
       SECTION_A, SECTION_B, FACTOR_CODE, 
       PRICE_VALUE, UNIT_TYPE, TOTAL_PRICE_VALUE, 
@@ -123,145 +123,145 @@
       #{extCode,jdbcType=BIGINT}, #{subjectCode,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}, 
       #{isPriceEqual,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo" >
     insert into cp_step_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="setpId != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="setpId != null" >
         SETP_ID,
       </if>
-      <if test="detailCode != null">
+      <if test="detailCode != null" >
         DETAIL_CODE,
       </if>
-      <if test="stepSeq != null">
+      <if test="stepSeq != null" >
         STEP_SEQ,
       </if>
-      <if test="sectionA != null">
+      <if test="sectionA != null" >
         SECTION_A,
       </if>
-      <if test="sectionB != null">
+      <if test="sectionB != null" >
         SECTION_B,
       </if>
-      <if test="factorCode != null">
+      <if test="factorCode != null" >
         FACTOR_CODE,
       </if>
-      <if test="priceValue != null">
+      <if test="priceValue != null" >
         PRICE_VALUE,
       </if>
-      <if test="unitType != null">
+      <if test="unitType != null" >
         UNIT_TYPE,
       </if>
-      <if test="totalPriceValue != null">
+      <if test="totalPriceValue != null" >
         TOTAL_PRICE_VALUE,
       </if>
-      <if test="extCode != null">
+      <if test="extCode != null" >
         EXT_CODE,
       </if>
-      <if test="subjectCode != null">
+      <if test="subjectCode != null" >
         SUBJECT_CODE,
       </if>
-      <if test="serviceType != null">
+      <if test="serviceType != null" >
         SERVICE_TYPE,
       </if>
-      <if test="isPriceEqual != null">
+      <if test="isPriceEqual != null" >
         IS_PRICE_EQUAL,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="setpId != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="setpId != null" >
         #{setpId,jdbcType=BIGINT},
       </if>
-      <if test="detailCode != null">
+      <if test="detailCode != null" >
         #{detailCode,jdbcType=BIGINT},
       </if>
-      <if test="stepSeq != null">
+      <if test="stepSeq != null" >
         #{stepSeq,jdbcType=BIGINT},
       </if>
-      <if test="sectionA != null">
+      <if test="sectionA != null" >
         #{sectionA,jdbcType=DOUBLE},
       </if>
-      <if test="sectionB != null">
+      <if test="sectionB != null" >
         #{sectionB,jdbcType=DOUBLE},
       </if>
-      <if test="factorCode != null">
+      <if test="factorCode != null" >
         #{factorCode,jdbcType=VARCHAR},
       </if>
-      <if test="priceValue != null">
+      <if test="priceValue != null" >
         #{priceValue,jdbcType=DOUBLE},
       </if>
-      <if test="unitType != null">
+      <if test="unitType != null" >
         #{unitType,jdbcType=VARCHAR},
       </if>
-      <if test="totalPriceValue != null">
+      <if test="totalPriceValue != null" >
         #{totalPriceValue,jdbcType=DOUBLE},
       </if>
-      <if test="extCode != null">
+      <if test="extCode != null" >
         #{extCode,jdbcType=BIGINT},
       </if>
-      <if test="subjectCode != null">
+      <if test="subjectCode != null" >
         #{subjectCode,jdbcType=VARCHAR},
       </if>
-      <if test="serviceType != null">
+      <if test="serviceType != null" >
         #{serviceType,jdbcType=VARCHAR},
       </if>
-      <if test="isPriceEqual != null">
+      <if test="isPriceEqual != null" >
         #{isPriceEqual,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria" resultType="java.lang.Integer" >
     select count(*) from cp_step_info
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update cp_step_info
-    <set>
-      <if test="record.setpId != null">
+    <set >
+      <if test="record.setpId != null" >
         SETP_ID = #{record.setpId,jdbcType=BIGINT},
       </if>
-      <if test="record.detailCode != null">
+      <if test="record.detailCode != null" >
         DETAIL_CODE = #{record.detailCode,jdbcType=BIGINT},
       </if>
-      <if test="record.stepSeq != null">
+      <if test="record.stepSeq != null" >
         STEP_SEQ = #{record.stepSeq,jdbcType=BIGINT},
       </if>
-      <if test="record.sectionA != null">
+      <if test="record.sectionA != null" >
         SECTION_A = #{record.sectionA,jdbcType=DOUBLE},
       </if>
-      <if test="record.sectionB != null">
+      <if test="record.sectionB != null" >
         SECTION_B = #{record.sectionB,jdbcType=DOUBLE},
       </if>
-      <if test="record.factorCode != null">
+      <if test="record.factorCode != null" >
         FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.priceValue != null">
+      <if test="record.priceValue != null" >
         PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
       </if>
-      <if test="record.unitType != null">
+      <if test="record.unitType != null" >
         UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
       </if>
-      <if test="record.totalPriceValue != null">
+      <if test="record.totalPriceValue != null" >
         TOTAL_PRICE_VALUE = #{record.totalPriceValue,jdbcType=DOUBLE},
       </if>
-      <if test="record.extCode != null">
+      <if test="record.extCode != null" >
         EXT_CODE = #{record.extCode,jdbcType=BIGINT},
       </if>
-      <if test="record.subjectCode != null">
+      <if test="record.subjectCode != null" >
         SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.serviceType != null">
+      <if test="record.serviceType != null" >
         SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
       </if>
-      <if test="record.isPriceEqual != null">
+      <if test="record.isPriceEqual != null" >
         IS_PRICE_EQUAL = #{record.isPriceEqual,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update cp_step_info
     set SETP_ID = #{record.setpId,jdbcType=BIGINT},
       DETAIL_CODE = #{record.detailCode,jdbcType=BIGINT},
@@ -276,53 +276,53 @@
       SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
       SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
       IS_PRICE_EQUAL = #{record.isPriceEqual,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo" >
     update cp_step_info
-    <set>
-      <if test="detailCode != null">
+    <set >
+      <if test="detailCode != null" >
         DETAIL_CODE = #{detailCode,jdbcType=BIGINT},
       </if>
-      <if test="stepSeq != null">
+      <if test="stepSeq != null" >
         STEP_SEQ = #{stepSeq,jdbcType=BIGINT},
       </if>
-      <if test="sectionA != null">
+      <if test="sectionA != null" >
         SECTION_A = #{sectionA,jdbcType=DOUBLE},
       </if>
-      <if test="sectionB != null">
+      <if test="sectionB != null" >
         SECTION_B = #{sectionB,jdbcType=DOUBLE},
       </if>
-      <if test="factorCode != null">
+      <if test="factorCode != null" >
         FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
       </if>
-      <if test="priceValue != null">
+      <if test="priceValue != null" >
         PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
       </if>
-      <if test="unitType != null">
+      <if test="unitType != null" >
         UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
       </if>
-      <if test="totalPriceValue != null">
+      <if test="totalPriceValue != null" >
         TOTAL_PRICE_VALUE = #{totalPriceValue,jdbcType=DOUBLE},
       </if>
-      <if test="extCode != null">
+      <if test="extCode != null" >
         EXT_CODE = #{extCode,jdbcType=BIGINT},
       </if>
-      <if test="subjectCode != null">
+      <if test="subjectCode != null" >
         SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
       </if>
-      <if test="serviceType != null">
+      <if test="serviceType != null" >
         SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
       </if>
-      <if test="isPriceEqual != null">
+      <if test="isPriceEqual != null" >
         IS_PRICE_EQUAL = #{isPriceEqual,jdbcType=VARCHAR},
       </if>
     </set>
     where SETP_ID = #{setpId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo" >
     update cp_step_info
     set DETAIL_CODE = #{detailCode,jdbcType=BIGINT},
       STEP_SEQ = #{stepSeq,jdbcType=BIGINT},
@@ -336,328 +336,6 @@
       SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
       SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
       IS_PRICE_EQUAL = #{isPriceEqual,jdbcType=VARCHAR}
-    where SETP_ID = #{setpId,jdbcType=BIGINT}
-  </update>
-  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
-    <id column="SETP_ID" jdbcType="BIGINT" property="setpId" />
-    <result column="DETAIL_CODE" jdbcType="BIGINT" property="detailCode" />
-    <result column="STEP_SEQ" jdbcType="BIGINT" property="stepSeq" />
-    <result column="SECTION_A" jdbcType="DOUBLE" property="sectionA" />
-    <result column="SECTION_B" jdbcType="DOUBLE" property="sectionB" />
-    <result column="FACTOR_CODE" jdbcType="VARCHAR" property="factorCode" />
-    <result column="PRICE_VALUE" jdbcType="DOUBLE" property="priceValue" />
-    <result column="UNIT_TYPE" jdbcType="VARCHAR" property="unitType" />
-    <result column="TOTAL_PRICE_VALUE" jdbcType="DOUBLE" property="totalPriceValue" />
-    <result column="EXT_CODE" jdbcType="BIGINT" property="extCode" />
-    <result column="SUBJECT_CODE" jdbcType="VARCHAR" property="subjectCode" />
-    <result column="SERVICE_TYPE" jdbcType="VARCHAR" property="serviceType" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    SETP_ID, DETAIL_CODE, STEP_SEQ, SECTION_A, SECTION_B, FACTOR_CODE, PRICE_VALUE, UNIT_TYPE, 
-    TOTAL_PRICE_VALUE, EXT_CODE, SUBJECT_CODE, SERVICE_TYPE
-  </sql>
-  <select id="selectByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from cp_step_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="limitStart != null and limitStart&gt;=0">
-      limit #{limitStart} , #{limitEnd}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cp_step_info
-    where SETP_ID = #{setpId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="Long">
-    delete from cp_step_info
-    where SETP_ID = #{setpId,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria">
-    delete from cp_step_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
-    insert into cp_step_info (SETP_ID, DETAIL_CODE, STEP_SEQ, 
-      SECTION_A, SECTION_B, FACTOR_CODE, 
-      PRICE_VALUE, UNIT_TYPE, TOTAL_PRICE_VALUE, 
-      EXT_CODE, SUBJECT_CODE, SERVICE_TYPE
-      )
-    values (#{setpId,jdbcType=BIGINT}, #{detailCode,jdbcType=BIGINT}, #{stepSeq,jdbcType=BIGINT}, 
-      #{sectionA,jdbcType=DOUBLE}, #{sectionB,jdbcType=DOUBLE}, #{factorCode,jdbcType=VARCHAR}, 
-      #{priceValue,jdbcType=DOUBLE}, #{unitType,jdbcType=VARCHAR}, #{totalPriceValue,jdbcType=DOUBLE}, 
-      #{extCode,jdbcType=BIGINT}, #{subjectCode,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
-    insert into cp_step_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="setpId != null">
-        SETP_ID,
-      </if>
-      <if test="detailCode != null">
-        DETAIL_CODE,
-      </if>
-      <if test="stepSeq != null">
-        STEP_SEQ,
-      </if>
-      <if test="sectionA != null">
-        SECTION_A,
-      </if>
-      <if test="sectionB != null">
-        SECTION_B,
-      </if>
-      <if test="factorCode != null">
-        FACTOR_CODE,
-      </if>
-      <if test="priceValue != null">
-        PRICE_VALUE,
-      </if>
-      <if test="unitType != null">
-        UNIT_TYPE,
-      </if>
-      <if test="totalPriceValue != null">
-        TOTAL_PRICE_VALUE,
-      </if>
-      <if test="extCode != null">
-        EXT_CODE,
-      </if>
-      <if test="subjectCode != null">
-        SUBJECT_CODE,
-      </if>
-      <if test="serviceType != null">
-        SERVICE_TYPE,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="setpId != null">
-        #{setpId,jdbcType=BIGINT},
-      </if>
-      <if test="detailCode != null">
-        #{detailCode,jdbcType=BIGINT},
-      </if>
-      <if test="stepSeq != null">
-        #{stepSeq,jdbcType=BIGINT},
-      </if>
-      <if test="sectionA != null">
-        #{sectionA,jdbcType=DOUBLE},
-      </if>
-      <if test="sectionB != null">
-        #{sectionB,jdbcType=DOUBLE},
-      </if>
-      <if test="factorCode != null">
-        #{factorCode,jdbcType=VARCHAR},
-      </if>
-      <if test="priceValue != null">
-        #{priceValue,jdbcType=DOUBLE},
-      </if>
-      <if test="unitType != null">
-        #{unitType,jdbcType=VARCHAR},
-      </if>
-      <if test="totalPriceValue != null">
-        #{totalPriceValue,jdbcType=DOUBLE},
-      </if>
-      <if test="extCode != null">
-        #{extCode,jdbcType=BIGINT},
-      </if>
-      <if test="subjectCode != null">
-        #{subjectCode,jdbcType=VARCHAR},
-      </if>
-      <if test="serviceType != null">
-        #{serviceType,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria" resultType="java.lang.Integer">
-    select count(*) from cp_step_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update cp_step_info
-    <set>
-      <if test="record.setpId != null">
-        SETP_ID = #{record.setpId,jdbcType=BIGINT},
-      </if>
-      <if test="record.detailCode != null">
-        DETAIL_CODE = #{record.detailCode,jdbcType=BIGINT},
-      </if>
-      <if test="record.stepSeq != null">
-        STEP_SEQ = #{record.stepSeq,jdbcType=BIGINT},
-      </if>
-      <if test="record.sectionA != null">
-        SECTION_A = #{record.sectionA,jdbcType=DOUBLE},
-      </if>
-      <if test="record.sectionB != null">
-        SECTION_B = #{record.sectionB,jdbcType=DOUBLE},
-      </if>
-      <if test="record.factorCode != null">
-        FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.priceValue != null">
-        PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
-      </if>
-      <if test="record.unitType != null">
-        UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.totalPriceValue != null">
-        TOTAL_PRICE_VALUE = #{record.totalPriceValue,jdbcType=DOUBLE},
-      </if>
-      <if test="record.extCode != null">
-        EXT_CODE = #{record.extCode,jdbcType=BIGINT},
-      </if>
-      <if test="record.subjectCode != null">
-        SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.serviceType != null">
-        SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update cp_step_info
-    set SETP_ID = #{record.setpId,jdbcType=BIGINT},
-      DETAIL_CODE = #{record.detailCode,jdbcType=BIGINT},
-      STEP_SEQ = #{record.stepSeq,jdbcType=BIGINT},
-      SECTION_A = #{record.sectionA,jdbcType=DOUBLE},
-      SECTION_B = #{record.sectionB,jdbcType=DOUBLE},
-      FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
-      PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
-      UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
-      TOTAL_PRICE_VALUE = #{record.totalPriceValue,jdbcType=DOUBLE},
-      EXT_CODE = #{record.extCode,jdbcType=BIGINT},
-      SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
-      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
-    update cp_step_info
-    <set>
-      <if test="detailCode != null">
-        DETAIL_CODE = #{detailCode,jdbcType=BIGINT},
-      </if>
-      <if test="stepSeq != null">
-        STEP_SEQ = #{stepSeq,jdbcType=BIGINT},
-      </if>
-      <if test="sectionA != null">
-        SECTION_A = #{sectionA,jdbcType=DOUBLE},
-      </if>
-      <if test="sectionB != null">
-        SECTION_B = #{sectionB,jdbcType=DOUBLE},
-      </if>
-      <if test="factorCode != null">
-        FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
-      </if>
-      <if test="priceValue != null">
-        PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
-      </if>
-      <if test="unitType != null">
-        UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
-      </if>
-      <if test="totalPriceValue != null">
-        TOTAL_PRICE_VALUE = #{totalPriceValue,jdbcType=DOUBLE},
-      </if>
-      <if test="extCode != null">
-        EXT_CODE = #{extCode,jdbcType=BIGINT},
-      </if>
-      <if test="subjectCode != null">
-        SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
-      </if>
-      <if test="serviceType != null">
-        SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where SETP_ID = #{setpId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo">
-    update cp_step_info
-    set DETAIL_CODE = #{detailCode,jdbcType=BIGINT},
-      STEP_SEQ = #{stepSeq,jdbcType=BIGINT},
-      SECTION_A = #{sectionA,jdbcType=DOUBLE},
-      SECTION_B = #{sectionB,jdbcType=DOUBLE},
-      FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
-      PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
-      UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
-      TOTAL_PRICE_VALUE = #{totalPriceValue,jdbcType=DOUBLE},
-      EXT_CODE = #{extCode,jdbcType=BIGINT},
-      SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
-      SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR}
     where SETP_ID = #{setpId,jdbcType=BIGINT}
   </update>
 </mapper>
