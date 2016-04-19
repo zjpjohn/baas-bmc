@@ -120,5 +120,18 @@ public class IConfigCenterClientTest {
 
         System.out.println("DBConf config ... end");
     }
+     
+     
+     @Test
+     public void queryDbConfInfo() {
+         System.out.println("DBConf config ... start");
+         StringBuilder sb = new StringBuilder();
+         String dbconf=client.get(SDKConstants.DB_CONF_PATH);
+         
 
+         System.out.println("DBConf config:"+dbconf);
+     }
+
+    
+     
 }

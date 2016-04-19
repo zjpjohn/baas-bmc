@@ -166,6 +166,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 				fp.setGitfAmount(present.getPresentAmount());
 				fp.setActiveCycle(present.getActiveCycle());
 				fp.setActiveFlag(present.getActiveFlag());
+				singlePro.setProductList(JSON.parseArray(present.getProductIds(),Long.class));
 				singlePro.setRuleAmount(present.getReachAmount());
 				singlePro.setRuleUnit(present.getUnit());
 				list.add(fp);
@@ -178,7 +179,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 			singlePro.setRuleAmount(reduce.getReachAmount());
 			singlePro.setReduceAmount(reduce.getReduceAmount());
 			singlePro.setRuleUnit(reduce.getUnit());
-			singlePro.setProductList(JSON.parseArray(reduce.getProductIds(), Integer.class));
+			singlePro.setProductList(JSON.parseArray(reduce.getProductIds(), Long.class));
 
 		}
 		ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
