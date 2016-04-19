@@ -100,6 +100,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
 		
+		cpPriceInfo.setActiveStatus(vo.getActiveDateTag());
+		priceinfobject.put("ACTIVE_STATUS", vo.getActiveDateTag());
+		
 		try {
 			this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
 			log.info("修改cpPriceInfo信息完毕！！！");
@@ -216,6 +219,11 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				//
 				serviceVOList.add(serviceVo);
 			}
+			if(!CollectionUtil.isEmpty(cpStepInfoList)){
+				productVo.setTotalPrice(new BigDecimal(cpStepInfoList.get(0).getTotalPriceValue()));
+				productVo.setIsPriceEqual(cpStepInfoList.get(0).getIsPriceEqual());
+			}
+			
 		}
 		if((CHARGE_TYPE_PACKAGE).equalsIgnoreCase(billingType)){
 			CpPackageInfo cpPackageInfo = new CpPackageInfo();
@@ -557,6 +565,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 		cpStepInfo.setServiceType(serviceVO.getServiceType());
 		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
+		
+		cpStepInfo.setIsPriceEqual(vo.getIsPriceEqual());
+		stepobject.put("IS_PRICE_EQUAL", vo.getIsPriceEqual());
+		
 		
 		//this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
 		if(StringUtil.isBlank(serviceVO.getServiceId())){
