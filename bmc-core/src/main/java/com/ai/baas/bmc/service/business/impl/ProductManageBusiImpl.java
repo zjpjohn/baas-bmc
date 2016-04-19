@@ -341,8 +341,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				}
 			}
 		} catch (Exception e) {
-			//e.printStackTrace();
-			throw new BusinessException("error", "操作失败");
+			e.printStackTrace();
+			throw new BusinessException("error",e.getMessage());
 		}
 
 	}
