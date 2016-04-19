@@ -66,7 +66,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		// cpPriceInfo.setProductType(vo.getProductType()); 暂时不启用
 		cpPriceInfo.setChargeType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setActiveStatus("INOPERATIVE"); // inoperative 待生效
+		cpPriceInfo.setActiveStatus("INACTIVE"); // inoperative 待生效
 		// TODO 有返回值，后期注意处理
 		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
@@ -142,7 +142,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		//cpPriceInfo.setProductType(vo.getProductType());
 		cpPriceInfo.setChargeType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setActiveStatus("INOPERATIVE"); // inoperative 待生效
+		cpPriceInfo.setActiveStatus("INACTIVE"); // inoperative 待生效
 		// TODO 有返回值，后期注意处理
 		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
@@ -275,7 +275,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceDetailBusi.updatePriceDetail(detail);
 		String chargeType = detail.getChargeType();
 		String detailCode = detail.getDetailCode();
-		if ("PRESENT".equals(chargeType)) {// 满赠
+		if ("dr_offer".equals(chargeType)) {// 满赠
 			// 由于数量不好对应所以进行先删后增
 			cpFullPresentBusi.deleteFullPresent(detailCode);
 			List<FullPresent> fList = vo.getPresentList();
@@ -296,7 +296,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 				cpFullPresentBusi.addFullPresent(cfp);
 			}
 		}
-		if ("REDUCE".equals(chargeType)) {// 满减
+		if ("dr_minus".equals(chargeType)) {// 满减
 			CpFullReduce r=cpFullReduceBusi.getFullReduce(detailCode);
 			CpFullReduce reduce = new CpFullReduce();
 			reduce.setActiveTime(vo.getActiveDate());
@@ -321,7 +321,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	public BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException {
 		int  count=0;
 		// 满赠
-		if ("PRESENT".equals(vo.getChargeType())) {
+		if ("dr_offer".equals(vo.getChargeType())) {
 			List<Long> pIds = vo.getFullIds();
 			for (Long id : pIds) {
 				CpFullPresent p = cpFullPresentBusi.getFullPresent(id);
@@ -333,7 +333,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 
 		}
 		// 满减
-		if ("REDUCE".equals(vo.getChargeType())) {
+		if ("dr_minus".equals(vo.getChargeType())) {
 			Long rId = vo.getFullIds().get(0);
 			CpFullReduce r = cpFullReduceBusi.getFullReduce(rId);
 			if (r != null) {
