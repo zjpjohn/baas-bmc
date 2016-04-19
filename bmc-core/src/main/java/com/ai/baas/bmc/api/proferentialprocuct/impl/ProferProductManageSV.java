@@ -297,7 +297,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			}
 		}
 		if ("REDUCE".equals(chargeType)) {// 满减
-
+			CpFullReduce r=cpFullReduceBusi.getFullReduce(detailCode);
 			CpFullReduce reduce = new CpFullReduce();
 			reduce.setActiveTime(vo.getActiveDate());
 			// reduce.setDetailCode(detailCode);
@@ -308,7 +308,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			reduce.setReduceCode(BmcSeqUtil.getReduceCode());
 			reduce.setReduceId(BmcSeqUtil.getReduceId());
 			reduce.setUnit(vo.getRuleUnit());
-			reduce.setReduceId(vo.getReduceId());
+			reduce.setReduceId(r.getReduceId());
 			cpFullReduceBusi.updateFullReduce(reduce);
 		}
 		ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
