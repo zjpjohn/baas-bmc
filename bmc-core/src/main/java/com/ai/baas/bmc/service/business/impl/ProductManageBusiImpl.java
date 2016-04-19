@@ -68,6 +68,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 	public static final String CHARGE_TYPE_STEP = "step_group_type";
 	public static final String CHARGE_TYPE_PACKAGE = "standard_group_type";
+	public static final String STATUS_ACTIVE = "ACTIVE";
+	public static final String STATUS_INACTIVE = "INACTIVE";
 	/**
 	 * 修改产品信息
 	 */
@@ -305,13 +307,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
 		
-		//如果失效日期大于当前系统日期 那么为有效状态 1：有效 ；0：失效
+		//如果失效日期大于当前系统日期 那么为有效状态 ACTIVE：有效 ；INACTIVE：失效
 //		if(vo.getInvalidDate().compareTo(DateUtil.getSysDate()) > 0){
 //			cpPriceInfo.setActiveStatus("1");
 //			priceinfobject.put("ACTIVE_STATUS", 1);
 //		}else{
-			cpPriceInfo.setActiveStatus("0");
-			priceinfobject.put("ACTIVE_STATUS", 0);
+			cpPriceInfo.setActiveStatus(STATUS_INACTIVE);
+			priceinfobject.put("ACTIVE_STATUS", STATUS_INACTIVE);
 //		}
 		
 		

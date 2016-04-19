@@ -256,7 +256,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 pageInfo.setResult(cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria));
 	         pageInfo.setCount(cpPriceInfoMapper.countByExample(cpPriceInfoCriteria));
 		        
-	        
+	        Log.info("size--------->>>"+pageInfo.getResult().size());
 	         //
 	         List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
 	         
@@ -302,6 +302,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				
 				
 			 }
+			 Log.info("productInfoList.size----->>>"+productInfoList.size());
 //			 List<ProductInfo> productInfoListNew = new ArrayList<ProductInfo>();
 //			 //
 //			 if(pageInfo.getStartRowIndex()>productInfoList.size()){
@@ -311,9 +312,9 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 //			 }
 			 //
 			 productInfoPageInfo.setResult(productInfoList);
-//	         productInfoPageInfo.setCount(productInfoList.size());
-//	         productInfoPageInfo.setPageNo(pageInfo.getPageNo());
-//	         productInfoPageInfo.setPageSize(pageInfo.getPageSize());
+	         productInfoPageInfo.setCount(productInfoList.size());
+	         productInfoPageInfo.setPageNo(1);
+	         productInfoPageInfo.setPageSize(productInfoList.size());
 
 		} catch (Exception e) {
 			e.printStackTrace();
