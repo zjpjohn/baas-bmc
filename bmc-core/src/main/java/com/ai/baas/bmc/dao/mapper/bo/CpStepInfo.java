@@ -25,6 +25,8 @@ public class CpStepInfo {
 
     private String serviceType;
 
+    private String isPriceEqual;
+
     public Long getSetpId() {
         return setpId;
     }
@@ -119,5 +121,13 @@ public class CpStepInfo {
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType == null ? null : serviceType.trim();
+    }
+
+    public String getIsPriceEqual() {
+        return isPriceEqual;
+    }
+
+    public void setIsPriceEqual(String isPriceEqual) {
+        this.isPriceEqual = isPriceEqual == null ? null : isPriceEqual.trim();
     }
 }

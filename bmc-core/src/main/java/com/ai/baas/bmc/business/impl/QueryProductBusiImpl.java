@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
 import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
@@ -236,6 +237,12 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 productInfo.setBillingType(CHARGE_TYPE_PACKAGE); 
 			 productInfo.setTotalPrice(new BigDecimal(packageInfo.get(0).getTotalPriceValue()));
 		 }
+	}
+
+	@Override
+	public PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

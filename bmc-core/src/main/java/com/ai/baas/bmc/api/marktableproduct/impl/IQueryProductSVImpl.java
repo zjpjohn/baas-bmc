@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.marktableproduct.interfaces.IQueryProductSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
 import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
 import com.ai.opt.base.exception.BusinessException;
@@ -41,6 +42,13 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 		return iQueryProductBusiImpl.Product(vo);
 		
 	
+	}
+
+	@Override
+	public PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo)
+			throws BusinessException, SystemException {
+		
+		return null;
 	}
 
 }

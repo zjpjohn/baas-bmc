@@ -883,6 +883,76 @@ public class CpStepInfoCriteria {
             addCriterion("SERVICE_TYPE not between", value1, value2, "serviceType");
             return (Criteria) this;
         }
+
+        public Criteria andIsPriceEqualIsNull() {
+            addCriterion("IS_PRICE_EQUAL is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualIsNotNull() {
+            addCriterion("IS_PRICE_EQUAL is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualEqualTo(String value) {
+            addCriterion("IS_PRICE_EQUAL =", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualNotEqualTo(String value) {
+            addCriterion("IS_PRICE_EQUAL <>", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualGreaterThan(String value) {
+            addCriterion("IS_PRICE_EQUAL >", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualGreaterThanOrEqualTo(String value) {
+            addCriterion("IS_PRICE_EQUAL >=", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualLessThan(String value) {
+            addCriterion("IS_PRICE_EQUAL <", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualLessThanOrEqualTo(String value) {
+            addCriterion("IS_PRICE_EQUAL <=", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualLike(String value) {
+            addCriterion("IS_PRICE_EQUAL like", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualNotLike(String value) {
+            addCriterion("IS_PRICE_EQUAL not like", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualIn(List<String> values) {
+            addCriterion("IS_PRICE_EQUAL in", values, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualNotIn(List<String> values) {
+            addCriterion("IS_PRICE_EQUAL not in", values, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualBetween(String value1, String value2) {
+            addCriterion("IS_PRICE_EQUAL between", value1, value2, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualNotBetween(String value1, String value2) {
+            addCriterion("IS_PRICE_EQUAL not between", value1, value2, "isPriceEqual");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
