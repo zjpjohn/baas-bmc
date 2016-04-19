@@ -80,9 +80,11 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         
         String code = null;
         String name = null;
+        
         code = record.getStandardId();
         name = record.getPriceName();
-        Criteria criteria=cpPriceInfoCriteria.or();
+        
+        CpPriceInfoCriteria.Criteria criteria=cpPriceInfoCriteria.or();
         if(!StringUtil.isBlank(code)){
             //code = "%"+record.getStandardId()+"%";
             criteria.andPriceCodeLike("%"+code+"%");
@@ -91,6 +93,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
             //name = "%"+record.getPriceName()+"%";
             criteria.andPriceNameLike("%"+name+"%");         
         }
+
         if(StringUtil.isBlank(record.getTenantId())){
             responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，查询失败"));
             return responseMessage;
@@ -124,14 +127,21 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            System.out.println("price_code"+price_code);
            CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
            
-           cpPriceDetailCriteria.createCriteria()
-             .andPriceCodeEqualTo(price_code);
+           CpPriceDetailCriteria.Criteria cpPriceDetailC=cpPriceDetailCriteria.or();
+           cpPriceDetailC.andPriceCodeEqualTo(price_code);
+           //////TEMP
+          //业务类型作为查询条件
+           if(!StringUtil.isBlank(record.getServiceType())){
+               cpPriceDetailC.andServiceTypeEqualTo(record.getServiceType());
+             }
+           
            List<CpPriceDetail> cpPriceDetailList = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
            //CpPriceDetail判空
            if(cpPriceDetailList.size()==0){
                System.out.println("price_code:"+price_code+"在CpPriceDetail表中没有对应的数据");
                continue;
            }
+
            CpPriceDetail cpPriceDetail = cpPriceDetailList.get(0);
            //查询CpUnitpriceInfo    获得factor_code fee_item_code
            detail_code = cpPriceDetail.getDetailCode();
@@ -149,9 +159,12 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            //查询CpUnitpriceItem
            fee_item_code = cpUnitpriceInfo.getFeeItemCode();
            CpUnitpriceItemCriteria cpUnitpriceItemCriteria = new CpUnitpriceItemCriteria();
-           
-           cpUnitpriceItemCriteria.createCriteria()
-             .andFeeItemCodeEqualTo(fee_item_code);
+           CpUnitpriceItemCriteria.Criteria  cpUnitpriceItemC = cpUnitpriceItemCriteria.or();
+           //增加生效状态做为查询条件
+           if(!StringUtil.isBlank(record.getPriceState())){
+               cpUnitpriceItemC.andActiveStatusEqualTo(record.getPriceState());
+           }
+           cpUnitpriceItemC.andFeeItemCodeEqualTo(fee_item_code);
            List<CpUnitpriceItem> cpUnitpriceItemList =  cpUnitpriceItemMapper.selectByExample(cpUnitpriceItemCriteria);
            if(cpUnitpriceItemList.size()==0){
                System.out.println("fee_item_code:"+fee_item_code+"在CpUnitpriceItem表中没有对应的数据");
@@ -170,8 +183,12 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
                System.out.println("factor_code:"+factor_code+"在CpFactorInfo表中没有对应的数据");
                continue;
            }
-           CpFactorInfo cpFactorInfo = cpFactorInfoList.get(0);
            
+           CpFactorInfo cpFactorInfo = cpFactorInfoList.get(0);
+           if(!StringUtil.isBlank(record.getSubServiceType())&&!cpFactorInfo.getFactorValue().equals(record.getSubServiceType())){
+               System.out.println("业务类型细分不匹配");
+               continue;
+           }
            responseMessage.setTradeSeq(record.getTradeSeq());//TradeSeq 交易流水
            responseMessage.setTenantId(cpPriceInfo.getTenantId());//TenantId 租户ID
            StandardList standards = new StandardList();

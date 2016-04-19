@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.priceinfo.impl;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
 import com.ai.baas.bmc.api.priceinfo.params.ResponseMessage;
 import com.ai.baas.bmc.api.priceinfo.params.StandardPriceInfoParams;
+import com.ai.baas.bmc.api.priceinfo.params.StanderdPriceInfoUsage;
 import com.ai.baas.bmc.business.interfaces.IGetPriceInfoBussiness;
 import com.ai.baas.bmc.business.interfaces.IUpdatePriceInfoBussiness;
 import com.ai.baas.bmc.util.LoggerUtil;
@@ -51,7 +53,12 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
             return result;
         }
         if(StringUtil.isBlank(record.getTenantId())){
-            result.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，查询失败"));
+            result.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，更新失败"));
+            return result;
+        }
+        List<StanderdPriceInfoUsage> standerdPriceInfoUsageList = record.getUsageList();
+        if(standerdPriceInfoUsageList.size()== 0 ){
+            result.setResponseHeader(new ResponseHeader(false, "000001", "usageList为空，更新失败"));
             return result;
         }
         if (("UPDATE".equals(record.getUpdateId()))&& StringUtil.isBlank(record.getStandardId())) {
