@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.marktableproduct.interfaces;
 
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -28,5 +29,16 @@ public interface IQueryProductSV {
 	 */
 	PageInfo<ProductInfo> getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
 	@interface GetProductInfo{}
-	
+	/**
+	 * 根据租户编号和产品编号列表查询产品信息 分页
+	 * @param vo
+	 * @return
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo) throws BusinessException, SystemException;
+	@interface getProductInfoByProductIdList{}
 }

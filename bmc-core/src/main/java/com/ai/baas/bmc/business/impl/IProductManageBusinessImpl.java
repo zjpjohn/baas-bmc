@@ -184,7 +184,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		cpStepInfo.setUnitType(serviceVO.getUnit());
 		stepobject.put("UNIT_TYPE", serviceVO.getUnit());
 		
-		cpStepInfo.setFactorCode(Long.valueOf(serviceVO.getServiceTypeDetail()));
+		cpStepInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
 		
 		cpStepInfoMapper.insert(cpStepInfo);

@@ -3,6 +3,7 @@ package com.ai.baas.bmc.api.priceinfo.params;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.opt.base.vo.BaseInfo;
@@ -23,7 +24,7 @@ public class QueryInfoParams extends BaseInfo {
      * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
      * 必填<br>
      */
-    @NotNull(message="消息流水不能为空")
+    @NotBlank(message="消息流水不能为空")
    //@Size(max=32)
     private String tradeSeq;
     

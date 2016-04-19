@@ -434,52 +434,62 @@ public class CpStepInfoCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeEqualTo(Long value) {
+        public Criteria andFactorCodeEqualTo(String value) {
             addCriterion("FACTOR_CODE =", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeNotEqualTo(Long value) {
+        public Criteria andFactorCodeNotEqualTo(String value) {
             addCriterion("FACTOR_CODE <>", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeGreaterThan(Long value) {
+        public Criteria andFactorCodeGreaterThan(String value) {
             addCriterion("FACTOR_CODE >", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeGreaterThanOrEqualTo(Long value) {
+        public Criteria andFactorCodeGreaterThanOrEqualTo(String value) {
             addCriterion("FACTOR_CODE >=", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeLessThan(Long value) {
+        public Criteria andFactorCodeLessThan(String value) {
             addCriterion("FACTOR_CODE <", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeLessThanOrEqualTo(Long value) {
+        public Criteria andFactorCodeLessThanOrEqualTo(String value) {
             addCriterion("FACTOR_CODE <=", value, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeIn(List<Long> values) {
+        public Criteria andFactorCodeLike(String value) {
+            addCriterion("FACTOR_CODE like", value, "factorCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactorCodeNotLike(String value) {
+            addCriterion("FACTOR_CODE not like", value, "factorCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFactorCodeIn(List<String> values) {
             addCriterion("FACTOR_CODE in", values, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeNotIn(List<Long> values) {
+        public Criteria andFactorCodeNotIn(List<String> values) {
             addCriterion("FACTOR_CODE not in", values, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeBetween(Long value1, Long value2) {
+        public Criteria andFactorCodeBetween(String value1, String value2) {
             addCriterion("FACTOR_CODE between", value1, value2, "factorCode");
             return (Criteria) this;
         }
 
-        public Criteria andFactorCodeNotBetween(Long value1, Long value2) {
+        public Criteria andFactorCodeNotBetween(String value1, String value2) {
             addCriterion("FACTOR_CODE not between", value1, value2, "factorCode");
             return (Criteria) this;
         }
@@ -871,6 +881,76 @@ public class CpStepInfoCriteria {
 
         public Criteria andServiceTypeNotBetween(String value1, String value2) {
             addCriterion("SERVICE_TYPE not between", value1, value2, "serviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualIsNull() {
+            addCriterion("IS_PRICE_EQUAL is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualIsNotNull() {
+            addCriterion("IS_PRICE_EQUAL is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualEqualTo(String value) {
+            addCriterion("IS_PRICE_EQUAL =", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualNotEqualTo(String value) {
+            addCriterion("IS_PRICE_EQUAL <>", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualGreaterThan(String value) {
+            addCriterion("IS_PRICE_EQUAL >", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualGreaterThanOrEqualTo(String value) {
+            addCriterion("IS_PRICE_EQUAL >=", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualLessThan(String value) {
+            addCriterion("IS_PRICE_EQUAL <", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualLessThanOrEqualTo(String value) {
+            addCriterion("IS_PRICE_EQUAL <=", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualLike(String value) {
+            addCriterion("IS_PRICE_EQUAL like", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualNotLike(String value) {
+            addCriterion("IS_PRICE_EQUAL not like", value, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualIn(List<String> values) {
+            addCriterion("IS_PRICE_EQUAL in", values, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualNotIn(List<String> values) {
+            addCriterion("IS_PRICE_EQUAL not in", values, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualBetween(String value1, String value2) {
+            addCriterion("IS_PRICE_EQUAL between", value1, value2, "isPriceEqual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPriceEqualNotBetween(String value1, String value2) {
+            addCriterion("IS_PRICE_EQUAL not between", value1, value2, "isPriceEqual");
             return (Criteria) this;
         }
     }

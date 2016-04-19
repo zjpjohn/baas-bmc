@@ -11,7 +11,7 @@ public class CpStepInfo {
 
     private Double sectionB;
 
-    private Long factorCode;
+    private String factorCode;
 
     private Double priceValue;
 
@@ -24,6 +24,8 @@ public class CpStepInfo {
     private String subjectCode;
 
     private String serviceType;
+
+    private String isPriceEqual;
 
     public Long getSetpId() {
         return setpId;
@@ -65,12 +67,12 @@ public class CpStepInfo {
         this.sectionB = sectionB;
     }
 
-    public Long getFactorCode() {
+    public String getFactorCode() {
         return factorCode;
     }
 
-    public void setFactorCode(Long factorCode) {
-        this.factorCode = factorCode;
+    public void setFactorCode(String factorCode) {
+        this.factorCode = factorCode == null ? null : factorCode.trim();
     }
 
     public Double getPriceValue() {
@@ -119,5 +121,13 @@ public class CpStepInfo {
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType == null ? null : serviceType.trim();
+    }
+
+    public String getIsPriceEqual() {
+        return isPriceEqual;
+    }
+
+    public void setIsPriceEqual(String isPriceEqual) {
+        this.isPriceEqual = isPriceEqual == null ? null : isPriceEqual.trim();
     }
 }

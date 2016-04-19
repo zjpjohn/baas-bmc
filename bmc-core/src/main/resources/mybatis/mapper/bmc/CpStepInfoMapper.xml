@@ -7,13 +7,14 @@
     <result column="STEP_SEQ" property="stepSeq" jdbcType="BIGINT" />
     <result column="SECTION_A" property="sectionA" jdbcType="DOUBLE" />
     <result column="SECTION_B" property="sectionB" jdbcType="DOUBLE" />
-    <result column="FACTOR_CODE" property="factorCode" jdbcType="BIGINT" />
+    <result column="FACTOR_CODE" property="factorCode" jdbcType="VARCHAR" />
     <result column="PRICE_VALUE" property="priceValue" jdbcType="DOUBLE" />
     <result column="UNIT_TYPE" property="unitType" jdbcType="VARCHAR" />
     <result column="TOTAL_PRICE_VALUE" property="totalPriceValue" jdbcType="DOUBLE" />
     <result column="EXT_CODE" property="extCode" jdbcType="BIGINT" />
     <result column="SUBJECT_CODE" property="subjectCode" jdbcType="VARCHAR" />
     <result column="SERVICE_TYPE" property="serviceType" jdbcType="VARCHAR" />
+    <result column="IS_PRICE_EQUAL" property="isPriceEqual" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     SETP_ID, DETAIL_CODE, STEP_SEQ, SECTION_A, SECTION_B, FACTOR_CODE, PRICE_VALUE, UNIT_TYPE, 
-    TOTAL_PRICE_VALUE, EXT_CODE, SUBJECT_CODE, SERVICE_TYPE
+    TOTAL_PRICE_VALUE, EXT_CODE, SUBJECT_CODE, SERVICE_TYPE, IS_PRICE_EQUAL
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria" >
     select
@@ -114,13 +115,13 @@
     insert into cp_step_info (SETP_ID, DETAIL_CODE, STEP_SEQ, 
       SECTION_A, SECTION_B, FACTOR_CODE, 
       PRICE_VALUE, UNIT_TYPE, TOTAL_PRICE_VALUE, 
-      EXT_CODE, SUBJECT_CODE, SERVICE_TYPE
-      )
+      EXT_CODE, SUBJECT_CODE, SERVICE_TYPE, 
+      IS_PRICE_EQUAL)
     values (#{setpId,jdbcType=BIGINT}, #{detailCode,jdbcType=BIGINT}, #{stepSeq,jdbcType=BIGINT}, 
-      #{sectionA,jdbcType=DOUBLE}, #{sectionB,jdbcType=DOUBLE}, #{factorCode,jdbcType=BIGINT}, 
+      #{sectionA,jdbcType=DOUBLE}, #{sectionB,jdbcType=DOUBLE}, #{factorCode,jdbcType=VARCHAR}, 
       #{priceValue,jdbcType=DOUBLE}, #{unitType,jdbcType=VARCHAR}, #{totalPriceValue,jdbcType=DOUBLE}, 
-      #{extCode,jdbcType=BIGINT}, #{subjectCode,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}
-      )
+      #{extCode,jdbcType=BIGINT}, #{subjectCode,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}, 
+      #{isPriceEqual,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpStepInfo" >
     insert into cp_step_info
@@ -161,6 +162,9 @@
       <if test="serviceType != null" >
         SERVICE_TYPE,
       </if>
+      <if test="isPriceEqual != null" >
+        IS_PRICE_EQUAL,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="setpId != null" >
@@ -179,7 +183,7 @@
         #{sectionB,jdbcType=DOUBLE},
       </if>
       <if test="factorCode != null" >
-        #{factorCode,jdbcType=BIGINT},
+        #{factorCode,jdbcType=VARCHAR},
       </if>
       <if test="priceValue != null" >
         #{priceValue,jdbcType=DOUBLE},
@@ -198,6 +202,9 @@
       </if>
       <if test="serviceType != null" >
         #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="isPriceEqual != null" >
+        #{isPriceEqual,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -226,7 +233,7 @@
         SECTION_B = #{record.sectionB,jdbcType=DOUBLE},
       </if>
       <if test="record.factorCode != null" >
-        FACTOR_CODE = #{record.factorCode,jdbcType=BIGINT},
+        FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
       </if>
       <if test="record.priceValue != null" >
         PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
@@ -246,6 +253,9 @@
       <if test="record.serviceType != null" >
         SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
       </if>
+      <if test="record.isPriceEqual != null" >
+        IS_PRICE_EQUAL = #{record.isPriceEqual,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -258,13 +268,14 @@
       STEP_SEQ = #{record.stepSeq,jdbcType=BIGINT},
       SECTION_A = #{record.sectionA,jdbcType=DOUBLE},
       SECTION_B = #{record.sectionB,jdbcType=DOUBLE},
-      FACTOR_CODE = #{record.factorCode,jdbcType=BIGINT},
+      FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
       PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
       UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
       TOTAL_PRICE_VALUE = #{record.totalPriceValue,jdbcType=DOUBLE},
       EXT_CODE = #{record.extCode,jdbcType=BIGINT},
       SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
-      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR}
+      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      IS_PRICE_EQUAL = #{record.isPriceEqual,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -285,7 +296,7 @@
         SECTION_B = #{sectionB,jdbcType=DOUBLE},
       </if>
       <if test="factorCode != null" >
-        FACTOR_CODE = #{factorCode,jdbcType=BIGINT},
+        FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
       </if>
       <if test="priceValue != null" >
         PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
@@ -305,6 +316,9 @@
       <if test="serviceType != null" >
         SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
       </if>
+      <if test="isPriceEqual != null" >
+        IS_PRICE_EQUAL = #{isPriceEqual,jdbcType=VARCHAR},
+      </if>
     </set>
     where SETP_ID = #{setpId,jdbcType=BIGINT}
   </update>
@@ -314,13 +328,14 @@
       STEP_SEQ = #{stepSeq,jdbcType=BIGINT},
       SECTION_A = #{sectionA,jdbcType=DOUBLE},
       SECTION_B = #{sectionB,jdbcType=DOUBLE},
-      FACTOR_CODE = #{factorCode,jdbcType=BIGINT},
+      FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
       PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
       UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
       TOTAL_PRICE_VALUE = #{totalPriceValue,jdbcType=DOUBLE},
       EXT_CODE = #{extCode,jdbcType=BIGINT},
       SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
-      SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR}
+      SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      IS_PRICE_EQUAL = #{isPriceEqual,jdbcType=VARCHAR}
     where SETP_ID = #{setpId,jdbcType=BIGINT}
   </update>
 </mapper>
