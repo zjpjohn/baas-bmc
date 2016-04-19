@@ -50,7 +50,7 @@ public class QueryProductSvTest {
 		productIdList.add("148");
 		//
 		vo.setProductIdList(productIdList);
-		
+		System.out.println("-----param:"+JSON.toJSONString(vo));
 		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getProductInfoByProductIdList(vo);
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
 	}
