@@ -7,7 +7,7 @@
     <result column="STEP_SEQ" property="stepSeq" jdbcType="BIGINT" />
     <result column="SECTION_A" property="sectionA" jdbcType="DOUBLE" />
     <result column="SECTION_B" property="sectionB" jdbcType="DOUBLE" />
-    <result column="FACTOR_CODE" property="factorCode" jdbcType="BIGINT" />
+    <result column="FACTOR_CODE" property="factorCode" jdbcType="VARCHAR" />
     <result column="PRICE_VALUE" property="priceValue" jdbcType="DOUBLE" />
     <result column="UNIT_TYPE" property="unitType" jdbcType="VARCHAR" />
     <result column="TOTAL_PRICE_VALUE" property="totalPriceValue" jdbcType="DOUBLE" />
@@ -117,7 +117,7 @@
       EXT_CODE, SUBJECT_CODE, SERVICE_TYPE
       )
     values (#{setpId,jdbcType=BIGINT}, #{detailCode,jdbcType=BIGINT}, #{stepSeq,jdbcType=BIGINT}, 
-      #{sectionA,jdbcType=DOUBLE}, #{sectionB,jdbcType=DOUBLE}, #{factorCode,jdbcType=BIGINT}, 
+      #{sectionA,jdbcType=DOUBLE}, #{sectionB,jdbcType=DOUBLE}, #{factorCode,jdbcType=VARCHAR}, 
       #{priceValue,jdbcType=DOUBLE}, #{unitType,jdbcType=VARCHAR}, #{totalPriceValue,jdbcType=DOUBLE}, 
       #{extCode,jdbcType=BIGINT}, #{subjectCode,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}
       )
@@ -179,7 +179,7 @@
         #{sectionB,jdbcType=DOUBLE},
       </if>
       <if test="factorCode != null" >
-        #{factorCode,jdbcType=BIGINT},
+        #{factorCode,jdbcType=VARCHAR},
       </if>
       <if test="priceValue != null" >
         #{priceValue,jdbcType=DOUBLE},
@@ -226,7 +226,7 @@
         SECTION_B = #{record.sectionB,jdbcType=DOUBLE},
       </if>
       <if test="record.factorCode != null" >
-        FACTOR_CODE = #{record.factorCode,jdbcType=BIGINT},
+        FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
       </if>
       <if test="record.priceValue != null" >
         PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
@@ -258,7 +258,7 @@
       STEP_SEQ = #{record.stepSeq,jdbcType=BIGINT},
       SECTION_A = #{record.sectionA,jdbcType=DOUBLE},
       SECTION_B = #{record.sectionB,jdbcType=DOUBLE},
-      FACTOR_CODE = #{record.factorCode,jdbcType=BIGINT},
+      FACTOR_CODE = #{record.factorCode,jdbcType=VARCHAR},
       PRICE_VALUE = #{record.priceValue,jdbcType=DOUBLE},
       UNIT_TYPE = #{record.unitType,jdbcType=VARCHAR},
       TOTAL_PRICE_VALUE = #{record.totalPriceValue,jdbcType=DOUBLE},
@@ -285,7 +285,7 @@
         SECTION_B = #{sectionB,jdbcType=DOUBLE},
       </if>
       <if test="factorCode != null" >
-        FACTOR_CODE = #{factorCode,jdbcType=BIGINT},
+        FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
       </if>
       <if test="priceValue != null" >
         PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
@@ -314,7 +314,7 @@
       STEP_SEQ = #{stepSeq,jdbcType=BIGINT},
       SECTION_A = #{sectionA,jdbcType=DOUBLE},
       SECTION_B = #{sectionB,jdbcType=DOUBLE},
-      FACTOR_CODE = #{factorCode,jdbcType=BIGINT},
+      FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
       PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
       UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
       TOTAL_PRICE_VALUE = #{totalPriceValue,jdbcType=DOUBLE},

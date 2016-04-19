@@ -417,13 +417,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setUnitType(serviceVO.getUnit());
 		stepobject.put("UNIT_TYPE", serviceVO.getUnit());
 
-		cpStepInfo.setFactorCode(Long.valueOf(serviceVO.getServiceTypeDetail()));
-		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
-
 		cpStepInfo.setServiceType(serviceVO.getServiceType());
 		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
 		
-		cpStepInfo.setFactorCode(new Long(serviceVO.getServiceTypeDetail()));
+		cpStepInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
 		
 		this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
@@ -550,7 +547,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setUnitType(serviceVO.getUnit());
 		stepobject.put("UNIT_TYPE", serviceVO.getUnit());
 
-		cpStepInfo.setFactorCode(Long.valueOf(serviceVO.getServiceTypeDetail()));
+		cpStepInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		stepobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
 
 		cpStepInfo.setServiceType(serviceVO.getServiceType());

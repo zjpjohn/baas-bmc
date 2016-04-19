@@ -11,7 +11,7 @@ public class CpStepInfo {
 
     private Double sectionB;
 
-    private Long factorCode;
+    private String factorCode;
 
     private Double priceValue;
 
@@ -65,12 +65,12 @@ public class CpStepInfo {
         this.sectionB = sectionB;
     }
 
-    public Long getFactorCode() {
+    public String getFactorCode() {
         return factorCode;
     }
 
-    public void setFactorCode(Long factorCode) {
-        this.factorCode = factorCode;
+    public void setFactorCode(String factorCode) {
+        this.factorCode = factorCode == null ? null : factorCode.trim();
     }
 
     public Double getPriceValue() {
