@@ -65,6 +65,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 			productInfo.setStatus(info.getActiveStatus());
 			productInfo.setTenantId(info.getTenantId());
 			productInfo.setTradeSeq(vo.getTradeSeq());
+			productInfo.setPriceCode(info.getPriceCode());
 			CpPriceDetail detail = iCpPriceDetailBusi.getCpPriceDetail(info.getPriceCode());
 			if(detail!=null){
 				productInfo.setProferType(detail.getChargeType());
