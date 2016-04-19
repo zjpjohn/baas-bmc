@@ -57,4 +57,10 @@ public class CpPackageInfoAtomImpl implements ICpPackageInfoAtom {
 
 		this.cpPackageInfoMapper.insertSelective(info);
 	}
+
+	@Override
+	public void updateCpPackageInfoByPrimaryKey(CpPackageInfo info) {
+
+		this.cpPackageInfoMapper.updateByPrimaryKeySelective(info);
+	}
 }

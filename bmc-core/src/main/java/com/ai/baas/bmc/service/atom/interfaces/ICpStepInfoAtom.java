@@ -14,6 +14,14 @@ public interface ICpStepInfoAtom {
 	 */
 	public void updateCpStepInfoByDetailCode(CpStepInfo info);
 	/**
+	 * 根据stepId修改信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public void updateCpStepInfoByPrimaryKey(CpStepInfo info);
+	/**
 	 * 通过detailCode删除信息
 	 * @param info
 	 * @author zhangzd

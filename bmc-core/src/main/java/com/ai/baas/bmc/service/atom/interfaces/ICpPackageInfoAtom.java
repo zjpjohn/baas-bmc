@@ -21,6 +21,14 @@ public interface ICpPackageInfoAtom {
 	 */
 	public void updateCpPackageInfoByDetailCode(CpPackageInfo info);
 	/**
+	 * 根据packageId修改信息
+	 * @param info
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public void updateCpPackageInfoByPrimaryKey(CpPackageInfo info);
+	/**
 	 * 通过detailCode删除信息
 	 * @param info
 	 * @author zhangzd
