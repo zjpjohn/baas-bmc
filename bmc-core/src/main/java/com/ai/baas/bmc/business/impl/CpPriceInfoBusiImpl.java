@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.business.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
 import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.opt.sdk.util.CollectionUtil;
-import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.fastjson.JSON;
-
-import net.sf.json.JSONObject;
 @Service
 @Transactional
 public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
@@ -63,6 +61,10 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
 		criteria.andActiveStatusNotEqualTo("DEL");
+		List<String> list=new ArrayList<String>();
+		list.add("dr_minus");
+		list.add("dr_offer");
+		criteria.andChargeTypeIn(list);
 		if(vo.getProductId()!=null){
 			criteria.andPriceInfoIdEqualTo(vo.getProductId());
 		}
@@ -93,6 +95,10 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
 		criteria.andActiveStatusNotEqualTo("DEL");
+		List<String> list=new ArrayList<String>();
+		list.add("dr_minus");
+		list.add("dr_offer");
+		criteria.andChargeTypeIn(list);
 		if(vo.getProductId()!=null){
 			criteria.andPriceInfoIdEqualTo(vo.getProductId());
 		}
