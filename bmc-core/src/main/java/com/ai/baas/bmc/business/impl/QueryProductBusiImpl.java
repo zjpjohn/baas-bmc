@@ -248,7 +248,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
 			CpPriceInfoCriteria.Criteria criteriaCpPriceInfo= cpPriceInfoCriteria.createCriteria();
 			criteriaCpPriceInfo.andTenantIdEqualTo(vo.getTenantId());
-			
+			criteriaCpPriceInfo.andPriceCodeIn(vo.getProductIdList());
 			 
 			 PageInfo<CpPriceInfo> pageInfo = new PageInfo<CpPriceInfo>();
 			 
@@ -302,19 +302,18 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				
 				
 			 }
-			 List<ProductInfo> productInfoListNew = new ArrayList<ProductInfo>();
+//			 List<ProductInfo> productInfoListNew = new ArrayList<ProductInfo>();
+//			 //
+//			 if(pageInfo.getStartRowIndex()>productInfoList.size()){
+//				 productInfoListNew = new ArrayList<ProductInfo>();
+//			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
+//				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size());
+//			 }
 			 //
-			 int startRowIndex = 0;
-			 if(pageInfo.getStartRowIndex()>productInfoList.size()){
-				 productInfoListNew = new ArrayList<ProductInfo>();
-			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
-				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size());
-			 }
-			 //
-			 productInfoPageInfo.setResult(productInfoListNew);
-	         productInfoPageInfo.setCount(productInfoList.size());
-	         productInfoPageInfo.setPageNo(pageInfo.getPageNo());
-	         productInfoPageInfo.setPageSize(pageInfo.getPageSize());
+			 productInfoPageInfo.setResult(productInfoList);
+//	         productInfoPageInfo.setCount(productInfoList.size());
+//	         productInfoPageInfo.setPageNo(pageInfo.getPageNo());
+//	         productInfoPageInfo.setPageSize(pageInfo.getPageSize());
 
 		} catch (Exception e) {
 			e.printStackTrace();
