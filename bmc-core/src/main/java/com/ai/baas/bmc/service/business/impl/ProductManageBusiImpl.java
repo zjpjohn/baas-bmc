@@ -568,10 +568,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		//this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
 		if(StringUtil.isBlank(serviceVO.getServiceId())){
 			this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
-			DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 1);
+			DshmUtil.getIdshmSV().initLoader("cp_step_info", JSON.toJSONString(stepobject), 1);
 		}else{
 			this.cpStepInfoAtom.updateCpStepInfoByPrimaryKey(cpStepInfo);
-			DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 0);
+			DshmUtil.getIdshmSV().initLoader("cp_step_info", JSON.toJSONString(stepobject), 0);
 		}
 	}
 
@@ -617,10 +617,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		//
 		if(StringUtil.isBlank(serviceVO.getServiceId())){
 			this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
-			DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 1);
+			DshmUtil.getIdshmSV().initLoader("cp_package_info", JSON.toJSONString(packageobject), 1);
 		}else{
 			this.cpPackageInfoAtom.updateCpPackageInfoByPrimaryKey(cpPackageInfo);
-			DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 0);
+			DshmUtil.getIdshmSV().initLoader("cp_package_info", JSON.toJSONString(packageobject), 0);
 		}
 	}
 
