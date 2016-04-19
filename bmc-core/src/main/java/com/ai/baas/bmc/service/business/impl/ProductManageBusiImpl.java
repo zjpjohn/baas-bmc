@@ -112,7 +112,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			String detailCode = detailDb.getDetailCode();
 			log.info("序列生成DETAIL_CODE:"+detailCode);
 			
-			this.toUpdateCpPriceDetail(priceCode, vo, detailCode);
+			this.toUpdateCpPriceDetail(vo.getProductId(), vo, detailCode);
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				
 				// 阶梯类型
