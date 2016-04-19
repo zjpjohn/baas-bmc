@@ -50,4 +50,9 @@ public class CpStepInfoAtomImpl implements ICpStepInfoAtom {
 		this.cpStepInfoMapper.insertSelective(info);
 		
 	}
+
+	@Override
+	public void updateCpStepInfoByPrimaryKey(CpStepInfo info) {
+		this.cpStepInfoMapper.updateByPrimaryKeySelective(info);
+	}
 }

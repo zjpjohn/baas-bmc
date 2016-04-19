@@ -76,6 +76,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		JSONObject priceinfobject = new JSONObject();
 		String priceCode = aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0);
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		
+		cpPriceInfo.setPriceCode(vo.getProductId());
+		priceinfobject.put("PRICE_CODE", vo.getProductId());
+		
 		cpPriceInfo.setActiveTime(vo.getActiveDate());
 		priceinfobject.put("ACTIVE_TIME", vo.getActiveDate());
 
@@ -200,6 +204,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			
 			for(CpStepInfo cpStepInfoNew : cpStepInfoList){
 				serviceVo = new ServiceVO();
+				serviceVo.setServiceId(cpStepInfoNew.getSetpId().toString());
 				serviceVo.setPrice(new BigDecimal(cpStepInfoNew.getPriceValue()));
 				serviceVo.setAmountStart(cpStepInfoNew.getSectionA());
 				serviceVo.setAmountEnd(cpStepInfoNew.getSectionB());
@@ -218,6 +223,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			
 			for(CpPackageInfo cpPackageInfoNew : cpPackageInfoList){
 				serviceVo = new ServiceVO();
+				serviceVo.setServiceId(cpPackageInfoNew.getPackageId().toString());
 				serviceVo.setAmountEnd(cpPackageInfoNew.getAmount());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitType());
 				serviceVo.setPrice(new BigDecimal(cpPackageInfoNew.getPriceValue()));
@@ -335,8 +341,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				}
 			}
 		} catch (Exception e) {
-			//e.printStackTrace();
-			throw new BusinessException("error", "操作失败");
+			e.printStackTrace();
+			throw new BusinessException("error",e.getMessage());
 		}
 
 	}
@@ -519,6 +525,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	private void toUpdateCpStepInfo(String detailCode, ServiceVO serviceVO, long stepSeq, ProductVO vo) {
 		CpStepInfo cpStepInfo = new CpStepInfo();
 		JSONObject stepobject = new JSONObject();
+		cpStepInfo.setSetpId(new Long(serviceVO.getServiceId()));
+		stepobject.put("STEP_ID", serviceVO.getServiceId());
+		
 		cpStepInfo.setDetailCode(Long.valueOf(detailCode));
 		stepobject.put("DETAIL_CODE", detailCode);
 		// cpStepInfo.setExtCode(extCode);
@@ -547,8 +556,14 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setServiceType(serviceVO.getServiceType());
 		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
 		
-		this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
-		DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 0);
+		//this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
+		if(StringUtil.isBlank(serviceVO.getServiceId())){
+			this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
+			DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 1);
+		}else{
+			this.cpStepInfoAtom.updateCpStepInfoByPrimaryKey(cpStepInfo);
+			DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 0);
+		}
 	}
 
 	/**
@@ -564,6 +579,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		CpPackageInfo cpPackageInfo = new CpPackageInfo();
 		JSONObject packageobject = new JSONObject();
 
+		cpPackageInfo.setPackageId(new Long(serviceVO.getServiceId()));
+		packageobject.put("PACKAGE_ID", serviceVO.getServiceId());
+		
 		cpPackageInfo.setAmount(serviceVO.getAmountEnd());
 		packageobject.put("AMOUNT", serviceVO.getAmountEnd());
 
@@ -573,8 +591,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPackageInfo.setUnitType(serviceVO.getUnit());
 		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
 
-		cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue());
-		packageobject.put("PRICE_VALUE", serviceVO.getPrice());
+		cpPackageInfo.setPriceValue(0.0);//(serviceVO.getPrice().doubleValue());
+		packageobject.put("PRICE_VALUE", 0.0);//serviceVO.getPrice());
 
 		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
 		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
@@ -587,9 +605,14 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		
 		cpPackageInfo.setUnitCode(serviceVO.getUnit());
 		packageobject.put("UNIT_CODE", serviceVO.getUnit());
-		
-		this.cpPackageInfoAtom.updateCpPackageInfoByDetailCode(cpPackageInfo);
-		DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 0);
+		//
+		if(StringUtil.isBlank(serviceVO.getServiceId())){
+			this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
+			DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 1);
+		}else{
+			this.cpPackageInfoAtom.updateCpPackageInfoByPrimaryKey(cpPackageInfo);
+			DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 0);
+		}
 	}
 
 	@Override
