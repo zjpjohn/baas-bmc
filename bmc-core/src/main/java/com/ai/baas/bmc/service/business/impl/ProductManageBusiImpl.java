@@ -102,7 +102,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
 			log.info("修改cpPriceInfo信息完毕！！！");
 			// 插入共享内存
-			DshmUtil.getIdshmSV().initLoader("cp_price_info", JSON.toJSONString(priceinfobject), 0);
+			//DshmUtil.getIdshmSV().initLoader("cp_price_info", JSON.toJSONString(priceinfobject), 0);
 			long stepSeq = 0;
 			//序列生成DETAIL_CODE
 			CpPriceDetail cpPriceDetail = new CpPriceDetail();
@@ -515,7 +515,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		// detailobject.put("SERVICE_TYPE", s.getServiceType());
 
 		this.cpPriceDetailAtom.updatePriceDetailByPriceCode(cpPriceDetail);
-		DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 0);
+		//DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 0);
 	}
 	/**
 	 * 修改阶梯组合表信息
