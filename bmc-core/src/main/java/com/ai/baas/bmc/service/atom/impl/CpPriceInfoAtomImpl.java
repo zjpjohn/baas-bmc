@@ -127,6 +127,7 @@ public class CpPriceInfoAtomImpl implements ICpPriceInfoAtom {
 	 */
 	@Override
 	public void updatePriceInfoByPriceCode(CpPriceInfo info) {
+		//
 		CpPriceInfoCriteria sql=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria=sql.createCriteria();
 		criteria.andPriceCodeEqualTo(info.getPriceCode());

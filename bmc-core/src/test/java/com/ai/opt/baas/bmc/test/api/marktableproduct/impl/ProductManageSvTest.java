@@ -41,7 +41,7 @@ public class ProductManageSvTest {
 	
 	
 	
-	@Test
+	//@Test
 	public void addProduct(){
 		ProductVO productVO = new ProductVO();
 		productVO.setActiveDate(DateUtil.getSysDate());
@@ -113,5 +113,22 @@ public class ProductManageSvTest {
 		System.out.println("-------------********------------------>>>>params:"+jsonObj);
 		System.out.println("-------------********------------------>>>>response:"+jsonObj2);
 	
+	}
+	@Test
+	public void updateProduct(){
+		
+		ProductVO vo = new ProductVO();
+		vo.setActiveDate(DateUtil.getSysDate());
+		vo.setActiveDateTag("ACTIVE");
+		vo.setBillingType("standard_group_type");
+		vo.setInvalidDate(DateUtil.getSysDate());
+		vo.setIsPriceEqual("0");
+		vo.setProductId("169");
+		vo.setProductName("标准组合测试2333444");
+		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
+		vo.setTotalPrice(new BigDecimal(201));
+
+		this.productManageSV.updateProduct(vo);
+		System.out.println("----------->>>:update success");
 	}
 }

@@ -38,6 +38,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
+import com.alibaba.fastjson.JSON;
 
 import net.sf.json.JSONObject;
 
@@ -85,17 +86,11 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPriceInfo.setActiveTime(vo.getActiveDate());
 		priceinfobject.put("ACTIVE_TIME", vo.getActiveDate());
 
-		cpPriceInfo.setCreateTime(DateUtil.getTimestamp(System.currentTimeMillis()));
-		priceinfobject.put("CREATE_TIME", DateUtil.getTimestamp(System.currentTimeMillis()));
-
 		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
 		priceinfobject.put("INACTIVE_TIME", vo.getInvalidDate());
 
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		priceinfobject.put("TENANT_ID", vo.getTenantId());
-
-		cpPriceInfo.setPriceCode(priceCode);
-		priceinfobject.put("PRICE_CODE", priceCode);
 
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
@@ -107,7 +102,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
 			log.info("修改cpPriceInfo信息完毕！！！");
 			// 插入共享内存
-			DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 0);
+			DshmUtil.getIdshmSV().initLoader("cp_price_info", JSON.toJSONString(priceinfobject), 0);
 			long stepSeq = 0;
 			//序列生成DETAIL_CODE
 			CpPriceDetail cpPriceDetail = new CpPriceDetail();
