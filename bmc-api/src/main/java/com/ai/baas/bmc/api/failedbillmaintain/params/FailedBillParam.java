@@ -70,13 +70,13 @@ public class FailedBillParam extends BaseInfo {
         if (isBlank(failDate)) {
             throw new BusinessException("400", "fail_date不能为空");
         }
-        if (isBlank(failedCode)){
+        if (isBlank(failedCode)) {
             throw new BusinessException("400", "failedCode不能为空");
         }
     }
 
-    private boolean isBlank(String value){
-        if (value== null || value.length() == 0){
+    private boolean isBlank(String value) {
+        if (value == null || value.length() == 0) {
             return true;
         }
 
@@ -144,9 +144,7 @@ public class FailedBillParam extends BaseInfo {
     }
 
     public Map<String, String> getFailPacket() {
-        if (failPacket == null){
-            throw new BusinessException("400", "failPacket 不能为空");
-        }
+
         return failPacket;
     }
 
@@ -155,9 +153,7 @@ public class FailedBillParam extends BaseInfo {
     }
 
     public String getAccountPeriod() {
-        if (isBlank(accountPeriod)){
-            throw new BusinessException("400", "accountPeriod 不能为空");
-        }
+
         return accountPeriod;
     }
 
@@ -166,10 +162,20 @@ public class FailedBillParam extends BaseInfo {
     }
 
     public String getArrivalTime() {
-        if (isBlank(arrivalTime)){
+
+        return arrivalTime;
+    }
+
+    public void validateRowKeyParam() {
+        if (failPacket == null) {
+            throw new BusinessException("400", "failPacket 不能为空");
+        }
+        if (isBlank(accountPeriod)) {
+            throw new BusinessException("400", "accountPeriod 不能为空");
+        }
+        if (isBlank(arrivalTime)) {
             throw new BusinessException("400", "arrivalTime 不能为空");
         }
-        return arrivalTime;
     }
 
     public void setArrivalTime(String arrivalTime) {

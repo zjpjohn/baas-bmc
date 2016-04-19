@@ -139,6 +139,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
     }
 
     private String generateMessage(FailedBillParam param) {
+        param.validateRowKeyParam();
         StringBuilder stringBuilder = new StringBuilder();
         BmcRecordFmtCriteria criteria = new BmcRecordFmtCriteria();
         criteria.createCriteria().andFormatTypeEqualTo((short) 1);
