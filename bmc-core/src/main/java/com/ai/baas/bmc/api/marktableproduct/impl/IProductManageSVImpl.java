@@ -251,8 +251,10 @@ public class IProductManageSVImpl implements IProductManageSV {
 	}
 
 	@Override
-	public void updateProduct(ProductVO vo) throws BusinessException,
+	public BaseResponse updateProduct(ProductVO vo) throws BusinessException,
 			SystemException {
+		BaseResponse response = new BaseResponse();
+		
 		if(StringUtil.isBlank(vo.getTenantId())){
 			throw new BusinessException("empty","租户id不能为空");
 		}
@@ -269,6 +271,11 @@ public class IProductManageSVImpl implements IProductManageSV {
 			throw new BusinessException("productName is max length 64","产品名称长度不能超过64位");
 		}
 		this.iProductManageBusi.updateProduct(vo);
+		ResponseHeader responseHeader = new ResponseHeader(true,
+				ErrorCode.SUCCESS, "成功");
+		response.setResponseHeader(responseHeader);
+		//
+		return response;
 	}
 
 	@Override
