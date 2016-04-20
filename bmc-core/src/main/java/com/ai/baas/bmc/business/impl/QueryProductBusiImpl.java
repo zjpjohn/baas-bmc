@@ -314,7 +314,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 productInfoPageInfo.setResult(productInfoList);
 	         productInfoPageInfo.setCount(productInfoList.size());
 	         productInfoPageInfo.setPageNo(1);
-	         productInfoPageInfo.setPageSize(productInfoList.size());
+	         productInfoPageInfo.setPageSize(productInfoList.size()==0?1:productInfoList.size());
 
 		} catch (Exception e) {
 			e.printStackTrace();
