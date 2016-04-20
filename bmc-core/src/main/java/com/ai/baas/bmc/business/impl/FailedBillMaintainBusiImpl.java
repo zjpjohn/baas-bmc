@@ -131,12 +131,66 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         FailedBill failedBill = queryFailedBillById(param.buildFailedBillRowKey());
         if (failedBill != null) {
             String message = generateMessage(param);
+            cleanDuplicateData(param);
+            cleanFailedBillData(param);
             MDSUtil.sendMessage(message);
-            Table table = MyHbaseUtil.getTable(tableName);
-            Delete delete = new Delete(param.buildFailedBillRowKey().getBytes());
-            table.delete(delete);
         }
     }
+
+    private void cleanFailedBillData(FailedBillParam param) throws IOException {
+        Table table = MyHbaseUtil.getTable(tableName);
+        Delete delete = new Delete(param.buildFailedBillRowKey().getBytes());
+        table.delete(delete);
+    }
+
+    private void cleanDuplicateData(FailedBillParam param) throws IOException {
+        Table duplicateionBill = MyHbaseUtil.getTable(buildDuplicateBillTableName(param));
+        Delete duplicateDelete = new Delete(param.getBsn().getBytes());
+        duplicateionBill.delete(duplicateDelete);
+    }
+
+    private String buildDuplicateBillTableName(FailedBillParam param) {
+        return param.getTenantId() + "_" + param.getServiceId() + "_" +
+                param.getServiceId() + "_" + param.getAccountPeriod().substring(0, 6);
+    }
+
+    @Override
+    public void batchResendFailedBill(List<FailedBillParam> params) throws IOException {
+        for (FailedBillParam param : params) {
+            param.validate();
+            FailedBill failedBill = queryFailedBillById(param.buildFailedBillRowKey());
+            String message = generateMessage(failedBill);
+            cleanDuplicateData(param);
+            cleanFailedBillData(param);
+            MDSUtil.sendMessage(message);
+        }
+    }
+
+    private String generateMessage(FailedBill failedBill) {
+        StringBuilder stringBuilder = new StringBuilder();
+        BmcRecordFmtCriteria criteria = new BmcRecordFmtCriteria();
+        criteria.createCriteria().andFormatTypeEqualTo((short) 1);
+        criteria.setOrderByClause(" r.field_serial ");
+        List<BmcRecordFmt> bmcRecordFmts = bmcRecordFmtMapper.selectByExample(criteria);
+
+        stringBuilder.append(failedBill.getTenantId() + "\1");
+        stringBuilder.append(failedBill.getServiceId() + "\1");
+        stringBuilder.append(failedBill.getSource() + "\1");
+        stringBuilder.append(failedBill.getBsn() + "\1");
+        stringBuilder.append(failedBill.getSn() + "\1");
+        stringBuilder.append(failedBill.getArrivalTime() + "\1");
+        stringBuilder.append(failedBill.getAccountPeriod() + "\1");
+
+        for (BmcRecordFmt bmcRecordFmt : bmcRecordFmts) {
+            String value = failedBill.getFailPacket().get(bmcRecordFmt.getFieldName());
+            if (value == null || value.length() == 0)
+                throw new BusinessException("400", bmcRecordFmt.getFieldName() + " 不能被找到或者值为空");
+            stringBuilder.append(failedBill.getAccountPeriod() + "\1");
+        }
+
+        return stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
+    }
+
 
     private String generateMessage(FailedBillParam param) {
         param.validateRowKeyParam();
@@ -147,7 +201,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         List<BmcRecordFmt> bmcRecordFmts = bmcRecordFmtMapper.selectByExample(criteria);
 
         stringBuilder.append(param.getTenantId() + "\1");
-        stringBuilder.append(param.getService_id() + "\1");
+        stringBuilder.append(param.getServiceId() + "\1");
         stringBuilder.append(param.getSource() + "\1");
         stringBuilder.append(param.getBsn() + "\1");
         stringBuilder.append(param.getSn() + "\1");
@@ -177,7 +231,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
                             cell.getValueLength()),
                     new TypeToken<Map<String, String>>() {
                     }.getType());
-            failedBill.setFail_packet(failedPacket);
+            failedBill.setFailPacket(failedPacket);
         }
     }
 
