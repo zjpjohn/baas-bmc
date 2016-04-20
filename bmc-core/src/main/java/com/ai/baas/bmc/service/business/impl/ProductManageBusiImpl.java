@@ -561,9 +561,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setServiceType(serviceVO.getServiceType());
 		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
 		
-		cpStepInfo.setIsPriceEqual(vo.getIsPriceEqual());
-		stepobject.put("IS_PRICE_EQUAL", vo.getIsPriceEqual());
-		
+		if(StringUtil.isBlank(vo.getIsPriceEqual())){
+			cpStepInfo.setIsPriceEqual("0");
+			stepobject.put("IS_PRICE_EQUAL", "0");
+		}else{
+			cpStepInfo.setIsPriceEqual(vo.getIsPriceEqual());
+			stepobject.put("IS_PRICE_EQUAL", vo.getIsPriceEqual());
+		}
 		
 		//this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
 		if(StringUtil.isBlank(serviceVO.getServiceId())){
