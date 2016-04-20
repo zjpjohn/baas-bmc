@@ -22,7 +22,7 @@ import com.alibaba.fastjson.JSON;
 public class QueryProductSvTest {
 	@Autowired
 	private IQueryProductSV queryProductSv;
-	//@Test
+	@Test
 	public void testPageSearch(){
 		ProductQueryVO vo = new ProductQueryVO();
 		
@@ -32,15 +32,15 @@ public class QueryProductSvTest {
 //		vo.setInvalidDate(Timestamp.valueOf("2016-04-13 11:48:54"));
 //		vo.setTenantId("11111533");
 //		vo.setServiceType("1");
-		//vo.setBillingType("PACKAGE");
-		vo.setTenantId("test");
+		vo.setBillingType("step_group_type");
+		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		//vo.setProductId("0000000312");
-		vo.setProductName("a");
+		//vo.setProductName("a");
 		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getProductInfo(vo);
 		System.out.println("-----param:"+JSON.toJSONString(vo));
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
 	}
-	@Test
+	//@Test
 	public void testSearchByProductIdList(){
 		ProductQueryByIdListVO vo = new ProductQueryByIdListVO();
 		vo.setTenantId("baas-test");
