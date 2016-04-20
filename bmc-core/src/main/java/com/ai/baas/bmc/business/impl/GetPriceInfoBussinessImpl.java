@@ -198,7 +198,8 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            standards.setServiceType(cpPriceDetail.getServiceType());//ServiceType 业务类型
            standards.setPrice(cpUnitpriceItem.getPriceValue());//Price 价格
            
-           standards.setStatus(cpUnitpriceItem.getActiveStatus());//新增状态
+           standards.setSubjectCode(cpUnitpriceItem.getSubjectCode());//新增  科目ID
+           standards.setStatus(cpUnitpriceItem.getActiveStatus());//新增   状态
            
            UsageList usages =new UsageList();
            usages.setAmount(cpUnitpriceItem.getUnitTypeValue());//使用量

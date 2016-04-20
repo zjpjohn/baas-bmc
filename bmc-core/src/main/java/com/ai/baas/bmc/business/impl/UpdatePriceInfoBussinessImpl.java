@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.baas.bmc.api.priceinfo.params.StandardPriceInfoParams;
 import com.ai.baas.bmc.api.priceinfo.params.StanderdPriceInfoUsage;
+import com.ai.baas.bmc.api.priceinfo.params.SubjectInput;
 import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
 import com.ai.baas.bmc.business.interfaces.IUpdatePriceInfoBussiness;
 import com.ai.baas.bmc.context.Context;
@@ -328,6 +329,45 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             aCpFactorInfoMapper.deleteByExample(factorInfoC);
             // *************************end****************************
         }
+    }
+
+    @Override
+    public void linkSubjectId(SubjectInput param) {
+  
+        //通过cp_price_info 得到detail_code
+        CpPriceInfo priceInfo = new CpPriceInfo();
+        CpPriceInfoCriteria priceInfoC = new CpPriceInfoCriteria();
+        priceInfoC.createCriteria().andPriceCodeEqualTo(param.getStandardId());
+        List<CpPriceInfo>priceInfoList = aCpPriceInfoMapper.selectByExample(priceInfoC);
+        if (priceInfoList.size()==0) {
+            throw new BusinessException("BaaS-000001", "CpPriceInfo表没有相关信息");
+        }
+        priceInfo = priceInfoList.get(0);
+        
+        // 通过price_code得到cp_price_detail
+        CpPriceDetail priceDetail = new CpPriceDetail();
+        CpPriceDetailCriteria priceDetailC = new CpPriceDetailCriteria();
+        priceDetailC.createCriteria().andPriceCodeEqualTo(priceInfo.getPriceCode());
+        priceDetail = aCpPriceDetailMapper.selectByExample(priceDetailC).get(0);
+
+        // 通过price_detail得到cp_unitprice_info
+        CpUnitpriceInfo unitpriceInfo;
+        CpUnitpriceInfoCriteria unitpriceInfoC = new CpUnitpriceInfoCriteria();
+        unitpriceInfoC.createCriteria().andUnitPriceCodeEqualTo(priceDetail.getDetailCode());
+        unitpriceInfo = aCpUnitpriceInfoMapper.selectByExample(unitpriceInfoC).get(0);
+        //通过fee_item_code得到cp_unitprice_item
+
+        CpUnitpriceItem unitpriceItem = new CpUnitpriceItem();
+        //更新状态字段
+        unitpriceItem.setSubjectCode(param.getSubjectCode());
+        CpUnitpriceItemCriteria unitpriceItemC = new CpUnitpriceItemCriteria();
+        unitpriceItemC.createCriteria().andFeeItemCodeEqualTo(unitpriceInfo.getFeeItemCode());
+        if (aCpUnitpriceItemMapper.updateByExampleSelective(unitpriceItem,
+                unitpriceItemC) < 1) {
+            throw new BusinessException("BaaS-000001", "cp_unitprice_item表没有相关信息，无法更新科目ID");
+        }
+        
+        
     }
 
 

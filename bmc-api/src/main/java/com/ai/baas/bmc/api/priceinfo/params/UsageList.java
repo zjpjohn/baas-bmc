@@ -11,15 +11,19 @@ public class UsageList implements Serializable{
     
     private static final long serialVersionUID = -4989482563493979L;
     
-    //@NotNull(message = "使用量不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })  
+    /**
+     * 使用量
+     */
     private Double amount;
     
-//    @NotNull(message = "业务类型细分不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-//    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+    /**
+     * 业务类型细分
+     */
     private String subServiceType;
     
-//    @NotNull(message = "单位不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-//    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+    /**
+     * 单位
+     */
     private String unit;
     
     public Double getAmount() {

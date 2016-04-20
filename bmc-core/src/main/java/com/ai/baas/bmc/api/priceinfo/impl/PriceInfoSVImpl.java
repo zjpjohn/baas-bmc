@@ -11,6 +11,7 @@ import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
 import com.ai.baas.bmc.api.priceinfo.params.ResponseMessage;
 import com.ai.baas.bmc.api.priceinfo.params.StandardPriceInfoParams;
 import com.ai.baas.bmc.api.priceinfo.params.StanderdPriceInfoUsage;
+import com.ai.baas.bmc.api.priceinfo.params.SubjectInput;
 import com.ai.baas.bmc.business.interfaces.IGetPriceInfoBussiness;
 import com.ai.baas.bmc.business.interfaces.IUpdatePriceInfoBussiness;
 import com.ai.baas.bmc.util.LoggerUtil;
@@ -78,6 +79,22 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
             return result;
         }
         aIUpdatePriceInfoBussiness.deleteData(record);
+        result.setResponseHeader(new ResponseHeader(true, "BMC-000000", "成功"));
+        return result;
+    }
+    
+    @Override
+    public BaseResponse linkSubjectId(SubjectInput record)throws BusinessException, SystemException {
+        BaseResponse result = new BaseResponse();
+        if (StringUtil.isBlank(record.getStandardId())||StringUtil.isBlank(record.getSubjectCode())) {
+            result.setResponseHeader(new ResponseHeader(false, "000001", "StandarId和SubjectCode不能为空"));
+            return result;
+        }
+        if(StringUtil.isBlank(record.getTenantId())){
+            result.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，更新失败"));
+            return result;
+        }
+        aIUpdatePriceInfoBussiness.linkSubjectId(record);
         result.setResponseHeader(new ResponseHeader(true, "BMC-000000", "成功"));
         return result;
     }

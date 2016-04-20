@@ -3,6 +3,7 @@ package com.ai.baas.bmc.api.priceinfo.interfaces;
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
 import com.ai.baas.bmc.api.priceinfo.params.ResponseMessage;
 import com.ai.baas.bmc.api.priceinfo.params.StandardPriceInfoParams;
+import com.ai.baas.bmc.api.priceinfo.params.SubjectInput;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
@@ -45,4 +46,15 @@ public interface IPriceInfoSV {
       */
      public BaseResponse deletePriceInfo(StandardPriceInfoParams record)throws BusinessException,SystemException;
      @interface DeletePriceInfo{}
+     /**
+      * 标准资费关联科目ID
+      * @param SubjectInput
+      * @return BaseResponse
+      * @throws BusinessException
+      * @throws SystemException
+      * @author wangkai16
+      * @ApiCode BaaS-00003
+      */
+    public BaseResponse linkSubjectId(SubjectInput record) throws BusinessException, SystemException;
+    @interface LinkSubjectId{}
 }

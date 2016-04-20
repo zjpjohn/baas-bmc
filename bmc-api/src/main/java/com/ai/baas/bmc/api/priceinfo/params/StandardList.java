@@ -5,16 +5,53 @@ import java.util.List;
 
 public class StandardList  implements Serializable{
     private static final long serialVersionUID = -49891863493979L;
+    /**
+     * 标准资费ID
+     */
     private String standardId;
+    /**
+     * 标准资费名称
+     */
     private String priceName;
+    /**
+     * 业务类型
+     */
     private String serviceType;
+    /**
+     * 标准资费使用量列表
+     */
     private List<UsageList> usageList;
+    /**
+     * 单次/周期类型
+     */
     private String cycleType;
+    /**
+     * 单次/周期数量
+     */
     private Double cycleAmount;
+    /**
+     * 单次/周期标识
+     */
     private String cycleId;
+    /**
+     * 价格类型
+     */
     private String priceType;
+    /**
+     * 价格
+     */
     private Double price;
+    /**
+     * 科目ID
+     */
+    private String subjectCode;
+    /**
+     * 资费描述
+     */
     private String comments;
+    /**
+     * 状态
+     */
     private String status;
     public String getStandardId() {
         return standardId;
@@ -82,5 +119,12 @@ public class StandardList  implements Serializable{
     public void setStatus(String status) {
         this.status = status;
     }
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+    
     
 }

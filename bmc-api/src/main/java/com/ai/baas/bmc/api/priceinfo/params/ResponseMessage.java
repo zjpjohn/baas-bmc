@@ -9,9 +9,21 @@ import com.ai.opt.base.vo.PageInfo;
 public class ResponseMessage extends BaseResponse {
 
     private static final long serialVersionUID = -433299863493979L;
+    /**
+     * 返回码
+     */
     private String returnCode;
+    /**
+     * 流水号
+     */ 
     private String tradeSeq;
+    /**
+     * 租户ID
+     */
     private String tenantId;
+    /**
+     * 标准资费列表
+     */
     private PageInfo<StandardList> standardList;
     
     public String getReturnCode() {
