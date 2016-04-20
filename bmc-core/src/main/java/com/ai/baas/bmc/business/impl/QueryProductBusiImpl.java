@@ -198,7 +198,9 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
 			 criteriaCpStepInfo.andTotalPriceValueNotBetween(vo.getPriceStart(), vo.getPriceEnd());
 		 }
-		 
+		 if(!StringUtil.isBlank(vo.getServiceType())){
+			 criteriaCpStepInfo.andServiceTypeEqualTo(vo.getServiceType());
+		 }
 		 
 		 
 		 List<CpStepInfo> cpStepInfo =cpStepInfoMapper.selectByExample(cpStepInfoCriteria);
@@ -227,7 +229,9 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
 			 criteriaCpPackageInfo.andTotalPriceValueBetween(vo.getPriceStart(), vo.getPriceEnd());
 		 }
-		 
+		 if(!StringUtil.isBlank(vo.getServiceType())){
+			 criteriaCpPackageInfo.andServiceTypeEqualTo(vo.getServiceType());
+		 }
 		 List<CpPackageInfo> packageInfo = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteria);
 		 System.out.println("packageInfoList.Size:"+packageInfo.size());
 		 for(CpPackageInfo p : packageInfo){
