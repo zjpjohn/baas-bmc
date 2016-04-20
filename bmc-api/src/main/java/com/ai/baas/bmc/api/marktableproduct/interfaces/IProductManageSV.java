@@ -67,7 +67,7 @@ public interface IProductManageSV {
 	 * @ApiCode bmc-00012
 	 */
 	
-	void updateProduct(ProductVO vo) throws BusinessException, SystemException;
+	BaseResponse updateProduct(ProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProduct{}
 	/**
 	 * 根据priceCode编辑信息

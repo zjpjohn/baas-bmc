@@ -60,12 +60,19 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
 			CpPriceInfoCriteria.Criteria criteriaCpPriceInfo= cpPriceInfoCriteria.createCriteria();
 			criteriaCpPriceInfo.andTenantIdEqualTo(vo.getTenantId());
-			 if (null != vo.getActiveDate()) {
-				 criteriaCpPriceInfo.andActiveTimeEqualTo(vo.getActiveDate());
-			 }		
-			 if (null != vo.getInvalidDate()) {
-				 criteriaCpPriceInfo.andInactiveTimeEqualTo(vo.getInvalidDate());
+			 
+			 if(null != vo.getActiveDate() && null != vo.getInvalidDate()){
+				 criteriaCpPriceInfo.andActiveTimeBetween(vo.getActiveDate(), vo.getInvalidDate());
+			 }else{
+				 if (null != vo.getActiveDate()) {
+					 criteriaCpPriceInfo.andActiveTimeGreaterThanOrEqualTo(vo.getActiveDate());
+				 }
+				 if (null != vo.getInvalidDate()) {
+					 criteriaCpPriceInfo.andActiveTimeLessThanOrEqualTo(vo.getInvalidDate());
+				 }
 			 }
+			 
+			 
 			 if(!StringUtil.isBlank(vo.getProductId())){
 				 criteriaCpPriceInfo.andPriceCodeEqualTo(vo.getProductId());
 			 }
@@ -198,7 +205,9 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
 			 criteriaCpStepInfo.andTotalPriceValueNotBetween(vo.getPriceStart(), vo.getPriceEnd());
 		 }
-		 
+		 if(!StringUtil.isBlank(vo.getServiceType())){
+			 criteriaCpStepInfo.andServiceTypeEqualTo(vo.getServiceType());
+		 }
 		 
 		 
 		 List<CpStepInfo> cpStepInfo =cpStepInfoMapper.selectByExample(cpStepInfoCriteria);
@@ -227,7 +236,9 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
 			 criteriaCpPackageInfo.andTotalPriceValueBetween(vo.getPriceStart(), vo.getPriceEnd());
 		 }
-		 
+		 if(!StringUtil.isBlank(vo.getServiceType())){
+			 criteriaCpPackageInfo.andServiceTypeEqualTo(vo.getServiceType());
+		 }
 		 List<CpPackageInfo> packageInfo = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteria);
 		 System.out.println("packageInfoList.Size:"+packageInfo.size());
 		 for(CpPackageInfo p : packageInfo){
