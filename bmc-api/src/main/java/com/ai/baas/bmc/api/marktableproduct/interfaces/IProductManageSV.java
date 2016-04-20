@@ -1,12 +1,12 @@
 package com.ai.baas.bmc.api.marktableproduct.interfaces;
 
-import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseResponse;
 
 /**
  * 可销售产品管理
@@ -28,7 +28,7 @@ public interface IProductManageSV {
 	 * @ApiCode bmc-00005
 	 */
 	
-	ProcductResponse addProduct(ProductVO vo) throws BusinessException, SystemException;
+	BaseResponse addProduct(ProductVO vo) throws BusinessException, SystemException;
 	@interface AddProduct{}
 	/**
 	 * 修改产品状态
@@ -40,7 +40,7 @@ public interface IProductManageSV {
 	 * @ApiCode bmc-00006
 	 */
 	
-	ProcductResponse updateProductStatus(ProductActiveVO vo) throws BusinessException, SystemException;
+	BaseResponse updateProductStatus(ProductActiveVO vo) throws BusinessException, SystemException;
 	@interface UpdateProductStatus{}
 	
 	/**

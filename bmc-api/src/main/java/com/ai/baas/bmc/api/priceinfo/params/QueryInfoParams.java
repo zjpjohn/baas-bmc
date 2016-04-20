@@ -48,7 +48,13 @@ public class QueryInfoParams extends BaseInfo {
      */
    @Size(max=32)
     private String serviceType;
-    
+   
+   /**
+    * 业务类型细分
+    * VARCHAR(32)
+    */
+   @Size(max=32)
+   private String subServiceType;
     /**
      * 资费状态
      * VARCHAR(32)
@@ -82,6 +88,15 @@ public class QueryInfoParams extends BaseInfo {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    
+    public String getSubServiceType() {
+        return subServiceType;
+    }
+
+    public void setSubServiceType(String subServiceType) {
+        this.subServiceType = subServiceType;
     }
 
     public String getTradeSeq() {

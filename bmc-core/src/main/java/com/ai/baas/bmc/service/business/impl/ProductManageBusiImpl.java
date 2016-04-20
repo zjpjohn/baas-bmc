@@ -38,6 +38,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
+import com.alibaba.fastjson.JSON;
 
 import net.sf.json.JSONObject;
 
@@ -68,6 +69,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 	public static final String CHARGE_TYPE_STEP = "step_group_type";
 	public static final String CHARGE_TYPE_PACKAGE = "standard_group_type";
+	public static final String STATUS_ACTIVE = "ACTIVE";
+	public static final String STATUS_INACTIVE = "INACTIVE";
 	/**
 	 * 修改产品信息
 	 */
@@ -83,26 +86,23 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPriceInfo.setActiveTime(vo.getActiveDate());
 		priceinfobject.put("ACTIVE_TIME", vo.getActiveDate());
 
-		cpPriceInfo.setCreateTime(DateUtil.getTimestamp(System.currentTimeMillis()));
-		priceinfobject.put("CREATE_TIME", DateUtil.getTimestamp(System.currentTimeMillis()));
-
 		cpPriceInfo.setInactiveTime(vo.getInvalidDate());
 		priceinfobject.put("INACTIVE_TIME", vo.getInvalidDate());
 
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		priceinfobject.put("TENANT_ID", vo.getTenantId());
 
-		cpPriceInfo.setPriceCode(priceCode);
-		priceinfobject.put("PRICE_CODE", priceCode);
-
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
+		
+		cpPriceInfo.setActiveStatus(vo.getActiveDateTag());
+		priceinfobject.put("ACTIVE_STATUS", vo.getActiveDateTag());
 		
 		try {
 			this.cpPriceInfoAtom.updatePriceInfoByPriceCode(cpPriceInfo);
 			log.info("修改cpPriceInfo信息完毕！！！");
 			// 插入共享内存
-			DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 0);
+			//DshmUtil.getIdshmSV().initLoader("cp_price_info", JSON.toJSONString(priceinfobject), 0);
 			long stepSeq = 0;
 			//序列生成DETAIL_CODE
 			CpPriceDetail cpPriceDetail = new CpPriceDetail();
@@ -112,7 +112,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			String detailCode = detailDb.getDetailCode();
 			log.info("序列生成DETAIL_CODE:"+detailCode);
 			
-			this.toUpdateCpPriceDetail(priceCode, vo, detailCode);
+			this.toUpdateCpPriceDetail(vo.getProductId(), vo, detailCode);
 			for (ServiceVO s : vo.getMajorProductAmount()) {
 				
 				// 阶梯类型
@@ -214,6 +214,11 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				//
 				serviceVOList.add(serviceVo);
 			}
+			if(!CollectionUtil.isEmpty(cpStepInfoList)){
+				productVo.setTotalPrice(new BigDecimal(cpStepInfoList.get(0).getTotalPriceValue()));
+				productVo.setIsPriceEqual(cpStepInfoList.get(0).getIsPriceEqual());
+			}
+			
 		}
 		if((CHARGE_TYPE_PACKAGE).equalsIgnoreCase(billingType)){
 			CpPackageInfo cpPackageInfo = new CpPackageInfo();
@@ -305,13 +310,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPriceInfo.setPriceName(vo.getProductName());
 		priceinfobject.put("PRICE_NAME", vo.getProductName());
 		
-		//如果失效日期大于当前系统日期 那么为有效状态 1：有效 ；0：失效
+		//如果失效日期大于当前系统日期 那么为有效状态 ACTIVE：有效 ；INACTIVE：失效
 //		if(vo.getInvalidDate().compareTo(DateUtil.getSysDate()) > 0){
 //			cpPriceInfo.setActiveStatus("1");
 //			priceinfobject.put("ACTIVE_STATUS", 1);
 //		}else{
-			cpPriceInfo.setActiveStatus("0");
-			priceinfobject.put("ACTIVE_STATUS", 0);
+			cpPriceInfo.setActiveStatus(STATUS_INACTIVE);
+			priceinfobject.put("ACTIVE_STATUS", STATUS_INACTIVE);
 //		}
 		
 		
@@ -510,7 +515,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		// detailobject.put("SERVICE_TYPE", s.getServiceType());
 
 		this.cpPriceDetailAtom.updatePriceDetailByPriceCode(cpPriceDetail);
-		DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 0);
+		//DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 0);
 	}
 	/**
 	 * 修改阶梯组合表信息
@@ -556,13 +561,21 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setServiceType(serviceVO.getServiceType());
 		stepobject.put("SERVICE_TYPE", serviceVO.getServiceType());
 		
+		if(StringUtil.isBlank(vo.getIsPriceEqual())){
+			cpStepInfo.setIsPriceEqual("0");
+			stepobject.put("IS_PRICE_EQUAL", "0");
+		}else{
+			cpStepInfo.setIsPriceEqual(vo.getIsPriceEqual());
+			stepobject.put("IS_PRICE_EQUAL", vo.getIsPriceEqual());
+		}
+		
 		//this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
 		if(StringUtil.isBlank(serviceVO.getServiceId())){
 			this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
-			DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 1);
+			DshmUtil.getIdshmSV().initLoader("cp_step_info", JSON.toJSONString(stepobject), 1);
 		}else{
 			this.cpStepInfoAtom.updateCpStepInfoByPrimaryKey(cpStepInfo);
-			DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 0);
+			DshmUtil.getIdshmSV().initLoader("cp_step_info", JSON.toJSONString(stepobject), 0);
 		}
 	}
 
@@ -608,10 +621,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		//
 		if(StringUtil.isBlank(serviceVO.getServiceId())){
 			this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
-			DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 1);
+			DshmUtil.getIdshmSV().initLoader("cp_package_info", JSON.toJSONString(packageobject), 1);
 		}else{
 			this.cpPackageInfoAtom.updateCpPackageInfoByPrimaryKey(cpPackageInfo);
-			DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 0);
+			DshmUtil.getIdshmSV().initLoader("cp_package_info", JSON.toJSONString(packageobject), 0);
 		}
 	}
 

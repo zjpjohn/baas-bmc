@@ -1,7 +1,6 @@
 package com.ai.opt.baas.bmc.test.api.marktableproduct.impl;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +11,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
-import com.ai.baas.bmc.api.marktableproduct.params.ProcductResponse;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.sdk.util.DateUtil;
 import com.alibaba.fastjson.JSON;
 
@@ -41,7 +41,7 @@ public class ProductManageSvTest {
 	
 	
 	
-	@Test
+	//@Test
 	public void addProduct(){
 		ProductVO productVO = new ProductVO();
 		productVO.setActiveDate(DateUtil.getSysDate());
@@ -73,7 +73,7 @@ public class ProductManageSvTest {
 		
 		productVO.setMajorProductAmount(serviceVoList);;
 		String jsonObj = JSON.toJSONString(productVO);
-		ProcductResponse response = this.productManageSV.addProduct(productVO);
+		BaseResponse response = this.productManageSV.addProduct(productVO);
 		String jsonObj2 = JSON.toJSONString(response);
 		
 		System.out.println("-------------********------------------>>>>params:"+jsonObj);
@@ -107,11 +107,32 @@ public class ProductManageSvTest {
 		vo.setProductId("67");
 		vo.setStatus("10");
 		//
-		ProcductResponse response = this.productManageSV.updateProductStatus(vo);
+		BaseResponse response = this.productManageSV.updateProductStatus(vo);
 		String jsonObj = JSON.toJSONString(vo);
 		String jsonObj2 = JSON.toJSONString(response);
 		System.out.println("-------------********------------------>>>>params:"+jsonObj);
 		System.out.println("-------------********------------------>>>>response:"+jsonObj2);
 	
+	}
+	@Test
+	public void updateProduct(){
+		
+		ProductVO vo = new ProductVO();
+		vo.setActiveDate(DateUtil.getSysDate());
+		vo.setActiveDateTag("ACTIVE");
+		vo.setBillingType("standard_group_type");
+		vo.setInvalidDate(DateUtil.getSysDate());
+		vo.setIsPriceEqual("0");
+		//vo.setProductId("169");
+		//vo.setProductName("标准组合测试2333444");
+		//vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
+		vo.setTotalPrice(new BigDecimal(201));
+		try{
+			this.productManageSV.updateProduct(vo);
+		}catch(BusinessException e){
+			System.out.println("----------->>>:"+e.getErrorCode()+e.getErrorMessage());
+			
+		}
+		System.out.println("----------->>>:update success");
 	}
 }

@@ -1,6 +1,8 @@
 package com.ai.opt.baas.bmc.test.api.marktableproduct.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ai.baas.bmc.api.marktableproduct.interfaces.IQueryProductSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
 import com.ai.opt.base.vo.PageInfo;
 import com.alibaba.fastjson.JSON;
@@ -29,12 +32,26 @@ public class QueryProductSvTest {
 //		vo.setInvalidDate(Timestamp.valueOf("2016-04-13 11:48:54"));
 //		vo.setTenantId("11111533");
 //		vo.setServiceType("1");
-		//vo.setBillingType("PACKAGE");
-		vo.setTenantId("test");
+		vo.setBillingType("step_group_type");
+		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		//vo.setProductId("0000000312");
-		vo.setProductName("a");
+		//vo.setProductName("a");
 		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getProductInfo(vo);
 		System.out.println("-----param:"+JSON.toJSONString(vo));
+		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
+	}
+	//@Test
+	public void testSearchByProductIdList(){
+		ProductQueryByIdListVO vo = new ProductQueryByIdListVO();
+		vo.setTenantId("baas-test");
+		
+		List<String> productIdList = new ArrayList<String>();
+		productIdList.add("147");
+		productIdList.add("148");
+		//
+		vo.setProductIdList(productIdList);
+		System.out.println("-----param:"+JSON.toJSONString(vo));
+		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getProductInfoByProductIdList(vo);
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
 	}
 }
