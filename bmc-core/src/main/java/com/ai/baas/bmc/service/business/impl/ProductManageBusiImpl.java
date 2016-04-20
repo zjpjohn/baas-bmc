@@ -30,6 +30,7 @@ import com.ai.baas.bmc.service.atom.interfaces.ICpPriceDetailAtom;
 import com.ai.baas.bmc.service.atom.interfaces.ICpPriceInfoAtom;
 import com.ai.baas.bmc.service.atom.interfaces.ICpStepInfoAtom;
 import com.ai.baas.bmc.service.business.interfaces.IProductManageBusi;
+import com.ai.baas.bmc.util.BmcSeqUtil;
 import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.baas.bmc.util.MyJsonUtil;
@@ -77,7 +78,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	@Override
 	public void updateProduct(ProductVO vo) {
 		JSONObject priceinfobject = new JSONObject();
-		String priceCode = aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0);
+
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		
 		cpPriceInfo.setPriceCode(vo.getProductId());
@@ -291,8 +292,13 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	@Override
 	public void addProduct(ProductVO vo) {
 		JSONObject priceinfobject = new JSONObject();
-		String priceCode = aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0);
+		String priceCode = BmcSeqUtil.getPriceCode();//aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0);
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
+		Long priceInfoid = BmcSeqUtil.getPriceInfoId();
+		
+		cpPriceInfo.setPriceInfoId(priceInfoid);
+		priceinfobject.put("PRICE_INFO_ID", priceInfoid);
+		
 		cpPriceInfo.setActiveTime(vo.getActiveDate());
 		priceinfobject.put("ACTIVE_TIME", vo.getActiveDate());
 
@@ -328,7 +334,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 1);
 			long stepSeq = 0;
 			//序列生成DETAIL_CODE
-			String detailCode = aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0);
+			String detailCode = BmcSeqUtil.getDetailCode();//aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0);
 			log.info("序列生成DETAIL_CODE:"+detailCode);
 			this.toAddCpPriceDetail(priceCode, vo, detailCode);
 			for (ServiceVO s : vo.getMajorProductAmount()) {
@@ -362,8 +368,14 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	 * @ApiCode
 	 */
 	private void toAddCpPriceDetail(String priceCode, ProductVO vo, String detailCode) {
+		Long detailId = BmcSeqUtil.getDetailId();
+		
 		JSONObject detailobject = new JSONObject();
 		CpPriceDetail cpPriceDetail = new CpPriceDetail();
+		
+		cpPriceDetail.setDetailId(detailId);
+		detailobject.put("DETAIL_ID", detailId);
+		
 		cpPriceDetail.setActiveTime(vo.getActiveDate());
 		detailobject.put("ACTIVE_TIME", vo.getActiveDate());
 
