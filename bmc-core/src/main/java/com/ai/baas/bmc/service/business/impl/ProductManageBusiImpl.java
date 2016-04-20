@@ -130,6 +130,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new BusinessException("error","修改失败");
 		}
 	}
 
