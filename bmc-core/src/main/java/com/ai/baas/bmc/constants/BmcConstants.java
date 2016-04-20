@@ -46,5 +46,8 @@ public final class BmcConstants {
         	}
         	public static final String CACHENS_PROFERENTIALPRODUCT="com.ai.baas.bmc.proferentialprocuct";
         }
+        public static final class ProferName{
+        	private ProferName(){}
+        }
 
 }
