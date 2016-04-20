@@ -201,7 +201,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 CpStepInfoCriteria cpStepInfoCriteria = new CpStepInfoCriteria();
 		 CpStepInfoCriteria.Criteria criteriaCpStepInfo = cpStepInfoCriteria.createCriteria();
 		 
-		 criteriaCpStepInfo.andDetailCodeEqualTo(Long.valueOf(detailCode));
+		 criteriaCpStepInfo.andDetailCodeEqualTo(detailCode);
 		 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
 			 criteriaCpStepInfo.andTotalPriceValueNotBetween(vo.getPriceStart(), vo.getPriceEnd());
 		 }
