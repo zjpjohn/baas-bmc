@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,9 @@ import com.esotericsoftware.minlog.Log;
 @Service
 @Transactional
 public class QueryProductBusiImpl implements IQueryProductBusi {
+	private static final Logger log = LogManager
+			.getLogger(QueryProductBusiImpl.class);
+	
 	@Autowired
 	private CpPriceInfoMapper cpPriceInfoMapper;
 	@Autowired
@@ -83,7 +88,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 	        
 	         //
 	         List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
-	         
+	         log.info("cpPriceInfoList.size------->>>"+pageInfo.getResult().size());
 	         ProductInfo productInfo = null;
 			 for(CpPriceInfo c : pageInfo.getResult()){
 				 productInfo = new ProductInfo();
@@ -161,6 +166,8 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 productInfoListNew = new ArrayList<ProductInfo>();
 			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
 				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size());
+			 }else if(pageInfo.getEndRowIndex()<productInfoList.size()){
+				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),pageInfo.getEndRowIndex());
 			 }
 			 //
 			 productInfoPageInfo.setResult(productInfoListNew);
