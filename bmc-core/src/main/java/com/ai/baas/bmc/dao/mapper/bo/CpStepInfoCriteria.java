@@ -194,52 +194,62 @@ public class CpStepInfoCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeEqualTo(Long value) {
+        public Criteria andDetailCodeEqualTo(String value) {
             addCriterion("DETAIL_CODE =", value, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeNotEqualTo(Long value) {
+        public Criteria andDetailCodeNotEqualTo(String value) {
             addCriterion("DETAIL_CODE <>", value, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeGreaterThan(Long value) {
+        public Criteria andDetailCodeGreaterThan(String value) {
             addCriterion("DETAIL_CODE >", value, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeGreaterThanOrEqualTo(Long value) {
+        public Criteria andDetailCodeGreaterThanOrEqualTo(String value) {
             addCriterion("DETAIL_CODE >=", value, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeLessThan(Long value) {
+        public Criteria andDetailCodeLessThan(String value) {
             addCriterion("DETAIL_CODE <", value, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeLessThanOrEqualTo(Long value) {
+        public Criteria andDetailCodeLessThanOrEqualTo(String value) {
             addCriterion("DETAIL_CODE <=", value, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeIn(List<Long> values) {
+        public Criteria andDetailCodeLike(String value) {
+            addCriterion("DETAIL_CODE like", value, "detailCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailCodeNotLike(String value) {
+            addCriterion("DETAIL_CODE not like", value, "detailCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailCodeIn(List<String> values) {
             addCriterion("DETAIL_CODE in", values, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeNotIn(List<Long> values) {
+        public Criteria andDetailCodeNotIn(List<String> values) {
             addCriterion("DETAIL_CODE not in", values, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeBetween(Long value1, Long value2) {
+        public Criteria andDetailCodeBetween(String value1, String value2) {
             addCriterion("DETAIL_CODE between", value1, value2, "detailCode");
             return (Criteria) this;
         }
 
-        public Criteria andDetailCodeNotBetween(Long value1, Long value2) {
+        public Criteria andDetailCodeNotBetween(String value1, String value2) {
             addCriterion("DETAIL_CODE not between", value1, value2, "detailCode");
             return (Criteria) this;
         }

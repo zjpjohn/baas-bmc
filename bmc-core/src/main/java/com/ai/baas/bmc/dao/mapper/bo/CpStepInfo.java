@@ -3,7 +3,7 @@ package com.ai.baas.bmc.dao.mapper.bo;
 public class CpStepInfo {
     private Long setpId;
 
-    private Long detailCode;
+    private String detailCode;
 
     private Long stepSeq;
 
@@ -35,12 +35,12 @@ public class CpStepInfo {
         this.setpId = setpId;
     }
 
-    public Long getDetailCode() {
+    public String getDetailCode() {
         return detailCode;
     }
 
-    public void setDetailCode(Long detailCode) {
-        this.detailCode = detailCode;
+    public void setDetailCode(String detailCode) {
+        this.detailCode = detailCode == null ? null : detailCode.trim();
     }
 
     public Long getStepSeq() {
