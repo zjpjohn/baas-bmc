@@ -22,7 +22,7 @@ import com.alibaba.fastjson.JSON;
 public class QueryProductSvTest {
 	@Autowired
 	private IQueryProductSV queryProductSv;
-	@Test
+	//@Test
 	public void testPageSearch(){
 		ProductQueryVO vo = new ProductQueryVO();
 		
@@ -40,14 +40,14 @@ public class QueryProductSvTest {
 		System.out.println("-----param:"+JSON.toJSONString(vo));
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
 	}
-	//@Test
+	@Test
 	public void testSearchByProductIdList(){
 		ProductQueryByIdListVO vo = new ProductQueryByIdListVO();
 		vo.setTenantId("baas-test");
 		
 		List<String> productIdList = new ArrayList<String>();
-		productIdList.add("147");
-		productIdList.add("148");
+		productIdList.add("472");
+		productIdList.add("482");
 		//
 		vo.setProductIdList(productIdList);
 		System.out.println("-----param:"+JSON.toJSONString(vo));

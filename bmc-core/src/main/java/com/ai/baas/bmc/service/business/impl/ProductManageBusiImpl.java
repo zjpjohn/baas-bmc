@@ -530,9 +530,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	private void toUpdateCpStepInfo(String detailCode, ServiceVO serviceVO, long stepSeq, ProductVO vo) {
 		CpStepInfo cpStepInfo = new CpStepInfo();
 		JSONObject stepobject = new JSONObject();
-		cpStepInfo.setSetpId(new Long(serviceVO.getServiceId()));
-		stepobject.put("STEP_ID", serviceVO.getServiceId());
-		
+		if(!StringUtil.isBlank(serviceVO.getServiceId())){
+			cpStepInfo.setSetpId(new Long(serviceVO.getServiceId()));
+			stepobject.put("STEP_ID", serviceVO.getServiceId());
+		}
 		cpStepInfo.setDetailCode(Long.valueOf(detailCode));
 		stepobject.put("DETAIL_CODE", detailCode);
 		// cpStepInfo.setExtCode(extCode);
@@ -591,10 +592,11 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 	private void toUpdateCpPackageInfo(String detailCode, ServiceVO serviceVO, ProductVO vo) {
 		CpPackageInfo cpPackageInfo = new CpPackageInfo();
 		JSONObject packageobject = new JSONObject();
-
-		cpPackageInfo.setPackageId(new Long(serviceVO.getServiceId()));
-		packageobject.put("PACKAGE_ID", serviceVO.getServiceId());
-		
+		//
+		if(!StringUtil.isBlank(serviceVO.getServiceId())){
+			cpPackageInfo.setPackageId(new Long(serviceVO.getServiceId()));
+			packageobject.put("PACKAGE_ID", serviceVO.getServiceId());
+		}
 		cpPackageInfo.setAmount(serviceVO.getAmountEnd());
 		packageobject.put("AMOUNT", serviceVO.getAmountEnd());
 
