@@ -17,4 +17,6 @@ public interface IFailedBillMaintainBusi {
     FailedBill queryFailedBillById(String failedBillRowKey) throws IOException;
 
     void doResendFailedBill(FailedBillParam failedBillRowKey) throws IOException;
+
+    void batchResendFailedBill(List<FailedBillParam> param) throws IOException;
 }
