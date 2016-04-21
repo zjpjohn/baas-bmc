@@ -123,7 +123,6 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             System.err.println("当前custID下没有subsId");
         }else{
             System.err.println("找到subs_id为"+subsId);
-            
         }
         BlUserinfo aBlUserinfo = writeBlUserinfo(orderInfoParams, custId, subsId, acctId);
         System.err.println(MyJsonUtil.toJson(aBlUserinfo));
@@ -256,8 +255,14 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
                     .andExtNameEqualTo(orderExt.getExtName());
             // 查出要删除的记录
             try {
-                BlUserinfoExt temp = aBlUserinfoExtMapper.selectByExample(example).get(0);
-                aBlUserinfoExtMapper.deleteByExample(example);
+                List<BlUserinfoExt> tempList = aBlUserinfoExtMapper.selectByExample(example);
+                BlUserinfoExt temp = new BlUserinfoExt();
+                if(tempList.size()==0){
+                   System.out.println("blUserinfoExt表中不存在对应的数据，无法删除");
+                }else{
+                    temp = aBlUserinfoExtMapper.selectByExample(example).get(0);
+                    aBlUserinfoExtMapper.deleteByExample(example);
+                }
                 // 刷新用户扩展信息表的内存表
                 JSONObject json = new JSONObject();
                 json.put("EXT_ID", temp.getExtId());
@@ -277,10 +282,26 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             example.createCriteria()
                     .andSubsIdEqualTo(subsId)
                     .andExtNameEqualTo(orderExt.getExtName());
-            try {
+
                 // 查出要更新的记录
 //                BlUserinfoExt temp = aBlUserinfoExtMapper.selectByExample(example).get(0);
-                aBlUserinfoExtMapper.updateByExampleSelective(aBlUserinfoExt, example);
+            BlUserinfoExt temp = new BlUserinfoExt();
+            try{
+                List<BlUserinfoExt> tempList = aBlUserinfoExtMapper.selectByExample(example);
+                if(tempList.size()==0){
+                   System.out.println("blUserinfoExt表中不存在对应的数据，无法更新");
+                }else{
+                    aBlUserinfoExtMapper.updateByExampleSelective(aBlUserinfoExt, example);
+                    temp = aBlUserinfoExtMapper.selectByExample(example).get(0);
+                    JSONObject json = new JSONObject();
+                    json.put("EXT_ID", temp.getExtId());
+                    json.put("SUBS_ID", temp.getSubsId());
+                    json.put("EXT_NAME", temp.getExtName());
+                    json.put("EXT_VALUE", temp.getExtValue());
+                    json.put("TENANT_ID", tenantId);
+                    DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", json.toString(),0);
+                }
+
                 // 刷新用户扩展信息表的内存表
                 // ********************************
 //                JSONObject json = new JSONObject();
@@ -291,14 +312,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
 //                json.put("TENANT_ID", tenantId);
 //                DshmUtil.getIdshmSV().initdel("bl_userinfo_ext",json.toString());
                 // 查出更新后的记录
-                BlUserinfoExt temp = aBlUserinfoExtMapper.selectByExample(example).get(0);
-                JSONObject json = new JSONObject();
-                json.put("EXT_ID", temp.getExtId());
-                json.put("SUBS_ID", temp.getSubsId());
-                json.put("EXT_NAME", temp.getExtName());
-                json.put("EXT_VALUE", temp.getExtValue());
-                json.put("TENANT_ID", tenantId);
-                DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", json.toString(),0);
+                 
+                
 
             } catch (NullPointerException e) {
                 throw new BusinessException(ErrorCode.NULL, "用户扩展信息不在表中，无法更新");
@@ -345,6 +360,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         for (int i = 0; i < product.getProductNumber(); i++) {
             BlSubsComm aBlSubsComm = new BlSubsComm();
             JSONObject json = new JSONObject();
+            
             //时间格式转换
             Date dDate = null;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -367,15 +383,12 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             aBlSubsComm.setSubsId(userInfo.getSubsId());
             aBlSubsComm.setSubsProductId(
                     aISysSequenceSvc.terrigerSysSequence("SUBS_PRODUCT_ID", 1).get(0));
-            // aBlSubsComm.setActiveTime(DateUtil.getTimestamp(product.getActiveTime(), DateUtil.YYYYMMDDHHMMSS));
             aBlSubsComm.setProductId(product.getProductId());
             aBlSubsComm.setResBonusFlag(product.getResBonusFlag());
-            //aBlSubsComm.setInactiveTime( DateUtil.getTimestamp(product.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS));
             aBlSubsComm.setTenantId(userInfo.getTenantId());
             aBlSubsComm.setCustId(userInfo.getCustId());
             aBlSubsCommMapper.insertSelective(aBlSubsComm);
             // 刷新产品订购信息的内存表
-
             json.put("subs_id", aBlSubsComm.getSubsId());
             json.put("subs_product_id", aBlSubsComm.getSubsProductId());
 //            json.put("active_time", aBlSubsComm.getActiveTime());
@@ -386,17 +399,18 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             json.put("cust_id", aBlSubsComm.getCustId());
 //            DshmUtil.getIdshmSV().initdel(TableCon.BL_SUBS_COMM, json.toString());
             DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),1);
-            LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());
-                }
+            LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());             
+          }
         String PRODUCT_ID = product.getProductId();
         
+        //                      暂时不写扩展表
         // 如果产品订购扩展信息不为空则对产品订购扩展信息表进行操作
-        if (product.getProductExtInfoList() != null) {
-            for (ProductExt pe : product.getProductExtInfoList()) {
-                writeBlSubsCommExt(PRODUCT_ID,pe,userInfo.getTenantId());
-            }
-        }
-    }
+//        if (product.getProductExtInfoList() != null) {
+//            for (ProductExt pe : product.getProductExtInfoList()) {
+//                writeBlSubsCommExt(PRODUCT_ID,pe,userInfo.getTenantId());
+//        }
+//      }
+  }
 
     // 产品订购扩展信息表操作
     private void writeBlSubsCommExt(String productId,  ProductExt productExt,String tenantId) {
@@ -505,7 +519,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         LoggerUtil.log.debug("刷新账户表共享内存：" + json.toString());
 
     }
-    // 账户扩展信息表操作^^目前不使用
+    // 账户扩展信息表操作   目前不使用
     // private void writeAcctInfoExt(BlAcctinfoExt aBlAcctinfoExt){
     //
     // }

@@ -23,22 +23,22 @@ public class UpdatePriceInfoTest {
     @Test
     public void test(){
         StandardPriceInfoParams param = new StandardPriceInfoParams();
-        param.setTenantId("test");
-        param.setTradeSeq("11266666");
-        param.setPriceName("testPriceName");
-        param.setServiceType("testServiceType");
-        param.setUsageList(new ArrayList<StanderdPriceInfoUsage>());
-        StanderdPriceInfoUsage usage = new StanderdPriceInfoUsage();
-        usage.setAmount(111);
-        usage.setSubServiceType("testServiceType");
-        usage.setUnit("分钟");
-        param.getUsageList().add(usage);
-        param.setPrice(4.5);
-        param.setUpdateId("CREATE");
-        param.setComments("本机自测用");
-//        param =  JSONObject.parseObject(
-//                "{\"serviceType\":\"VOICE\",\"comments\":\"1233asda\",\"tenantPwd\":\"\",\"cycleId\":\"\",\"priceType\":\"\",\"standardId\":\"\",\"cycleAmount\":0,\"cycleType\":\"\",\"updateId\":\"CREATE\",\"price\":1232,\"tenantId\":\"7BAF6267AE2F421FA8D1E305EE35C4BA\",\"priceName\":\"test05\",\"tradeSeq\":\"7BAF6267AE2F421FA8D1E305EE35C4BA20160421112650933e972edf2-d9f0-42af-8209-eb60e3077036\",\"status\":\"NOTEFFECT\",\"usageList\":[{\"amount\":1,\"subServiceType\":\"CALL_IN\",\"unit\":\"KB\"}]}"
-//                , StandardPriceInfoParams.class);
+//        param.setTenantId("test");
+//        param.setTradeSeq("11266666");
+//        param.setPriceName("testPriceName");
+//        param.setServiceType("testServiceType");
+//        param.setUsageList(new ArrayList<StanderdPriceInfoUsage>());
+//        StanderdPriceInfoUsage usage = new StanderdPriceInfoUsage();
+//        usage.setAmount(111);
+//        usage.setSubServiceType("testServiceType");
+//        usage.setUnit("分钟");
+//        param.getUsageList().add(usage);
+//        param.setPrice(4.5);
+//        param.setUpdateId("CREATE");
+//        param.setComments("本机自测用");
+        param =  JSONObject.parseObject(
+                "{\"serviceType\":\"VOICE\",\"comments\":\"1233asda\",\"tenantPwd\":\"\",\"cycleId\":\"\",\"priceType\":\"\",\"standardId\":\"\",\"cycleAmount\":0,\"cycleType\":\"\",\"updateId\":\"CREATE\",\"price\":1232,\"tenantId\":\"7BAF6267AE2F421FA8D1E305EE35C4BA\",\"priceName\":\"test05\",\"tradeSeq\":\"7BAF6267AE2F421FA8D1E305EE35C4BA20160421112650933e972edf2-d9f0-42af-8209-eb60e3077036\",\"status\":\"NOTEFFECT\",\"usageList\":[{\"amount\":1,\"subServiceType\":\"CALL_IN\",\"unit\":\"KB\"}]}"
+                , StandardPriceInfoParams.class);
         System.out.println("param="+com.alibaba.fastjson.JSON.toJSONString(param));
         System.out.println(com.alibaba.fastjson.JSON.toJSONString(aIPriceInfoSV.updatePriceInfo(param)));
     }
