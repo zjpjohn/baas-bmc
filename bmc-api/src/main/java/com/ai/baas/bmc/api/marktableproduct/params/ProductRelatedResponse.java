@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.api.marktableproduct.params;
 
+import java.io.Serializable;
 import java.util.List;
 /**
  * 关联详单科目 供可销售产品关联查询用
@@ -8,7 +9,11 @@ import java.util.List;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author zhangzd
  */
-public class ProductRelatedResponse {
+public class ProductRelatedResponse implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 产品编号
 	 */
