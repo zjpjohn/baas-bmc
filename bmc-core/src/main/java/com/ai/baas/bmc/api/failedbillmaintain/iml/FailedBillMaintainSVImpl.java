@@ -89,10 +89,7 @@ public class FailedBillMaintainSVImpl implements IFailedBillMaintainSV {
     public BaseResponse batchResendFailedBill(List<FailedBillParam> params) {
         ResponseHeader responseHeader = new ResponseHeader(true, "000000", "Success");
         try {
-            for (FailedBillParam param : params) {
-                param.validate();
-                failedBillMaintainBusi.doResendFailedBill(param);
-            }
+            failedBillMaintainBusi.batchResendFailedBill(params);
         } catch (BusinessException e) {
             responseHeader.setResultCode("000001");
             responseHeader.setIsSuccess(false);

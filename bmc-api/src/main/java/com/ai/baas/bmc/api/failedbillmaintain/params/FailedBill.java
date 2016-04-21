@@ -32,7 +32,7 @@ public class FailedBill implements Serializable {
     /**
      * 错单记录
      */
-    private Map<String, String> fail_packet;
+    private Map<String, String> failPacket;
 
     public String getBsn() {
         return bsn;
@@ -78,8 +78,8 @@ public class FailedBill implements Serializable {
         return arrivalTime;
     }
 
-    public Map<String, String> getFail_packet() {
-        return fail_packet;
+    public Map<String, String> getFailPacket() {
+        return failPacket;
     }
 
     public void setBsn(String bsn) {
@@ -126,7 +126,7 @@ public class FailedBill implements Serializable {
         this.arrivalTime = arrivalTime;
     }
 
-    public void setFail_packet(Map<String, String> fail_packet) {
-        this.fail_packet = fail_packet;
+    public void setFailPacket(Map<String, String> failPacket) {
+        this.failPacket = failPacket;
     }
 }
