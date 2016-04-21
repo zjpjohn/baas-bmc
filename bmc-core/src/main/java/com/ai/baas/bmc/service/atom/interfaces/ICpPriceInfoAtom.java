@@ -2,6 +2,7 @@ package com.ai.baas.bmc.service.atom.interfaces;
 
 import java.util.List;
 
+import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
@@ -59,4 +60,14 @@ public interface ICpPriceInfoAtom {
 	 * @ApiCode
 	 */
 	void updateProductStatus(CpPriceInfo info);
+	
+	/**
+	 * 根据priceCode进行模糊查询
+	 * @param info
+	 * @return
+	 * @author wangkai16
+	 * @ApiCode
+	 */
+	List<CpPriceInfo> getCpPriceInfoByPriceCodeLike(QueryInfoParams record );
+	
 }
