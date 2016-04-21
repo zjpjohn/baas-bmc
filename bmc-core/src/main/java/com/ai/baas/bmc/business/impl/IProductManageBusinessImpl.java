@@ -162,7 +162,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 			long stepSeq, ProductVO vo) {
 		CpStepInfo cpStepInfo = new CpStepInfo();
 		JSONObject stepobject = new JSONObject();
-		cpStepInfo.setDetailCode(Long.valueOf(detailCode));
+		cpStepInfo.setDetailCode(detailCode);
 		stepobject.put("DETAIL_CODE", detailCode);
 		// cpStepInfo.setExtCode(extCode);
 		// cpStepInfo.setFactorCode(factorCode);

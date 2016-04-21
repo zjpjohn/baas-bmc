@@ -95,14 +95,6 @@ public class FailedBillParam extends BaseInfo {
         return stringBuilder.toString();
     }
 
-    public String getService_id() {
-        return serviceId;
-    }
-
-    public void setService_id(String service_id) {
-        this.serviceId = service_id;
-    }
-
     public String getSource() {
         return source;
     }

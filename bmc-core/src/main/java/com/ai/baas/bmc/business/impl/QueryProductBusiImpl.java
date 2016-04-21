@@ -112,12 +112,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 
 				 CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
 				 CpPriceDetailCriteria.Criteria criteriaCpPriceDetail = cpPriceDetailCriteria.createCriteria();
-				 if(null != vo.getActiveDate()){
-					 criteriaCpPriceDetail.andActiveTimeEqualTo(vo.getActiveDate());
-				 }
-				 if(!StringUtil.isBlank(vo.getServiceType())){
-					 criteriaCpPriceDetail.andServiceTypeEqualTo(vo.getServiceType());
-				 }
+				 
 				 if(!StringUtil.isBlank(vo.getBillingType())){
 					 criteriaCpPriceDetail.andChargeTypeEqualTo(vo.getBillingType());
 				 }
@@ -201,7 +196,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 CpStepInfoCriteria cpStepInfoCriteria = new CpStepInfoCriteria();
 		 CpStepInfoCriteria.Criteria criteriaCpStepInfo = cpStepInfoCriteria.createCriteria();
 		 
-		 criteriaCpStepInfo.andDetailCodeEqualTo(Long.valueOf(detailCode));
+		 criteriaCpStepInfo.andDetailCodeEqualTo(detailCode);
 		 if(null != new Double(vo.getPriceStart()) && new Double(vo.getPriceStart()) != 0.0 && null != new Double(vo.getPriceEnd()) && new Double(vo.getPriceEnd()) != 0.0 ){
 			 criteriaCpStepInfo.andTotalPriceValueNotBetween(vo.getPriceStart(), vo.getPriceEnd());
 		 }

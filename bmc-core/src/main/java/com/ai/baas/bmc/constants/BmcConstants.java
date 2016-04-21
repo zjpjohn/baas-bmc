@@ -46,5 +46,32 @@ public final class BmcConstants {
         	}
         	public static final String CACHENS_PROFERENTIALPRODUCT="com.ai.baas.bmc.proferentialprocuct";
         }
+        public static final class ProferName{
+        	private ProferName(){}
+        	/**
+        	 * 满赠类型
+        	 */
+        	public static final String DR_OFFER="dr_offer";
+        	/**
+        	 * 满赠类型
+        	 */
+        	public static final String DR_MINUS="dr_minus";
+        	/**
+        	 * 赠送业务
+        	 */
+        	public static final String SERVICE_OFFER="service_offer";
+        	/**
+        	 * 生效
+        	 */
+        	public static final String ACTIVE="ACTIVE";
+        	/**
+        	 * 失效
+        	 */
+        	public static final String INACTIVE="INACTIVE";
+        	/**
+        	 * 失效状态
+        	 */
+        	public static final String DEL="DEL";
+        }
 
 }

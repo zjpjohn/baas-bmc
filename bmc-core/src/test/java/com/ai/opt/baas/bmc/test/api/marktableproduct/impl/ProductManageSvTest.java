@@ -41,20 +41,20 @@ public class ProductManageSvTest {
 	
 	
 	
-	//@Test
+	@Test
 	public void addProduct(){
 		ProductVO productVO = new ProductVO();
 		productVO.setActiveDate(DateUtil.getSysDate());
 		//productVO.setActiveDateTag("1");
-		productVO.setBillingType("step_group_type");
+		productVO.setBillingType("STEP_GROUP_TYPE");
 		productVO.setInvalidDate(DateUtil.getSysDate());
-		productVO.setIsPriceEqual("ok");
+		productVO.setIsPriceEqual("1");
 		productVO.setProductId("111115");
-		productVO.setProductName("超级产品BBBccca");
+		productVO.setProductName("超级产品BBBcccaCCCCC");
 		productVO.setStandardPriceType("bbb");
-		productVO.setTenantId("111115222");
+		productVO.setTenantId("111115112");
 		productVO.setTotalPrice(new BigDecimal(100.1));
-		productVO.setTradeSeq("aaaaa122121213");
+		productVO.setTradeSeq("aaaaa12212231213");
 		//
 		List<ServiceVO> serviceVoList = new ArrayList<ServiceVO>();
 		
@@ -114,7 +114,7 @@ public class ProductManageSvTest {
 		System.out.println("-------------********------------------>>>>response:"+jsonObj2);
 	
 	}
-	@Test
+	//@Test
 	public void updateProduct(){
 		
 		ProductVO vo = new ProductVO();

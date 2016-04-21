@@ -26,15 +26,16 @@ public class QueryProductSvTest {
 	public void testPageSearch(){
 		ProductQueryVO vo = new ProductQueryVO();
 		
-		vo.setPageNo(2);
-		vo.setPageSize(10);
+		vo.setPageNo(1);
+		vo.setPageSize(6);
 //		vo.setActiveDate(Timestamp.valueOf("2016-04-13 11:48:54"));
-//		vo.setInvalidDate(Timestamp.valueOf("2016-04-13 11:48:54"));
+		vo.setInvalidDate(Timestamp.valueOf("2016-04-23 11:48:54"));
 //		vo.setTenantId("11111533");
-//		vo.setServiceType("1");
+		vo.setServiceType("VOICE");
 		//vo.setBillingType("STEP_GROUP_TYPE");
 		//vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
+		vo.setActiveDate(Timestamp.valueOf("2016-04-19 00:00:00"));
 		//vo.setPriceEnd(0);
 		//vo.setPriceStart(0);
 		//vo.setProductId("0000000312");
