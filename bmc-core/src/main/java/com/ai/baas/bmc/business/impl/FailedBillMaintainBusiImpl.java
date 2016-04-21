@@ -80,13 +80,15 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
                         && !StringUtil.isBlank(pager.getPreviousRow())) {
                     PageFilter pageFilter = new PageFilter(pager.getPageSize() + 1);
                     filterList.addFilter(pageFilter);
-                    scan.setStartRow(pager.getPreviousRow().getBytes());
+                    String previousRowKey = pager.getPreviousRow().replaceAll("@@","\\x01");
+                    scan.setStartRow(previousRowKey.getBytes());
                 } else {
                     // 向前查一页
                     if (!StringUtil.isBlank(pager.getStartRow())) {
                         PageFilter pageFilter = new PageFilter(pager.getPageSize());
                         filterList.addFilter(pageFilter);
-                        scan.setStartRow(pager.getStartRow().getBytes());
+                        String startRowKey = pager.getStartRow().replaceAll("@@","\\x01");
+                        scan.setStartRow(startRowKey.getBytes());
                     } else {
                         throw new BusinessException("500", "分页器参数不合法");
                     }
@@ -256,7 +258,20 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         fillSourceValue(failedBill, result);
         fillTenantIdValue(failedBill, result);
         fillFailPacketValue(failedBill, result);
+        buildRowKey(failedBill);
         return failedBill;
+    }
+
+    private void buildRowKey(FailedBill param) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(param.getTenantId() + "@@");
+        stringBuilder.append(param.getServiceId() + "@@");
+        stringBuilder.append(param.getSource() + "@@");
+        stringBuilder.append(param.getBsn() + "@@");
+        stringBuilder.append(param.getSn() + "@@");
+        stringBuilder.append(param.getArrivalTime() + "@@");
+        stringBuilder.append(param.getAccountPeriod());
+        param.setRowKey(stringBuilder.toString());
     }
 
     private void fillTenantIdValue(FailedBill failedBill, Result result) {
