@@ -80,14 +80,14 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
                         && !StringUtil.isBlank(pager.getPreviousRow())) {
                     PageFilter pageFilter = new PageFilter(pager.getPageSize() + 1);
                     filterList.addFilter(pageFilter);
-                    String previousRowKey = pager.getPreviousRow().replaceAll("@@","\\x01");
+                    String previousRowKey = pager.getPreviousRow().replaceAll("@@","\\\\x01");
                     scan.setStartRow(previousRowKey.getBytes());
                 } else {
                     // 向前查一页
                     if (!StringUtil.isBlank(pager.getStartRow())) {
                         PageFilter pageFilter = new PageFilter(pager.getPageSize());
                         filterList.addFilter(pageFilter);
-                        String startRowKey = pager.getStartRow().replaceAll("@@","\\x01");
+                        String startRowKey = pager.getStartRow().replaceAll("@@","\\\\x01");
                         scan.setStartRow(startRowKey.getBytes());
                     } else {
                         throw new BusinessException("500", "分页器参数不合法");
