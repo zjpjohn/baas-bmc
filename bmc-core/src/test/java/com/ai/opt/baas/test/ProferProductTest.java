@@ -290,21 +290,20 @@ public class ProferProductTest {
 		@Test
 		public void testRelatedAccount2(){
 			RelatedAccountVO vo=new RelatedAccountVO();
-			vo.setAccountType("xiangdankemuzengjia");
-			vo.setChargeType("PRESENT");
-			vo.setProductId(561L);
+			vo.setAccountType("dr_suject");
+			vo.setChargeType("dr_offer");
+			vo.setProductId(761L);
 			List<Long> list=new ArrayList<Long>();
-			list.add(1L);
-			list.add(2L);
-			list.add(3L);
+			list.add(401L);
+			
 			vo.setRelAccounts(list);
 			
 			List<Long> list1=new ArrayList<Long>();
 			list1.add(282L);
 			list1.add(283L);
 			list1.add(284L);
-			vo.setFullIds(list1);
-			vo.setTenantId("BYD");
+			//vo.setFullIds(list1);
+			vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 			vo.setTradeSeq("xuliehao123");
 			
 			iProferProductManageSV.relatedAccout(vo);
