@@ -31,6 +31,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfoCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria;
+import com.ai.baas.bmc.util.BmcSeqUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil.CellTemp;
 import com.ai.baas.bmc.util.MyJsonUtil;
@@ -152,8 +153,12 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
 
             // 插入cp_price_info表
             CpPriceInfo priceInfo = new CpPriceInfo();
+            
+            String priceCode = BmcSeqUtil.getPriceCode();
+            Long priceInfoId = BmcSeqUtil.getPriceInfoId();
+            priceInfo.setPriceInfoId(priceInfoId);
             priceInfo.setTenantId(param.getTenantId());
-            priceInfo.setPriceCode(aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0));
+            priceInfo.setPriceCode(priceCode);//(aISysSequenceSvc.terrigerSysSequence("PRICE_CODE", 1).get(0));
             priceInfo.setPriceName(param.getPriceName());
             priceInfo.setCreateTime(DateUtil.getTimestamp(System.currentTimeMillis()));
             priceInfo.setComments(param.getComments());
@@ -169,10 +174,12 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             // for (StanderdPriceInfoUsage u : param.getUsageList()) {
             // 插入cp_price_detail表
             CpPriceDetail priceDetail = new CpPriceDetail();
+            String detailCode = BmcSeqUtil.getDetailCode();
+            Long priceDetailId = BmcSeqUtil.getDetailId();
+            priceDetail.setDetailId(priceDetailId);
             priceDetail.setPriceCode(priceInfo.getPriceCode());
             priceDetail.setServiceType(param.getServiceType());
-            priceDetail
-                    .setDetailCode(aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0));
+            priceDetail.setDetailCode(detailCode);//(aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0));
             // ^^设置默认值
             priceDetail.setActiveTime(DateUtil.getTimestamp("20150101", DateUtil.YYYYMMDD));
             priceDetail.setInactiveTime(DateUtil.getTimestamp("20300101", DateUtil.YYYYMMDD));

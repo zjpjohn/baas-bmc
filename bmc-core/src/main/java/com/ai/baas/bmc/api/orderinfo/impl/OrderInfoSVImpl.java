@@ -50,12 +50,11 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         params.put("tenant_id", record.getTenantId());
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
                 .executeQuery(DshmUtil.getCacheClient());
-        System.err.println(result.size());
         // 获得对应的内部的custId
         
         String custId = null;
         System.err.println("map"+JSON.toJSONString(result));
-         // 循环获得第一条非空的数据
+        // 循环获得第一条非空的数据
         for (Map<String, String> r : result) {
             if (!r.isEmpty()) {
                 custId = r.get("cust_id");
@@ -70,7 +69,6 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         }
         System.err.println("获得cust_id : "+custId);
         LoggerUtil.log.debug("获得cust_id:" + custId);
-
         LoggerUtil.log.debug("校验成功！");
         
         // 幂等性判断（判重）
@@ -93,9 +91,6 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
             resultCode.setResponseHeader(new ResponseHeader(false, "000001", e.getErrorCode() + e.getErrorMessage()));
             return resultCode;
         }
-        // catch (Exception e1) {
-        // return "请联系管理员";
-        // }
         resultCode.setResponseHeader(new ResponseHeader(true, "000000", "成功"));
         return resultCode;
     }
