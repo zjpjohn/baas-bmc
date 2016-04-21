@@ -35,6 +35,16 @@ public class ProductRelatedRequest implements Serializable {
 	@NotBlank(message="计费类型不能为空",groups={IProductManageSV.updateProductRelated.class,IQueryProductSV.getProductRelated.class})
 	private String billingType;
 	
+	@NotBlank(message="计费类型不能为空",groups={IProductManageSV.updateProductRelated.class})
+	private String subjectCode;
+
+	public String getSubjectCode() {
+		return subjectCode;
+	}
+
+	public void setSubjectCode(String subjectCode) {
+		this.subjectCode = subjectCode;
+	}
 
 	public String getProductId() {
 		return productId;
