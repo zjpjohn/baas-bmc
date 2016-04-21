@@ -666,7 +666,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		//
 		ProductParamKeyVo productParamKeyVo = new ProductParamKeyVo();
 		productParamKeyVo.setBillingType(vo.getBillingType());
-		productParamKeyVo.setProductId(vo.getTenantId());
+		productParamKeyVo.setProductId(vo.getProductId());
 		ProductVO productVo = this.editProduct(productParamKeyVo);
 		List<ServiceVO> serviceVOList = productVo.getMajorProductAmount();
 		//
