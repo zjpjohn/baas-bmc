@@ -12,11 +12,7 @@ public class RelatedAccountVO extends BaseInfo {
 
 	
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 租户Id
-	 */
-	@NotBlank(message="租户Id不能为空")
-	private String tenantId;
+
 	/**
      * 消息流水<br>
      * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
@@ -46,13 +42,7 @@ public class RelatedAccountVO extends BaseInfo {
 	 */
 	private String accountType;
 	
-	public String getTenantId() {
-		return tenantId;
-	}
-
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+	
 
 	public String getTradeSeq() {
 		return tradeSeq;
