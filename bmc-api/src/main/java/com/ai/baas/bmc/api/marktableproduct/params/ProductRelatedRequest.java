@@ -22,17 +22,17 @@ public class ProductRelatedRequest implements Serializable {
 	/**
 	 * 产品编号
 	 */
-	@NotBlank(message="产品Id不能为空",groups={IProductManageSV.updateProductRelated.class,IQueryProductSV.getProductRelated.class})
+	@NotBlank(message="产品Id不能为空",groups={IProductManageSV.updateProductRelated.class,IQueryProductSV.GetProductRelated.class})
 	private String productId;
 	/**
 	 * 租户id
 	 */
-	@NotBlank(message="租户id不能为空",groups={IProductManageSV.updateProductRelated.class,IQueryProductSV.getProductRelated.class})
+	@NotBlank(message="租户id不能为空",groups={IProductManageSV.updateProductRelated.class,IQueryProductSV.GetProductRelated.class})
 	private String tenantId;
 	/**
 	 * 计费类型
 	 */
-	@NotBlank(message="计费类型不能为空",groups={IProductManageSV.updateProductRelated.class,IQueryProductSV.getProductRelated.class})
+	@NotBlank(message="计费类型不能为空",groups={IProductManageSV.updateProductRelated.class,IQueryProductSV.GetProductRelated.class})
 	private String billingType;
 	
 	@NotBlank(message="科目编码不能为空",groups={IProductManageSV.updateProductRelated.class})

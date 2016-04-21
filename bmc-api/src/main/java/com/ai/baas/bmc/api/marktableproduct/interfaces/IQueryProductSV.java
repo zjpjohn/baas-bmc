@@ -42,7 +42,7 @@ public interface IQueryProductSV {
 	 * @ApiCode
 	 */
 	PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo) throws BusinessException, SystemException;
-	@interface getProductInfoByProductIdList{}
+	@interface GetProductInfoByProductIdList{}
 	/**
 	 * 
 	 * @param 可销售产品>>>关联详单科目
@@ -54,5 +54,5 @@ public interface IQueryProductSV {
 	 * @ApiCode
 	 */
 	ProductRelatedResponse getProductRelated(ProductRelatedRequest vo) throws BusinessException,SystemException;
-	@interface getProductRelated{}
+	@interface GetProductRelated{}
 }

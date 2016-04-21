@@ -240,7 +240,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVo.setServiceTypeDetail(cpPackageInfoNew.getFactorCode());
 				serviceVo.setServiceType(cpPackageInfoNew.getServiceType());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitCode());
-				serviceVo.setSubjectCode(cpPackageInfo.getSubjectCode());
+				serviceVo.setSubjectCode(cpPackageInfoNew.getSubjectCode());
 				//
 				serviceVOList.add(serviceVo);
 			}
