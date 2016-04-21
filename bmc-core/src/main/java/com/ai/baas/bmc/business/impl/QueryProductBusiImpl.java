@@ -112,9 +112,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 
 				 CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
 				 CpPriceDetailCriteria.Criteria criteriaCpPriceDetail = cpPriceDetailCriteria.createCriteria();
-				 if(null != vo.getActiveDate()){
-					 criteriaCpPriceDetail.andActiveTimeEqualTo(vo.getActiveDate());
-				 }
+				 
 				 if(!StringUtil.isBlank(vo.getServiceType())){
 					 criteriaCpPriceDetail.andServiceTypeEqualTo(vo.getServiceType());
 				 }
