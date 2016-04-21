@@ -699,11 +699,11 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		for(ServiceVO serviceVo : serviceVOList){
 			if(CHARGE_TYPE_STEP.equalsIgnoreCase(vo.getBillingType())){
 				//
-				this.cpStepInfoAtom.updateSubjectCodeByStepId(serviceVo.getSubjectCode(), serviceVo.getServiceId());
+				this.cpStepInfoAtom.updateSubjectCodeByStepId(vo.getSubjectCode(), serviceVo.getServiceId());
 				
 			}else if(CHARGE_TYPE_PACKAGE.equalsIgnoreCase(vo.getBillingType())){
 				//
-				this.cpPackageInfoAtom.updateSubjectCodeByPackageId(serviceVo.getSubjectCode(), serviceVo.getServiceId());
+				this.cpPackageInfoAtom.updateSubjectCodeByPackageId(vo.getSubjectCode(), serviceVo.getServiceId());
 			}
 		}
 			
