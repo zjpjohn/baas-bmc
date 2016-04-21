@@ -137,7 +137,6 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         if(StringUtil.isBlank(subsId)){
             writeAcctInfo(aBlUserinfo);
         }
-
     }
 
     // 用户信息表操作,成功返回用户信息
@@ -191,8 +190,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         // 业务类型不确定，暂为空
         // 如果subsId为空则认为需要插入，否则执行更新
         if (StringUtil.isBlank(subsId)) {
-            // subsId调用序列
-            
+            // subsId调用序列 
             aBluserinfo.setSubsId(
                     aISysSequenceSvc.terrigerSysSequence("SUBS_ID", 1).get(0));
             // acctId调用序列

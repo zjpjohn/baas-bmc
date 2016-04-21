@@ -35,6 +35,13 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
     @Override
     public ResponseMessage getPriceInfo(QueryInfoParams record)
             throws BusinessException, SystemException {
+        ResponseMessage responseMessage = new ResponseMessage();
+        
+        if(StringUtil.isBlank(record.getTenantId())){
+            responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，查询失败"));
+            return responseMessage;
+        }
+        
         return IGetPriceInfoBussiness.getPriceInfo(record);
     }
 
@@ -43,16 +50,16 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
             throws BusinessException, SystemException {
         BaseResponse result = new BaseResponse();
         // 幂等性判断（判重）
-        try {
-            if (aIUpdatePriceInfoBussiness.dupCheck(record)) {
-                result.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
-                return result;
-            }
-        } catch (IOException e) {
-            LoggerUtil.log.error(e);
-            result.setResponseHeader(new ResponseHeader(false, "000001", "幂等性判断判断失败请联系管理员"));
-            return result;
-        }
+//        try {
+//            if (aIUpdatePriceInfoBussiness.dupCheck(record)) {
+//                result.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
+//                return result;
+//            }
+//        } catch (IOException e) {
+//            LoggerUtil.log.error(e);
+//            result.setResponseHeader(new ResponseHeader(false, "000001", "幂等性判断判断失败请联系管理员"));
+//            return result;
+//        }
         if(StringUtil.isBlank(record.getTenantId())){
             result.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，更新失败"));
             return result;

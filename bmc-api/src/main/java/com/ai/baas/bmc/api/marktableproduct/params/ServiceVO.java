@@ -59,7 +59,19 @@ public class ServiceVO implements Serializable {
 	 * 单价
 	 */
 	private BigDecimal price;
+	/**
+	 * 科目编码
+	 */
+	private String subjectCode;
 	
+	public String getSubjectCode() {
+		return subjectCode;
+	}
+
+	public void setSubjectCode(String subjectCode) {
+		this.subjectCode = subjectCode;
+	}
+
 	public String getServiceId() {
 		return serviceId;
 	}

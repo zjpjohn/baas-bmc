@@ -41,4 +41,14 @@ public interface ICpPriceDetailAtom {
 	 * @ApiCode
 	 */
 	CpPriceDetail getCpPriceDetailByPriceCode(CpPriceDetail info);
+	
+	/**
+	 * 根据priceCode和serviceType查询信息
+	 * @param
+	 * @author wangkai16
+	 * @ApiDocMethod
+	 */
+	List<CpPriceDetail> getCpPriceDetailByServiceType(String priceCode, String serviceType);
+	
+	
 }

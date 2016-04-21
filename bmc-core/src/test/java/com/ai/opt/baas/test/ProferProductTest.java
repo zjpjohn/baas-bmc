@@ -313,8 +313,8 @@ public class ProferProductTest {
 	@Test
 	public void testgetRelated(){
 		RelatedVO vo=new RelatedVO();
-		vo.setProductId(561L);
-		vo.setTenantId("BYD");
+		vo.setProductId(761L);
+		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		vo.setTradeSeq("12321321321");
 		System.out.println(JSON.toJSONString(iQueryProferProductSV.getRelatedAccount(vo)));
 	}

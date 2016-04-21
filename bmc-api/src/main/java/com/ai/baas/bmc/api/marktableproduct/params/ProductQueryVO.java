@@ -56,11 +56,11 @@ public class ProductQueryVO extends BaseInfo {
 	/**
 	 * 产品价格开头
 	 */
-	private double priceStart;
+	private Double priceStart;
 	/**
 	 * 产品价格结尾
 	 */
-	private double priceEnd;
+	private Double priceEnd;
 	
 	 /**
      * 当前第几页,必填
@@ -111,16 +111,16 @@ public class ProductQueryVO extends BaseInfo {
 		this.invalidDate = invalidDate;
 	}
 	
-	public double getPriceStart() {
+	public Double getPriceStart() {
 		return priceStart;
 	}
-	public void setPriceStart(double priceStart) {
+	public void setPriceStart(Double priceStart) {
 		this.priceStart = priceStart;
 	}
-	public double getPriceEnd() {
+	public Double getPriceEnd() {
 		return priceEnd;
 	}
-	public void setPriceEnd(double priceEnd) {
+	public void setPriceEnd(Double priceEnd) {
 		this.priceEnd = priceEnd;
 	}
 	public String getTradeSeq() {

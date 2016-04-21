@@ -10,6 +10,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetailCriteria;
 import com.ai.baas.bmc.service.atom.interfaces.ICpPriceDetailAtom;
 import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.fastjson.JSON;
 @Service
 public class CpPriceDetailAtomImpl implements ICpPriceDetailAtom {
@@ -101,6 +102,21 @@ public class CpPriceDetailAtomImpl implements ICpPriceDetailAtom {
 		}
 		return cpPriceDetail;
 	}
+    @Override
+    public List<CpPriceDetail> getCpPriceDetailByServiceType(String priceCode, String serviceType) {
+        
+        CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();          
+        CpPriceDetailCriteria.Criteria cpPriceDetailC=cpPriceDetailCriteria.or();
+        cpPriceDetailC.andPriceCodeEqualTo(priceCode);
+       //业务类型作为查询条件
+        if(!StringUtil.isBlank(serviceType)){
+            cpPriceDetailC.andServiceTypeEqualTo(serviceType);
+          }
+        
+        List<CpPriceDetail> cpPriceDetailList = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
+        
+        return cpPriceDetailList;
+    }
 	
 
 }

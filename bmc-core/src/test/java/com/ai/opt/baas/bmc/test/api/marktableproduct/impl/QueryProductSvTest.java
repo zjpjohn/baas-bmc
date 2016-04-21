@@ -14,6 +14,8 @@ import com.ai.baas.bmc.api.marktableproduct.interfaces.IQueryProductSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedRequest;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.alibaba.fastjson.JSON;
 
@@ -22,7 +24,7 @@ import com.alibaba.fastjson.JSON;
 public class QueryProductSvTest {
 	@Autowired
 	private IQueryProductSV queryProductSv;
-	@Test
+	//@Test
 	public void testPageSearch(){
 		ProductQueryVO vo = new ProductQueryVO();
 		
@@ -57,5 +59,15 @@ public class QueryProductSvTest {
 		System.out.println("-----param:"+JSON.toJSONString(vo));
 		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getProductInfoByProductIdList(vo);
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
+	}
+	@Test
+	public void getProductRelated(){
+		ProductRelatedRequest request = new ProductRelatedRequest();
+		request.setBillingType("STEP_GROUP_TYPE");
+		request.setProductId("0000001031");
+		request.setTenantId("111115132");
+		
+		ProductRelatedResponse response = this.queryProductSv.getProductRelated(request);
+		System.out.println("---->>>:"+JSON.toJSONString(response));
 	}
 }

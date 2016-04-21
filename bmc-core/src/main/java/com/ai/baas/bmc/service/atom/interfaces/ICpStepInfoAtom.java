@@ -46,4 +46,13 @@ public interface ICpStepInfoAtom {
 	 * @ApiCode
 	 */
 	public void addCpStepInfo(CpStepInfo info);
+	/**
+	 * 通过stepId修改subjectCode
+	 * @param subjectCode
+	 * @param stepId
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public void updateSubjectCodeByStepId(String subjectCode,String stepId);
 }

@@ -11,7 +11,10 @@ import com.ai.baas.bmc.api.marktableproduct.interfaces.IQueryProductSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedRequest;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedResponse;
 import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
+import com.ai.baas.bmc.service.business.interfaces.IProductManageBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
@@ -26,6 +29,8 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 			.getLogger(IQueryProductSVImpl.class);
 	@Autowired
 	private IQueryProductBusi iQueryProductBusiImpl;
+	@Autowired
+	private IProductManageBusi iProductManageBusi;
 	
 	@Override
 	public PageInfo<ProductInfo> getProductInfo(ProductQueryVO vo)
@@ -48,6 +53,14 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 	public PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo)
 			throws BusinessException, SystemException {
 		return this.iQueryProductBusiImpl.getProductInfoByProductIdList(vo);
+	}
+	/**
+	 * 可销售产品管理>>>关联详单 查询
+	 */
+	@Override
+	public ProductRelatedResponse getProductRelated(ProductRelatedRequest vo)
+			throws BusinessException, SystemException {
+		return this.iProductManageBusi.getProductRelated(vo);
 	}
 
 }

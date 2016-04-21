@@ -63,4 +63,19 @@ public class CpPackageInfoAtomImpl implements ICpPackageInfoAtom {
 
 		this.cpPackageInfoMapper.updateByPrimaryKeySelective(info);
 	}
+	/**
+	 * 通过pakcageId修改subjectCode
+	 */
+	@Override
+	public void updateSubjectCodeByPackageId(String subjectCode, String packageId) {
+		CpPackageInfo cpPackageInfo = new CpPackageInfo();
+		cpPackageInfo.setSubjectCode(subjectCode);
+		//
+		CpPackageInfoCriteria example = new CpPackageInfoCriteria();
+		CpPackageInfoCriteria.Criteria criteria = example.createCriteria();
+		criteria.andPackageIdEqualTo(new Long(packageId));
+		
+		this.cpPackageInfoMapper.updateByExampleSelective(cpPackageInfo, example);
+		
+	}
 }

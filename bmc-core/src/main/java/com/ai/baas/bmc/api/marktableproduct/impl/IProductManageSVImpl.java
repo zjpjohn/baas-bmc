@@ -11,6 +11,7 @@ import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedRequest;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.service.business.interfaces.IProductManageBusi;
@@ -289,6 +290,14 @@ public class IProductManageSVImpl implements IProductManageSV {
 		}
 		return this.iProductManageBusi.editProduct(vo);
 		
+	}
+	/**
+	 * 可销售产品管理>>>关联详单 修改
+	 */
+	@Override
+	public void updateProductRelated(ProductRelatedRequest vo) throws BusinessException, SystemException {
+		
+		this.iProductManageBusi.updateProductRelated(vo);
 	}
 
 }
