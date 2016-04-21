@@ -14,6 +14,7 @@ import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedRequest;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
 import com.ai.opt.base.exception.BusinessException;
@@ -41,7 +42,7 @@ public class ProductManageSvTest {
 	
 	
 	
-	@Test
+	//@Test
 	public void addProduct(){
 		ProductVO productVO = new ProductVO();
 		productVO.setActiveDate(DateUtil.getSysDate());
@@ -134,5 +135,15 @@ public class ProductManageSvTest {
 			
 		}
 		System.out.println("----------->>>:update success");
+	}
+	@Test
+	public void updateProductRelated(){
+		ProductRelatedRequest request = new ProductRelatedRequest();
+		request.setBillingType("STEP_GROUP_TYPE");
+		request.setProductId("0000001031");
+		request.setTenantId("111115132");
+		request.setSubjectCode("SUPER");
+		
+		this.productManageSV.updateProductRelated(request);
 	}
 }
