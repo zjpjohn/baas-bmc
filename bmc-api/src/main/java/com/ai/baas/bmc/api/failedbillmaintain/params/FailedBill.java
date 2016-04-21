@@ -34,6 +34,9 @@ public class FailedBill implements Serializable {
      */
     private Map<String, String> failPacket;
 
+
+    private String rowKey;
+
     public String getBsn() {
         return bsn;
     }
@@ -128,5 +131,13 @@ public class FailedBill implements Serializable {
 
     public void setFailPacket(Map<String, String> failPacket) {
         this.failPacket = failPacket;
+    }
+
+    public String getRowKey() {
+        return rowKey;
+    }
+
+    public void setRowKey(String rowKey) {
+        this.rowKey = rowKey;
     }
 }
