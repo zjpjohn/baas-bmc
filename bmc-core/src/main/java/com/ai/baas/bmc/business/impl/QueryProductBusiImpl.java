@@ -113,9 +113,6 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
 				 CpPriceDetailCriteria.Criteria criteriaCpPriceDetail = cpPriceDetailCriteria.createCriteria();
 				 
-				 if(!StringUtil.isBlank(vo.getServiceType())){
-					 criteriaCpPriceDetail.andServiceTypeEqualTo(vo.getServiceType());
-				 }
 				 if(!StringUtil.isBlank(vo.getBillingType())){
 					 criteriaCpPriceDetail.andChargeTypeEqualTo(vo.getBillingType());
 				 }
