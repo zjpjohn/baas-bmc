@@ -16,11 +16,7 @@ public class RelatedVO extends BaseInfo {
      */
 	@NotNull(message="消息流水号不能为空")
 	private String tradeSeq;
-	/**
-	 * 租户Id
-	 */
-	@NotBlank(message="租户Id不能为空")
-	private String tenantId;
+	
 	
 	/**
 	 * 产品Id
@@ -44,12 +40,6 @@ public class RelatedVO extends BaseInfo {
 		this.productId = productId;
 	}
 
-	public String getTenantId() {
-		return tenantId;
-	}
 
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
 	
 }
