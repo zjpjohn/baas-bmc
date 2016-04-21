@@ -53,4 +53,13 @@ public interface ICpPackageInfoAtom {
 	 * @ApiCode
 	 */
 	public void addCpPackageInfo(CpPackageInfo info);
+	/**
+	 * 通过packageId修改subjectCode
+	 * @param subjectCode
+	 * @param packageId
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	public void updateSubjectCodeByPackageId(String subjectCode,String packageId);
 }

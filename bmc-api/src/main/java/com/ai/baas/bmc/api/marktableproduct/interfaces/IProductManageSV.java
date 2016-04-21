@@ -3,6 +3,7 @@ package com.ai.baas.bmc.api.marktableproduct.interfaces;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedRequest;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -81,4 +82,7 @@ public interface IProductManageSV {
 	 */
 	ProductVO editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException;
 	@interface EditProduct{}
+	
+	void updateProductRelated(ProductRelatedRequest vo) throws BusinessException,SystemException;
+	@interface updateProductRelated{}
 }

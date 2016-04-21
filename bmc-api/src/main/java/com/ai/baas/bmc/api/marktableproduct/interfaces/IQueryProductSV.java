@@ -3,6 +3,8 @@ package com.ai.baas.bmc.api.marktableproduct.interfaces;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedRequest;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedResponse;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
@@ -41,4 +43,16 @@ public interface IQueryProductSV {
 	 */
 	PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo) throws BusinessException, SystemException;
 	@interface getProductInfoByProductIdList{}
+	/**
+	 * 
+	 * @param 可销售产品>>>关联详单科目
+	 * @return
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	ProductRelatedResponse getProductRelated(ProductRelatedRequest vo) throws BusinessException,SystemException;
+	@interface getProductRelated{}
 }

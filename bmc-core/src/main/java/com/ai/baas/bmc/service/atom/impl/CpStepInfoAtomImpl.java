@@ -55,4 +55,19 @@ public class CpStepInfoAtomImpl implements ICpStepInfoAtom {
 	public void updateCpStepInfoByPrimaryKey(CpStepInfo info) {
 		this.cpStepInfoMapper.updateByPrimaryKeySelective(info);
 	}
+	/**
+	 * 通过stepId修改subjectCode
+	 */
+	@Override
+	public void updateSubjectCodeByStepId(String subjectCode, String stepId) {
+		CpStepInfo cpStepInfo = new CpStepInfo();
+		cpStepInfo.setSubjectCode(subjectCode);
+		//
+		CpStepInfoCriteria example = new CpStepInfoCriteria();
+		CpStepInfoCriteria.Criteria criteria = example.createCriteria();
+		criteria.andSetpIdEqualTo(new Long(stepId));
+		//
+		this.cpStepInfoMapper.updateByExampleSelective(cpStepInfo, example);
+		
+	}
 }

@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductDelVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductParamKeyVo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedRequest;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductRelatedResponse;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
 import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
@@ -213,6 +215,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVo.setUnit(cpStepInfoNew.getUnitType());
 				serviceVo.setServiceTypeDetail(cpStepInfoNew.getFactorCode().toString());
 				serviceVo.setServiceType(cpStepInfoNew.getServiceType());
+				serviceVo.setSubjectCode(cpStepInfoNew.getSubjectCode());
 				//
 				serviceVOList.add(serviceVo);
 			}
@@ -237,6 +240,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVo.setServiceTypeDetail(cpPackageInfoNew.getFactorCode());
 				serviceVo.setServiceType(cpPackageInfoNew.getServiceType());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitCode());
+				serviceVo.setSubjectCode(cpPackageInfo.getSubjectCode());
 				//
 				serviceVOList.add(serviceVo);
 			}
@@ -652,5 +656,56 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		//
 		this.cpPriceInfoAtom.updateProductStatus(cpPriceInfo);
 		
+	}
+	/**
+	 * 可销售产品>>>详单科目关联 查询
+	 */
+	@Override
+	public ProductRelatedResponse getProductRelated(ProductRelatedRequest vo) {
+		ProductRelatedResponse productRelatedResponse = new ProductRelatedResponse();
+		//
+		ProductParamKeyVo productParamKeyVo = new ProductParamKeyVo();
+		productParamKeyVo.setBillingType(vo.getBillingType());
+		productParamKeyVo.setProductId(vo.getTenantId());
+		ProductVO productVo = this.editProduct(productParamKeyVo);
+		List<ServiceVO> serviceVOList = productVo.getMajorProductAmount();
+		//
+		ServiceVO serviceVo = new ServiceVO();
+		if(!CollectionUtil.isEmpty(serviceVOList)){
+			serviceVo = serviceVOList.get(0);
+		}
+		//
+		productRelatedResponse.setProductId(productVo.getProductId());
+		productRelatedResponse.setProductName(productVo.getProductName());
+		productRelatedResponse.setTenantId(productVo.getTenantId());
+		productRelatedResponse.setBillingType(productVo.getBillingType());
+		productRelatedResponse.setSubjectCode(serviceVo.getSubjectCode());
+		//
+		return productRelatedResponse;
+	}
+	/**
+	 * 可销售产品>>>详单科目关联 修改
+	 */
+	@Override
+	public void updateProductRelated(ProductRelatedRequest vo) {
+		//
+		ProductParamKeyVo productParamKeyVo = new ProductParamKeyVo();
+		productParamKeyVo.setBillingType(vo.getBillingType());
+		productParamKeyVo.setProductId(vo.getTenantId());
+		ProductVO productVo = this.editProduct(productParamKeyVo);
+		List<ServiceVO> serviceVOList = productVo.getMajorProductAmount();
+	
+		//
+		for(ServiceVO serviceVo : serviceVOList){
+			if(CHARGE_TYPE_STEP.equalsIgnoreCase(vo.getBillingType())){
+				//
+				this.cpStepInfoAtom.updateSubjectCodeByStepId(serviceVo.getSubjectCode(), serviceVo.getServiceId());
+				
+			}else if(CHARGE_TYPE_PACKAGE.equalsIgnoreCase(vo.getBillingType())){
+				//
+				this.cpPackageInfoAtom.updateSubjectCodeByPackageId(serviceVo.getSubjectCode(), serviceVo.getServiceId());
+			}
+		}
+			
 	}
 }

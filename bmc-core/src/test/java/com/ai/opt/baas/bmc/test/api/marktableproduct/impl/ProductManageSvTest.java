@@ -50,11 +50,11 @@ public class ProductManageSvTest {
 		productVO.setInvalidDate(DateUtil.getSysDate());
 		productVO.setIsPriceEqual("1");
 		productVO.setProductId("111115");
-		productVO.setProductName("超级产品BBBcccaCCCCC");
+		productVO.setProductName("超级产品BBBcccaCCCCCDDD");
 		productVO.setStandardPriceType("bbb");
-		productVO.setTenantId("111115112");
+		productVO.setTenantId("111115132");
 		productVO.setTotalPrice(new BigDecimal(100.1));
-		productVO.setTradeSeq("aaaaa12212231213");
+		productVO.setTradeSeq("aaaaa12211131213");
 		//
 		List<ServiceVO> serviceVoList = new ArrayList<ServiceVO>();
 		
