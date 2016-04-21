@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.FullPresent;
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedAccountVO;
@@ -27,6 +28,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -320,25 +322,45 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	@Override
 	public BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException {
 		int  count=0;
+		ProductQueryParam param=new ProductQueryParam();
+		param.setProductId(vo.getProductId());
+		param.setTenantId(vo.getTenantId());
+		param.setTradeSeq(vo.getTradeSeq());
+		String priceCode=cpPriceInfoBusi.getCpPriceInfo(param).getPriceCode();
+		String detailCode=cpPriceDetailBusi.getCpPriceDetail(priceCode).getDetailCode();
+		
 		// 满赠
 		if ("dr_offer".equals(vo.getChargeType())) {
-			List<Long> pIds = vo.getFullIds();
+			//List<Long> pIds = vo.getFullIds();
+			List<CpFullPresent> plist=cpFullPresentBusi.getFullPresents(detailCode);
+			if(!CollectionUtil.isEmpty(plist)){
+				for(CpFullPresent cp:plist){
+					CpFullPresent p = cpFullPresentBusi.getFullPresent(cp.getPresentId());
+
+					p.setAccountType(vo.getAccountType());
+					p.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
+					count=cpFullPresentBusi.updateFullPresent(p);
+				}
+			}
+			
+		/*	
 			for (Long id : pIds) {
 				CpFullPresent p = cpFullPresentBusi.getFullPresent(id);
 
 				p.setAccountType(vo.getAccountType());
 				p.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
 				count=cpFullPresentBusi.updateFullPresent(p);
-			}
+			}*/
 
 		}
 		// 满减
 		if ("dr_minus".equals(vo.getChargeType())) {
 			Long rId = vo.getFullIds().get(0);
-			CpFullReduce r = cpFullReduceBusi.getFullReduce(rId);
-			if (r != null) {
+			CpFullReduce fr=cpFullReduceBusi.getFullReduce(priceCode);
 			
-
+			//CpFullReduce r = cpFullReduceBusi.getFullReduce(rId);
+			CpFullReduce r = cpFullReduceBusi.getFullReduce(fr.getReduceId());
+			if (r != null) {
 				CpFullReduce cfr = new CpFullReduce();
 				cfr.setRelatedAccount(JSON.toJSONString(vo.getFullIds()));
 				cfr.setAccountType(vo.getAccountType());
