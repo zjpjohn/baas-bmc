@@ -157,7 +157,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
 
     private String buildDuplicateBillTableName(FailedBillParam param) {
         return param.getTenantId() + "_" + param.getServiceId() + "_" +
-                param.getSource() + "_" + param.getAccountPeriod().substring(0, 5);
+                param.getSource() + "_" + param.getAccountPeriod().substring(0, 6);
     }
 
     @Override
