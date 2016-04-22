@@ -15,6 +15,7 @@ import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.SingleProductInfo;
+import com.ai.baas.bmc.business.interfaces.IBaseInfoBussiness;
 import com.ai.baas.bmc.business.interfaces.ICpFullPresentBusi;
 import com.ai.baas.bmc.business.interfaces.ICpFullReduceBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceDetailBusi;
@@ -44,6 +45,8 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 	private ICpFullPresentBusi iCpFullPresentBusi;
 	@Autowired
 	private ICpFullReduceBusi iCpFullReduceBusi;
+	@Autowired
+	private IBaseInfoBussiness iBaseInfoBussiness;
 
 	@Override
 	public ProferProductResponse getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException {
@@ -82,6 +85,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 						for (CpFullPresent present : presentList) {
 							sb.append("满");
 							sb.append(present.getReachAmount());
+							sb.append(iBaseInfoBussiness.getParamName(info.getTenantId(), "PRODUCT_UNIT", present.getUnit()));
 							sb.append("赠送");
 							String presentType = present.getPresentType();
 							if (presentType.equals("servive_offer")) {
@@ -108,7 +112,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 						StringBuffer sb = new StringBuffer();
 						sb.append("满");
 						sb.append(cpFullReduce.getReachAmount());
-						sb.append(cpFullReduce.getUnit());
+						sb.append(sb.append(iBaseInfoBussiness.getParamName(info.getTenantId(), "PRODUCT_UNIT", cpFullReduce.getUnit())));
 						sb.append("减");
 						sb.append(cpFullReduce.getReduceAmount());
 						sb.append("元");
