@@ -46,14 +46,15 @@ public class QueryProductSvTest {
 		System.out.println("-----param:"+JSON.toJSONString(vo));
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
 	}
-	//@Test
+	@Test
 	public void testSearchByProductIdList(){
 		ProductQueryByIdListVO vo = new ProductQueryByIdListVO();
-		vo.setTenantId("baas-test");
+		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		
 		List<String> productIdList = new ArrayList<String>();
-		productIdList.add("472");
-		productIdList.add("482");
+		productIdList.add("171");
+		productIdList.add("359");
+		productIdList.add("360");
 		//
 		vo.setProductIdList(productIdList);
 		System.out.println("-----param:"+JSON.toJSONString(vo));

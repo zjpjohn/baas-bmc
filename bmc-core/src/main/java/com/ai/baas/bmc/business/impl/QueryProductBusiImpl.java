@@ -79,6 +79,9 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 if(!StringUtil.isBlank(vo.getProductName())){
 				 criteriaCpPriceInfo.andPriceNameLike("%"+vo.getProductName()+"%");
 			 }
+			 if(!StringUtil.isBlank(vo.getActiveStatus())){
+				 criteriaCpPriceInfo.andActiveStatusEqualTo(vo.getActiveStatus());
+			 }
 			 if (vo.getPageNo() != null && vo.getPageSize() != null) {
 				 //cpPriceInfoCriteria.setLimitStart((vo.getPageNo() - 1) * vo.getPageSize());
 				 //cpPriceInfoCriteria.setLimitEnd(vo.getPageSize());
