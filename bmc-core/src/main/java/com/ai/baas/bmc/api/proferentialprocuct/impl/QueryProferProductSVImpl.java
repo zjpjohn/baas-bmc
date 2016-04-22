@@ -89,7 +89,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 							sb.append("赠送");
 							String presentType = present.getPresentType();
 							if (presentType.equals("servive_offer")) {
-								sb.append("赠送业务");
+								sb.append("业务");
 							} else if ("cash_offer".equals(presentType)) {
 								sb.append(present.getPresentAmount());
 								sb.append("元");
@@ -112,7 +112,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 						StringBuffer sb = new StringBuffer();
 						sb.append("满");
 						sb.append(cpFullReduce.getReachAmount());
-						sb.append(sb.append(iBaseInfoBussiness.getParamName(info.getTenantId(), "PRODUCT_UNIT", cpFullReduce.getUnit())));
+						sb.append(iBaseInfoBussiness.getParamName(info.getTenantId(), "PRODUCT_UNIT", cpFullReduce.getUnit()));
 						sb.append("减");
 						sb.append(cpFullReduce.getReduceAmount());
 						sb.append("元");
