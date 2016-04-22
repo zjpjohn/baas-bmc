@@ -88,7 +88,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 							sb.append(iBaseInfoBussiness.getParamName(info.getTenantId(), "PRODUCT_UNIT", present.getUnit()));
 							sb.append("赠送");
 							String presentType = present.getPresentType();
-							if (presentType.equals("servive_offer")) {
+							if (presentType.equals("service_offer")) {
 								sb.append("业务");
 							} else if ("cash_offer".equals(presentType)) {
 								sb.append(present.getPresentAmount());
