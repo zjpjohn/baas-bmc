@@ -63,11 +63,11 @@ public class OrderinfoTest {
             orderExtList.add(o);
             a.setOrderExtInfo(orderExtList);
             
-            p.setProductId("88887777");
+            p.setProductId("123123");
             p.setProductNumber(2);
             p.setResBonusFlag("Y");
             p.setActiveTime("20150406235959");
-            p.setInactiveTime("20200406235959");
+            p.setInactiveTime("20200411235959");
 //                pe.setExtName("扩展信息");
 //                pe.setExtValue("没用");
 //                pe.setUpdateFlag("N");

@@ -63,16 +63,9 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
     public ResponseMessage getPriceInfo(QueryInfoParams record) {
 
         ResponseMessage responseMessage = new ResponseMessage();
-        //StandardList standards = new StandardList();
-        //UsageList usages =new UsageList();
         List<StandardList> standardList = new ArrayList<StandardList>( );
         
         //基于StandardId 和 PriceName 模糊查询
-        CpPriceDetailMapper cpPriceDetailMapper = sqlSessionTemplate.getMapper(CpPriceDetailMapper.class);
-        
-        CpUnitpriceInfoMapper cpUnitpriceInfoMapper = sqlSessionTemplate.getMapper(CpUnitpriceInfoMapper.class);
-        
-        CpUnitpriceItemMapper cpUnitpriceItemMapper = sqlSessionTemplate.getMapper(CpUnitpriceItemMapper.class);
         
         CpFactorInfoMapper cpFactorInfoMapper = sqlSessionTemplate.getMapper(CpFactorInfoMapper.class);
         
