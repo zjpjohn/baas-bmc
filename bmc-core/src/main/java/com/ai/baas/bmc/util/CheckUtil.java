@@ -3,6 +3,7 @@ package com.ai.baas.bmc.util;
 import java.text.SimpleDateFormat;
 
 import com.ai.baas.bmc.context.ErrorCode;
+import com.ai.paas.ipaas.util.StringUtil;
 
 public class CheckUtil {
     /**
@@ -11,7 +12,7 @@ public class CheckUtil {
      */
     public static String check(Object o, String name, boolean canBeNull, int lenth,
             String... enums) {
-        if (o == null || "".equals(o.toString())) {
+        if (null == o || "".equals(o.toString())) {
             if (canBeNull) {
                 return ErrorCode.SUCCESS;
             }
@@ -22,7 +23,7 @@ public class CheckUtil {
             return ErrorCode.OVER_LENTH + ":" +name + "不能超过" + lenth + "位";
         }
 
-        if (enums == null || enums.length == 0) {
+        if (null == enums || enums.length == 0) {
             return ErrorCode.SUCCESS;
         }
 
@@ -39,7 +40,7 @@ public class CheckUtil {
      * 校验时间格式
      */
     public static boolean check(String time ,String pattern){
-        if(time == null || "".equals(time)){
+        if(StringUtil.isBlank(time)){//(null == time || "".equals(time)){
             return true;
         }
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
