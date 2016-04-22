@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.ai.baas.bmc.api.custInfo.interfaces.ICustInfoSV;
 import com.ai.baas.bmc.api.custInfo.params.CustInfoParams;
@@ -41,7 +42,8 @@ public class CustInfoSVImpl implements ICustInfoSV {
 	 */
 	@Override
 	public String custNotify(CustInfoParams custInfo) throws CallerException {
-		if (custInfo == null) {
+		
+		if (StringUtils.isEmpty(custInfo)) {
 			log.debug("extInfoNotify() custInfo = [null]");
 			return null;
 		} else {

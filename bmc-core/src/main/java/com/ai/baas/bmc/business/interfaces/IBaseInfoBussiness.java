@@ -17,4 +17,6 @@ public interface IBaseInfoBussiness {
 	BaseCodeInfo getBaseInfo(QueryInfoParams param);
 	
 	ChildeCodeResponse getChildCode(QueryChildCodeRequest request);
+	
+	String getParamName(String tenantId,String paramType,String paramCode);
 }

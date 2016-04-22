@@ -112,5 +112,32 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 		return baseCodeInfo;
 	}
 
+	@Override
+	public String getParamName(String tenantId, String paramType, String paramCode) {
+		
+		BmcBasedataCodeCriteria pubsql = new BmcBasedataCodeCriteria();
+		BmcBasedataCodeCriteria.Criteria pubCriteria = pubsql.or();
+		pubCriteria.andTenantIdEqualTo(TenantId.PUB).andParamTypeEqualTo(paramType).andParamCodeEqualTo(paramCode);
+		List<BmcBasedataCode> pubList = bmcBasedataCodeMapper.selectByExample(pubsql);
+		String unit="";
+		if (!CollectionUtil.isEmpty(pubList)) {
+			unit=pubList.get(0).getParamName();
+		}
+		if(!(TenantId.PUB).equals(tenantId)){
+			BmcBasedataCodeCriteria sql = new BmcBasedataCodeCriteria();
+			BmcBasedataCodeCriteria.Criteria Criteria = sql.or();
+			Criteria.andTenantIdEqualTo(tenantId).andParamTypeEqualTo(paramType).andParamCodeEqualTo(paramCode);
+			List<BmcBasedataCode> list = bmcBasedataCodeMapper.selectByExample(sql);
+			// 非pub查询
+			if (!CollectionUtil.isEmpty(list)) {
+				unit=list.get(0).getParamName();
+
+			}
+		}
+
+	
+		return unit;
+	}
+
 	
 }
