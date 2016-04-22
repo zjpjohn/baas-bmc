@@ -356,7 +356,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		// 满减
 		if ("dr_minus".equals(vo.getChargeType())) {
 			//Long rId = vo.getFullIds().get(0);
-			CpFullReduce fr=cpFullReduceBusi.getFullReduce(priceCode);
+			CpFullReduce fr=cpFullReduceBusi.getFullReduce(detailCode);
 			
 			//CpFullReduce r = cpFullReduceBusi.getFullReduce(rId);
 			CpFullReduce r = cpFullReduceBusi.getFullReduce(fr.getReduceId());
