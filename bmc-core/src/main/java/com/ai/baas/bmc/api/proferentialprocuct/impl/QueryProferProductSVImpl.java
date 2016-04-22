@@ -20,6 +20,7 @@ import com.ai.baas.bmc.business.interfaces.ICpFullPresentBusi;
 import com.ai.baas.bmc.business.interfaces.ICpFullReduceBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceDetailBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
+import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.constants.ExceptCodeConstant;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullPresent;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullReduce;
@@ -88,7 +89,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 							sb.append(iBaseInfoBussiness.getParamName(info.getTenantId(), "PRODUCT_UNIT", present.getUnit()));
 							sb.append("赠送");
 							String presentType = present.getPresentType();
-							if (presentType.equals("servive_offer")) {
+							if (presentType.equals(BmcConstants.ProferName.SERVICE_OFFER)) {
 								sb.append("业务");
 							} else if ("cash_offer".equals(presentType)) {
 								sb.append(present.getPresentAmount());
