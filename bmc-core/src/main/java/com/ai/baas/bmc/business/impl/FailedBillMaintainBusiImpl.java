@@ -191,7 +191,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         for (BmcRecordFmt bmcRecordFmt : bmcRecordFmts) {
             String value = failedBill.getFailPacket().get(bmcRecordFmt.getFieldCode());
             if (value == null || value.length() == 0)
-                throw new BusinessException("400", bmcRecordFmt.getFieldName() + " 不能被找到或者值为空");
+                throw new BusinessException("400", bmcRecordFmt.getFieldName()+"["+bmcRecordFmt.getFieldCode()+"]" + " 不能被找到或者值为空");
             stringBuilder.append(failedBill.getAccountPeriod() + "\1");
         }
 
@@ -217,9 +217,9 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         stringBuilder.append(param.getAccountPeriod() + "\1");
 
         for (BmcRecordFmt bmcRecordFmt : bmcRecordFmts) {
-            String value = param.getFailPacket().get(bmcRecordFmt.getFieldName());
+            String value = param.getFailPacket().get(bmcRecordFmt.getFieldCode());
             if (value == null || value.length() == 0)
-                throw new BusinessException("400", bmcRecordFmt.getFieldName() + " 不能被找到或者值为空");
+                throw new BusinessException("400", bmcRecordFmt.getFieldName()+"["+bmcRecordFmt.getFieldCode()+"]" + " 不能被找到或者值为空");
             stringBuilder.append(param.getAccountPeriod() + "\1");
         }
 
