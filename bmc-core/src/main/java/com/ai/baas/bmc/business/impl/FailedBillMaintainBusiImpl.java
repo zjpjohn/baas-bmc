@@ -12,6 +12,7 @@ import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.HBasePager;
 import com.ai.opt.sdk.util.StringUtil;
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.hadoop.hbase.Cell;
@@ -111,10 +112,11 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
     public static void main(String[] args) throws IOException {
         FailedBillMaintainBusiImpl failedBillMaintainBusi = new FailedBillMaintainBusiImpl();
         FailedBillCriteria criteria = new FailedBillCriteria();
-        criteria.setErrorCode("BMC-B0001");
+        //criteria.setErrorCode("BMC-B0001");
         criteria.setServiceType("VOICE");
         criteria.setTenantId("TR");
-        failedBillMaintainBusi.queryFailedBills(criteria);
+        List<FailedBill> list=failedBillMaintainBusi.queryFailedBills(criteria);
+        System.out.println("list:"+JSON.toJSONString(list));
     }
 
     @Override
@@ -259,6 +261,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         fillTenantIdValue(failedBill, result);
         fillFailPacketValue(failedBill, result);
         buildRowKey(failedBill);
+        failedBill.setRowKeyRaw(new String(result.getRow()));
         return failedBill;
     }
 

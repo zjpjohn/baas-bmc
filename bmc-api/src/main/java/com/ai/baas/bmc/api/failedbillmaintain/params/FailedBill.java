@@ -1,7 +1,5 @@
 package com.ai.baas.bmc.api.failedbillmaintain.params;
 
-import com.ai.opt.base.vo.BaseResponse;
-
 import java.io.Serializable;
 import java.util.Map;
 
@@ -36,8 +34,20 @@ public class FailedBill implements Serializable {
 
 
     private String rowKey;
+    
+    private String rowKeyRaw;
+    
+    
 
-    public String getBsn() {
+    public String getRowKeyRaw() {
+		return rowKeyRaw;
+	}
+
+	public void setRowKeyRaw(String rowKeyRaw) {
+		this.rowKeyRaw = rowKeyRaw;
+	}
+
+	public String getBsn() {
         return bsn;
     }
 
