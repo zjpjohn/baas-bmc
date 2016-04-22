@@ -69,6 +69,8 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
                 CompareFilter.CompareOp.EQUAL, new RegexStringComparator("BMC*"));
 
         filterList.addFilter(columnFilter);
+        Filter countFilter=new PageFilter(100);
+        filterList.addFilter(countFilter);
         if (pager != null) {
             //查询第一页
             if (StringUtil.isBlank(pager.getStartRow())
