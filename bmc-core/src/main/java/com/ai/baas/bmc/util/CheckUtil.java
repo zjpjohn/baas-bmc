@@ -2,6 +2,8 @@ package com.ai.baas.bmc.util;
 
 import java.text.SimpleDateFormat;
 
+import org.springframework.util.StringUtils;
+
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.paas.ipaas.util.StringUtil;
 
@@ -12,7 +14,7 @@ public class CheckUtil {
      */
     public static String check(Object o, String name, boolean canBeNull, int lenth,
             String... enums) {
-        if (null == o || "".equals(o.toString())) {
+        if (StringUtils.isEmpty(o)) {
             if (canBeNull) {
                 return ErrorCode.SUCCESS;
             }
@@ -23,7 +25,7 @@ public class CheckUtil {
             return ErrorCode.OVER_LENTH + ":" +name + "不能超过" + lenth + "位";
         }
 
-        if (null == enums || enums.length == 0) {
+        if (StringUtils.isEmpty(enums)) {
             return ErrorCode.SUCCESS;
         }
 
@@ -40,7 +42,7 @@ public class CheckUtil {
      * 校验时间格式
      */
     public static boolean check(String time ,String pattern){
-        if(StringUtil.isBlank(time)){//(null == time || "".equals(time)){
+        if(StringUtils.isEmpty(time)){//(null == time || "".equals(time)){
             return true;
         }
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
