@@ -172,7 +172,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
 				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size()-1);
 			 }else if(pageInfo.getEndRowIndex()<=productInfoList.size()){
-				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),pageInfo.getEndRowIndex()-1);
+				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),pageInfo.getEndRowIndex());
 			 }
 			 //
 			 productInfoPageInfo.setResult(productInfoListNew);
