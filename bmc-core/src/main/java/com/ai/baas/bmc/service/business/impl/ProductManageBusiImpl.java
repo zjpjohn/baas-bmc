@@ -335,7 +335,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			this.cpPriceInfoAtom.addCpPriceInfo(cpPriceInfo);
 			log.info("添加cpPriceInfo信息完毕！！！");
 			// 插入共享内存
-			DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 1);
+			//DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 1);
 			long stepSeq = 0;
 			//序列生成DETAIL_CODE
 			String detailCode = BmcSeqUtil.getDetailCode();//aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0);
@@ -402,7 +402,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		// detailobject.put("SERVICE_TYPE", s.getServiceType());
 
 		this.cpPriceDetailAtom.addCpPriceDetail(cpPriceDetail);
-		DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 1);
+		//DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 1);
 	}
 	/**
 	 * 添加阶梯组合表信息
@@ -429,10 +429,11 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 
 		cpStepInfo.setSectionB(serviceVO.getAmountEnd());
 		stepobject.put("SECTION_B", serviceVO.getAmountEnd());
-
-		cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
-		stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
-
+		if(null != vo.getTotalPrice()){
+			cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
+			stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+		}
+		
 		cpStepInfo.setStepSeq(stepSeq);
 		stepobject.put("STEP_SEQ", Long.toString(stepSeq));
 

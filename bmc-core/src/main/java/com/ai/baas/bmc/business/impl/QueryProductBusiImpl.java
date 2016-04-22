@@ -171,7 +171,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 productInfoListNew = new ArrayList<ProductInfo>();
 			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
 				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size());
-			 }else if(pageInfo.getEndRowIndex()<productInfoList.size()){
+			 }else if(pageInfo.getEndRowIndex()<=productInfoList.size()){
 				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),pageInfo.getEndRowIndex());
 			 }
 			 //
