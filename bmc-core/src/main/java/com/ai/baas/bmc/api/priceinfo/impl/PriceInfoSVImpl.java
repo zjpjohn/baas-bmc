@@ -49,7 +49,7 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
     public BaseResponse updatePriceInfo(StandardPriceInfoParams record)
             throws BusinessException, SystemException {
         BaseResponse result = new BaseResponse();
-        // 幂等性判断（判重）
+//         幂等性判断（判重）
 //        try {
 //            if (aIUpdatePriceInfoBussiness.dupCheck(record)) {
 //                result.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
@@ -68,6 +68,14 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
         if(standerdPriceInfoUsageList.size()== 0 ){
             result.setResponseHeader(new ResponseHeader(false, "000001", "usageList为空，更新失败"));
             return result;
+        }
+        if(standerdPriceInfoUsageList.size()!=0){
+            for(StanderdPriceInfoUsage su : standerdPriceInfoUsageList){
+                if(StringUtil.isBlank(su.getSubServiceType())||StringUtil.isBlank(su.getSubServiceType())||(Double)su.getAmount()==null){
+                    result.setResponseHeader(new ResponseHeader(false, "000001", "标准资费使用量列表中的参数不能为空，更新失败"));
+                    return result;
+                }
+            }
         }
         if (("UPDATE".equals(record.getUpdateId()))&& StringUtil.isBlank(record.getStandardId())) {
             result.setResponseHeader(new ResponseHeader(false, "000001", "更新时StandarId不能为空"));
