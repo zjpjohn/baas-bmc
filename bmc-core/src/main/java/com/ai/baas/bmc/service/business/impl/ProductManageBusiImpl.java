@@ -335,7 +335,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			this.cpPriceInfoAtom.addCpPriceInfo(cpPriceInfo);
 			log.info("添加cpPriceInfo信息完毕！！！");
 			// 插入共享内存
-			DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 1);
+			//DshmUtil.getIdshmSV().initLoader("cp_price_info", priceinfobject.toString(), 1);
 			long stepSeq = 0;
 			//序列生成DETAIL_CODE
 			String detailCode = BmcSeqUtil.getDetailCode();//aISysSequenceSvc.terrigerSysSequence("DETAIL_CODE", 1).get(0);
@@ -402,7 +402,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		// detailobject.put("SERVICE_TYPE", s.getServiceType());
 
 		this.cpPriceDetailAtom.addCpPriceDetail(cpPriceDetail);
-		DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 1);
+		//DshmUtil.getIdshmSV().initLoader("cp_price_detail", detailobject.toString(), 1);
 	}
 	/**
 	 * 添加阶梯组合表信息
