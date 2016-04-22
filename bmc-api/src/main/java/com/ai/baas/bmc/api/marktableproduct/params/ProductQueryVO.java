@@ -73,7 +73,18 @@ public class ProductQueryVO extends BaseInfo {
      */
 	@NotNull(message="数据条数不能为空",groups={IQueryProductSV.GetProductInfo.class})
     private Integer pageSize;
+	/**
+	 * 生效状态 ACTIVE:生效;INACTIVE:失效;
+	 */
+	private String activeStatus;
 	
+	
+	public String getActiveStatus() {
+		return activeStatus;
+	}
+	public void setActiveStatus(String activeStatus) {
+		this.activeStatus = activeStatus;
+	}
 	public String getProductId() {
 		return productId;
 	}
