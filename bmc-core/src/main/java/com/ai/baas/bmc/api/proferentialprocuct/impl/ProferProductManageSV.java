@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.api.proferentialprocuct.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,7 +183,10 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		reduce.setInactiveTime(vo.getInvalidDate());
 		reduce.setProductIds(JSON.toJSONString(vo.getProductList()));
 		reduce.setReachAmount(vo.getRuleAmount());
-		reduce.setReduceAmount(vo.getReduceAmount());
+		
+		 BigDecimal fz = new BigDecimal(vo.getReduceAmount());
+         BigDecimal fm = new BigDecimal(1000L);
+		reduce.setReduceAmount(fz.multiply(fm).doubleValue());
 		reduce.setReduceCode(BmcSeqUtil.getReduceCode());
 		reduce.setReduceId(BmcSeqUtil.getReduceId());
 		reduce.setUnit(vo.getRuleUnit());
