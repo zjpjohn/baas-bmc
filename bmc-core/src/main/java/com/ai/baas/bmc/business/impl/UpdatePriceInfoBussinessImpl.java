@@ -130,6 +130,9 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             unitpriceItem.setPriceValue(param.getPrice());
             unitpriceItem.setUnitTypeValue(u.getAmount());
             unitpriceItem.setUnitType(u.getUnit());
+            if(param.getStatus()!=null){
+                unitpriceItem.setActiveStatus(param.getStatus());
+            }
 
             CpUnitpriceItemCriteria unitpriceItemC = new CpUnitpriceItemCriteria();
             unitpriceItemC.createCriteria().andFeeItemCodeEqualTo(unitpriceInfo.getFeeItemCode());
@@ -204,6 +207,7 @@ public class UpdatePriceInfoBussinessImpl implements IUpdatePriceInfoBussiness {
             unitpriceItem.setPriceValue(param.getPrice());
             unitpriceItem.setUnitTypeValue(u.getAmount());
             unitpriceItem.setUnitType(u.getUnit());
+            unitpriceItem.setActiveStatus(param.getStatus());
             // ^^费用类型写死为1
             unitpriceItem.setFeeType(1);
             // ^^生失效时间默认

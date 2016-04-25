@@ -122,7 +122,7 @@ public class StandardPriceInfoParams extends BaseInfo {
 
     /**
      * 状态<br>
-     * 取值范围：,NOTEFFECT：待生效,EFFECT：生效<br>
+     * 取值范围：,INACTIVE：待生效,  ACTIVE：生效<br>
      * 必填<br>
      * VARCHAR(32)
      */
