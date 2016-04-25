@@ -58,6 +58,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	public List<CpPriceInfo> getCpPriceInfo(ProductQueryVO vo) {
 		
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
+	
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
 		criteria.andActiveStatusNotEqualTo("DEL");
@@ -68,7 +69,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		if(vo.getProductId()!=null){
 			criteria.andPriceInfoIdEqualTo(vo.getProductId());
 		}
-	
+		
 		if(vo.getActiveDate()!=null){
 			criteria.andActiveTimeGreaterThanOrEqualTo(vo.getActiveDate());
 		}
@@ -85,7 +86,7 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 			example.setLimitStart((vo.getPageNo()-1)*vo.getPageSize());
 			example.setLimitEnd(vo.getPageSize());
 		}
-		
+		example.setOrderByClause("create_time desc");
 		return cpPriceInfoMapper.selectByExample(example);
 	}
 	@Override

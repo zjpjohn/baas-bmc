@@ -258,7 +258,7 @@ public class ProferProductTest {
 	@Test
 	public void testPage(){
 		ProductQueryVO vo=new ProductQueryVO();
-		vo.setTenantId("BYD");
+		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		vo.setPageNo(1);
 		vo.setPageSize(10);
 		System.out.println(JSON.toJSONString(iQueryProferProductSV.getProductInfo(vo)));
