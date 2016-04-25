@@ -32,6 +32,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfoCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItemCriteria;
+import com.ai.baas.bmc.service.atom.interfaces.ICpFactorInfoAtom;
 import com.ai.baas.bmc.service.atom.interfaces.ICpPriceDetailAtom;
 import com.ai.baas.bmc.service.atom.interfaces.ICpPriceInfoAtom;
 import com.ai.baas.bmc.service.atom.interfaces.ICpUnitPriceInfoAtom;
@@ -53,6 +54,8 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
     private ICpUnitPriceInfoAtom iCpUnitPriceInfoAtom;
     @Autowired
     private ICpUnitPriceItemAtom iCpUnitPriceItemAtom;
+    @Autowired
+    private ICpFactorInfoAtom iCpFactorInfoAtom;
     
     private static String price_code = null;
     private static String detail_code = null;
@@ -66,8 +69,6 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
         List<StandardList> standardList = new ArrayList<StandardList>( );
         
         //基于StandardId 和 PriceName 模糊查询
-        
-        CpFactorInfoMapper cpFactorInfoMapper = sqlSessionTemplate.getMapper(CpFactorInfoMapper.class);
         
 //        CpPriceInfoMapper  cpPriceInfoMapper = sqlSessionTemplate.getMapper(CpPriceInfoMapper.class); 
 //        CpPriceInfoCriteria cpPriceInfoCriteria=new CpPriceInfoCriteria();
@@ -126,12 +127,8 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            CpUnitpriceItem cpUnitpriceItem = cpUnitpriceItemList.get(0);
            //查询CpFactorInfo
            factor_code = cpUnitpriceInfo.getFactorCode();
-           CpFactorInfoCriteria cpFactorInfoCriteria = new CpFactorInfoCriteria();
-           cpFactorInfoCriteria.createCriteria()
-            .andFactorCodeEqualTo(factor_code)
-            .andFactorNameEqualTo("subServiceType");
-           
-           List<CpFactorInfo>cpFactorInfoList = cpFactorInfoMapper.selectByExample(cpFactorInfoCriteria) ;
+           String factorName = "subServiceType";//暂时写死          
+           List<CpFactorInfo>cpFactorInfoList = iCpFactorInfoAtom.getFactorInfo(factor_code, factorName);
            if(cpFactorInfoList.size()==0){
                System.out.println("factor_code:"+factor_code+"在CpFactorInfo表中没有对应的数据");
                continue;
@@ -165,6 +162,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            //CpUnitpriceItem
            //目前list.size() = 1
         }// end for
+        
         int sum = standardList.size();
         List<StandardList> standardSubList = new ArrayList<StandardList>();
         //内存分页

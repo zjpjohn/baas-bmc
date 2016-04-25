@@ -44,7 +44,7 @@ public class OrderinfoTest {
         a.setExtCustId("1111");//外部客户ID
         
         a.setServiceId("1800000000");
-        a.setTradeSeq("99913a111231111");
+        a.setTradeSeq("99913a1245531111");
 
         a.setUsetype("Test");
         a.setState("Normal");
@@ -59,22 +59,22 @@ public class OrderinfoTest {
         a.setRemark("666666");
             o.setExtName("connectPhone");
             o.setExtValue("11111999999");
-            o.setUpdateFlag("N");
+            o.setUpdateFlag("U");
             orderExtList.add(o);
             a.setOrderExtInfo(orderExtList);
             
-            p.setProductId("123123");
-            p.setProductNumber(2);
-            p.setResBonusFlag("Y");
-            p.setActiveTime("20150406235959");
-            p.setInactiveTime("20200411235959");
-//                pe.setExtName("扩展信息");
-//                pe.setExtValue("没用");
-//                pe.setUpdateFlag("N");
-//                productExtInfoList.add(pe);
-//             p.setProductExtInfoList(productExtInfoList);
-             productList.add(p);
-         a.setProductList(productList);
+//            p.setProductId("123123");
+//            p.setProductNumber(2);
+//            p.setResBonusFlag("Y");
+//            p.setActiveTime("20150406235959");
+//            p.setInactiveTime("20200411235959");
+////                pe.setExtName("扩展信息");
+////                pe.setExtValue("没用");
+////                pe.setUpdateFlag("N");
+////                productExtInfoList.add(pe);
+////             p.setProductExtInfoList(productExtInfoList);
+//             productList.add(p);
+//         a.setProductList(productList);
 
 //         a =  JSONObject.parseObject(
 //                 "{\"tradeSeq\":\"BDF354456745613\",\"tenantId\":\"VIV-BYD\",\"extCustId\":\"test50\",\"usetype\":\"Normal\",\"state\":\"Test\",\"serviceId\":\"GRO20160406235959\",\"orderTime\":\"20160406085959\",\"provinceCode\":\"123456\",\"cityCode\":\"013CC1\",\"chlId\":\"GRO20160406235959099999512345678\",\"devId\":\"GRO20160406235959099999512345678\",\"activeTime\":\"20160406235959\",\"inactiveTime\":\"20190406235959\",\"remark\":\"test22\",\"orderExtInfo\":[{\"extName\":\"remind_num\",\"extValue\":\"18501956112\",\"updateFlag\":\"N\"}],\"productList\":[{\"productId\":\"test50\",\"productNumber\":1,\"resBonusFlag\":\"Y\",\"activeTime\":\"20150410235959\",\"inactiveTime\":\"20200411235959\",\"productExtInfoList\":[{\"extName\":\"test50\",\"extValue\":\"GRO20160406235959099999512345678GRO20160406235959099999512345678\",\"updateFlag\":\"N\"}]}]}"

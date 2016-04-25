@@ -44,26 +44,28 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
             return resultCode;
         }
         
-        if(record.getOrderExtInfo().size()!=0){
-            List<OrderExt> orderExtList = record.getOrderExtInfo();
-            for(OrderExt oe : orderExtList ){
-                if(StringUtil.isBlank(oe.getExtName())||StringUtil.isBlank(oe.getExtValue())||StringUtil.isBlank(oe.getUpdateFlag())){
-                    resultCode.setResponseHeader(new ResponseHeader(false,"000001","订购扩展信息中的参数不能为空"));
-                    return resultCode;
-                }   
-            }
-        }
-        
-        if(record.getProductList().size()!=0){
-            List<Product>productList = record.getProductList();
-            for(Product pt:productList){
-                if(StringUtil.isBlank(pt.getActiveTime())||StringUtil.isBlank(pt.getInactiveTime())||StringUtil.isBlank(pt.getProductId())||pt.getProductNumber()==null){
-                    resultCode.setResponseHeader(new ResponseHeader(false,"000001","产品列表中的参数不能为空"));
-                    return resultCode;
+        if(record.getOrderExtInfo()!=null){
+            if(record.getOrderExtInfo().size()!=0){
+                List<OrderExt> orderExtList = record.getOrderExtInfo();
+                for(OrderExt oe : orderExtList ){
+                    if(StringUtil.isBlank(oe.getExtName())||StringUtil.isBlank(oe.getExtValue())||StringUtil.isBlank(oe.getUpdateFlag())){
+                        resultCode.setResponseHeader(new ResponseHeader(false,"000001","订购扩展信息中的参数不能为空"));
+                        return resultCode;
+                    }   
                 }
             }
         }
-   
+        if(record.getProductList()!=null){
+            if(record.getProductList().size()!=0){
+                List<Product>productList = record.getProductList();
+                for(Product pt:productList){
+                    if(StringUtil.isBlank(pt.getActiveTime())||StringUtil.isBlank(pt.getInactiveTime())||StringUtil.isBlank(pt.getProductId())||pt.getProductNumber()==null){
+                        resultCode.setResponseHeader(new ResponseHeader(false,"000001","产品列表中的参数不能为空"));
+                        return resultCode;
+                    }
+                }
+            }
+        }
         // 通过共享内存获得内部的custId
         Map<String, String> params = new TreeMap<String, String>();
         params.put("ext_cust_id", record.getExtCustId());
