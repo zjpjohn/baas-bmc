@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.api.proferentialprocuct.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,7 +183,9 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 		} else if ("dr_minus".equals(detail.getChargeType())) {
 			CpFullReduce reduce = iCpFullReduceBusi.getFullReduce(detail.getDetailCode());
 			singlePro.setRuleAmount(reduce.getReachAmount());
-			singlePro.setReduceAmount(reduce.getReduceAmount());
+			 BigDecimal fz = new BigDecimal(reduce.getReduceAmount());
+	         BigDecimal fm = new BigDecimal(1000L);
+			singlePro.setReduceAmount(fz.divide(fm).doubleValue());
 			singlePro.setRuleUnit(reduce.getUnit());
 			singlePro.setProductList(JSON.parseArray(reduce.getProductIds(), Long.class));
 
