@@ -116,7 +116,9 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 						sb.append(cpFullReduce.getReachAmount());
 						sb.append(iBaseInfoBussiness.getParamName(info.getTenantId(), "PRODUCT_UNIT", cpFullReduce.getUnit()));
 						sb.append("减");
-						sb.append(cpFullReduce.getReduceAmount());
+						 BigDecimal fz = new BigDecimal(cpFullReduce.getReduceAmount());
+				         BigDecimal fm = new BigDecimal(1000L);
+						sb.append(fz.divide(fm).doubleValue());
 						sb.append("元");
 						productInfo.setRule(sb.toString());
 					}
