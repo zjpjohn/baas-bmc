@@ -362,7 +362,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 			CpFullReduce r = cpFullReduceBusi.getFullReduce(fr.getReduceId());
 			if (r != null) {
 				CpFullReduce cfr = new CpFullReduce();
-				cfr.setRelatedAccount(JSON.toJSONString(vo.getFullIds()));
+				cfr.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
 				cfr.setAccountType(vo.getAccountType());
 				cfr.setReduceId(r.getReduceId());
 				count=cpFullReduceBusi.updateFullReduce(cfr);
