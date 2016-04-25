@@ -28,7 +28,18 @@ public class Product implements Serializable {
     @NotBlank(message="产品ID不能为空",groups={IOrderInfoSV.OrderInfo.class})
     @Size(max=32,groups={IOrderInfoSV.OrderInfo.class})
     private String productId;
+    
+    /**
+     * 产品类型<br>
+     * 取值范围：dr:详单, bill:账单
+     * 必填<br>
+     * VARCHAR(32)
+     */
+    @NotBlank
+    @Size(max=32)
+    private String productType;
 
+    
     /**
      * 产品数量<br>
      * 同一个产品被客户订购的数量<br>
@@ -123,4 +134,13 @@ public class Product implements Serializable {
         this.productExtInfoList = productExtInfoList;
     }
 
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    
 }
