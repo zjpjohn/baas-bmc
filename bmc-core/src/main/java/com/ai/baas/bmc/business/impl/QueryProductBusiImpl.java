@@ -207,20 +207,36 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 
 		 
 		 List<CpStepInfo> cpStepInfo =cpStepInfoMapper.selectByExample(cpStepInfoCriteria);
-		 for(CpStepInfo s : cpStepInfo){
-			 serv = new ServiceVO();
-			 serv.setAmountStart(s.getSectionA());
-			 serv.setAmountEnd(s.getSectionB());
-			 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()));
-			 serv.setServiceTypeDetail(s.getFactorCode().toString());
-			 serv.setUnit(s.getUnitType());
-			 serv.setServiceType(s.getServiceType());
-			 
-			 usageList.add(serv);	        
-		 }
+		 String detailCodeNew = null;
 		 if(!CollectionUtil.isEmpty(cpStepInfo)){
-			 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
+			 detailCodeNew = cpStepInfo.get(0).getDetailCode();
+			 //
+			 //
+			 CpStepInfoCriteria cpStepInfoCriteriaNew = new CpStepInfoCriteria();
+			 CpStepInfoCriteria.Criteria criteriaCpStepInfoNew = cpStepInfoCriteriaNew.createCriteria();
+			 
+			 criteriaCpStepInfoNew.andDetailCodeEqualTo(detailCodeNew);
+
+			 
+			 List<CpStepInfo> cpStepInfoNew =cpStepInfoMapper.selectByExample(cpStepInfoCriteriaNew);
+			 
+			 
+			 for(CpStepInfo s : cpStepInfoNew){
+				 serv = new ServiceVO();
+				 serv.setAmountStart(s.getSectionA());
+				 serv.setAmountEnd(s.getSectionB());
+				 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()));
+				 serv.setServiceTypeDetail(s.getFactorCode().toString());
+				 serv.setUnit(s.getUnitType());
+				 serv.setServiceType(s.getServiceType());
+				 
+				 usageList.add(serv);	        
+			 }
+			 if(!CollectionUtil.isEmpty(cpStepInfo)){
+				 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
+			 }
 		 }
+		 
 	}
 	
 	private void packageMethod(String detailCode,ServiceVO serv,List<ServiceVO> usageList,ProductQueryVO vo,ProductInfo productInfo,CpPriceDetail cpPriceDetailNew){
@@ -235,20 +251,36 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 }
 		 List<CpPackageInfo> packageInfo = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteria);
 		 System.out.println("packageInfoList.Size:"+packageInfo.size());
-		 for(CpPackageInfo p : packageInfo){
-			 serv = new ServiceVO();
-			 serv.setAmountStart(0);
-			 serv.setAmountEnd(p.getAmount());
-			 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()));
-			 serv.setServiceTypeDetail(p.getFactorCode());
-			 serv.setUnit(p.getUnitType());
-			 serv.setServiceType(p.getServiceType());
-			 usageList.add(serv);
-		 }
+		 //
+		 String detailCodeNew = null;
 		 if(!CollectionUtil.isEmpty(packageInfo)){
-			 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
-			 productInfo.setTotalPrice(new BigDecimal(packageInfo.get(0).getTotalPriceValue()));
+			 detailCodeNew = packageInfo.get(0).getDetailCode();
+			 //
+			 CpPackageInfoCriteria cpPackageInfoCriteriaNew =new CpPackageInfoCriteria();
+			 CpPackageInfoCriteria.Criteria criteriaCpPackageInfoNew = cpPackageInfoCriteriaNew.createCriteria();
+			 
+			 criteriaCpPackageInfoNew.andDetailCodeEqualTo(detailCodeNew);
+			 
+			 
+			 List<CpPackageInfo> packageInfoNew = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteriaNew);
+			 
+			 
+			 for(CpPackageInfo p : packageInfo){
+				 serv = new ServiceVO();
+				 serv.setAmountStart(0);
+				 serv.setAmountEnd(p.getAmount());
+				 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()));
+				 serv.setServiceTypeDetail(p.getFactorCode());
+				 serv.setUnit(p.getUnitType());
+				 serv.setServiceType(p.getServiceType());
+				 usageList.add(serv);
+			 }
+			 if(!CollectionUtil.isEmpty(packageInfo)){
+				 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
+				 productInfo.setTotalPrice(new BigDecimal(packageInfo.get(0).getTotalPriceValue()));
+			 }
 		 }
+		 
 	}
 
 	@Override
