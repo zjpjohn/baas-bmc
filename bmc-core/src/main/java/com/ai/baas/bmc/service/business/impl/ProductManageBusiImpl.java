@@ -222,6 +222,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			if(!CollectionUtil.isEmpty(cpStepInfoList)){
 				productVo.setTotalPrice(new BigDecimal(cpStepInfoList.get(0).getTotalPriceValue()));
 				productVo.setIsPriceEqual(cpStepInfoList.get(0).getIsPriceEqual());
+			}else{
+				productVo.setTotalPrice(new BigDecimal(0.0));
+				productVo.setIsPriceEqual("0");
+			
 			}
 			
 		}
