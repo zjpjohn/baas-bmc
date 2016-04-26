@@ -265,7 +265,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 List<CpPackageInfo> packageInfoNew = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteriaNew);
 			 
 			 
-			 for(CpPackageInfo p : packageInfo){
+			 for(CpPackageInfo p : packageInfoNew){
 				 serv = new ServiceVO();
 				 serv.setAmountStart(0);
 				 serv.setAmountEnd(p.getAmount());
