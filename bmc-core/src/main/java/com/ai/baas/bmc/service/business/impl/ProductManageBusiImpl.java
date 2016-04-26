@@ -220,7 +220,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVOList.add(serviceVo);
 			}
 			if(!CollectionUtil.isEmpty(cpStepInfoList)){
-				productVo.setTotalPrice(new BigDecimal(cpStepInfoList.get(0).getTotalPriceValue()/1000));
+				if(null != cpStepInfoList.get(0).getTotalPriceValue()){
+					productVo.setTotalPrice(new BigDecimal(cpStepInfoList.get(0).getTotalPriceValue()/1000));
+				}
 				productVo.setIsPriceEqual(null == cpStepInfoList.get(0).getIsPriceEqual()?"0":cpStepInfoList.get(0).getIsPriceEqual());
 			}
 			
