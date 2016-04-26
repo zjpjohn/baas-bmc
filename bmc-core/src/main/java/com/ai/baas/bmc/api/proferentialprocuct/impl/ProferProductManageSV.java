@@ -18,6 +18,7 @@ import com.ai.baas.bmc.business.interfaces.ICpFullPresentBusi;
 import com.ai.baas.bmc.business.interfaces.ICpFullReduceBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceDetailBusi;
 import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
+import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.constants.BmcConstants.ResultCode;
 import com.ai.baas.bmc.constants.ExceptCodeConstant;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullPresent;
@@ -69,7 +70,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		// cpPriceInfo.setProductType(vo.getProductType()); 暂时不启用
 		cpPriceInfo.setChargeType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setActiveStatus("INACTIVE"); // inoperative 待生效
+		cpPriceInfo.setActiveStatus(BmcConstants.ProferName.INACTIVE); // inoperative 待生效
 		
 		
 
@@ -149,7 +150,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		//cpPriceInfo.setProductType(vo.getProductType());
 		cpPriceInfo.setChargeType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setActiveStatus("INACTIVE"); // inoperative 待生效
+		cpPriceInfo.setActiveStatus(BmcConstants.ProferName.INACTIVE); // inoperative 待生效
 		// TODO 有返回值，后期注意处理
 		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 
@@ -235,7 +236,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
 		cpPriceInfo.setTenantId(vo.getTenantId());
-		cpPriceInfo.setActiveStatus("DEL"); // 设置状态为删除
+		cpPriceInfo.setActiveStatus(BmcConstants.ProferName.DEL); // 设置状态为删除
 		int count = cpPriceInfoBusi.delCpRpriceInfo(cpPriceInfo);
 		ResponseHeader responseHeader = new ResponseHeader();
 		if (count > 0) {
@@ -285,7 +286,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceDetailBusi.updatePriceDetail(detail);
 		String chargeType = detail.getChargeType();
 		String detailCode = detail.getDetailCode();
-		if ("dr_offer".equals(chargeType)) {// 满赠
+		if ((BmcConstants.ProferName.DR_OFFER).equals(chargeType)) {// 满赠
 			// 由于数量不好对应所以进行先删后增
 			cpFullPresentBusi.deleteFullPresent(detailCode);
 			List<FullPresent> fList = vo.getPresentList();
@@ -306,7 +307,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 				cpFullPresentBusi.addFullPresent(cfp);
 			}
 		}
-		if ("dr_minus".equals(chargeType)) {// 满减
+		if ((BmcConstants.ProferName.DR_MINUS).equals(chargeType)) {// 满减
 			CpFullReduce r=cpFullReduceBusi.getFullReduce(detailCode);
 			CpFullReduce reduce = new CpFullReduce();
 			reduce.setActiveTime(vo.getActiveDate());
@@ -338,7 +339,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		String detailCode=cpPriceDetailBusi.getCpPriceDetail(priceCode).getDetailCode();
 		
 		// 满赠
-		if ("dr_offer".equals(vo.getChargeType())) {
+		if ((BmcConstants.ProferName.DR_OFFER).equals(vo.getChargeType())) {
 			//List<Long> pIds = vo.getFullIds();
 			List<CpFullPresent> plist=cpFullPresentBusi.getFullPresents(detailCode);
 			if(!CollectionUtil.isEmpty(plist)){
@@ -354,7 +355,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		
 		}
 		// 满减
-		if ("dr_minus".equals(vo.getChargeType())) {
+		if ((BmcConstants.ProferName.DR_MINUS).equals(vo.getChargeType())) {
 			//Long rId = vo.getFullIds().get(0);
 			CpFullReduce fr=cpFullReduceBusi.getFullReduce(detailCode);
 			
