@@ -70,8 +70,8 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		cpPriceInfo.setChargeType(vo.getProductType());
 		cpPriceInfo.setTenantId(vo.getTenantId());
 		cpPriceInfo.setActiveStatus("INACTIVE"); // inoperative 待生效
-		// TODO 有返回值，后期注意处理
-		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
+		
+		
 
 		/**
 		 * 插入资费计划明细表 cp_price_detail
@@ -95,7 +95,11 @@ public class ProferProductManageSV implements IProferProductManageSV {
 		detail.setActiveTime(DateUtil.getTimestamp("2015-1-1"));
 		detail.setInactiveTime(DateUtil.getTimestamp("2030-1-1"));
 		detail.setServiceType(vo.getProductType());
-
+		
+		
+		//集中插入表的操作
+		// TODO 有返回值，后期注意处理
+		cpPriceInfoBusi.addCpPriceInfo(cpPriceInfo);
 		cpPriceDetailBusi.addCpPriceDetail(detail);
 
 		/**
@@ -202,7 +206,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	@Override
 	public BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
 		if (StringUtil.isBlank(vo.getTenantId())) {
-			throw new BusinessException("88888888", "[租户Id]不能为空");
+			throw new BusinessException("888888", "[租户Id]不能为空");
 		}
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
@@ -347,15 +351,7 @@ public class ProferProductManageSV implements IProferProductManageSV {
 				}
 			}
 			
-		/*	
-			for (Long id : pIds) {
-				CpFullPresent p = cpFullPresentBusi.getFullPresent(id);
-
-				p.setAccountType(vo.getAccountType());
-				p.setRelatedAccount(JSON.toJSONString(vo.getRelAccounts()));
-				count=cpFullPresentBusi.updateFullPresent(p);
-			}*/
-
+		
 		}
 		// 满减
 		if ("dr_minus".equals(vo.getChargeType())) {
