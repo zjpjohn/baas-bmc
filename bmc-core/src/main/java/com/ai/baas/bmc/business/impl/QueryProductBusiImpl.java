@@ -232,7 +232,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 
 				 usageList.add(serv);	        
 			 }
-			 if(!CollectionUtil.isEmpty(cpStepInfo)){
+			 if(!CollectionUtil.isEmpty(cpStepInfoNew)){
 				 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
 			 }
 		 }
@@ -275,9 +275,9 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 serv.setServiceType(p.getServiceType());
 				 usageList.add(serv);
 			 }
-			 if(!CollectionUtil.isEmpty(packageInfo)){
+			 if(!CollectionUtil.isEmpty(packageInfoNew)){
 				 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
-				 productInfo.setTotalPrice(new BigDecimal(packageInfo.get(0).getTotalPriceValue()));
+				 productInfo.setTotalPrice(new BigDecimal(packageInfoNew.get(0).getTotalPriceValue()));
 			 }
 		 }
 		 
