@@ -225,7 +225,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 serv = new ServiceVO();
 				 serv.setAmountStart(s.getSectionA());
 				 serv.setAmountEnd(s.getSectionB());
-				 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()));
+				 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()/1000));
 				 serv.setServiceTypeDetail(s.getFactorCode().toString());
 				 serv.setUnit(s.getUnitType());
 				 serv.setServiceType(s.getServiceType());
@@ -269,7 +269,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 serv = new ServiceVO();
 				 serv.setAmountStart(0);
 				 serv.setAmountEnd(p.getAmount());
-				 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()));
+				 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()/1000));
 				 serv.setServiceTypeDetail(p.getFactorCode());
 				 serv.setUnit(p.getUnitType());
 				 serv.setServiceType(p.getServiceType());
@@ -277,7 +277,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 }
 			 if(!CollectionUtil.isEmpty(packageInfoNew)){
 				 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
-				 productInfo.setTotalPrice(new BigDecimal(packageInfoNew.get(0).getTotalPriceValue()));
+				 productInfo.setTotalPrice(new BigDecimal(packageInfoNew.get(0).getTotalPriceValue()/1000));
 			 }
 		 }
 		 

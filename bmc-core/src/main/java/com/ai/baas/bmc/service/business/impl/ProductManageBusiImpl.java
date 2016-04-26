@@ -209,7 +209,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			for(CpStepInfo cpStepInfoNew : cpStepInfoList){
 				serviceVo = new ServiceVO();
 				serviceVo.setServiceId(cpStepInfoNew.getSetpId().toString());
-				serviceVo.setPrice(new BigDecimal(cpStepInfoNew.getPriceValue()));
+				serviceVo.setPrice(new BigDecimal(cpStepInfoNew.getPriceValue()/1000));
 				serviceVo.setAmountStart(cpStepInfoNew.getSectionA());
 				serviceVo.setAmountEnd(cpStepInfoNew.getSectionB());
 				serviceVo.setUnit(cpStepInfoNew.getUnitType());
@@ -220,7 +220,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVOList.add(serviceVo);
 			}
 			if(!CollectionUtil.isEmpty(cpStepInfoList)){
-				productVo.setTotalPrice(null==cpStepInfoList.get(0).getTotalPriceValue()?new BigDecimal(0.0):new BigDecimal(cpStepInfoList.get(0).getTotalPriceValue()));
+				productVo.setTotalPrice(null==cpStepInfoList.get(0).getTotalPriceValue()?new BigDecimal(0.0):new BigDecimal(cpStepInfoList.get(0).getTotalPriceValue()/1000));
 				productVo.setIsPriceEqual(null == cpStepInfoList.get(0).getIsPriceEqual()?"0":cpStepInfoList.get(0).getIsPriceEqual());
 			}else{
 				productVo.setTotalPrice(new BigDecimal(0.0));
@@ -240,7 +240,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVo.setServiceId(cpPackageInfoNew.getPackageId().toString());
 				serviceVo.setAmountEnd(cpPackageInfoNew.getAmount());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitType());
-				serviceVo.setPrice(new BigDecimal(cpPackageInfoNew.getPriceValue()));
+				serviceVo.setPrice(new BigDecimal(cpPackageInfoNew.getPriceValue()/1000));
 				serviceVo.setServiceTypeDetail(cpPackageInfoNew.getFactorCode());
 				serviceVo.setServiceType(cpPackageInfoNew.getServiceType());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitCode());
@@ -249,7 +249,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVOList.add(serviceVo);
 			}
 			if(!CollectionUtil.isEmpty(cpPackageInfoList)){
-				productVo.setTotalPrice(new BigDecimal(cpPackageInfoList.get(0).getTotalPriceValue()));
+				productVo.setTotalPrice(new BigDecimal(cpPackageInfoList.get(0).getTotalPriceValue()/1000));
 			}
 		}
 		productVo.setMajorProductAmount(serviceVOList);
@@ -428,8 +428,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		stepobject.put("DETAIL_CODE", detailCode);
 		// cpStepInfo.setExtCode(extCode);
 		// cpStepInfo.setFactorCode(factorCode);
-		cpStepInfo.setPriceValue(serviceVO.getPrice().doubleValue());
-		stepobject.put("PRICE_VALUE", serviceVO.getPrice());
+		cpStepInfo.setPriceValue(serviceVO.getPrice().doubleValue()*1000);
+		stepobject.put("PRICE_VALUE", serviceVO.getPrice().doubleValue()*1000);
 
 		cpStepInfo.setSectionA(serviceVO.getAmountStart());
 		stepobject.put("SECTION_A", serviceVO.getAmountStart());
@@ -437,8 +437,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setSectionB(serviceVO.getAmountEnd());
 		stepobject.put("SECTION_B", serviceVO.getAmountEnd());
 		if(null != vo.getTotalPrice()){
-			cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
-			stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+			cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
+			stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
 		}
 		
 		cpStepInfo.setStepSeq(stepSeq);
@@ -485,8 +485,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPackageInfo.setPriceValue(0.0);//(serviceVO.getPrice().doubleValue());
 		packageobject.put("PRICE_VALUE", "0.0");
 
-		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
-		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
+		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
 
 		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
@@ -563,8 +563,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		stepobject.put("DETAIL_CODE", detailCode);
 		// cpStepInfo.setExtCode(extCode);
 		// cpStepInfo.setFactorCode(factorCode);
-		cpStepInfo.setPriceValue(serviceVO.getPrice().doubleValue());
-		stepobject.put("PRICE_VALUE", serviceVO.getPrice());
+		cpStepInfo.setPriceValue(serviceVO.getPrice().doubleValue()*1000);
+		stepobject.put("PRICE_VALUE", serviceVO.getPrice().doubleValue()*1000);
 
 		cpStepInfo.setSectionA(serviceVO.getAmountStart());
 		stepobject.put("SECTION_A", serviceVO.getAmountStart());
@@ -572,8 +572,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setSectionB(serviceVO.getAmountEnd());
 		stepobject.put("SECTION_B", serviceVO.getAmountEnd());
 
-		cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
-		stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+		cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
+		stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
 
 		cpStepInfo.setStepSeq(stepSeq);
 		stepobject.put("STEP_SEQ", Long.toString(stepSeq));
@@ -634,8 +634,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPackageInfo.setPriceValue(0.0);//(serviceVO.getPrice().doubleValue());
 		packageobject.put("PRICE_VALUE", 0.0);//serviceVO.getPrice());
 
-		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue());
-		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice());
+		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
+		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
 
 		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
