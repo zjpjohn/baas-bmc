@@ -32,6 +32,7 @@ import com.ai.baas.bmc.dao.interfaces.BlUserinfoExtMapper;
 import com.ai.baas.bmc.dao.interfaces.BlUserinfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.BlAcctInfo;
 import com.ai.baas.bmc.dao.mapper.bo.BlSubsComm;
+import com.ai.baas.bmc.dao.mapper.bo.BlSubsCommCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.BlSubscommExt;
 import com.ai.baas.bmc.dao.mapper.bo.BlSubscommExtCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.BlUserinfo;
@@ -129,7 +130,38 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         // 当产品列表不为空时，循环插入产品表
         if (orderInfoParams.getProductList() != null) {
             for (Product p : orderInfoParams.getProductList()) {
-                writeBlSubsComm(aBlUserinfo, p);
+                if(p.getProductType().equals("dr")){   
+                    writeBlSubsComm(aBlUserinfo, p);
+                }
+                if(p.getProductType().equals("bill")){
+                    
+                    //校验，查共享内存，判断amc_product_info表中，productId是否存在，如果存在，existFlag=true ，update，如果不存在 existFlag=false insert                   
+                    Map<String, String> productInfo = new TreeMap<String, String>();
+                    productInfo.put("product_id", p.getProductId());
+                    productInfo.put("tenant_id", orderInfoParams.getTenantId());
+                    List<Map<String, String>> products = DshmUtil.getClient().list("amc_product_info")
+                            .where(params).executeQuery(DshmUtil.getCacheClient());
+                   
+                    System.err.println("bluserinfoList："+JSON.toJSONString(products));
+                    String productId = null;
+                    boolean existFlag = false;
+                   //获得缓存中第一条有效数据
+                    if (!(products == null || products.isEmpty())) {
+                        for(Map<String, String> r : products){
+                            if(!r.isEmpty()){
+                                productId = r.get("product_id");      
+                                existFlag = true;//productId已存在，更新数据
+                                break;
+                            }          
+                        }
+                    }
+                    System.err.println("productId : "+productId+" existFlag : "+existFlag);
+                    if(existFlag){
+                        updateBlSubsComm(aBlUserinfo,p);
+                    }else{
+                        writeBlSubsComm(aBlUserinfo, p);
+                    }
+                }
             }
         }
         // 根据用户信息创建账户信息
@@ -137,6 +169,117 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             writeAcctInfo(aBlUserinfo);
         }
     }
+
+    private void updateBlSubsComm(BlUserinfo userInfo, Product product) {
+        BlSubsComm aBlSubsComm = new BlSubsComm();
+        BlSubsCommCriteria blSubsCommCriteria = new BlSubsCommCriteria();
+        JSONObject json = new JSONObject();
+        
+        //时间格式转换
+        Date dDate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        try{
+            dDate = sdf.parse(product.getActiveTime());
+            Timestamp actTime = new Timestamp(dDate.getTime());
+            System.out.println("actTime = [" + actTime + "]");
+            aBlSubsComm.setActiveTime(actTime);
+            
+            dDate = sdf.parse(product.getInactiveTime());
+            Timestamp inactTime = new Timestamp(dDate.getTime());
+            System.out.println("inactTime = [" + inactTime + "]");
+            aBlSubsComm.setInactiveTime(inactTime);
+                 
+            json.put("active_time", actTime.toString());
+            json.put("inactive_time", inactTime.toString());
+        }catch (ParseException e){
+            throw new SystemException("时间格式转换异常");
+        }
+        aBlSubsComm.setProductType(product.getProductType());//新增字段
+        
+        aBlSubsComm.setSubsId(userInfo.getSubsId());
+        aBlSubsComm.setSubsProductId(
+                aISysSequenceSvc.terrigerSysSequence("SUBS_PRODUCT_ID", 1).get(0));
+        aBlSubsComm.setProductId(product.getProductId());
+        aBlSubsComm.setResBonusFlag(product.getResBonusFlag());
+        aBlSubsComm.setTenantId(userInfo.getTenantId());
+        aBlSubsComm.setCustId(userInfo.getCustId());
+        
+        blSubsCommCriteria.createCriteria()
+            .andProductTypeEqualTo(product.getProductType())
+            .andProductIdEqualTo(product.getProductId());
+
+        aBlSubsCommMapper.updateByExampleSelective(aBlSubsComm, blSubsCommCriteria);
+        
+        // 刷新产品订购信息的内存表
+        json.put("subs_id", aBlSubsComm.getSubsId());
+        json.put("subs_product_id", aBlSubsComm.getSubsProductId());
+        json.put("product_id", aBlSubsComm.getProductId());
+        json.put("res_bonus_flag", aBlSubsComm.getResBonusFlag());
+        json.put("tenant_id", aBlSubsComm.getTenantId());
+        json.put("cust_id", aBlSubsComm.getCustId());
+        json.put("product_type", aBlSubsComm.getProductType());
+        DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),0);//0为更新
+        LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());        
+    }
+    
+    // 产品订购信息表操作
+    private void writeBlSubsComm(BlUserinfo userInfo, Product product) {
+        System.err.println("BlSubsComm有 "+product.getProductNumber()+" 个相同的产品");
+        for (int i = 0; i < product.getProductNumber(); i++) {
+            BlSubsComm aBlSubsComm = new BlSubsComm();
+            JSONObject json = new JSONObject();
+            
+            //时间格式转换
+            Date dDate = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            try{
+                dDate = sdf.parse(product.getActiveTime());
+                Timestamp actTime = new Timestamp(dDate.getTime());
+                System.out.println("actTime = [" + actTime + "]");
+                aBlSubsComm.setActiveTime(actTime);
+                
+                dDate = sdf.parse(product.getInactiveTime());
+                Timestamp inactTime = new Timestamp(dDate.getTime());
+                System.out.println("inactTime = [" + inactTime + "]");
+                aBlSubsComm.setInactiveTime(inactTime);
+                     
+                json.put("active_time", actTime.toString());
+                json.put("inactive_time", inactTime.toString());
+            }catch (ParseException e){
+                throw new SystemException("时间格式转换异常");
+            }
+            aBlSubsComm.setProductType(product.getProductType());//新增字段
+            
+            aBlSubsComm.setSubsId(userInfo.getSubsId());
+            aBlSubsComm.setSubsProductId(
+                    aISysSequenceSvc.terrigerSysSequence("SUBS_PRODUCT_ID", 1).get(0));
+            aBlSubsComm.setProductId(product.getProductId());
+            aBlSubsComm.setResBonusFlag(product.getResBonusFlag());
+            aBlSubsComm.setTenantId(userInfo.getTenantId());
+            aBlSubsComm.setCustId(userInfo.getCustId());
+            aBlSubsCommMapper.insertSelective(aBlSubsComm);
+            
+            // 刷新产品订购信息的内存表
+            json.put("subs_id", aBlSubsComm.getSubsId());
+            json.put("subs_product_id", aBlSubsComm.getSubsProductId());
+            json.put("product_id", aBlSubsComm.getProductId());
+            json.put("res_bonus_flag", aBlSubsComm.getResBonusFlag());
+            json.put("tenant_id", aBlSubsComm.getTenantId());
+            json.put("cust_id", aBlSubsComm.getCustId());
+            json.put("product_type", aBlSubsComm.getProductType());
+            DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),1);
+            LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());             
+          }
+//        String PRODUCT_ID = product.getProductId();
+        
+//                              暂时不写扩展表
+//         如果产品订购扩展信息不为空则对产品订购扩展信息表进行操作
+//        if (product.getProductExtInfoList() != null) {
+//            for (ProductExt pe : product.getProductExtInfoList()) {
+//                writeBlSubsCommExt(PRODUCT_ID,pe,userInfo.getTenantId());
+//        }
+//      }
+  }
 
     // 用户信息表操作,成功返回用户信息
     private BlUserinfo writeBlUserinfo(OrderInfoParams orderInfoParams, String custId, String subsId, String acctId) {
@@ -354,63 +497,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         }
     }
 
-    // 产品订购信息表操作
-    private void writeBlSubsComm(BlUserinfo userInfo, Product product) {
-        System.err.println("BlSubsComm有 "+product.getProductNumber()+" 个相同的产品");
-        for (int i = 0; i < product.getProductNumber(); i++) {
-            BlSubsComm aBlSubsComm = new BlSubsComm();
-            JSONObject json = new JSONObject();
-            
-            //时间格式转换
-            Date dDate = null;
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-            try{
-                dDate = sdf.parse(product.getActiveTime());
-                Timestamp actTime = new Timestamp(dDate.getTime());
-                System.out.println("actTime = [" + actTime + "]");
-                aBlSubsComm.setActiveTime(actTime);
-                
-                dDate = sdf.parse(product.getInactiveTime());
-                Timestamp inactTime = new Timestamp(dDate.getTime());
-                System.out.println("inactTime = [" + inactTime + "]");
-                aBlSubsComm.setInactiveTime(inactTime);
-                     
-                json.put("active_time", actTime.toString());
-                json.put("inactive_time", inactTime.toString());
-            }catch (ParseException e){
-                throw new SystemException("时间格式转换异常");
-            }
-            aBlSubsComm.setSubsId(userInfo.getSubsId());
-            aBlSubsComm.setSubsProductId(
-                    aISysSequenceSvc.terrigerSysSequence("SUBS_PRODUCT_ID", 1).get(0));
-            aBlSubsComm.setProductId(product.getProductId());
-            aBlSubsComm.setResBonusFlag(product.getResBonusFlag());
-            aBlSubsComm.setTenantId(userInfo.getTenantId());
-            aBlSubsComm.setCustId(userInfo.getCustId());
-            aBlSubsCommMapper.insertSelective(aBlSubsComm);
-            // 刷新产品订购信息的内存表
-            json.put("subs_id", aBlSubsComm.getSubsId());
-            json.put("subs_product_id", aBlSubsComm.getSubsProductId());
-//            json.put("active_time", aBlSubsComm.getActiveTime());
-            json.put("product_id", aBlSubsComm.getProductId());
-            json.put("res_bonus_flag", aBlSubsComm.getResBonusFlag());
-//            json.put("inactive_time", aBlSubsComm.getInactiveTime());
-            json.put("tenant_id", aBlSubsComm.getTenantId());
-            json.put("cust_id", aBlSubsComm.getCustId());
-//            DshmUtil.getIdshmSV().initdel(TableCon.BL_SUBS_COMM, json.toString());
-            DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),1);
-            LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());             
-          }
-        String PRODUCT_ID = product.getProductId();
-        
-        //                      暂时不写扩展表
-        // 如果产品订购扩展信息不为空则对产品订购扩展信息表进行操作
-//        if (product.getProductExtInfoList() != null) {
-//            for (ProductExt pe : product.getProductExtInfoList()) {
-//                writeBlSubsCommExt(PRODUCT_ID,pe,userInfo.getTenantId());
-//        }
-//      }
-  }
+
 
     // 产品订购扩展信息表操作
     private void writeBlSubsCommExt(String productId,  ProductExt productExt,String tenantId) {

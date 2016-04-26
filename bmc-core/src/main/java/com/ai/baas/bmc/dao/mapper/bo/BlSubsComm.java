@@ -13,6 +13,8 @@ public class BlSubsComm extends BlSubsCommKey {
 
     private String custId;
 
+    private String productType;
+
     public String getProductId() {
         return productId;
     }
@@ -51,5 +53,13 @@ public class BlSubsComm extends BlSubsCommKey {
 
     public void setCustId(String custId) {
         this.custId = custId == null ? null : custId.trim();
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType == null ? null : productType.trim();
     }
 }

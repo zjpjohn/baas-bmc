@@ -59,8 +59,12 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
             if(record.getProductList().size()!=0){
                 List<Product>productList = record.getProductList();
                 for(Product pt:productList){
-                    if(StringUtil.isBlank(pt.getActiveTime())||StringUtil.isBlank(pt.getInactiveTime())||StringUtil.isBlank(pt.getProductId())||pt.getProductNumber()==null){
+                    if(StringUtil.isBlank(pt.getActiveTime())||StringUtil.isBlank(pt.getInactiveTime())||StringUtil.isBlank(pt.getProductId())||StringUtil.isBlank(pt.getProductType())||pt.getProductNumber()==null){
                         resultCode.setResponseHeader(new ResponseHeader(false,"000001","产品列表中的参数不能为空"));
+                        return resultCode;
+                    }
+                    if(pt.getProductType().equals("bill")&&pt.getProductNumber()!=1){
+                        resultCode.setResponseHeader(new ResponseHeader(false,"000001","订购账单产品ProductNumber必须为1,订购失败"));
                         return resultCode;
                     }
                 }
