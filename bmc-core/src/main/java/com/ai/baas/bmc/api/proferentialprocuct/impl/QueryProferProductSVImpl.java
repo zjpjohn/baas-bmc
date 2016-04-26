@@ -77,7 +77,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 				String detailCode = detail.getDetailCode();
 				String chargeType = detail.getChargeType();
 
-				if (chargeType.equals("dr_offer")) { // 如果类型是满赠
+				if (chargeType.equals(BmcConstants.ProferName.DR_OFFER)) { // 如果类型是满赠
 					// 赠表可能有多个记录
 					// CpFullPresent present=
 					// iCpFullPresentBusi.getFullPresent(detailCode);
@@ -108,7 +108,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 					}
 					
 					
-				} else if (chargeType.equals("dr_minus")) { // 如果是满减
+				} else if (chargeType.equals(BmcConstants.ProferName.DR_MINUS)) { // 如果是满减
 					CpFullReduce cpFullReduce = iCpFullReduceBusi.getFullReduce(detailCode);
 					if(cpFullReduce!=null){
 						StringBuffer sb = new StringBuffer();
@@ -161,7 +161,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 		singlePro.setProductType(detail.getChargeType()); // 获取优惠类型
 
 		// 根据类型查询相对应的横表
-		if ("dr_offer".equals(detail.getChargeType())) { // 查询满赠表
+		if ((BmcConstants.ProferName.DR_OFFER).equals(detail.getChargeType())) { // 查询满赠表
 			List<FullPresent> list = new ArrayList<FullPresent>();
 			List<CpFullPresent> presentList = iCpFullPresentBusi.getFullPresents(detail.getDetailCode());
 			for (CpFullPresent present : presentList) {
@@ -182,7 +182,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 			}
 			singlePro.setPresentList(list);
 
-		} else if ("dr_minus".equals(detail.getChargeType())) {
+		} else if ((BmcConstants.ProferName.DR_MINUS).equals(detail.getChargeType())) {
 			CpFullReduce reduce = iCpFullReduceBusi.getFullReduce(detail.getDetailCode());
 			singlePro.setRuleAmount(reduce.getReachAmount());
 			 BigDecimal fz = new BigDecimal(reduce.getReduceAmount());
@@ -206,7 +206,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 		List<String> accList=null;
 		List<Long> ids=new ArrayList<Long>();
 		// 如果是满赠，则查询满赠
-		if ("dr_offer".equals(chargeType)) {
+		if ((BmcConstants.ProferName.DR_OFFER).equals(chargeType)) {
 			List<CpFullPresent> pList = iCpFullPresentBusi.getFullPresents(detail.getDetailCode());
 			for(CpFullPresent p:pList){
 				ids.add(p.getPresentId());
@@ -218,7 +218,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 		}
 
 		// 如果是满减，则查询满减
-		if ("dr_minus".equals(chargeType)) {
+		if ((BmcConstants.ProferName.DR_MINUS).equals(chargeType)) {
 			CpFullReduce reduce = iCpFullReduceBusi.getFullReduce(detail.getDetailCode());
 			if(null!=reduce){
 				accList=JSON.parseArray(reduce.getRelatedAccount(),String.class);	

@@ -11,6 +11,7 @@ import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
+import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
@@ -61,10 +62,10 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
-		criteria.andActiveStatusNotEqualTo("DEL");
+		criteria.andActiveStatusNotEqualTo(BmcConstants.ProferName.DEL);
 		List<String> list=new ArrayList<String>();
-		list.add("dr_minus");
-		list.add("dr_offer");
+		list.add(BmcConstants.ProferName.DR_MINUS);
+		list.add(BmcConstants.ProferName.DR_OFFER);
 		criteria.andChargeTypeIn(list);
 		if(vo.getProductId()!=null){
 			criteria.andPriceInfoIdEqualTo(vo.getProductId());
@@ -95,10 +96,10 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 		CpPriceInfoCriteria example=new CpPriceInfoCriteria();
 		CpPriceInfoCriteria.Criteria criteria = example.or();
 		criteria.andTenantIdEqualTo(vo.getTenantId());
-		criteria.andActiveStatusNotEqualTo("DEL");
+		criteria.andActiveStatusNotEqualTo(BmcConstants.ProferName.DEL);
 		List<String> list=new ArrayList<String>();
-		list.add("dr_minus");
-		list.add("dr_offer");
+		list.add(BmcConstants.ProferName.DR_MINUS);
+		list.add(BmcConstants.ProferName.DR_OFFER);
 		criteria.andChargeTypeIn(list);
 		if(vo.getProductId()!=null){
 			criteria.andPriceInfoIdEqualTo(vo.getProductId());
