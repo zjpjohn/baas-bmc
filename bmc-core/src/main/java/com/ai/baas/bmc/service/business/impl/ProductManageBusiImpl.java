@@ -570,8 +570,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpStepInfo.setSectionB(serviceVO.getAmountEnd());
 		stepobject.put("SECTION_B", serviceVO.getAmountEnd());
 
-		cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
-		stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
+		if(vo.getTotalPrice()!=null){
+			cpStepInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
+			stepobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
+		}
 
 		cpStepInfo.setStepSeq(stepSeq);
 		stepobject.put("STEP_SEQ", Long.toString(stepSeq));

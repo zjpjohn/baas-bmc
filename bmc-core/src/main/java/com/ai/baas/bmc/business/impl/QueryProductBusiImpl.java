@@ -60,8 +60,8 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
 			CpPriceInfoCriteria.Criteria criteriaCpPriceInfo= cpPriceInfoCriteria.createCriteria();
 			criteriaCpPriceInfo.andTenantIdEqualTo(vo.getTenantId());
-			 
-			 if(null != vo.getActiveDate() && null != vo.getInvalidDate()){
+			cpPriceInfoCriteria.setOrderByClause("PRICE_CODE DESC");
+			if(null != vo.getActiveDate() && null != vo.getInvalidDate()){
 				 criteriaCpPriceInfo.andActiveTimeBetween(vo.getActiveDate(), vo.getInvalidDate());
 			 }else{
 				 if (null != vo.getActiveDate()) {
