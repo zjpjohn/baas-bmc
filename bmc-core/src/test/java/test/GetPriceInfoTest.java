@@ -30,25 +30,25 @@ public class GetPriceInfoTest {
         PageInfo<StandardList> resultPage=new PageInfo<StandardList>();
         QueryInfoParams queryInfoParams = new QueryInfoParams();
         queryInfoParams.setTenantId("baas-test");
-        queryInfoParams.setTradeSeq("123456dfdf123222693");
-        queryInfoParams.setStandardId("");
+        queryInfoParams.setTradeSeq("123456dfdf12322asd2693");
+        queryInfoParams.setStandardId("1");
         queryInfoParams.setPriceName("");
         queryInfoParams.setPageNo(1);
         queryInfoParams.setPageSize(20);
         queryInfoParams.setServiceType("");
         queryInfoParams.setSubServiceType("");
-        queryInfoParams.setPriceState(null);
+//        queryInfoParams.setPriceState(null);
         System.err.println("queryInfoParams："+queryInfoParams.getPriceName()+"kkk");
-        
-//        queryInfoParams.setPageNo(null);
-//        queryInfoParams.setPageSize(null);
+       
         
         //queryInfoParams =  JSONObject.parseObject("{\"serviceType\":\"\",\"tenantPwd\":\"\",\"pageNo\":1,\"priceState\":\"\",\"standardId\":\"\",\"tenantId\":\"7BAF6267AE2F421FA8D1E305EE35C4BA\",\"pageSize\":20,\"priceName\":\"\",\"tradeSeq\":\"test201604181518035501\"}", QueryInfoParams.class);
         ResponseMessage responseMessage = iPriceInfoSV.getPriceInfo(queryInfoParams);
 //        List<StandardList> result= responseMessage.getStandardList().getResult();
 //        StandardList standardList = result.get(0);
         System.out.println("param="+com.alibaba.fastjson.JSON.toJSONString(queryInfoParams));
+        System.out.println("1");
         System.out.println("responseMessage="+com.alibaba.fastjson.JSON.toJSONString(responseMessage));
+       System.out.println("2");
 
        
     }

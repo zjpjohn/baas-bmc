@@ -212,7 +212,7 @@ public class CpPriceInfoAtomImpl implements ICpPriceInfoAtom {
             criteria.andPriceNameLike("%"+name+"%");         
         }
         criteria.andTenantIdEqualTo(record.getTenantId());
-        
+        cpPriceInfoCriteria.setOrderByClause("CREATE_TIME desc");
         List<CpPriceInfo>  cpPriceInfoList=cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria);
         return cpPriceInfoList;
     }

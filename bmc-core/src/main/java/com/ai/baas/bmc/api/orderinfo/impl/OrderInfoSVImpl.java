@@ -37,11 +37,141 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
     @Override
     public BaseResponse orderInfo(OrderInfoParams record)throws BusinessException, SystemException {
 
-        BaseResponse resultCode = new BaseResponse();
+        BaseResponse resultParams = new BaseResponse();
+        String resultCode = null;
         // 入参检验
+        
+        resultCode = CheckUtil.check(record.getTenantId(), "tenantId", false, 32);
+        if (!ErrorCode.SUCCESS.equals(resultCode)) {
+            resultParams.setResponseHeader(new ResponseHeader(false,"000001","订购扩展信息中的参数不能为空"));
+            return resultParams;
+        } 
+    
+       resultCode = CheckUtil.check(record.getUsetype(), "usetype", false, 32, "Test", "Normal");
+       if (!ErrorCode.SUCCESS.equals(resultCode)) {
+           resultParams.setResponseHeader(new ResponseHeader(false,"000001","useType字段有误，取值范围：Test,Normal"));
+           return resultParams;
+       }
+
+       resultCode = CheckUtil.check(record.getState(), "state", true, 32, "Normal", "Stop",
+              "Cancel");
+       if (!ErrorCode.SUCCESS.equals(resultCode)) {
+           resultParams.setResponseHeader(new ResponseHeader(false,"000001","state字段有误，取值范围：Normal，Stop"));
+           return resultParams;
+       }
+
+
+//
+//      resultCode = CheckUtil.check(record.getCityCode(), "cityCode", true, 6);
+//      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//          return resultCode;
+//      }
+//
+//      resultCode = CheckUtil.check(record.getChlId(), "chlId", true, 32);
+//      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//          return resultCode;
+//      }
+//
+//      resultCode = CheckUtil.check(record.getDevId(), "devId", true, 32);
+//      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//          return resultCode;
+//      }
+//
+//      resultCode = CheckUtil.check(record.getActiveTime(), "activeTime", false, 14);
+//      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//          return resultCode;
+//      } else if (!CheckUtil.check(record.getActiveTime(), DateUtil.YYYYMMDDHHMMSS)) {
+//          return ErrorCode.UNFORMATE + ":activeTime格式YYYYMMDDHH24MISS";
+//      }
+//
+//      resultCode = CheckUtil.check(record.getInactiveTime(), "inactiveTime", false, 14);
+//      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//          return resultCode;
+//      } else if (!CheckUtil.check(record.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS)) {
+//          return ErrorCode.UNFORMATE + ":inactiveTime格式YYYYMMDDHH24MISS";
+//      }
+
+//      if (record.getOrderExtInfo() != null) {
+//          for (OrderExt o : record.getOrderExtInfo()) {
+//              resultCode = CheckUtil.check(o.getExtName(), "extName", false, 32);
+//              if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                  return resultCode;
+//              }
+//
+//              resultCode = CheckUtil.check(o.getExtValue(), "extValue", false, 64);
+//              if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                  return resultCode;
+//              }
+//
+//              resultCode = CheckUtil.check(o.getUpdateFlag(), "updateFlag", false, 1, "D", "U",
+//                      "N");
+//              if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                  return resultCode;
+//              }
+//          }
+//      }
+//      resultCode = CheckUtil.check(record.getRemark(), "remark", true, 1024);
+//      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//          return resultCode;
+//      }
+//
+//      if (record.getProductList() != null) {
+//          for (Product p : record.getProductList()) {
+//              resultCode = CheckUtil.check(p.getProductId(), "productId", false, 32);
+//              if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                  return resultCode;
+//              }
+//
+//              resultCode = CheckUtil.check(p.getProductNumber(), "productNumber", false, 9);
+//              if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                  return resultCode;
+//              }
+//
+//              resultCode = CheckUtil.check(p.getResBonusFlag(), "resBonusFlag", true, 1, "Y",
+//                      "N");
+//              if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                  return resultCode;
+//              }
+//
+//              resultCode = CheckUtil.check(p.getActiveTime(), "activeTime", false, 14);
+//              if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                  return resultCode;
+//              } else if (!CheckUtil.check(p.getActiveTime(), DateUtil.YYYYMMDDHHMMSS)) {
+//                  return ErrorCode.UNFORMATE + ":activeTime格式YYYYMMDDHH24MISS";
+//              }
+//
+//              resultCode = CheckUtil.check(p.getInactiveTime(), "inactiveTime", false, 14);
+//              if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                  return resultCode;
+//              } else if (!CheckUtil.check(p.getInactiveTime(), DateUtil.YYYYMMDDHHMMSS)) {
+//                  return ErrorCode.UNFORMATE + ":inactiveTime格式YYYYMMDDHH24MISS";
+//              }
+//
+//              if (p.getProductExtInfoList() != null) {
+//                  for (ProductExt o : p.getProductExtInfoList()) {
+//                      resultCode = CheckUtil.check(o.getExtName(), "extName", false, 32);
+//                      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                          return resultCode;
+//                      }
+//
+//                      resultCode = CheckUtil.check(o.getExtValue(), "extValue", false, 64);
+//                      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                          return resultCode;
+//                      }
+//
+//                      resultCode = CheckUtil.check(o.getUpdateFlag(), "updateFlag", false, 1, "D",
+//                              "U", "N");
+//                      if (!ErrorCode.SUCCESS.equals(resultCode)) {
+//                          return resultCode;
+//                      }
+//                  }
+//              }
+//          }
+//      }
+        
         if (record == null) {
-            resultCode.setResponseHeader(new ResponseHeader(false, "000001", "入参不能为空"));
-            return resultCode;
+            resultParams.setResponseHeader(new ResponseHeader(false, "000001", "入参不能为空"));
+            return resultParams;
         }
         
         if(record.getOrderExtInfo()!=null){
@@ -49,8 +179,8 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 List<OrderExt> orderExtList = record.getOrderExtInfo();
                 for(OrderExt oe : orderExtList ){
                     if(StringUtil.isBlank(oe.getExtName())||StringUtil.isBlank(oe.getExtValue())||StringUtil.isBlank(oe.getUpdateFlag())){
-                        resultCode.setResponseHeader(new ResponseHeader(false,"000001","订购扩展信息中的参数不能为空"));
-                        return resultCode;
+                        resultParams.setResponseHeader(new ResponseHeader(false,"000001","订购扩展信息中的参数不能为空"));
+                        return resultParams;
                     }   
                 }
             }
@@ -60,12 +190,12 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                 List<Product>productList = record.getProductList();
                 for(Product pt:productList){
                     if(StringUtil.isBlank(pt.getActiveTime())||StringUtil.isBlank(pt.getInactiveTime())||StringUtil.isBlank(pt.getProductId())||StringUtil.isBlank(pt.getProductType())||pt.getProductNumber()==null){
-                        resultCode.setResponseHeader(new ResponseHeader(false,"000001","产品列表中的参数不能为空"));
-                        return resultCode;
+                        resultParams.setResponseHeader(new ResponseHeader(false,"000001","产品列表中的参数不能为空"));
+                        return resultParams;
                     }
                     if(pt.getProductType().equals("bill")&&pt.getProductNumber()!=1){
-                        resultCode.setResponseHeader(new ResponseHeader(false,"000001","订购账单产品ProductNumber必须为1,订购失败"));
-                        return resultCode;
+                        resultParams.setResponseHeader(new ResponseHeader(false,"000001","订购账单产品ProductNumber必须为1,订购失败"));
+                        return resultParams;
                     }
                 }
             }
@@ -90,8 +220,8 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         
         if(StringUtil.isBlank(custId)){
             LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + record.getExtCustId());
-            resultCode.setResponseHeader(new ResponseHeader(false, "000001", "客户ID不存在23333, EXT_CUST_ID为" + record.getExtCustId()));
-            return resultCode;
+            resultParams.setResponseHeader(new ResponseHeader(false, "000001", "客户ID不存在23333, EXT_CUST_ID为" + record.getExtCustId()));
+            return resultParams;
         }
         System.err.println("获得cust_id : "+custId);
         LoggerUtil.log.debug("获得cust_id:" + custId);
@@ -100,13 +230,13 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         // 幂等性判断（判重）
         try {
             if (business.hasSeq(record)) {
-                resultCode.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
-                return resultCode;
+                resultParams.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
+                return resultParams;
             }
         } catch (IOException e) {
             LoggerUtil.log.error(e);
-            resultCode.setResponseHeader(new ResponseHeader(false, "000001", "幂等性判断失败"));
-            return resultCode;
+            resultParams.setResponseHeader(new ResponseHeader(false, "000001", "幂等性判断失败"));
+            return resultParams;
         }
         
         
@@ -114,11 +244,11 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         try {
             business.writeData(record, custId);
         } catch (BusinessException e) {
-            resultCode.setResponseHeader(new ResponseHeader(false, "000001", e.getErrorCode() + e.getErrorMessage()));
-            return resultCode;
+            resultParams.setResponseHeader(new ResponseHeader(false, "000001", e.getErrorCode() + e.getErrorMessage()));
+            return resultParams;
         }
-        resultCode.setResponseHeader(new ResponseHeader(true, "000000", "成功"));
-        return resultCode;
+        resultParams.setResponseHeader(new ResponseHeader(true, "000000", "成功"));
+        return resultParams;
     }
 
     public static void main(String[] args) {

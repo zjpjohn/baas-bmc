@@ -131,11 +131,12 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         if (orderInfoParams.getProductList() != null) {
             for (Product p : orderInfoParams.getProductList()) {
                 if(p.getProductType().equals("dr")){   
+                    //共享内存校验 查cp_price_info表
                     writeBlSubsComm(aBlUserinfo, p);
                 }
                 if(p.getProductType().equals("bill")){
-                    
-                    //校验，查共享内存，判断amc_product_info表中，productId是否存在，如果存在，existFlag=true ，update，如果不存在 existFlag=false insert                   
+                    //共享内存校验 查amc_product_info表是否有这个产品ID
+                    //判断bl_subs_comm表中，productId是否存在，如果存在，existFlag=true ，update，如果不存在 existFlag=false insert                   
                     Map<String, String> productInfo = new TreeMap<String, String>();
                     productInfo.put("product_id", p.getProductId());
                     productInfo.put("tenant_id", orderInfoParams.getTenantId());
