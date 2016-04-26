@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -48,6 +49,7 @@ public class ProferProductVO extends BaseInfo {
 	 * 优惠活动名称
 	 */
 	@NotBlank(message="优惠活动名称不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@Size(max=64,message="活动名称不能超过64")
 	private String programName;
 	
 	/**
@@ -80,6 +82,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 备注
 	 */
+	@Size(max=1024,message="备注长度不能超过1024")
 	private String comments;
 	/**
 	 * 已选择的产品列表,必填
