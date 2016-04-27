@@ -14,10 +14,12 @@ import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV
 import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IQueryProferProductSV;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.FullPresent;
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedAccountVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.SingleProductInfo;
 import com.ai.opt.sdk.util.DateUtil;
 import com.alibaba.fastjson.JSON;
 
@@ -54,10 +56,10 @@ public class ProferProductTest {
 		fp.setGiftInvalidDate(DateUtil.getSysDate());
 		fp.setActiveCycle("THREE_MONTH");
 		fp.setActiveFlag("NOW");
-		List<Long> list1=new ArrayList<Long>();
-		list1.add(1L);
-		list1.add(2L);
-		list1.add(3L);
+		List<String> list1=new ArrayList<String>();
+		list1.add("1");
+		list1.add("2");
+		list1.add("3");
 		fp.setGiftProList(list1);
 		fp.setGiftType("SERVICETYPE");
 		list.add(fp);
@@ -107,10 +109,10 @@ public class ProferProductTest {
 			List<FullPresent> list=new ArrayList<FullPresent>();
 			
 			
-			List<Long> list1=new ArrayList<Long>();
-			list1.add(1L);
-			list1.add(2L);
-			list1.add(3L);
+			List<String> list1=new ArrayList<String>();
+			list1.add("1");
+			list1.add("2");
+			list1.add("3");
 			
 			vo.setPresentList(list);
 			
@@ -140,10 +142,10 @@ public class ProferProductTest {
 		vo.setOperatorId("BYD001");
 	
 		//产品列表
-		List<Long> list1=new ArrayList<Long>();
-		list1.add(1L);
-		list1.add(2L);
-		list1.add(3L);
+		List<String> list1=new ArrayList<String>();
+		list1.add("1");
+		list1.add("2");
+		list1.add("3");
 		vo.setProductList(list1);
 		
 		
@@ -184,10 +186,10 @@ public class ProferProductTest {
 				FullPresent fp=new FullPresent();
 				fp.setGiftActiveDate(DateUtil.getSysDate());
 				fp.setGiftInvalidDate(DateUtil.getSysDate());
-				List<Long> list1=new ArrayList<Long>();
-				list1.add(4L);
-				list1.add(5L);
-				list1.add(6L);
+				List<String> list1=new ArrayList<String>();
+				list1.add("4");
+				list1.add("5");
+				list1.add("6");
 				fp.setGiftProList(list1);
 				fp.setGiftType("SERVICETYPE");
 				list.add(fp);
@@ -235,10 +237,10 @@ public class ProferProductTest {
 				vo.setPriceCode("0000000202");
 			
 				
-				List<Long> list1=new ArrayList<Long>();
-				list1.add(4L);
-				list1.add(5L);
-				list1.add(6L);
+				List<String> list1=new ArrayList<String>();
+				list1.add("4");
+				list1.add("5");
+				list1.add("6");
 			
 		
 				vo.setProductList(list1);
@@ -316,6 +318,16 @@ public class ProferProductTest {
 		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		vo.setTradeSeq("12321321321");
 		System.out.println(JSON.toJSONString(iQueryProferProductSV.getRelatedAccount(vo)));
+	}
+	@Test
+	public void testgetDetail(){
+		
+		//SingleProductInfo getProductById(ProductQueryParam param)
+		ProductQueryParam vo=new ProductQueryParam();
+		vo.setProductId(1441L);
+		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
+		vo.setTradeSeq("12321321321");
+		System.out.println(JSON.toJSONString(iQueryProferProductSV.getProductById(vo)));
 	}
 	
 }

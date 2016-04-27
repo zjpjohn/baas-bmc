@@ -169,12 +169,12 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 				fp.setGiftActiveDate(present.getActiveTime());
 				fp.setGiftInvalidDate(present.getInactiveTime());
 
-				fp.setGiftProList(JSON.parseArray(present.getProductGiftIds(), Long.class));
+				fp.setGiftProList(JSON.parseArray(present.getProductGiftIds(), String.class));
 				fp.setGiftType(present.getPresentType());
 				fp.setGitfAmount(present.getPresentAmount());
 				fp.setActiveCycle(present.getActiveCycle());
 				fp.setActiveFlag(present.getActiveFlag());
-				singlePro.setProductList(JSON.parseArray(present.getProductIds(),Long.class));
+				singlePro.setProductList(JSON.parseArray(present.getProductIds(),String.class));
 				singlePro.setRuleAmount(present.getReachAmount());
 				singlePro.setRuleUnit(present.getUnit());
 				list.add(fp);
@@ -189,7 +189,7 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 	         BigDecimal fm = new BigDecimal(1000L);
 			singlePro.setReduceAmount(fz.divide(fm).doubleValue());
 			singlePro.setRuleUnit(reduce.getUnit());
-			singlePro.setProductList(JSON.parseArray(reduce.getProductIds(), Long.class));
+			singlePro.setProductList(JSON.parseArray(reduce.getProductIds(), String.class));
 
 		}
 		ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
