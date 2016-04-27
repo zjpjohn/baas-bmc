@@ -52,9 +52,9 @@ public class QueryProductSvTest {
 		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		
 		List<String> productIdList = new ArrayList<String>();
-		productIdList.add("171");
-		productIdList.add("359");
-		productIdList.add("360");
+		productIdList.add("1002");
+		//productIdList.add("359");
+	//	productIdList.add("360");
 		//
 		vo.setProductIdList(productIdList);
 		System.out.println("-----param:"+JSON.toJSONString(vo));

@@ -87,7 +87,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 已选择的产品列表,必填
 	 */
-	private List<Long> productList;
+	private List<String> productList;
 
 	/**
 	 * 操作员Id
@@ -171,10 +171,11 @@ public class ProferProductVO extends BaseInfo {
 	}
 	
 	
-	public List<Long> getProductList() {
+	
+	public List<String> getProductList() {
 		return productList;
 	}
-	public void setProductList(List<Long> productList) {
+	public void setProductList(List<String> productList) {
 		this.productList = productList;
 	}
 	public String getOperatorId() {

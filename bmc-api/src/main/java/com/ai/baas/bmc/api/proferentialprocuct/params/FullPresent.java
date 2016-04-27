@@ -40,7 +40,7 @@ public class FullPresent implements Serializable{
 	/**
 	 *参与赠品产品列表
 	 */
-	private List<Long> giftProList;
+	private List<String> giftProList;
 	/**
 	 * 赠送业务周期
 	 */
@@ -75,10 +75,11 @@ public class FullPresent implements Serializable{
 		this.giftInvalidDate = giftInvalidDate;
 	}
 	
-	public List<Long> getGiftProList() {
+	
+	public List<String> getGiftProList() {
 		return giftProList;
 	}
-	public void setGiftProList(List<Long> giftProList) {
+	public void setGiftProList(List<String> giftProList) {
 		this.giftProList = giftProList;
 	}
 	public Long getPresentId() {
