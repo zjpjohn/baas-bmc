@@ -305,6 +305,8 @@ public class ProferProductManageBusiImpl implements IProferProductManageBusi {
 				cfp.setProductIds(JSON.toJSONString(vo.getProductList()));
 				cfp.setPresentAmount(p.getGitfAmount());
 				cfp.setUnit(vo.getRuleUnit());
+				cfp.setActiveCycle(p.getActiveCycle());
+				cfp.setActiveFlag(p.getActiveFlag());
 				cpFullPresentBusi.addFullPresent(cfp);
 			}
 		}
