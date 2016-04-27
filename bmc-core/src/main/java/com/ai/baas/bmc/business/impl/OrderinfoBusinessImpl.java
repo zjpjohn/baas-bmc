@@ -94,6 +94,57 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         return false;
     }
 
+    private void checkDr(String productId,String tenantId){
+        //共享内存校验 查cp_price_info表
+        Map<String, String> checkDr = new TreeMap<String, String>();
+        checkDr.put("price_code", productId);
+        checkDr.put("tenant_id", tenantId);
+        List<Map<String, String>> bmcResult = DshmUtil.getClient().list("cp_price_info")
+                .where(checkDr).executeQuery(DshmUtil.getCacheClient());
+        if (bmcResult == null || bmcResult.isEmpty()) {
+            throw new BusinessException("000001", "cp_price_info表中，该productId(priceCode)： "+productId+" 不存在");
+        }
+    }
+    
+    private void checkBill(String productId,String tenantId){
+      //校验 查amc_product_info表
+        Map<String, String> checkBill = new TreeMap<String, String>();
+        checkBill.put("product_id", productId);
+        checkBill.put("tenant_id", tenantId);
+        List<Map<String, String>> amcResult = DshmUtil.getClient().list("amc_product_info")
+                .where(checkBill).executeQuery(DshmUtil.getCacheClient());
+        if (amcResult == null || amcResult.isEmpty()) {
+            throw new BusinessException("000001","amc_product_info表中，该productId： "+productId+" 不存在");
+        }
+    }
+    
+    private boolean checkOnly(String productId,String productType,String tenantId){
+      //判断唯一，bl_subs_comm表中，productId是否存在，如果存在，existFlag=true ，update，如果不存在 existFlag=false insert                   
+        Map<String, String> checkOnly = new TreeMap<String, String>();
+        checkOnly.put("product_id", productId);
+        checkOnly.put("product_type",productType);
+        checkOnly.put("tenant_id", tenantId);
+        List<Map<String, String>> amcResult = DshmUtil.getClient().list("bl_subs_comm")
+                .where(checkOnly).executeQuery(DshmUtil.getCacheClient());
+       
+        System.err.println("bluserinfoList："+JSON.toJSONString(amcResult));
+        String product_id = null;
+        boolean existFlag = false;
+       //获得缓存中第一条有效数据
+        if (!(amcResult == null || amcResult.isEmpty())) {
+            for(Map<String, String> r : amcResult){
+                if(!r.isEmpty()){
+                    productId = r.get("product_id");      
+                    existFlag = true;//productId已存在，更新数据
+                    System.err.println("product_id："+product_id+"已有订购信息，更新" ); 
+                    break;
+                }          
+            }
+        }
+        System.err.println("productId : "+productId+" existFlag : "+existFlag);
+        return existFlag;
+    }
+    
     @Override
     public void writeData(OrderInfoParams orderInfoParams, String custId) {
         // 判重
@@ -127,36 +178,21 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         }
         BlUserinfo aBlUserinfo = writeBlUserinfo(orderInfoParams, custId, subsId, acctId);
         System.err.println(MyJsonUtil.toJson(aBlUserinfo));
+        
         // 当产品列表不为空时，循环插入产品表
         if (orderInfoParams.getProductList() != null) {
             for (Product p : orderInfoParams.getProductList()) {
-                if(p.getProductType().equals("dr")){   
-                    //共享内存校验 查cp_price_info表
+                if(p.getProductType().equals("dr")){
+                    //校验产品ID
+                    checkDr(p.getProductId(),orderInfoParams.getTenantId());
                     writeBlSubsComm(aBlUserinfo, p);
                 }
                 if(p.getProductType().equals("bill")){
-                    //共享内存校验 查amc_product_info表是否有这个产品ID
-                    //判断bl_subs_comm表中，productId是否存在，如果存在，existFlag=true ，update，如果不存在 existFlag=false insert                   
-                    Map<String, String> productInfo = new TreeMap<String, String>();
-                    productInfo.put("product_id", p.getProductId());
-                    productInfo.put("tenant_id", orderInfoParams.getTenantId());
-                    List<Map<String, String>> products = DshmUtil.getClient().list("amc_product_info")
-                            .where(params).executeQuery(DshmUtil.getCacheClient());
-                   
-                    System.err.println("bluserinfoList："+JSON.toJSONString(products));
-                    String productId = null;
-                    boolean existFlag = false;
-                   //获得缓存中第一条有效数据
-                    if (!(products == null || products.isEmpty())) {
-                        for(Map<String, String> r : products){
-                            if(!r.isEmpty()){
-                                productId = r.get("product_id");      
-                                existFlag = true;//productId已存在，更新数据
-                                break;
-                            }          
-                        }
-                    }
-                    System.err.println("productId : "+productId+" existFlag : "+existFlag);
+                    //校验 查amc_product_info表是否有这个产品ID
+                    checkBill(p.getProductId(),orderInfoParams.getTenantId());
+                    //判断唯一，bl_subs_comm表中，productId是否存在，如果存在，existFlag=true ，update，如果不存在 existFlag=false insert    
+                    boolean existFlag = checkOnly(p.getProductId(),p.getProductType(),orderInfoParams.getTenantId());
+               
                     if(existFlag){
                         updateBlSubsComm(aBlUserinfo,p);
                     }else{

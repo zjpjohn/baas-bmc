@@ -41,9 +41,8 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         String resultCode = null;
         // 入参检验
         
-        resultCode = CheckUtil.check(record.getTenantId(), "tenantId", false, 32);
-        if (!ErrorCode.SUCCESS.equals(resultCode)) {
-            resultParams.setResponseHeader(new ResponseHeader(false,"000001","订购扩展信息中的参数不能为空"));
+        if(StringUtil.isBlank( record.getTenantId())) {
+            resultParams.setResponseHeader(new ResponseHeader(false,"000001","TenantId不能为空"));
             return resultParams;
         } 
     
@@ -169,10 +168,6 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
 //          }
 //      }
         
-        if (record == null) {
-            resultParams.setResponseHeader(new ResponseHeader(false, "000001", "入参不能为空"));
-            return resultParams;
-        }
         
         if(record.getOrderExtInfo()!=null){
             if(record.getOrderExtInfo().size()!=0){

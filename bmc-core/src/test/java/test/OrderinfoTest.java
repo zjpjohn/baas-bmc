@@ -44,7 +44,7 @@ public class OrderinfoTest {
         a.setExtCustId("1111");//外部客户ID
         
         a.setServiceId("1800000000");
-        a.setTradeSeq("99913111wrewer111a1245531111");
+        a.setTradeSeq("91112a31231232323sfd91111");
 
         a.setUsetype("Test");
         a.setState("Normal");
@@ -63,11 +63,11 @@ public class OrderinfoTest {
             orderExtList.add(o);
             a.setOrderExtInfo(orderExtList);
             
-            p.setProductId("123123");
+            p.setProductId("5555");
             p.setProductType("bill");
             p.setProductNumber(1);
-            p.setResBonusFlag("Y");
-            p.setActiveTime("20150406235959");
+            p.setResBonusFlag("N");
+            p.setActiveTime("20160406235959");
             p.setInactiveTime("20200411235959");
 //                pe.setExtName("扩展信息");
 //                pe.setExtValue("没用");
