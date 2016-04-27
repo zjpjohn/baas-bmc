@@ -238,7 +238,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVo.setServiceId(cpPackageInfoNew.getPackageId().toString());
 				serviceVo.setAmountEnd(cpPackageInfoNew.getAmount());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitType());
-				serviceVo.setPrice(new BigDecimal(cpPackageInfoNew.getPriceValue()/1000));
+				if(null != cpPackageInfoNew.getPriceValue()){
+					serviceVo.setPrice(new BigDecimal(cpPackageInfoNew.getPriceValue()/1000));
+				}
 				serviceVo.setServiceTypeDetail(cpPackageInfoNew.getFactorCode());
 				serviceVo.setServiceType(cpPackageInfoNew.getServiceType());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitCode());
