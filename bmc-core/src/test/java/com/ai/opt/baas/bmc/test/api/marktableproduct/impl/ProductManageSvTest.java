@@ -89,11 +89,11 @@ public class ProductManageSvTest {
 		this.productManageSV.delProduct(vo);
 	}
 	
-	//@Test
+	@Test
 	public void editProduct(){
 		ProductParamKeyVo vo = new ProductParamKeyVo();
-		vo.setProductId("44");
-		vo.setBillingType("PACKAGE");
+		vo.setProductId("0000001403");
+		vo.setBillingType("STEP_GROUP_TYPE");
 		
 		ProductVO productVo = this.productManageSV.editProduct(vo);
 		String jsonObj = JSON.toJSONString(vo);
