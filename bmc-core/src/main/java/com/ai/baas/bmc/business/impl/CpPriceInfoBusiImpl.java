@@ -28,10 +28,10 @@ public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	public Long addCpPriceInfo(CpPriceInfo info) {
 		//1 是添加，0是删除
 	
-		int cpPriceInfoId=cpPriceInfoMapper.insert(info);
-		if(cpPriceInfoId>0){ //刷新缓存
+		cpPriceInfoMapper.insert(info);
+		/*if(cpPriceInfoId>0){ //刷新缓存
 			DshmUtil.getIdshmSV().initLoader("cp_price_info",JSON.toJSONString(info),1);	
-		}
+		}*/
 		return info.getPriceInfoId();
 	}
 	
