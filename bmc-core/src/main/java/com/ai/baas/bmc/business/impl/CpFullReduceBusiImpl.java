@@ -3,8 +3,7 @@ package com.ai.baas.bmc.business.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.business.interfaces.ICpFullReduceBusi;
 import com.ai.baas.bmc.dao.interfaces.CpFullReduceMapper;
@@ -12,8 +11,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpFullReduce;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullReduceCriteria;
 import com.ai.opt.sdk.util.CollectionUtil;
 
-@Service
-@Transactional
+@Component
 public class CpFullReduceBusiImpl implements ICpFullReduceBusi {
 	@Autowired
 	private CpFullReduceMapper cpFullReduceMapper;

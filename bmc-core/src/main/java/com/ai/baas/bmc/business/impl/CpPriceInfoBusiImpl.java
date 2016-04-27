@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
@@ -15,11 +14,8 @@ import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
-import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.opt.sdk.util.CollectionUtil;
-import com.alibaba.fastjson.JSON;
-@Service
-@Transactional
+@Component
 public class CpPriceInfoBusiImpl implements ICpPriceInfoBusi {
 	@Autowired
 	private CpPriceInfoMapper cpPriceInfoMapper;

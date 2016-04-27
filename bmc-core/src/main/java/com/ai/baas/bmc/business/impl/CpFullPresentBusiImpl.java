@@ -3,8 +3,7 @@ package com.ai.baas.bmc.business.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.business.interfaces.ICpFullPresentBusi;
 import com.ai.baas.bmc.dao.interfaces.CpFullPresentMapper;
@@ -13,8 +12,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpFullPresentCriteria.Criteria;
 import com.ai.opt.sdk.util.CollectionUtil;
 
-@Service
-@Transactional
+@Component
 public class CpFullPresentBusiImpl implements ICpFullPresentBusi {
 
 	//TODO 需要统一检查如果需要使用缓存的需要使用缓存进行处理，统一排查

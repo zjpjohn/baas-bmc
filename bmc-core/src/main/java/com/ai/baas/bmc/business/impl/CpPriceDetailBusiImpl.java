@@ -3,8 +3,7 @@ package com.ai.baas.bmc.business.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.business.interfaces.ICpPriceDetailBusi;
 import com.ai.baas.bmc.dao.interfaces.CpPriceDetailMapper;
@@ -13,8 +12,7 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetailCriteria;
 import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.alibaba.fastjson.JSON;
-@Service
-@Transactional
+@Component
 public class CpPriceDetailBusiImpl implements ICpPriceDetailBusi {
 
 	@Autowired
@@ -23,9 +21,9 @@ public class CpPriceDetailBusiImpl implements ICpPriceDetailBusi {
 	public Long addCpPriceDetail(CpPriceDetail info) {
 		//TODO 还需要刷到缓存当中去
 		int id=cpPriceDetailMapper.insert(info);
-		if(id>0){
+	/*	if(id>0){
 			DshmUtil.getIdshmSV().initLoader("cp_price_detail",JSON.toJSONString(info),1);	
-		}
+		}*/
 		return info.getDetailId();
 	}
 	@Override
