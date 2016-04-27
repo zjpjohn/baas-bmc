@@ -633,8 +633,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPackageInfo.setUnitType(serviceVO.getUnit());
 		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
 
-		cpPackageInfo.setPriceValue(0.0);//(serviceVO.getPrice().doubleValue());
-		packageobject.put("PRICE_VALUE", 0.0);//serviceVO.getPrice());
+//		cpPackageInfo.setPriceValue(0.0);//(serviceVO.getPrice().doubleValue());
+//		packageobject.put("PRICE_VALUE", 0.0);//serviceVO.getPrice());
 
 		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
 		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
