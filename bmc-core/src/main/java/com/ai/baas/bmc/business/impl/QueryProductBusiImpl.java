@@ -226,7 +226,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 serv.setAmountStart(s.getSectionA());
 				 serv.setAmountEnd(s.getSectionB());
 				 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()/1000));
-				 serv.setServiceTypeDetail(s.getFactorCode().toString());
+				 serv.setServiceTypeDetail(s.getFactorCode());
 				 serv.setUnit(s.getUnitType());
 				 serv.setServiceType(s.getServiceType());
 				 
