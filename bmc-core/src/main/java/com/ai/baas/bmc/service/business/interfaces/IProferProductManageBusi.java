@@ -28,7 +28,7 @@ public interface IProferProductManageBusi {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00007
 	 */
-	ProductResponse addProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	ProductResponse addProferProduct(ProferProductVO vo);
 	@interface AddProferProduct{}
 	/**
 	 * 添加优惠产品(满减)
@@ -39,7 +39,7 @@ public interface IProferProductManageBusi {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00014
 	 */
-	ProductResponse addDiscontProduct(ProferProductVO vo)throws BusinessException, SystemException;
+	ProductResponse addDiscontProduct(ProferProductVO vo);
 	@interface AddDiscontProduct{}
 	
 	/**
@@ -51,7 +51,7 @@ public interface IProferProductManageBusi {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00009
 	 */
-	BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
+	BaseResponse updateProferProductStatus(ActiveProductVO vo) ;
 	@interface UpdateProferProductStatus{}
 	
 	/**
@@ -63,7 +63,7 @@ public interface IProferProductManageBusi {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00010
 	 */
-	BaseResponse delProferProduct(productDelVO vo) throws BusinessException, SystemException;
+	BaseResponse delProferProduct(productDelVO vo);
 	@interface DelProferProduct{}
 	/**
 	 * 更新优惠产品
@@ -73,7 +73,7 @@ public interface IProferProductManageBusi {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00013
 	 */
-	BaseResponse updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	BaseResponse updateProferProduct(ProferProductVO vo);
 	@interface UpdateProferProduct{}
 	
 	/**
@@ -85,6 +85,6 @@ public interface IProferProductManageBusi {
 	 * @ApiDocMethod
 	 * @ApiCode
 	 */
-	BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException;
+	BaseResponse relatedAccout(RelatedAccountVO vo);
 	
 }

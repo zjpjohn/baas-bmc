@@ -44,7 +44,9 @@ public class ProferProductManageSV implements IProferProductManageSV {
 
 	@Override
 	public BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
-	
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 		return iProferProductManageBusi.updateProferProductStatus(vo);
 
 	}
