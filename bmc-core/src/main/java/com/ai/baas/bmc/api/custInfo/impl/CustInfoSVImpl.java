@@ -16,6 +16,7 @@ import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.util.CheckUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.runner.base.exception.CallerException;
 import com.alibaba.dubbo.config.annotation.Service;
 
@@ -50,6 +51,9 @@ public class CustInfoSVImpl implements ICustInfoSV {
 			log.debug("custNotify() custInfo = " + custInfo.toString() + "]");
 		}
 		
+		if(StringUtil.isBlank(custInfo.getTenantId())){
+			return ErrorCode.NULL +":tenantId不能为空";
+		}
 		 try {
 	            if(iCustinfoBusiness.hasSeq(custInfo)){
 	                return "tradeSeq已使用";
