@@ -13,6 +13,7 @@ import com.ai.baas.bmc.service.business.interfaces.IProferProductManageBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
@@ -27,13 +28,17 @@ public class ProferProductManageSV implements IProferProductManageSV {
 	 */
 	@Override
 	public ProductResponse addProferProduct(ProferProductVO vo) throws BusinessException, SystemException {
-		
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 		return iProferProductManageBusi.addProferProduct(vo);
 	}
 
 	@Override
 	public ProductResponse addDiscontProduct(ProferProductVO vo) throws BusinessException, SystemException {
-		
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 		return iProferProductManageBusi.addDiscontProduct(vo);
 	}
 
@@ -46,20 +51,26 @@ public class ProferProductManageSV implements IProferProductManageSV {
 
 	@Override
 	public BaseResponse delProferProduct(productDelVO vo) throws BusinessException, SystemException {
-		
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 		return iProferProductManageBusi.delProferProduct(vo);
 	}
 
 	@Override
 	public BaseResponse updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException {
-
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 	
 		return iProferProductManageBusi.updateProferProduct(vo);
 	}
 
 	@Override
 	public BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException {
-	
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 		return iProferProductManageBusi.relatedAccout(vo);
 	}
 
