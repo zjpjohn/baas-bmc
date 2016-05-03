@@ -118,12 +118,14 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         }
     }
     
-    private boolean checkOnly(String productId,String productType,String tenantId){
-      //判断唯一，bl_subs_comm表中，productId是否存在，如果存在，existFlag=true ，update，如果不存在 existFlag=false insert                   
+    private boolean checkOnly(String productId,String productType,String tenantId,BlUserinfo BlUserinfo){
+      //判断唯一，bl_subs_comm表中，productId是否存在，如果存在，existFlag=true ，update，如果不,存在 existFlag=false insert                   
         Map<String, String> checkOnly = new TreeMap<String, String>();
         checkOnly.put("product_id", productId);
         checkOnly.put("product_type",productType);
         checkOnly.put("tenant_id", tenantId);
+        checkOnly.put("subs_id", BlUserinfo.getSubsId());//一个SubsId下，bill类productId必须唯一
+        
         List<Map<String, String>> amcResult = DshmUtil.getClient().list("bl_subs_comm")
                 .where(checkOnly).executeQuery(DshmUtil.getCacheClient());
        
@@ -134,14 +136,14 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         if (!(amcResult == null || amcResult.isEmpty())) {
             for(Map<String, String> r : amcResult){
                 if(!r.isEmpty()){
-                    productId = r.get("product_id");      
+                    product_id = r.get("product_id");      
                     existFlag = true;//productId已存在，更新数据
-                    System.err.println("product_id："+product_id+"已有订购信息，更新" ); 
+                    System.err.println("product_id："+product_id+"已存在，更新" ); 
                     break;
                 }          
             }
         }
-        System.err.println("productId : "+productId+" existFlag : "+existFlag);
+        System.err.println("productId : "+product_id+" existFlag : "+existFlag);
         return existFlag;
     }
     
@@ -191,7 +193,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
                     //校验 查amc_product_info表是否有这个产品ID
                     checkBill(p.getProductId(),orderInfoParams.getTenantId());
                     //判断唯一，bl_subs_comm表中，productId是否存在，如果存在，existFlag=true ，update，如果不存在 existFlag=false insert    
-                    boolean existFlag = checkOnly(p.getProductId(),p.getProductType(),orderInfoParams.getTenantId());
+                    boolean existFlag = checkOnly(p.getProductId(),p.getProductType(),orderInfoParams.getTenantId(),aBlUserinfo);
                
                     if(existFlag){
                         updateBlSubsComm(aBlUserinfo,p);
@@ -243,6 +245,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         
         blSubsCommCriteria.createCriteria()
             .andProductTypeEqualTo(product.getProductType())
+            .andSubsIdEqualTo(userInfo.getSubsId())
             .andProductIdEqualTo(product.getProductId());
 
         aBlSubsCommMapper.updateByExampleSelective(aBlSubsComm, blSubsCommCriteria);

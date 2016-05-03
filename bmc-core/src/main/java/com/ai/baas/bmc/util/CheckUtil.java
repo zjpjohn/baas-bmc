@@ -25,18 +25,20 @@ public class CheckUtil {
             return ErrorCode.OVER_LENTH + ":" +name + "不能超过" + lenth + "位";
         }
 
-        if (StringUtils.isEmpty(enums)) {
+        if (StringUtils.isEmpty(enums) || enums.length <= 0) {
             return ErrorCode.SUCCESS;
-        }
+        }else{
 
-        String result = ErrorCode.UNKNOWN + ":" +name + "取值范围";
-        for (String e : enums) {
-            if (e.equals(o.toString())) {
-                return ErrorCode.SUCCESS;
-            }
-            result += e + " ";
+	        String result = ErrorCode.UNKNOWN + ":" +name + "取值范围";
+	        for (String e : enums) {
+	            if (e.equals(o.toString())) {
+	                return ErrorCode.SUCCESS;
+	            }
+	            result += e + " ";
+	        }
+	        return result;
         }
-        return result;
+        //return ErrorCode.SUCCESS;
     }
     /**
      * 校验时间格式
