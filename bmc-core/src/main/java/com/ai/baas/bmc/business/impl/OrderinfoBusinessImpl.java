@@ -360,7 +360,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         aBluserinfo.setServiceId(orderInfoParams.getServiceId());
         // 受理时间设为订购时间
         //aBluserinfo.setDealTime(DateUtil.getTimestamp(orderInfoParams.getOrderTime(), DateUtil.YYYYMMDDHHMMSS));
-       
+        aBluserinfo.setServType(orderInfoParams.getServType());
         aBluserinfo.setProvinceCode(orderInfoParams.getProvinceCode());
         aBluserinfo.setCityCode(orderInfoParams.getCityCode());
         aBluserinfo.setChlId(orderInfoParams.getChlId());
@@ -408,6 +408,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         json.put("serv_type", aBluserinfo.getServType());
         json.put("user_type", aBluserinfo.getUserType());
         json.put("user_state", aBluserinfo.getUserState());
+        json.put("serv_type", aBluserinfo.getServType());//新增
 //        DshmUtil.getIdshmSV().initDel(TableCon.BL_USERINFO, json.toString());
         // 如果subsId为空则认为需要插入，否则执行更新
         if (StringUtil.isBlank(subsId)) {

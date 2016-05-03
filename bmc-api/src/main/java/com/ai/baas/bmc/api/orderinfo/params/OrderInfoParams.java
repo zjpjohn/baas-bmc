@@ -41,6 +41,14 @@ public class OrderInfoParams extends BaseInfo {
     private String extCustId;
 
     /**
+     * 业务类型<br>
+     * VARCHAR(32)
+     */
+    @Size(max=32,groups={IOrderInfoSV.OrderInfo.class})
+    private String ServType;
+    
+    
+    /**
      * 订购类型<br>
      * 取值范围：Test:测试；Normal：正式<br>
      * 必填<br>
@@ -265,6 +273,14 @@ public class OrderInfoParams extends BaseInfo {
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public String getServType() {
+        return ServType;
+    }
+
+    public void setServType(String servType) {
+        ServType = servType;
     }
 
 }
