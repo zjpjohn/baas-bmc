@@ -32,6 +32,7 @@ import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 
@@ -52,6 +53,9 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 
 	@Override
 	public ProferProductResponse getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException {
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 		List<CpPriceInfo> priceInfoList = iCpPriceInfoBusi.getCpPriceInfo(vo);
 
 		PageInfo<ProferProductInfo> page = new PageInfo<ProferProductInfo>();
@@ -140,6 +144,9 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 
 	@Override
 	public SingleProductInfo getProductById(ProductQueryParam param) throws BusinessException, SystemException {
+		if (StringUtil.isBlank(param.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 		// 查询资费信息表
 		CpPriceInfo priceInfo = iCpPriceInfoBusi.getCpPriceInfo(param);
 		SingleProductInfo singlePro = new SingleProductInfo();
@@ -199,6 +206,9 @@ public class QueryProferProductSVImpl implements IQueryProferProductSV {
 
 	@Override
 	public RelatedResponse getRelatedAccount(RelatedVO vo) {
+		if (StringUtil.isBlank(vo.getTenantId())) {
+			throw new BusinessException("888888", "[租户Id]不能为空");
+		}
 		CpPriceInfo price = iCpPriceInfoBusi.getCpPriceInfo(vo);
 
 		CpPriceDetail detail = iCpPriceDetailBusi.getCpPriceDetail(price.getPriceCode());

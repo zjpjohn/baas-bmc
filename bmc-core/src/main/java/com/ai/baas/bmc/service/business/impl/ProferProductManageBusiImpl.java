@@ -54,7 +54,7 @@ public class ProferProductManageBusiImpl implements IProferProductManageBusi {
 	 * 满赠添加
 	 */
 	@Override
-	public ProductResponse addProferProduct(ProferProductVO vo) throws BusinessException, SystemException {
+	public ProductResponse addProferProduct(ProferProductVO vo) {
 		/**
 		 * 插入资费信息表 cp_price_info
 		 */
@@ -206,10 +206,8 @@ public class ProferProductManageBusiImpl implements IProferProductManageBusi {
 	}
 
 	@Override
-	public BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException {
-		if (StringUtil.isBlank(vo.getTenantId())) {
-			throw new BusinessException("888888", "[租户Id]不能为空");
-		}
+	public BaseResponse updateProferProductStatus(ActiveProductVO vo) {
+		
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
 		cpPriceInfo.setActiveStatus(vo.getStatus()); // 设置状态
@@ -233,7 +231,7 @@ public class ProferProductManageBusiImpl implements IProferProductManageBusi {
 	}
 
 	@Override
-	public BaseResponse delProferProduct(productDelVO vo) throws BusinessException, SystemException {
+	public BaseResponse delProferProduct(productDelVO vo) {
 		CpPriceInfo cpPriceInfo = new CpPriceInfo();
 		cpPriceInfo.setPriceInfoId(vo.getProductId());
 		cpPriceInfo.setTenantId(vo.getTenantId());
@@ -255,7 +253,7 @@ public class ProferProductManageBusiImpl implements IProferProductManageBusi {
 	}
 
 	@Override
-	public BaseResponse updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException {
+	public BaseResponse updateProferProduct(ProferProductVO vo){
 
 		
 		/**
@@ -332,7 +330,7 @@ public class ProferProductManageBusiImpl implements IProferProductManageBusi {
 	}
 
 	@Override
-	public BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException {
+	public BaseResponse relatedAccout(RelatedAccountVO vo)  {
 		int  count=0;
 		ProductQueryParam param=new ProductQueryParam();
 		param.setProductId(vo.getProductId());
