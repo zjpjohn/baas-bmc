@@ -25,7 +25,7 @@ public class CheckUtil {
             return ErrorCode.OVER_LENTH + ":" +name + "不能超过" + lenth + "位";
         }
 
-        if (StringUtils.isEmpty(enums)) {
+        if (StringUtils.isEmpty(enums) || enums.length <= 0) {
             return ErrorCode.SUCCESS;
         }else{
 
