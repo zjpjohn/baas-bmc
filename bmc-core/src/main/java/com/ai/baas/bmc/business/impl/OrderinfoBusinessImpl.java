@@ -344,13 +344,14 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             System.out.println("inactTime = [" + inactTime + "]");
             aBluserinfo.setInactiveTime(inactTime);
             
-            dDate = sdf.parse(orderInfoParams.getOrderTime());
-            Timestamp dealTime = new Timestamp(dDate.getTime());
-            System.out.println("dealTime = [" + dealTime + "]");
-            aBluserinfo.setDealTime(dealTime);
-            
-            json.put("active_time", actTime.toString());
-            json.put("deal_time", dealTime.toString());
+            if(!StringUtil.isBlank(orderInfoParams.getOrderTime())){
+                dDate = sdf.parse(orderInfoParams.getOrderTime());
+                Timestamp dealTime = new Timestamp(dDate.getTime());
+                System.out.println("dealTime = [" + dealTime + "]");
+                aBluserinfo.setDealTime(dealTime);
+                json.put("deal_time", dealTime.toString());
+            }
+            json.put("active_time", actTime.toString());           
             json.put("inactive_time", inactTime.toString());
         }catch (ParseException e){
             throw new SystemException("时间格式转换异常");

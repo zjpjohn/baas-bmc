@@ -44,12 +44,12 @@ public class OrderinfoTest {
         a.setExtCustId("1111");//外部客户ID
         
         a.setServiceId("1234555555");
-        a.setTradeSeq("91112a31231123123232323sfd91111");
+        a.setTradeSeq("91112a122223sfd91111");
 
         a.setUsetype("Test");
         a.setState("Normal");
         
-        a.setOrderTime("20130320111111");
+//        a.setOrderTime("20130320111111");
         a.setProvinceCode("07777");
         a.setCityCode("012345");
         a.setChlId("Normal");
