@@ -289,24 +289,27 @@ public class ProferProductManageBusiImpl implements IProferProductManageBusi {
 			// 由于数量不好对应所以进行先删后增
 			cpFullPresentBusi.deleteFullPresent(detailCode);
 			List<FullPresent> fList = vo.getPresentList();
-			for (FullPresent p : fList) {
-				CpFullPresent cfp = new CpFullPresent();
-				cfp.setPresentType(p.getGiftType());
-				cfp.setActiveTime(p.getGiftActiveDate());
-				cfp.setDetailCode(detailCode);
-				cfp.setInactiveTime(p.getGiftInvalidDate());
-				String presentCode = BmcSeqUtil.getPresentCode();
-				cfp.setPresentCode(presentCode);
-				cfp.setPresentId(BmcSeqUtil.getPresentId());
-				cfp.setProductGiftIds(JSON.toJSONString(p.getGiftProList()));
-				cfp.setReachAmount(vo.getRuleAmount());
-				cfp.setProductIds(JSON.toJSONString(vo.getProductList()));
-				cfp.setPresentAmount(p.getGitfAmount());
-				cfp.setUnit(vo.getRuleUnit());
-				cfp.setActiveCycle(p.getActiveCycle());
-				cfp.setActiveFlag(p.getActiveFlag());
-				cpFullPresentBusi.addFullPresent(cfp);
+			if(!CollectionUtil.isEmpty(fList)){
+				for (FullPresent p : fList) {
+					CpFullPresent cfp = new CpFullPresent();
+					cfp.setPresentType(p.getGiftType());
+					cfp.setActiveTime(p.getGiftActiveDate());
+					cfp.setDetailCode(detailCode);
+					cfp.setInactiveTime(p.getGiftInvalidDate());
+					String presentCode = BmcSeqUtil.getPresentCode();
+					cfp.setPresentCode(presentCode);
+					cfp.setPresentId(BmcSeqUtil.getPresentId());
+					cfp.setProductGiftIds(JSON.toJSONString(p.getGiftProList()));
+					cfp.setReachAmount(vo.getRuleAmount());
+					cfp.setProductIds(JSON.toJSONString(vo.getProductList()));
+					cfp.setPresentAmount(p.getGitfAmount());
+					cfp.setUnit(vo.getRuleUnit());
+					cfp.setActiveCycle(p.getActiveCycle());
+					cfp.setActiveFlag(p.getActiveFlag());
+					cpFullPresentBusi.addFullPresent(cfp);
+				}
 			}
+			
 		}
 		if ((BmcConstants.ProferName.DR_MINUS).equals(chargeType)) {// 满减
 			CpFullReduce r=cpFullReduceBusi.getFullReduce(detailCode);

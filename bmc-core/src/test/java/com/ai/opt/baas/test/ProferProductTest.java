@@ -175,24 +175,24 @@ public class ProferProductTest {
 	public void updateProferProduct1(){
 		//测试满赠添加
 				ProferProductVO vo=new ProferProductVO();
-				vo.setProductId(301L);
+				vo.setProductId(1644L);
 				vo.setActiveDate(DateUtil.getSysDate());
 				vo.setComments("这是个测试产品修改");
 				vo.setInvalidDate(DateUtil.getSysDate());
 				vo.setOperatorId("BYD");
-				vo.setPriceCode("0000000162");
+				vo.setPriceCode("0000001644");
 				List<FullPresent> list=new ArrayList<FullPresent>();
 				//赠送业务
-				FullPresent fp=new FullPresent();
-				fp.setGiftActiveDate(DateUtil.getSysDate());
-				fp.setGiftInvalidDate(DateUtil.getSysDate());
-				List<String> list1=new ArrayList<String>();
-				list1.add("4");
-				list1.add("5");
-				list1.add("6");
-				fp.setGiftProList(list1);
-				fp.setGiftType("SERVICETYPE");
-				list.add(fp);
+//				FullPresent fp=new FullPresent();
+//				fp.setGiftActiveDate(DateUtil.getSysDate());
+//				fp.setGiftInvalidDate(DateUtil.getSysDate());
+//				List<String> list1=new ArrayList<String>();
+//				list1.add("4");
+//				list1.add("5");
+//				list1.add("6");
+//				fp.setGiftProList(list1);
+//				fp.setGiftType("SERVICETYPE");
+//				list.add(fp);
 				//赠送现金
 //				FullPresent fp1=new FullPresent();
 //				fp1.setGiftActiveDate(DateUtil.getSysDate());
@@ -202,24 +202,24 @@ public class ProferProductTest {
 //				fp1.setGitfAmount(10.1);
 //				list.add(fp1);
 				//赠送虚拟货币
-				FullPresent fp2=new FullPresent();
-				fp2.setGiftActiveDate(DateUtil.getSysDate());
-				fp2.setGiftInvalidDate(DateUtil.getSysDate());
-				fp2.setGiftProList(list1);
-				fp2.setGiftType("COIN");
-				fp2.setGitfAmount(12);
-				list.add(fp2);
+//				FullPresent fp2=new FullPresent();
+//				fp2.setGiftActiveDate(DateUtil.getSysDate());
+//				fp2.setGiftInvalidDate(DateUtil.getSysDate());
+//				fp2.setGiftProList(list1);
+//				fp2.setGiftType("COIN");
+//				fp2.setGitfAmount(12);
+//				list.add(fp2);
 				
-				vo.setPresentList(list);
+			//	vo.setPresentList(list);
 				
 			//	vo.setPriceCode(priceCode);
-				vo.setProductList(list1);
+			//	vo.setProductList(list1);
 				
-				vo.setProductType("PRESENT");
+				vo.setProductType("dr_offer");
 				vo.setProgramName("满赠活动");
 				vo.setRuleAmount(180);
 				vo.setRuleUnit("YUAN");
-				vo.setTenantId("BYD");
+				vo.setTenantId("baas-test");
 				vo.setTradeSeq("BYD1234111111111111");
 				System.out.println(JSON.toJSONString(vo));
 				iProferProductManageSV.updateProferProduct(vo);
