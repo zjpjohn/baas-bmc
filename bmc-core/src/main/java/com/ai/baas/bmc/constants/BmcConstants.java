@@ -73,5 +73,10 @@ public final class BmcConstants {
         	 */
         	public static final String DEL="DEL";
         }
+        
+        public static final class MDSNS{
+        	//注意参考原来的配置文件的信息，只不过现在要统一进行修改，修改了其中的内容
+        	public static final String BMC_KAFKA_TOPIC="baas_bmc_topic";
+        }
 
 }

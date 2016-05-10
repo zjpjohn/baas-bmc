@@ -4,6 +4,7 @@ import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBill;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillCriteria;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillParam;
 import com.ai.baas.bmc.business.interfaces.IFailedBillMaintainBusi;
+import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.dao.interfaces.BmcRecordFmtMapper;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmt;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmtCriteria;
@@ -139,7 +140,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
             String message = generateMessage(param);
             cleanDuplicateData(param);
             cleanFailedBillData(param);
-            MDSUtil.sendMessage(message);
+            MDSUtil.sendMessage(BmcConstants.MDSNS.BMC_KAFKA_TOPIC,message);
         }
     }
 
@@ -168,7 +169,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
             String message = generateMessage(failedBill);
             cleanDuplicateData(param);
             cleanFailedBillData(param);
-            MDSUtil.sendMessage(message);
+            MDSUtil.sendMessage(BmcConstants.MDSNS.BMC_KAFKA_TOPIC,message);
         }
     }
 

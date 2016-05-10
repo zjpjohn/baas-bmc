@@ -28,10 +28,10 @@ dependencies {
     
     //compile 'com.ai.runner.center.dshm:dshmprocess:1.0.1-SNAPSHOT'
     
-    compile 'com.ai.baas:baas-dshm-sdk:1.0.8-SNAPSHOT'
-    compile 'com.ai.opt.sdk:opt-sdk:1.0.6-SNAPSHOT'
-    compile 'com.ai.opt.dshm:dshmprocess:1.0.0-SNAPSHOT'
-    compile 'com.ai.runner.center.dshm:dshmservice:1.0.1-SNAPSHOT'
+    compile 'com.ai.baas:baas-dshm-sdk:2.0-SNAPSHOT'
+    compile 'com.ai.opt.sdk:opt-sdk:2.0-SNAPSHOT'
+    compile 'com.ai.baas.dshm:dshmprocess:2.0-SNAPSHOT'
+    //compile 'com.ai.runner.center.dshm:dshmservice:1.0.1-SNAPSHOT'
     compile 'org.hibernate:hibernate-validator:4.2.0.Final'
     testCompile(
             "org.springframework:spring-test:4.1.7.RELEASE",

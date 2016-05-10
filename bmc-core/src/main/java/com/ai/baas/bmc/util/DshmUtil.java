@@ -5,7 +5,7 @@ import com.ai.baas.dshm.client.CacheFactoryUtil;
 import com.ai.baas.dshm.client.impl.CacheBLMapper;
 import com.ai.baas.dshm.client.impl.DshmClient;
 import com.ai.baas.dshm.client.interfaces.IDshmClient;
-import com.ai.opt.sdk.util.DubboConsumerFactory;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 
 public class DshmUtil {

@@ -1,10 +1,6 @@
 package com.ai.baas.bmc.business.impl;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -39,7 +35,6 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.paas.ipaas.util.StringUtil;
-import com.ai.runner.base.exception.CallerException;
 import com.alibaba.fastjson.JSON;
 
 import net.sf.json.JSONObject;
@@ -89,7 +84,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 				blCustinfo.setState(custInfo.getState());
 				custobject.put("STATE", custInfo.getState());
 			} else {
-				throw new CallerException("BMC-00002", "State超长");
+				throw new BusinessException("BMC-00002", "State超长");
 			}
 		} else {
 			   blCustinfo.setState("0");
@@ -101,7 +96,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 				custobject.put("STATE_CHG_TIME", DateUtil.getTimestamp(custInfo.getStateChgTime(), DateUtil.YYYYMMDDHHMMSS).toString().substring(0, 19));
 				
 			} else {
-				throw new CallerException("BMC-00002", "StateChgTime超长");
+				throw new BusinessException("BMC-00002", "StateChgTime超长");
 			}
 		} else {
 			  blCustinfo.setStateChgTime(DateUtil.getSysDate());

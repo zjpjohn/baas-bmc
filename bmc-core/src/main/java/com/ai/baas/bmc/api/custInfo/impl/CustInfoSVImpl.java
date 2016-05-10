@@ -16,8 +16,8 @@ import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.util.CheckUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.paas.ipaas.util.StringUtil;
-import com.ai.runner.base.exception.CallerException;
 import com.alibaba.dubbo.config.annotation.Service;
 
 /**
@@ -42,7 +42,7 @@ public class CustInfoSVImpl implements ICustInfoSV {
 	 * 
 	 */
 	@Override
-	public String custNotify(CustInfoParams custInfo) throws CallerException {
+	public String custNotify(CustInfoParams custInfo) throws BusinessException, SystemException {
 		
 		if (StringUtils.isEmpty(custInfo)) {
 			log.debug("extInfoNotify() custInfo = [null]");

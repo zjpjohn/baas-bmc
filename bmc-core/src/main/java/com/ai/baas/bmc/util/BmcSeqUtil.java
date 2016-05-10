@@ -1,8 +1,7 @@
 package com.ai.baas.bmc.util;
 
 import com.ai.baas.bmc.constants.BmcConstants.SEQ;
-import com.ai.opt.sdk.sequence.util.SeqUtil;
-import com.ai.opt.sdk.util.StringUtil;
+import com.ai.opt.sdk.components.sequence.util.SeqUtil;
 
 /**
  * BMC seq 工具类
