@@ -30,10 +30,8 @@ public class CCSTest {
 
     @Test
     public void addServiceIdPwdMap() throws ConfigException {
-    	String cachesnsConfig = "{\"MCS001\":\"" + "123456"     
-    			+ "\",\"MCS002\":\"" + "123456"
-    			+ "\",\"MDS001\":\"" + "123456"
-    			+ "\",\"DSS001\":\"" + "123456"
+    	String cachesnsConfig = "{\"MCS002\":\"" + "123456"     
+    			+ "\",\"MDS003\":\"" + "123456"
     			+ "\"}";
         
         // paas serviceid password 映射配置
