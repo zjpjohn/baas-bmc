@@ -16,6 +16,7 @@
     <result column="CONTACT_NO" property="contactNo" jdbcType="VARCHAR" />
     <result column="EMAIL" property="email" jdbcType="VARCHAR" />
     <result column="CUST_ADDRESS" property="custAddress" jdbcType="VARCHAR" />
+    <result column="ID_NUMBER" property="idNumber" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -77,13 +78,14 @@
   </sql>
   <sql id="Base_Column_List" >
     CUST_ID, TENANT_ID, CUST_NAME, EXT_CUST_ID, CUST_TYPE, CUST_GRADE, PROVINCE_CODE, 
-    CITY_CODE, STATE, STATE_CHG_TIME, REMARK, CONTACT_NO, EMAIL, CUST_ADDRESS
+    CITY_CODE, STATE, STATE_CHG_TIME, REMARK, CONTACT_NO, EMAIL, CUST_ADDRESS, ID_NUMBER
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlCustinfoCriteria" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'false' as QUERYID,
     <include refid="Base_Column_List" />
     from bl_custinfo
     <if test="_parameter != null" >
@@ -117,12 +119,14 @@
       EXT_CUST_ID, CUST_TYPE, CUST_GRADE, 
       PROVINCE_CODE, CITY_CODE, STATE, 
       STATE_CHG_TIME, REMARK, CONTACT_NO, 
-      EMAIL, CUST_ADDRESS)
+      EMAIL, CUST_ADDRESS, ID_NUMBER
+      )
     values (#{custId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, 
       #{extCustId,jdbcType=VARCHAR}, #{custType,jdbcType=VARCHAR}, #{custGrade,jdbcType=VARCHAR}, 
       #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
       #{stateChgTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{contactNo,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{custAddress,jdbcType=VARCHAR})
+      #{email,jdbcType=VARCHAR}, #{custAddress,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlCustinfo" >
     insert into bl_custinfo
@@ -169,6 +173,9 @@
       <if test="custAddress != null" >
         CUST_ADDRESS,
       </if>
+      <if test="idNumber != null" >
+        ID_NUMBER,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="custId != null" >
@@ -212,6 +219,9 @@
       </if>
       <if test="custAddress != null" >
         #{custAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -266,6 +276,9 @@
       <if test="record.custAddress != null" >
         CUST_ADDRESS = #{record.custAddress,jdbcType=VARCHAR},
       </if>
+      <if test="record.idNumber != null" >
+        ID_NUMBER = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -286,7 +299,8 @@
       REMARK = #{record.remark,jdbcType=VARCHAR},
       CONTACT_NO = #{record.contactNo,jdbcType=VARCHAR},
       EMAIL = #{record.email,jdbcType=VARCHAR},
-      CUST_ADDRESS = #{record.custAddress,jdbcType=VARCHAR}
+      CUST_ADDRESS = #{record.custAddress,jdbcType=VARCHAR},
+      ID_NUMBER = #{record.idNumber,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -333,6 +347,9 @@
       <if test="custAddress != null" >
         CUST_ADDRESS = #{custAddress,jdbcType=VARCHAR},
       </if>
+      <if test="idNumber != null" >
+        ID_NUMBER = #{idNumber,jdbcType=VARCHAR},
+      </if>
     </set>
     where CUST_ID = #{custId,jdbcType=VARCHAR}
   </update>
@@ -350,7 +367,8 @@
       REMARK = #{remark,jdbcType=VARCHAR},
       CONTACT_NO = #{contactNo,jdbcType=VARCHAR},
       EMAIL = #{email,jdbcType=VARCHAR},
-      CUST_ADDRESS = #{custAddress,jdbcType=VARCHAR}
+      CUST_ADDRESS = #{custAddress,jdbcType=VARCHAR},
+      ID_NUMBER = #{idNumber,jdbcType=VARCHAR}
     where CUST_ID = #{custId,jdbcType=VARCHAR}
   </update>
 </mapper>

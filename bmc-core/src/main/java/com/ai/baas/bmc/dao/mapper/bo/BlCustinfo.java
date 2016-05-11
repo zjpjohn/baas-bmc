@@ -31,6 +31,8 @@ public class BlCustinfo {
 
     private String custAddress;
 
+    private String idNumber;
+
     public String getCustId() {
         return custId;
     }
@@ -141,5 +143,13 @@ public class BlCustinfo {
 
     public void setCustAddress(String custAddress) {
         this.custAddress = custAddress == null ? null : custAddress.trim();
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber == null ? null : idNumber.trim();
     }
 }
