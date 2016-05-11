@@ -1,11 +1,9 @@
 package com.ai.baas.bmc.dao.interfaces;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.ai.baas.bmc.dao.mapper.bo.BlCustinfo;
 import com.ai.baas.bmc.dao.mapper.bo.BlCustinfoCriteria;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface BlCustinfoMapper {
     int countByExample(BlCustinfoCriteria example);
