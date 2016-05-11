@@ -13,8 +13,8 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.filter.BinaryComparator;
-import org.apache.hadoop.hbase.filter.CompareFilter;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
+import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +53,7 @@ public class FailBillTest {
 		@Test
 		public void insertData(){
 			Connection conn = HBaseProxy.getConnection();
-			String rowKey = getData();
+			String rowKey = getRowKey();
 			Table table = null;
 			try {
 				table = conn.getTable(TableName
@@ -75,20 +75,20 @@ public class FailBillTest {
 				failPacket.put("start_time", "20160413");
 				failPacket.put("tenant_id", "TR");
 				
-				put.addColumn("failure_bill".getBytes(), "accountPeriod".getBytes(), "20160411".getBytes());
-				put.addColumn("failure_bill".getBytes(), "arrivalTime".getBytes(), "20160410".getBytes());
+				put.addColumn("failure_bill".getBytes(), "account_period".getBytes(), "20160411".getBytes());
+				put.addColumn("failure_bill".getBytes(), "arrival_time".getBytes(), "20160410".getBytes());
 				put.addColumn("failure_bill".getBytes(), "bsn".getBytes(), "1456281622845".getBytes());
-				put.addColumn("failure_bill".getBytes(), "failCode".getBytes(), "BMC-S0001".getBytes());
-				put.addColumn("failure_bill".getBytes(), "failDate".getBytes(), "20160511170000".getBytes());
-				put.addColumn("failure_bill".getBytes(), "failReason".getBytes(), "重复数据2".getBytes());
-				put.addColumn("failure_bill".getBytes(), "failStep".getBytes(), "BMC".getBytes());
-				put.addColumn("failure_bill".getBytes(), "serviceId".getBytes(), "VOICE".getBytes());
+				put.addColumn("failure_bill".getBytes(), "fail_code".getBytes(), "BMC-S0001".getBytes());
+				put.addColumn("failure_bill".getBytes(), "fail_date".getBytes(), "20160511170000".getBytes());
+				put.addColumn("failure_bill".getBytes(), "fail_reason".getBytes(), "重复数据3333".getBytes());
+				put.addColumn("failure_bill".getBytes(), "fail_step".getBytes(), "BMC".getBytes());
+				put.addColumn("failure_bill".getBytes(), "service_id".getBytes(), "VOICE".getBytes());
 				put.addColumn("failure_bill".getBytes(), "sn".getBytes(), "1064802120010120060709230666".getBytes());
 				put.addColumn("failure_bill".getBytes(), "source".getBytes(), "TEST".getBytes());
-				put.addColumn("failure_bill".getBytes(), "tenantId".getBytes(), "TR".getBytes());
+				put.addColumn("failure_bill".getBytes(), "tenant_id".getBytes(), "TR".getBytes());
 				
 				
-				put.addColumn("failure_bill".getBytes(), "failPacket".getBytes(), JSON.toJSONString(failPacket).getBytes());
+				put.addColumn("failure_bill".getBytes(), "fail_packet".getBytes(), JSON.toJSONString(failPacket).getBytes());
 				table.put(put);
 				
 				/*{
@@ -140,14 +140,18 @@ public class FailBillTest {
 				/*scan.setFilter(new SingleColumnValueFilter("failure_bill".getBytes(),
 						"value".getBytes(), CompareFilter.CompareOp.EQUAL,
 						new BinaryComparator("JSBIUGZT20160412124".getBytes())));*/
+				
+				RowFilter rowFilter = new RowFilter(CompareOp.EQUAL, new BinaryComparator(getRowKey().getBytes()));
+				scan.setFilter(rowFilter);
 				ResultScanner rs = table.getScanner(scan);
+				System.out.println("rowkey="+getRowKey());
 				for (Result r : rs) {// 按行去遍历
 					String line = "";
 					for (KeyValue kv : r.raw()) {// 遍历每一行的各列
-						if (Bytes.toString(kv.getQualifier()).equals("record")) {
+						//if (Bytes.toString(kv.getQualifier()).equals("record")) {
 							line = Bytes.toString(kv.getValue());
-							System.out.println("---"+line);
-						}
+							System.out.println(Bytes.toString(kv.getQualifier())+"---"+line);
+						//}
 					}
 				}
 				rs.close();
@@ -160,7 +164,7 @@ public class FailBillTest {
 		}
 		
 		
-		public String getData(){
+		public String getRowKey(){
 			StringBuilder sb = new StringBuilder();
 			//tenant_id
 			sb.append("TR").append(FIELD_SPLIT);//
@@ -177,7 +181,8 @@ public class FailBillTest {
 			//failedCode
 			sb.append("BMC-S0001").append(FIELD_SPLIT);
 			//failDate
-			sb.append("20160511170000");
+//			sb.append("20160511170000");
+			sb.append("20160511154257");
 			return sb.toString();
 		}
 		
