@@ -13,7 +13,7 @@ public class FailedBill implements Serializable {
      */
     private String failCode;
     private String tenantId;
-    private long failDate;
+    private String failDate;
     private String failReason;
     /**
      * 错单处理断点
@@ -55,7 +55,7 @@ public class FailedBill implements Serializable {
         return failCode;
     }
 
-    public long getFailDate() {
+    public String getFailDate() {
         return failDate;
     }
 
@@ -103,7 +103,7 @@ public class FailedBill implements Serializable {
         this.failCode = failCode;
     }
 
-    public void setFailDate(long failDate) {
+    public void setFailDate(String failDate) {
         this.failDate = failDate;
     }
 
