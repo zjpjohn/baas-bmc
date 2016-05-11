@@ -26,7 +26,7 @@ public class FailedBill implements Serializable {
     private String sn;
     private String source;
     private String accountPeriod;
-    private long arrivalTime;
+    private String arrivalTime;
     /**
      * 错单记录
      */
@@ -87,7 +87,7 @@ public class FailedBill implements Serializable {
         return accountPeriod;
     }
 
-    public long getArrivalTime() {
+    public String getArrivalTime() {
         return arrivalTime;
     }
 
@@ -135,7 +135,7 @@ public class FailedBill implements Serializable {
         this.accountPeriod = accountPeriod;
     }
 
-    public void setArrivalTime(long arrivalTime) {
+    public void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 

@@ -361,7 +361,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         if (cell != null) {
             String arrivalTime = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
             if (arrivalTime != null && arrivalTime.length() > 0)
-                failedBill.setArrivalTime(Long.parseLong(arrivalTime));
+                failedBill.setArrivalTime(arrivalTime);
         }
     }
 }
