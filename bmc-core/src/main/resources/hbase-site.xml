@@ -27,10 +27,10 @@
 	</property>
 	<property>
 		<name>hbase.zookeeper.quorum</name>
-	    <value>BIU-DEV-BaaS-app1,BIU-DEV-BaaS-app2,BIU-DEV-BaaS-app3</value>
+	    <value>10.1.130.84,10.1.130.85,10.1.236.122</value>
 	</property>
 	<property>
 		<name>hbase.master</name>
-	    <value>BIU-DEV-BaaS-app1</value>
+	    <value>10.1.130.84</value>
 	</property>
 </configuration>
