@@ -2,6 +2,8 @@ package com.ai.baas.bmc.api.custInfo.interfaces;
 
 import com.ai.baas.bmc.api.custInfo.params.CustInfoResponse;
 import com.ai.baas.bmc.api.custInfo.params.QueryCustInfoRequest;
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 
 /**
  * 详单查询服务
@@ -20,7 +22,7 @@ public interface ICustInfoQuerySV {
 	 * @ApiDocMethod
 	 * @ApiCode
 	 */
-	CustInfoResponse getCustInfos(QueryCustInfoRequest param);
+	CustInfoResponse getCustInfos(QueryCustInfoRequest param) throws BusinessException, SystemException;
     
     
     

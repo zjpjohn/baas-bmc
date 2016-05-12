@@ -30,6 +30,16 @@ public class QueryCustInfoRequest extends BaseInfo {
 	 * 资源号码
 	 */
 	private String serviceId;
+	
+	 /**
+     * 当前第几页,必填
+     */
+    private Integer pageNo;
+
+    /**
+     * 每页数据条数,必填
+     */
+    private Integer pageSize;
 	public String getTradeSeq() {
 		return tradeSeq;
 	}
@@ -59,6 +69,18 @@ public class QueryCustInfoRequest extends BaseInfo {
 	}
 	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
+	}
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
 }
