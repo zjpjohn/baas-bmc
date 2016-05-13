@@ -23,6 +23,8 @@ public class CpPackageInfo extends CpPackageInfoKey {
 
     private String serviceType;
 
+    private String isTotalPrice;
+
     public Double getAmount() {
         return amount;
     }
@@ -109,5 +111,13 @@ public class CpPackageInfo extends CpPackageInfoKey {
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType == null ? null : serviceType.trim();
+    }
+
+    public String getIsTotalPrice() {
+        return isTotalPrice;
+    }
+
+    public void setIsTotalPrice(String isTotalPrice) {
+        this.isTotalPrice = isTotalPrice == null ? null : isTotalPrice.trim();
     }
 }

@@ -45,7 +45,7 @@ public interface IQueryProductSV {
 	@interface GetProductInfoByProductIdList{}
 	/**
 	 * 
-	 * @param 可销售产品>>>关联详单科目
+	 * 可销售产品>>>关联详单科目
 	 * @return
 	 * @throws BusinessException
 	 * @throws SystemException
