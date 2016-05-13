@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.custInfo.params.QueryCustInfoRequest;
+import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.dao.interfaces.BlCustinfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.BlCustinfo;
 import com.ai.baas.bmc.dao.mapper.bo.BlCustinfoCriteria;
@@ -28,6 +29,7 @@ public class IBlCustInfoAtomImpl implements IBlCustInfoAtomSV {
 		BlCustinfoCriteria sql =new BlCustinfoCriteria();
 		BlCustinfoCriteria.Criteria criteria=sql.createCriteria();
 		criteria.andTenantIdEqualTo(param.getTenantId());
+		criteria.andStateEqualTo(BmcConstants.CUST.NORMAL);
 		if(!StringUtil.isBlank(param.getCustGrade())){
 			criteria.andCustGradeEqualTo(param.getCustGrade());
 		}

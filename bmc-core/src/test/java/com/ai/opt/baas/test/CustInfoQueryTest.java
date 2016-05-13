@@ -32,7 +32,7 @@ public class CustInfoQueryTest {
 		
 		request.setCustGrade("A");
 		request.setCustName(null);
-		request.setIdNumber("11");
+		request.setIdNumber("41148119921213337X");
 		request.setTenantId("VIV-BYD");
 		request.setPageNo(1);
 		request.setPageSize(10);

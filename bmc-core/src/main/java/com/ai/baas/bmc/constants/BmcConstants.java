@@ -79,4 +79,7 @@ public final class BmcConstants {
         	public static final String BMC_KAFKA_TOPIC="baas-bmc-topic"; 
         }
 
+        public static final class CUST{
+        	public static final String NORMAL="Normal"; 
+        }
 }
