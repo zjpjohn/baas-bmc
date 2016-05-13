@@ -27,6 +27,8 @@ public class CpStepInfo {
 
     private String isPriceEqual;
 
+    private String isTotalPrice;
+
     public Long getSetpId() {
         return setpId;
     }
@@ -129,5 +131,13 @@ public class CpStepInfo {
 
     public void setIsPriceEqual(String isPriceEqual) {
         this.isPriceEqual = isPriceEqual == null ? null : isPriceEqual.trim();
+    }
+
+    public String getIsTotalPrice() {
+        return isTotalPrice;
+    }
+
+    public void setIsTotalPrice(String isTotalPrice) {
+        this.isTotalPrice = isTotalPrice == null ? null : isTotalPrice.trim();
     }
 }

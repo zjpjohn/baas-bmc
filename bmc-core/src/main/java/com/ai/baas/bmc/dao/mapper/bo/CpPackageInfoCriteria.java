@@ -993,6 +993,76 @@ public class CpPackageInfoCriteria {
             addCriterion("SERVICE_TYPE not between", value1, value2, "serviceType");
             return (Criteria) this;
         }
+
+        public Criteria andIsTotalPriceIsNull() {
+            addCriterion("IS_TOTAL_PRICE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceIsNotNull() {
+            addCriterion("IS_TOTAL_PRICE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceEqualTo(String value) {
+            addCriterion("IS_TOTAL_PRICE =", value, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceNotEqualTo(String value) {
+            addCriterion("IS_TOTAL_PRICE <>", value, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceGreaterThan(String value) {
+            addCriterion("IS_TOTAL_PRICE >", value, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceGreaterThanOrEqualTo(String value) {
+            addCriterion("IS_TOTAL_PRICE >=", value, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceLessThan(String value) {
+            addCriterion("IS_TOTAL_PRICE <", value, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceLessThanOrEqualTo(String value) {
+            addCriterion("IS_TOTAL_PRICE <=", value, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceLike(String value) {
+            addCriterion("IS_TOTAL_PRICE like", value, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceNotLike(String value) {
+            addCriterion("IS_TOTAL_PRICE not like", value, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceIn(List<String> values) {
+            addCriterion("IS_TOTAL_PRICE in", values, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceNotIn(List<String> values) {
+            addCriterion("IS_TOTAL_PRICE not in", values, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceBetween(String value1, String value2) {
+            addCriterion("IS_TOTAL_PRICE between", value1, value2, "isTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTotalPriceNotBetween(String value1, String value2) {
+            addCriterion("IS_TOTAL_PRICE not between", value1, value2, "isTotalPrice");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

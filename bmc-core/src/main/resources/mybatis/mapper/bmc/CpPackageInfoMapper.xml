@@ -15,6 +15,7 @@
     <result column="EXT_CODE" property="extCode" jdbcType="VARCHAR" />
     <result column="SUBJECT_CODE" property="subjectCode" jdbcType="VARCHAR" />
     <result column="SERVICE_TYPE" property="serviceType" jdbcType="VARCHAR" />
+    <result column="IS_TOTAL_PRICE" property="isTotalPrice" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List" >
     PACKAGE_ID, DETAIL_CODE, AMOUNT, PRICE_VALUE, TOTAL_PRICE_VALUE, UNIT_CODE, UNIT_TYPE, 
-    FACTOR_CODE, EXCEED_TYPE, UNITPRICE_CODE, EXT_CODE, SUBJECT_CODE, SERVICE_TYPE
+    FACTOR_CODE, EXCEED_TYPE, UNITPRICE_CODE, EXT_CODE, SUBJECT_CODE, SERVICE_TYPE, IS_TOTAL_PRICE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfoCriteria" >
     select
@@ -118,12 +119,12 @@
       PRICE_VALUE, TOTAL_PRICE_VALUE, UNIT_CODE, 
       UNIT_TYPE, FACTOR_CODE, EXCEED_TYPE, 
       UNITPRICE_CODE, EXT_CODE, SUBJECT_CODE, 
-      SERVICE_TYPE)
+      SERVICE_TYPE, IS_TOTAL_PRICE)
     values (#{packageId,jdbcType=BIGINT}, #{detailCode,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE}, 
       #{priceValue,jdbcType=DOUBLE}, #{totalPriceValue,jdbcType=DOUBLE}, #{unitCode,jdbcType=VARCHAR}, 
       #{unitType,jdbcType=VARCHAR}, #{factorCode,jdbcType=VARCHAR}, #{exceedType,jdbcType=VARCHAR}, 
       #{unitpriceCode,jdbcType=VARCHAR}, #{extCode,jdbcType=VARCHAR}, #{subjectCode,jdbcType=VARCHAR}, 
-      #{serviceType,jdbcType=VARCHAR})
+      #{serviceType,jdbcType=VARCHAR}, #{isTotalPrice,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo" >
     insert into cp_package_info
@@ -167,6 +168,9 @@
       <if test="serviceType != null" >
         SERVICE_TYPE,
       </if>
+      <if test="isTotalPrice != null" >
+        IS_TOTAL_PRICE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="packageId != null" >
@@ -207,6 +211,9 @@
       </if>
       <if test="serviceType != null" >
         #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="isTotalPrice != null" >
+        #{isTotalPrice,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -258,6 +265,9 @@
       <if test="record.serviceType != null" >
         SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
       </if>
+      <if test="record.isTotalPrice != null" >
+        IS_TOTAL_PRICE = #{record.isTotalPrice,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -277,7 +287,8 @@
       UNITPRICE_CODE = #{record.unitpriceCode,jdbcType=VARCHAR},
       EXT_CODE = #{record.extCode,jdbcType=VARCHAR},
       SUBJECT_CODE = #{record.subjectCode,jdbcType=VARCHAR},
-      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR}
+      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      IS_TOTAL_PRICE = #{record.isTotalPrice,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -318,6 +329,9 @@
       <if test="serviceType != null" >
         SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
       </if>
+      <if test="isTotalPrice != null" >
+        IS_TOTAL_PRICE = #{isTotalPrice,jdbcType=VARCHAR},
+      </if>
     </set>
     where PACKAGE_ID = #{packageId,jdbcType=BIGINT}
       and DETAIL_CODE = #{detailCode,jdbcType=VARCHAR}
@@ -334,7 +348,8 @@
       UNITPRICE_CODE = #{unitpriceCode,jdbcType=VARCHAR},
       EXT_CODE = #{extCode,jdbcType=VARCHAR},
       SUBJECT_CODE = #{subjectCode,jdbcType=VARCHAR},
-      SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR}
+      SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      IS_TOTAL_PRICE = #{isTotalPrice,jdbcType=VARCHAR}
     where PACKAGE_ID = #{packageId,jdbcType=BIGINT}
       and DETAIL_CODE = #{detailCode,jdbcType=VARCHAR}
   </update>

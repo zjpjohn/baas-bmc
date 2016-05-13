@@ -1,38 +1,29 @@
 package com.ai.baas.bmc.business.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
+import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
+import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
+import com.ai.baas.bmc.dao.interfaces.CpPackageInfoMapper;
+import com.ai.baas.bmc.dao.interfaces.CpPriceDetailMapper;
+import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
+import com.ai.baas.bmc.dao.interfaces.CpStepInfoMapper;
+import com.ai.baas.bmc.dao.mapper.bo.*;
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.vo.PageInfo;
+import com.ai.opt.sdk.util.CollectionUtil;
+import com.ai.paas.ipaas.util.StringUtil;
+import com.esotericsoftware.minlog.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
-import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
-import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
-import com.ai.baas.bmc.api.marktableproduct.params.ServiceVO;
-import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
-import com.ai.baas.bmc.context.ErrorCode;
-import com.ai.baas.bmc.dao.interfaces.CpPackageInfoMapper;
-import com.ai.baas.bmc.dao.interfaces.CpPriceDetailMapper;
-import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
-import com.ai.baas.bmc.dao.interfaces.CpStepInfoMapper;
-import com.ai.baas.bmc.dao.mapper.bo.CpPackageInfo;
-import com.ai.baas.bmc.dao.mapper.bo.CpPackageInfoCriteria;
-import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
-import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetailCriteria;
-import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
-import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
-import com.ai.baas.bmc.dao.mapper.bo.CpStepInfo;
-import com.ai.baas.bmc.dao.mapper.bo.CpStepInfoCriteria;
-import com.ai.opt.base.vo.PageInfo;
-import com.ai.opt.base.vo.ResponseHeader;
-import com.ai.opt.sdk.util.CollectionUtil;
-import com.ai.paas.ipaas.util.StringUtil;
-import com.esotericsoftware.minlog.Log;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -71,8 +62,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 					 criteriaCpPriceInfo.andActiveTimeLessThanOrEqualTo(vo.getInvalidDate());
 				 }
 			 }
-			 
-			 
+
 			 if(!StringUtil.isBlank(vo.getProductId())){
 				 criteriaCpPriceInfo.andPriceCodeEqualTo(vo.getProductId());
 			 }
@@ -82,21 +72,13 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 if(!StringUtil.isBlank(vo.getActiveStatus())){
 				 criteriaCpPriceInfo.andActiveStatusEqualTo(vo.getActiveStatus());
 			 }
-			 if (vo.getPageNo() != null && vo.getPageSize() != null) {
-				 //cpPriceInfoCriteria.setLimitStart((vo.getPageNo() - 1) * vo.getPageSize());
-				 //cpPriceInfoCriteria.setLimitEnd(vo.getPageSize());
-		     }
-			 
+
 			 PageInfo<CpPriceInfo> pageInfo = new PageInfo<CpPriceInfo>();
-			 
-			 
 			 pageInfo.setResult(cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria));
 	         pageInfo.setCount(cpPriceInfoMapper.countByExample(cpPriceInfoCriteria));
 	         pageInfo.setPageNo(vo.getPageNo());
 	         pageInfo.setPageSize(vo.getPageSize());
 		        
-	        
-	         //
 	         List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
 	         log.info("cpPriceInfoList.size------->>>"+pageInfo.getResult().size());
 	         ProductInfo productInfo = null;
@@ -111,8 +93,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 productInfo.setTenantId(c.getTenantId());
 				 //
 				 List<ServiceVO> usageList = new ArrayList<ServiceVO>();
-				 ServiceVO serv = null;
-				 
+
 				 CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
 				 CpPriceDetailCriteria.Criteria criteriaCpPriceDetail = cpPriceDetailCriteria.createCriteria();
 				 
@@ -132,41 +113,21 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 String detailCode = cpPriceDetailNew.getDetailCode();
 				 if(!StringUtil.isBlank(detailCode)){
 					 if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)){
-						 //stepInfo
-						 this.stepMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
-					 
+						 this.stepMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
 					 } else if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
-						//packageInfo
-						this.packageMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
+						this.packageMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
 						
 					 }else if(null == vo.getBillingType()){
-						
-						this.stepMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
-						this.packageMethod(detailCode, serv, usageList, vo, productInfo, cpPriceDetailNew);
-					 
+						this.stepMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
+						this.packageMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
 					 }
-				}
-						 
-				 productInfo.setUsageList(usageList);
-				 productInfoList.add(productInfo);
-				 //如果billingType 是 阶梯类型  只查阶梯类型不为空的数据
-				 if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)){
-					 
-					 if(StringUtil.isBlank(productInfo.getBillingType()) || CHARGE_TYPE_PACKAGE.equalsIgnoreCase(productInfo.getBillingType())){
-						 productInfoList.remove(productInfo);
-					 }
-				 //如果billingType 是 基本类型 只查基本类型不为空的数据
-				 }else if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
-					 
-					 if(StringUtil.isBlank(productInfo.getBillingType()) || CHARGE_TYPE_STEP.equalsIgnoreCase(productInfo.getBillingType())){
-						 productInfoList.remove(productInfo);
-					 }
+
+					 productInfo.setUsageList(usageList);
+					 productInfoList.add(productInfo);
 				 }
-				
 			 }
+
 			 List<ProductInfo> productInfoListNew = new ArrayList<ProductInfo>();
-			 //
-			 int startRowIndex = 0;
 			 if(pageInfo.getStartRowIndex()>productInfoList.size()){
 				 productInfoListNew = new ArrayList<ProductInfo>();
 			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
@@ -174,27 +135,20 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 }else if(pageInfo.getEndRowIndex()<=productInfoList.size()){
 				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),pageInfo.getEndRowIndex());
 			 }
-			 //
 			 productInfoPageInfo.setResult(productInfoListNew);
 	         productInfoPageInfo.setCount(productInfoList.size());
 	         productInfoPageInfo.setPageNo(pageInfo.getPageNo());
 	         productInfoPageInfo.setPageSize(pageInfo.getPageSize());
-//			 ResponseHeader responseHeader = new ResponseHeader(true, ErrorCode.SUCCESS, "成功");
-//			 product.setResponseHeader(responseHeader);
-
 		} catch (Exception e) {
-			e.printStackTrace();
-			ResponseHeader responseHeader = new ResponseHeader(false, ErrorCode.FALSE, "失败");
-//			 product.setResponseHeader(responseHeader);
-			 //pro_list.add(product);
-			 //return pro_list;
+			log.error("可销售产品查询异常",e);
+			throw new BusinessException("可销售产品查询异常",e.getMessage());
 		}
 		 
 		return productInfoPageInfo;
 		
 	}
 	
-	private void stepMethod(String detailCode,ServiceVO serv,List<ServiceVO> usageList,ProductQueryVO vo,ProductInfo productInfo,CpPriceDetail cpPriceDetailNew){
+	private void stepMethod(String detailCode,List<ServiceVO> usageList,ProductQueryVO vo,ProductInfo productInfo,CpPriceDetail cpPriceDetailNew){
 		//阶梯组合
 		 CpStepInfoCriteria cpStepInfoCriteria = new CpStepInfoCriteria();
 		 CpStepInfoCriteria.Criteria criteriaCpStepInfo = cpStepInfoCriteria.createCriteria();
@@ -207,22 +161,18 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 
 		 
 		 List<CpStepInfo> cpStepInfo =cpStepInfoMapper.selectByExample(cpStepInfoCriteria);
-		 String detailCodeNew = null;
 		 if(!CollectionUtil.isEmpty(cpStepInfo)){
-			 detailCodeNew = cpStepInfo.get(0).getDetailCode();
-			 //
-			 //
+			 CpStepInfo stepInfo = cpStepInfo.get(0);
+
+			 productInfo.setPricingType(stepInfo.getIsTotalPrice());
+
 			 CpStepInfoCriteria cpStepInfoCriteriaNew = new CpStepInfoCriteria();
 			 CpStepInfoCriteria.Criteria criteriaCpStepInfoNew = cpStepInfoCriteriaNew.createCriteria();
-			 
-			 criteriaCpStepInfoNew.andDetailCodeEqualTo(detailCodeNew);
-
-			 
+			 criteriaCpStepInfoNew.andDetailCodeEqualTo(stepInfo.getDetailCode());
 			 List<CpStepInfo> cpStepInfoNew =cpStepInfoMapper.selectByExample(cpStepInfoCriteriaNew);
 			 
-			 
 			 for(CpStepInfo s : cpStepInfoNew){
-				 serv = new ServiceVO();
+				 ServiceVO serv = new ServiceVO();
 				 serv.setAmountStart(s.getSectionA());
 				 serv.setAmountEnd(s.getSectionB());
 				 serv.setPrice(new java.math.BigDecimal(s.getPriceValue()/1000));
@@ -239,7 +189,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 
 	}
 	
-	private void packageMethod(String detailCode,ServiceVO serv,List<ServiceVO> usageList,ProductQueryVO vo,ProductInfo productInfo,CpPriceDetail cpPriceDetailNew){
+	private void packageMethod(String detailCode,List<ServiceVO> usageList,ProductQueryVO vo,ProductInfo productInfo,CpPriceDetail cpPriceDetailNew){
 		//标准组合
 		 CpPackageInfoCriteria cpPackageInfoCriteria =new CpPackageInfoCriteria();
 		 CpPackageInfoCriteria.Criteria criteriaCpPackageInfo = cpPackageInfoCriteria.createCriteria();
@@ -252,21 +202,20 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 List<CpPackageInfo> packageInfo = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteria);
 		 System.out.println("packageInfoList.Size:"+packageInfo.size());
 		 //
-		 String detailCodeNew = null;
 		 if(!CollectionUtil.isEmpty(packageInfo)){
-			 detailCodeNew = packageInfo.get(0).getDetailCode();
-			 //
+			 CpPackageInfo info = packageInfo.get(0);
+
+			 productInfo.setPricingType(info.getIsTotalPrice());
+
 			 CpPackageInfoCriteria cpPackageInfoCriteriaNew =new CpPackageInfoCriteria();
 			 CpPackageInfoCriteria.Criteria criteriaCpPackageInfoNew = cpPackageInfoCriteriaNew.createCriteria();
 			 
-			 criteriaCpPackageInfoNew.andDetailCodeEqualTo(detailCodeNew);
-			 
+			 criteriaCpPackageInfoNew.andDetailCodeEqualTo(info.getDetailCode());
 			 
 			 List<CpPackageInfo> packageInfoNew = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteriaNew);
-			 
-			 
+
 			 for(CpPackageInfo p : packageInfoNew){
-				 serv = new ServiceVO();
+				 ServiceVO serv = new ServiceVO();
 				 serv.setAmountStart(0);
 				 serv.setAmountEnd(p.getAmount());
 				 if(null != p.getPriceValue()){
@@ -277,6 +226,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 serv.setServiceType(p.getServiceType());
 				 usageList.add(serv);
 			 }
+
 			 if(!CollectionUtil.isEmpty(packageInfoNew)){
 				 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
 				 productInfo.setTotalPrice(new BigDecimal(packageInfoNew.get(0).getTotalPriceValue()/1000));
@@ -290,14 +240,12 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		PageInfo<ProductInfo> productInfoPageInfo =new PageInfo<ProductInfo>();
         
 		try {
-			
 			CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
 			CpPriceInfoCriteria.Criteria criteriaCpPriceInfo= cpPriceInfoCriteria.createCriteria();
 			criteriaCpPriceInfo.andTenantIdEqualTo(vo.getTenantId());
 			criteriaCpPriceInfo.andPriceCodeIn(vo.getProductIdList());
 			 
 			 PageInfo<CpPriceInfo> pageInfo = new PageInfo<CpPriceInfo>();
-			 
 			 
 			 pageInfo.setResult(cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria));
 	         pageInfo.setCount(cpPriceInfoMapper.countByExample(cpPriceInfoCriteria));
@@ -306,9 +254,8 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 	         //
 	         List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
 	         
-	         ProductInfo productInfo = null;
 			 for(CpPriceInfo c : pageInfo.getResult()){
-				 productInfo = new ProductInfo();
+				 ProductInfo productInfo = new ProductInfo();
 				 //
 				 productInfo.setActiveDate(c.getActiveTime());
 				 productInfo.setInvalidDate(c.getInactiveTime());
@@ -318,12 +265,10 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 productInfo.setTenantId(c.getTenantId());
 				 //
 				 List<ServiceVO> usageList = new ArrayList<ServiceVO>();
-				 ServiceVO serv = null;
-				 
+
 				 CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
 				 CpPriceDetailCriteria.Criteria criteriaCpPriceDetail = cpPriceDetailCriteria.createCriteria();
 				 
-				 //
 				 criteriaCpPriceDetail.andPriceCodeEqualTo(c.getPriceCode());
 				 //
 				 List<CpPriceDetail> cpPriceDetail = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
@@ -335,36 +280,23 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 //
 				 String detailCode = cpPriceDetailNew.getDetailCode();
 				 if(!StringUtil.isBlank(detailCode)){
-				 	ProductQueryVO productQueryVO = new ProductQueryVO();
-				 	
-				 	//
-					this.stepMethod(detailCode, serv, usageList, productQueryVO, productInfo, cpPriceDetailNew);
-					this.packageMethod(detailCode, serv, usageList, productQueryVO, productInfo, cpPriceDetailNew);
-					 
-				}
-						 
-				 productInfo.setUsageList(usageList);
-				 productInfoList.add(productInfo);
-				
-				
+					ProductQueryVO productQueryVO = new ProductQueryVO();
+					this.stepMethod(detailCode, usageList, productQueryVO, productInfo, cpPriceDetailNew);
+					this.packageMethod(detailCode, usageList, productQueryVO, productInfo, cpPriceDetailNew);
+					productInfo.setUsageList(usageList);
+					productInfoList.add(productInfo);
+				 }
+
 			 }
 			 Log.info("productInfoList.size----->>>"+productInfoList.size());
-//			 List<ProductInfo> productInfoListNew = new ArrayList<ProductInfo>();
-//			 //
-//			 if(pageInfo.getStartRowIndex()>productInfoList.size()){
-//				 productInfoListNew = new ArrayList<ProductInfo>();
-//			 }else if(pageInfo.getEndRowIndex()>productInfoList.size()){
-//				 productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size());
-//			 }
-			 //
 			 productInfoPageInfo.setResult(productInfoList);
 	         productInfoPageInfo.setCount(productInfoList.size());
 	         productInfoPageInfo.setPageNo(1);
 	         productInfoPageInfo.setPageSize(productInfoList.size()==0?1:productInfoList.size());
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			ResponseHeader responseHeader = new ResponseHeader(false, ErrorCode.FALSE, "失败");
+			log.error("getProductInfoByProductIdList-可销售产品查询异常",e);
+			throw new BusinessException("可销售产品查询异常",e.getMessage());
 		}
 		 
 		return productInfoPageInfo;

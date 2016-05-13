@@ -455,6 +455,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		
 		cpStepInfo.setIsPriceEqual(vo.getIsPriceEqual());
 		stepobject.put("IS_PRICE_EQUAL", vo.getIsPriceEqual());
+
+		cpStepInfo.setIsTotalPrice(vo.getPricingType());
+		stepobject.put("IS_TOTAL_PRICE",vo.getPricingType());
 		
 		this.cpStepInfoAtom.addCpStepInfo(cpStepInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_step_info", stepobject.toString(), 1);
@@ -499,7 +502,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		
 		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
-		
+
+		cpPackageInfo.setIsTotalPrice(vo.getPricingType());
+		packageobject.put("IS_TOTAL_PRICE",vo.getPricingType());
+
 		this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
 		DshmUtil.getIdshmSV().initLoader("cp_package_info", packageobject.toString(), 1);
 	}
@@ -596,6 +602,9 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			cpStepInfo.setIsPriceEqual(vo.getIsPriceEqual());
 			stepobject.put("IS_PRICE_EQUAL", vo.getIsPriceEqual());
 		}
+
+		cpStepInfo.setIsTotalPrice(vo.getPricingType());
+		stepobject.put("IS_TOTAL_PRICE",vo.getPricingType());
 		
 		//this.cpStepInfoAtom.updateCpStepInfoByDetailCode(cpStepInfo);
 		if(StringUtil.isBlank(serviceVO.getServiceId())){
@@ -647,7 +656,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		
 		cpPackageInfo.setUnitCode(serviceVO.getUnit());
 		packageobject.put("UNIT_CODE", serviceVO.getUnit());
-		//
+
+		cpPackageInfo.setIsTotalPrice(vo.getPricingType());
+		packageobject.put("IS_TOTAL_PRICE",vo.getPricingType());
+
 		if(StringUtil.isBlank(serviceVO.getServiceId())){
 			this.cpPackageInfoAtom.addCpPackageInfo(cpPackageInfo);
 			DshmUtil.getIdshmSV().initLoader("cp_package_info", JSON.toJSONString(packageobject), 1);

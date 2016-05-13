@@ -85,6 +85,19 @@ public class ProductVO extends BaseInfo{
 	 * 产品总价
 	 */
 	private BigDecimal totalPrice;
+	/**
+	 * 批价类型
+	 */
+	private String pricingType;
+
+	public String getPricingType() {
+		return pricingType;
+	}
+
+	public void setPricingType(String pricingType) {
+		this.pricingType = pricingType;
+	}
+
 	public String getBillingType() {
 		return billingType;
 	}
