@@ -19,6 +19,7 @@ import com.ai.baas.bmc.service.atom.interfaces.IBlUserInfoAtomSV;
 import com.ai.baas.bmc.service.business.interfaces.ICustInfoQueryBusiSV;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.util.CollectionUtil;
 @Service
 @Transactional
 public class CustInfoQueryBusiImpl implements ICustInfoQueryBusiSV {
@@ -32,45 +33,48 @@ public class CustInfoQueryBusiImpl implements ICustInfoQueryBusiSV {
 		String tenantId=param.getTenantId();
 		List<BlCustinfo> custinfoList=iBlCustInfoAtomSV.getCustInfos(param);
 		CustInfoResponse response=new CustInfoResponse();
-		for(BlCustinfo ci:custinfoList){
+		List<CustInfo> pageList=new ArrayList<CustInfo>();
+		PageInfo<CustInfo> pageInfo =new PageInfo<CustInfo>();
+		if(!CollectionUtil.isEmpty(custinfoList)){
+			for(BlCustinfo ci:custinfoList){
+				
+				String custId =ci.getCustId();
+				String custName=ci.getCustName();
+				String custGrade=ci.getCustGrade();
+				
+				UserInfoRequest rq=new UserInfoRequest();
+				rq.setTenantId(tenantId);
+				rq.setCustId(custId);
+				rq.setServiceId(param.getServiceId());
+				rq.setPageSize(param.getPageSize());
+				rq.setPageNo(param.getPageNo());
+				int pageCount=iBlUserInfoAtomSV.getUserInfoCount(rq);
+				//查询userInfo
+				List<BlUserinfo> userInfoList=iBlUserInfoAtomSV.getUserInfo(rq);
+				
+				pageInfo.setCount(pageCount);
+				//pageInfo.setPageCount(pageCount);
+				
+				
+				for(BlUserinfo bu:userInfoList){
+					CustInfo  custInfo=new CustInfo();
+					custInfo.setServiceId(bu.getServiceId());
+					custInfo.setCustGrade(custGrade);
+					custInfo.setCustName(custName);
+					pageList.add(custInfo);
+				}
 			
-			String custId =ci.getCustId();
-			String custName=ci.getCustName();
-			String custGrade=ci.getCustGrade();
-			
-			UserInfoRequest rq=new UserInfoRequest();
-			rq.setTenantId(tenantId);
-			rq.setCustId(custId);
-			rq.setServiceId(param.getServiceId());
-			rq.setPageSize(param.getPageSize());
-			rq.setPageNo(param.getPageNo());
-			int pageCount=iBlUserInfoAtomSV.getUserInfoCount(rq);
-			//查询userInfo
-			List<BlUserinfo> userInfoList=iBlUserInfoAtomSV.getUserInfo(rq);
-			PageInfo<CustInfo> pageInfo =new PageInfo<CustInfo>();
-			pageInfo.setCount(pageCount);
-			//pageInfo.setPageCount(pageCount);
-			pageInfo.setPageNo(param.getPageNo());
-			pageInfo.setPageSize(param.getPageSize());
-			List<CustInfo> pageList=new ArrayList<CustInfo>();
-			
-			for(BlUserinfo bu:userInfoList){
-				CustInfo  custInfo=new CustInfo();
-				custInfo.setServiceId(bu.getServiceId());
-				custInfo.setCustGrade(custGrade);
-				custInfo.setCustName(custName);
-				pageList.add(custInfo);
-			}
-			
-			pageInfo.setResult(pageList);
-			
-			
-			response.setPageInfo(pageInfo);
-			ResponseHeader rh=new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
-			response.setResponseHeader(rh);
-			
+			}	
+		}else{
+			pageInfo.setCount(0);
 		}
 		
+		pageInfo.setPageNo(param.getPageNo());
+		pageInfo.setPageSize(param.getPageSize());
+		pageInfo.setResult(pageList);
+		response.setPageInfo(pageInfo);
+		ResponseHeader rh=new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
+		response.setResponseHeader(rh);
 		return response;
 	}
 
