@@ -34,7 +34,7 @@ public class CustInfoQueryTest {
 		request.setCustName(null);
 		request.setIdNumber("41148119921213337X");
 		request.setTenantId("VIV-BYD");
-		request.setPageNo(1);
+		request.setPageNo(2);
 		request.setPageSize(10);
 		System.out.println("------------------>"+JSON.toJSONString(iCustInfoQuerySV.getCustInfos(request)));
 		

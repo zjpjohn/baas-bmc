@@ -37,10 +37,10 @@ public class IBlCustInfoAtomImpl implements IBlCustInfoAtomSV {
 		if(!StringUtil.isBlank(param.getIdNumber())){
 			criteria.andIdNumberEqualTo(param.getIdNumber());
 		}
-		if(param.getPageNo()!=null&&param.getPageSize()!=null){
+		/*if(param.getPageNo()!=null&&param.getPageSize()!=null){
 			sql.setLimitStart((param.getPageNo()-1)*param.getPageSize());
 			sql.setLimitEnd(param.getPageSize());
-		}
+		}*/
 		
 		return blCustinfoMapper.selectByExample(sql);
 	}
