@@ -87,12 +87,25 @@ public class CustInfoParams extends BaseInfo {
      * 邮箱，非必填，最大长度32字节 
      */
     private String custAddress;
-    
     /**
+     * 客户编码标识，非必填
+     */
+    private String idNumber;
+    
+
+	/**
      * 扩展信息列表  当这个字段有值，需要调用扩展因素接口传递扩展因素
      */
     private List<ExtInfo> extInfoList;
 
+    public String getIdNumber() {
+		return idNumber;
+	}
+
+
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
 
     public String getTradeSeq() {
 		return tradeSeq;

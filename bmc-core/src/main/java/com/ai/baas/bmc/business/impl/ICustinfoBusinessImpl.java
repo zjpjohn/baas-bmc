@@ -137,6 +137,9 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 		blCustinfo.setCustAddress(custInfo.getCustAddress());
 		custobject.put("CUST_ADDRESS", custInfo.getCustAddress());
 		
+		blCustinfo.setIdNumber(custInfo.getIdNumber());
+		custobject.put("ID_NUMBER", custInfo.getIdNumber());
+		
 		String custId = null;
 		Map<String, String> params = new TreeMap<String, String>();
         params.put("EXT_CUST_ID", custInfo.getExtCustId());
@@ -211,6 +214,7 @@ public class ICustinfoBusinessImpl implements ICustinfoBusiness{
 				blCustInfoUpdate.setStateChgTime(DateUtil.getSysDate());//(DateUtil.getSysDate());
 				
 				blCustInfoUpdate.setTenantId(custInfo.getTenantId());
+				blCustInfoUpdate.setIdNumber(custInfo.getIdNumber());
 				//
 				BlCustinfoCriteria blCustinfoCriteriaUpdate = new BlCustinfoCriteria();
 				blCustinfoCriteriaUpdate.createCriteria()
