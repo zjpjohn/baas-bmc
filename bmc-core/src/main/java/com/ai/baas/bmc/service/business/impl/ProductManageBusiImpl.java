@@ -485,11 +485,15 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPackageInfo.setUnitType(serviceVO.getUnit());
 		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
 
-//		cpPackageInfo.setPriceValue(0.0);//(serviceVO.getPrice().doubleValue());
-//		packageobject.put("PRICE_VALUE", "0.0");
+		if(serviceVO!=null&&serviceVO.getPrice()!=null){
+			cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue());
+			packageobject.put("PRICE_VALUE", serviceVO.getPrice().doubleValue());
+		}
 
-		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
-		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
+		if(vo.getTotalPrice()!=null){
+			cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
+			packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
+		}
 
 		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
@@ -642,11 +646,18 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		cpPackageInfo.setUnitType(serviceVO.getUnit());
 		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
 
-//		cpPackageInfo.setPriceValue(0.0);//(serviceVO.getPrice().doubleValue());
-//		packageobject.put("PRICE_VALUE", 0.0);//serviceVO.getPrice());
+		if(serviceVO!=null&&serviceVO.getPrice()!=null){
+			cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue());
+			packageobject.put("PRICE_VALUE", serviceVO.getPrice().doubleValue());
+		}else{
+			cpPackageInfo.setPriceValue(null);
+			packageobject.put("PRICE_VALUE", null);
+		}
 
-		cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
-		packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
+		if(vo.getTotalPrice()!=null){
+			cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
+			packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
+		}
 
 		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
 		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
