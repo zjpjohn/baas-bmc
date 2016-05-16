@@ -228,8 +228,10 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 			 }
 
 			 if(!CollectionUtil.isEmpty(packageInfoNew)){
-				 productInfo.setBillingType(cpPriceDetailNew.getChargeType()); 
-				 productInfo.setTotalPrice(new BigDecimal(packageInfoNew.get(0).getTotalPriceValue()/1000));
+				 productInfo.setBillingType(cpPriceDetailNew.getChargeType());
+				 if(packageInfoNew.get(0).getTotalPriceValue()!=null){
+					 productInfo.setTotalPrice(new BigDecimal(packageInfoNew.get(0).getTotalPriceValue()/1000));
+				 }
 			 }
 		 }
 		 
