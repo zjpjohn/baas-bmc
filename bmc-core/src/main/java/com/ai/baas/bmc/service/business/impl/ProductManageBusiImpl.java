@@ -486,8 +486,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
 
 		if(serviceVO!=null&&serviceVO.getPrice()!=null){
-			cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue());
-			packageobject.put("PRICE_VALUE", serviceVO.getPrice().doubleValue());
+			cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue()*1000);
+			packageobject.put("PRICE_VALUE", serviceVO.getPrice().doubleValue()*1000);
 		}
 
 		if(vo.getTotalPrice()!=null){
@@ -647,8 +647,8 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		packageobject.put("UNIT_TYPE", serviceVO.getUnit());
 
 		if(serviceVO!=null&&serviceVO.getPrice()!=null){
-			cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue());
-			packageobject.put("PRICE_VALUE", serviceVO.getPrice().doubleValue());
+			cpPackageInfo.setPriceValue(serviceVO.getPrice().doubleValue()*1000);
+			packageobject.put("PRICE_VALUE", serviceVO.getPrice().doubleValue()*1000);
 		}else{
 			cpPackageInfo.setPriceValue(null);
 			packageobject.put("PRICE_VALUE", null);
