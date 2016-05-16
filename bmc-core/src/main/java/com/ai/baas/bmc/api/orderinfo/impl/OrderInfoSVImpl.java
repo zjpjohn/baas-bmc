@@ -233,7 +233,9 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
             resultParams.setResponseHeader(new ResponseHeader(false, "000001", "幂等性判断失败"));
             return resultParams;
         }
-        
+        //判断产品是否存在
+        if(business.checkProduct(record)){
+        }
         
         // 写入MySQL表中
         try {

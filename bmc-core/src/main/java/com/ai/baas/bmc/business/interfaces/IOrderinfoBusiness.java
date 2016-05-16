@@ -16,6 +16,8 @@ public interface IOrderinfoBusiness {
      * 消息流水幂等性判断，如果没有，则插入hbase，返回false
      */
     public boolean hasSeq(OrderInfoParams record) throws IOException;
+    
+    public boolean checkProduct(OrderInfoParams record);
 
     /**
      * 写入mysql表,同时刷新内存

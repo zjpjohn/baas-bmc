@@ -93,7 +93,23 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
                 CellTemp.inst(ConTradeSeqLog.MSG_CONTENT, MyJsonUtil.toJson(record)));
         return false;
     }
-
+    
+    public boolean checkProduct (OrderInfoParams orderInfoParams){
+   
+        if (orderInfoParams.getProductList() != null) {
+            for (Product p : orderInfoParams.getProductList()) {
+                if(p.getProductType().equals("dr")){
+                    //校验产品ID
+                    checkDr(p.getProductId(),orderInfoParams.getTenantId());
+                }
+                if(p.getProductType().equals("bill")){
+                    //校验 查amc_product_info表是否有这个产品ID
+                    checkBill(p.getProductId(),orderInfoParams.getTenantId());
+                }
+            }
+        }
+        return true;
+    }
     private void checkDr(String productId,String tenantId){
         //共享内存校验 查cp_price_info表
         Map<String, String> checkDr = new TreeMap<String, String>();
