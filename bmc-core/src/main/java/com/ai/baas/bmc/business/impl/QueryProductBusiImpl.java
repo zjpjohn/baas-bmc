@@ -216,7 +216,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 
 			 for(CpPackageInfo p : packageInfoNew){
 				 ServiceVO serv = new ServiceVO();
-				 serv.setAmountStart(null);
+				 serv.setAmountStart(new Double(0));
 				 serv.setAmountEnd(p.getAmount());
 				 if(null != p.getPriceValue()){
 					 serv.setPrice(new java.math.BigDecimal(p.getPriceValue()/1000));
