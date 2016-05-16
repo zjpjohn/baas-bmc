@@ -32,11 +32,11 @@ public class ServiceVO implements Serializable {
 	/**
 	 * 使用量开头
 	 */
-	private double amountStart;
+	private Double amountStart;
 	/**
 	 * 使用量结尾
 	 */
-	private double amountEnd;
+	private Double amountEnd;
 	/**
 	 * 单位 
 	 */
@@ -95,19 +95,19 @@ public class ServiceVO implements Serializable {
 		this.serviceTypeDetail = serviceTypeDetail;
 	}
 
-	public double getAmountStart() {
+	public Double getAmountStart() {
 		return amountStart;
 	}
 
-	public void setAmountStart(double amountStart) {
+	public void setAmountStart(Double amountStart) {
 		this.amountStart = amountStart;
 	}
 
-	public double getAmountEnd() {
+	public Double getAmountEnd() {
 		return amountEnd;
 	}
 
-	public void setAmountEnd(double amountEnd) {
+	public void setAmountEnd(Double amountEnd) {
 		this.amountEnd = amountEnd;
 	}
 
