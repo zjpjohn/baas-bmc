@@ -36,6 +36,7 @@ public class CustInfoQueryTest {
 		request.setTenantId("VIV-BYD");
 		request.setPageNo(1);
 		request.setPageSize(10);
+		request.setTradeSeq("123123213");
 		System.out.println("------------------>"+JSON.toJSONString(iCustInfoQuerySV.getCustInfos(request)));
 		
 	}
