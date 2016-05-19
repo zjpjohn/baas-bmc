@@ -63,4 +63,18 @@ public class IQueryProductSVImpl implements IQueryProductSV{
 		return this.iProductManageBusi.getProductRelated(vo);
 	}
 
+	@Override
+	public PageInfo<ProductInfo> getActiveProductInfo(ProductQueryVO vo) throws BusinessException, SystemException {
+		if (null == vo) {
+			log.debug("addProduct() vo = [null]");
+			return null;
+		} else {
+			log.debug("addProduct() vo = " + vo.toString() + "]");
+		}
+		if(null == vo.getTenantId() || StringUtil.isBlank(vo.getTenantId())){
+			throw new BusinessException("tenantId is not null", "租户id不能为空");
+		}
+		return iQueryProductBusiImpl.getActiveProduct(vo);
+	}
+
 }

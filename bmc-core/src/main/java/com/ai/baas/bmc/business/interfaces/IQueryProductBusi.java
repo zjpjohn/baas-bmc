@@ -11,4 +11,6 @@ import com.ai.opt.base.vo.PageInfo;
 public interface IQueryProductBusi {
 	public PageInfo<ProductInfo> Product(ProductQueryVO vo);
 	public PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo);
+
+	PageInfo<ProductInfo> getActiveProduct(ProductQueryVO vo);
 }

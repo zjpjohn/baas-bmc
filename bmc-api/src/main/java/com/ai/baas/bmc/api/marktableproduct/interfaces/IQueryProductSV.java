@@ -55,4 +55,17 @@ public interface IQueryProductSV {
 	 */
 	ProductRelatedResponse getProductRelated(ProductRelatedRequest vo) throws BusinessException,SystemException;
 	@interface GetProductRelated{}
+
+	/**
+	 * 分页查询当前有效套餐产品信息
+	 * @param vo
+	 * @return
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author wangyx13
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	PageInfo<ProductInfo> getActiveProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
+	@interface GetActiveProductInfo{}
 }

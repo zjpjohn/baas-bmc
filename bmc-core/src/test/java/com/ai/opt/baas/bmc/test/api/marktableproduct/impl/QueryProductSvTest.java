@@ -71,4 +71,17 @@ public class QueryProductSvTest {
 		ProductRelatedResponse response = this.queryProductSv.getProductRelated(request);
 		System.out.println("---->>>:"+JSON.toJSONString(response));
 	}
+
+	@Test
+	public void testActivePageSearch(){
+		ProductQueryVO vo = new ProductQueryVO();
+
+		vo.setPageNo(1);
+		vo.setPageSize(6);
+		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
+		vo.setBillingType("STANDARD_GROUP_TYPE");
+		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getActiveProductInfo(vo);
+		System.out.println("-----param:"+JSON.toJSONString(vo));
+		System.out.println("-----result:"+JSON.toJSONString(pageInfo));
+	}
 }
