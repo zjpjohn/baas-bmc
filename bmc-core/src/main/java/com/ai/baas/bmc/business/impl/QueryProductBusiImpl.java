@@ -123,8 +123,10 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 						this.packageMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
 					 }
 
-					 productInfo.setUsageList(usageList);
-					 productInfoList.add(productInfo);
+					 if(!CollectionUtil.isEmpty(usageList)){
+						 productInfo.setUsageList(usageList);
+						 productInfoList.add(productInfo);
+					 }
 				 }
 			 }
 
@@ -369,8 +371,10 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 						this.packageMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
 					}
 
-					productInfo.setUsageList(usageList);
-					productInfoList.add(productInfo);
+					if(!CollectionUtil.isEmpty(usageList)){
+						productInfo.setUsageList(usageList);
+						productInfoList.add(productInfo);
+					}
 				}
 			}
 

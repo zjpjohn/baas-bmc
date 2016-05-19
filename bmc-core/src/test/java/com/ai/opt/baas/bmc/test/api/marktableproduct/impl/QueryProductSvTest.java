@@ -80,6 +80,7 @@ public class QueryProductSvTest {
 		vo.setPageSize(6);
 		vo.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
 		vo.setBillingType("STANDARD_GROUP_TYPE");
+		vo.setServiceType("VOICE");
 		PageInfo<ProductInfo> pageInfo = this.queryProductSv.getActiveProductInfo(vo);
 		System.out.println("-----param:"+JSON.toJSONString(vo));
 		System.out.println("-----result:"+JSON.toJSONString(pageInfo));

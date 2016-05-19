@@ -311,9 +311,7 @@
       <if test="unitType != null" >
         UNIT_TYPE = #{unitType,jdbcType=VARCHAR},
       </if>
-      <if test="factorCode != null" >
         FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
-      </if>
       <if test="exceedType != null" >
         EXCEED_TYPE = #{exceedType,jdbcType=VARCHAR},
       </if>

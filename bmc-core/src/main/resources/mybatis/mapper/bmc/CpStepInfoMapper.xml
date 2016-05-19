@@ -306,9 +306,7 @@
       <if test="sectionB != null" >
         SECTION_B = #{sectionB,jdbcType=DOUBLE},
       </if>
-      <if test="factorCode != null" >
         FACTOR_CODE = #{factorCode,jdbcType=VARCHAR},
-      </if>
       <if test="priceValue != null" >
         PRICE_VALUE = #{priceValue,jdbcType=DOUBLE},
       </if>

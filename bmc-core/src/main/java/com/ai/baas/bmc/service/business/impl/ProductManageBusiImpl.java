@@ -213,7 +213,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVo.setAmountStart(cpStepInfoNew.getSectionA());
 				serviceVo.setAmountEnd(cpStepInfoNew.getSectionB());
 				serviceVo.setUnit(cpStepInfoNew.getUnitType());
-				serviceVo.setServiceTypeDetail(cpStepInfoNew.getFactorCode().toString());
+				serviceVo.setServiceTypeDetail(cpStepInfoNew.getFactorCode());
 				serviceVo.setServiceType(cpStepInfoNew.getServiceType());
 				serviceVo.setSubjectCode(cpStepInfoNew.getSubjectCode());
 				//
@@ -237,6 +237,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			for(CpPackageInfo cpPackageInfoNew : cpPackageInfoList){
 				serviceVo = new ServiceVO();
 				serviceVo.setServiceId(cpPackageInfoNew.getPackageId().toString());
+				serviceVo.setAmountStart(new Double(0));
 				serviceVo.setAmountEnd(cpPackageInfoNew.getAmount());
 				serviceVo.setUnit(cpPackageInfoNew.getUnitType());
 				if(null != cpPackageInfoNew.getPriceValue()){
@@ -498,9 +499,6 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 			cpPackageInfo.setTotalPriceValue(vo.getTotalPrice().doubleValue()*1000);
 			packageobject.put("TOTAL_PRICE_VALUE", vo.getTotalPrice().doubleValue()*1000);
 		}
-
-		cpPackageInfo.setFactorCode(serviceVO.getServiceTypeDetail());
-		packageobject.put("FACTOR_CODE", serviceVO.getServiceTypeDetail());
 
 		cpPackageInfo.setServiceType(serviceVO.getServiceType());
 		packageobject.put("SERVICE_TYPE", serviceVO.getServiceType());
