@@ -24,7 +24,7 @@ import com.alibaba.fastjson.JSON;
 public class QueryProductSvTest {
 	@Autowired
 	private IQueryProductSV queryProductSv;
-	//@Test
+	@Test
 	public void testPageSearch(){
 		ProductQueryVO vo = new ProductQueryVO();
 		
