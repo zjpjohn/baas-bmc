@@ -192,6 +192,11 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                         resultParams.setResponseHeader(new ResponseHeader(false,"000001","订购账单产品ProductNumber必须为1,订购失败"));
                         return resultParams;
                     }
+                    if(!pt.getProductType().equals("bill")&&!pt.getProductType().equals("dr")){
+                        resultParams.setResponseHeader(new ResponseHeader(false,"000001","订购账单产品productType必须为dr或bill,订购失败"));
+                        return resultParams;
+                    }
+                    
                 }
             }
         }
