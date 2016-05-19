@@ -223,6 +223,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				if(null != cpStepInfoList.get(0).getTotalPriceValue()){
 					productVo.setTotalPrice(new BigDecimal(cpStepInfoList.get(0).getTotalPriceValue()/1000));
 				}
+				productVo.setPricingType(cpStepInfoList.get(0).getIsTotalPrice());
 				productVo.setIsPriceEqual(null == cpStepInfoList.get(0).getIsPriceEqual()?"0":cpStepInfoList.get(0).getIsPriceEqual());
 			}
 			
@@ -249,7 +250,10 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 				serviceVOList.add(serviceVo);
 			}
 			if(!CollectionUtil.isEmpty(cpPackageInfoList)){
-				productVo.setTotalPrice(new BigDecimal(cpPackageInfoList.get(0).getTotalPriceValue()/1000));
+				if(cpPackageInfoList.get(0).getTotalPriceValue()!=null){
+					productVo.setTotalPrice(new BigDecimal(cpPackageInfoList.get(0).getTotalPriceValue()/1000));
+				}
+				productVo.setPricingType(cpPackageInfoList.get(0).getIsTotalPrice());
 			}
 		}
 		productVo.setMajorProductAmount(serviceVOList);

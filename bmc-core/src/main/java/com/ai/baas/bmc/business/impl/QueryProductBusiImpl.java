@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -303,6 +304,94 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 
 		return productInfoPageInfo;
 		
+	}
+
+	@Override
+	public PageInfo<ProductInfo> getActiveProduct(ProductQueryVO vo) {
+		PageInfo<ProductInfo> productInfoPageInfo =new PageInfo<ProductInfo>();
+		try {
+			CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
+			CpPriceInfoCriteria.Criteria criteriaCpPriceInfo= cpPriceInfoCriteria.createCriteria();
+			criteriaCpPriceInfo.andTenantIdEqualTo(vo.getTenantId());
+			cpPriceInfoCriteria.setOrderByClause("PRICE_CODE DESC");
+
+			criteriaCpPriceInfo.andActiveStatusEqualTo("ACTIVE");
+			criteriaCpPriceInfo.andActiveTimeLessThanOrEqualTo(new Timestamp(System.currentTimeMillis()));
+			criteriaCpPriceInfo.andInactiveTimeGreaterThanOrEqualTo(new Timestamp(System.currentTimeMillis()));
+			if(!StringUtil.isBlank(vo.getProductId())){
+				criteriaCpPriceInfo.andPriceCodeEqualTo(vo.getProductId());
+			}
+			if(!StringUtil.isBlank(vo.getProductName())){
+				criteriaCpPriceInfo.andPriceNameLike("%"+vo.getProductName()+"%");
+			}
+			if(!StringUtil.isBlank(vo.getBillingType())){
+				criteriaCpPriceInfo.andChargeTypeEqualTo(vo.getBillingType());
+			}
+
+			PageInfo<CpPriceInfo> pageInfo = new PageInfo<CpPriceInfo>();
+			pageInfo.setResult(cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria));
+			pageInfo.setCount(cpPriceInfoMapper.countByExample(cpPriceInfoCriteria));
+			pageInfo.setPageNo(vo.getPageNo());
+			pageInfo.setPageSize(vo.getPageSize());
+
+			List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
+			log.info("cpPriceInfoList.size------->>>"+pageInfo.getResult().size());
+			for(CpPriceInfo c : pageInfo.getResult()){
+				ProductInfo productInfo = new ProductInfo();
+				//
+				productInfo.setActiveDate(c.getActiveTime());
+				productInfo.setInvalidDate(c.getInactiveTime());
+				productInfo.setProductId(c.getPriceCode());
+				productInfo.setProductName(c.getPriceName());
+				productInfo.setStatus(c.getActiveStatus());
+				productInfo.setTenantId(c.getTenantId());
+				//
+				List<ServiceVO> usageList = new ArrayList<ServiceVO>();
+
+				CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
+				CpPriceDetailCriteria.Criteria criteriaCpPriceDetail = cpPriceDetailCriteria.createCriteria();
+				criteriaCpPriceDetail.andPriceCodeEqualTo(c.getPriceCode());
+				List<CpPriceDetail> cpPriceDetail = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
+				CpPriceDetail cpPriceDetailNew = new CpPriceDetail();
+				if(!CollectionUtil.isEmpty(cpPriceDetail)){
+					System.out.println("打印信息 cpPriceDetail.size()："+cpPriceDetail.size());
+					cpPriceDetailNew = cpPriceDetail.get(0);
+				}
+				//
+				String detailCode = cpPriceDetailNew.getDetailCode();
+				if(!StringUtil.isBlank(detailCode)){
+					if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_STEP)){
+						this.stepMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
+					} else if(null != vo.getBillingType() && vo.getBillingType().equalsIgnoreCase(CHARGE_TYPE_PACKAGE)){
+						this.packageMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
+					}else if(null == vo.getBillingType()){
+						this.stepMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
+						this.packageMethod(detailCode, usageList, vo, productInfo, cpPriceDetailNew);
+					}
+
+					productInfo.setUsageList(usageList);
+					productInfoList.add(productInfo);
+				}
+			}
+
+			List<ProductInfo> productInfoListNew = new ArrayList<ProductInfo>();
+			if(pageInfo.getStartRowIndex()>productInfoList.size()){
+				productInfoListNew = new ArrayList<ProductInfo>();
+			}else if(pageInfo.getEndRowIndex()>productInfoList.size()){
+				productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),productInfoList.size());
+			}else if(pageInfo.getEndRowIndex()<=productInfoList.size()){
+				productInfoListNew = productInfoList.subList(pageInfo.getStartRowIndex(),pageInfo.getEndRowIndex());
+			}
+			productInfoPageInfo.setResult(productInfoListNew);
+			productInfoPageInfo.setCount(productInfoList.size());
+			productInfoPageInfo.setPageNo(pageInfo.getPageNo());
+			productInfoPageInfo.setPageSize(pageInfo.getPageSize());
+		} catch (Exception e) {
+			log.error("调用方法getActiveProduct查询可销售产品异常",e);
+			throw new BusinessException("调用方法getActiveProduct查询可销售产品异常",e.getMessage());
+		}
+
+		return productInfoPageInfo;
 	}
 
 }

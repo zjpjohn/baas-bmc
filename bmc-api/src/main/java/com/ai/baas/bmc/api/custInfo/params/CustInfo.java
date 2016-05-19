@@ -25,6 +25,17 @@ public class CustInfo implements  Serializable{
 	 * 资源号码
 	 */
 	private String serviceId;
+	
+	
+	/**
+	 * 交易流水号
+	 */
+	private String tradeSeq;
+	
+	/**
+	 * 租户Id
+	 */
+	private String tenantId;
 	public String getCustName() {
 		return custName;
 	}
@@ -42,6 +53,18 @@ public class CustInfo implements  Serializable{
 	}
 	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
+	}
+	public String getTradeSeq() {
+		return tradeSeq;
+	}
+	public void setTradeSeq(String tradeSeq) {
+		this.tradeSeq = tradeSeq;
+	}
+	public String getTenantId() {
+		return tenantId;
+	}
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
 	}
 	
 }

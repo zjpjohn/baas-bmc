@@ -31,6 +31,7 @@ public class CustInfoQueryBusiImpl implements ICustInfoQueryBusiSV {
 	@Override
 	public CustInfoResponse getCustInfos(QueryCustInfoRequest param) {
 		String tenantId=param.getTenantId();
+		String tradeSeq=param.getTradeSeq();
 		List<BlCustinfo> custinfoList=iBlCustInfoAtomSV.getCustInfos(param);
 		CustInfoResponse response=new CustInfoResponse();
 		List<CustInfo> pageList=new ArrayList<CustInfo>();
@@ -61,6 +62,8 @@ public class CustInfoQueryBusiImpl implements ICustInfoQueryBusiSV {
 					custInfo.setServiceId(bu.getServiceId());
 					custInfo.setCustGrade(custGrade);
 					custInfo.setCustName(custName);
+					custInfo.setTenantId(tenantId);
+					custInfo.setTradeSeq(tradeSeq);
 					pageList.add(custInfo);
 				}
 			
