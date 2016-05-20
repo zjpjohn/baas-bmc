@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.BmcOutputInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo" >
+    <id column="info_code" property="infoCode" jdbcType="BIGINT" />
+    <result column="tenant_id" property="tenantId" jdbcType="VARCHAR" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="table_prefix" property="tablePrefix" jdbcType="VARCHAR" />
+    <result column="table_postfix" property="tablePostfix" jdbcType="VARCHAR" />
+    <result column="output_type" property="outputType" jdbcType="CHAR" />
+    <result column="output_name" property="outputName" jdbcType="VARCHAR" />
+    <result column="key_seq" property="keySeq" jdbcType="CHAR" />
+    <result column="seq_name" property="seqName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    info_code, tenant_id, service_id, source, table_prefix, table_postfix, output_type, 
+    output_name, key_seq, seq_name, status, create_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bmc_output_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bmc_output_info
+    where info_code = #{infoCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Long" >
+    delete from bmc_output_info
+    where info_code = #{infoCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfoCriteria" >
+    delete from bmc_output_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo" >
+    insert into bmc_output_info (info_code, tenant_id, service_id, 
+      source, table_prefix, table_postfix, 
+      output_type, output_name, key_seq, 
+      seq_name, status, create_date
+      )
+    values (#{infoCode,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{tablePrefix,jdbcType=VARCHAR}, #{tablePostfix,jdbcType=VARCHAR}, 
+      #{outputType,jdbcType=CHAR}, #{outputName,jdbcType=VARCHAR}, #{keySeq,jdbcType=CHAR}, 
+      #{seqName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo" >
+    insert into bmc_output_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="infoCode != null" >
+        info_code,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+      <if test="serviceId != null" >
+        service_id,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="tablePrefix != null" >
+        table_prefix,
+      </if>
+      <if test="tablePostfix != null" >
+        table_postfix,
+      </if>
+      <if test="outputType != null" >
+        output_type,
+      </if>
+      <if test="outputName != null" >
+        output_name,
+      </if>
+      <if test="keySeq != null" >
+        key_seq,
+      </if>
+      <if test="seqName != null" >
+        seq_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="infoCode != null" >
+        #{infoCode,jdbcType=BIGINT},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="tablePrefix != null" >
+        #{tablePrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="tablePostfix != null" >
+        #{tablePostfix,jdbcType=VARCHAR},
+      </if>
+      <if test="outputType != null" >
+        #{outputType,jdbcType=CHAR},
+      </if>
+      <if test="outputName != null" >
+        #{outputName,jdbcType=VARCHAR},
+      </if>
+      <if test="keySeq != null" >
+        #{keySeq,jdbcType=CHAR},
+      </if>
+      <if test="seqName != null" >
+        #{seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from bmc_output_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bmc_output_info
+    <set >
+      <if test="record.infoCode != null" >
+        info_code = #{record.infoCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.tenantId != null" >
+        tenant_id = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceId != null" >
+        service_id = #{record.serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tablePrefix != null" >
+        table_prefix = #{record.tablePrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tablePostfix != null" >
+        table_postfix = #{record.tablePostfix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outputType != null" >
+        output_type = #{record.outputType,jdbcType=CHAR},
+      </if>
+      <if test="record.outputName != null" >
+        output_name = #{record.outputName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keySeq != null" >
+        key_seq = #{record.keySeq,jdbcType=CHAR},
+      </if>
+      <if test="record.seqName != null" >
+        seq_name = #{record.seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bmc_output_info
+    set info_code = #{record.infoCode,jdbcType=BIGINT},
+      tenant_id = #{record.tenantId,jdbcType=VARCHAR},
+      service_id = #{record.serviceId,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      table_prefix = #{record.tablePrefix,jdbcType=VARCHAR},
+      table_postfix = #{record.tablePostfix,jdbcType=VARCHAR},
+      output_type = #{record.outputType,jdbcType=CHAR},
+      output_name = #{record.outputName,jdbcType=VARCHAR},
+      key_seq = #{record.keySeq,jdbcType=CHAR},
+      seq_name = #{record.seqName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo" >
+    update bmc_output_info
+    <set >
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="tablePrefix != null" >
+        table_prefix = #{tablePrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="tablePostfix != null" >
+        table_postfix = #{tablePostfix,jdbcType=VARCHAR},
+      </if>
+      <if test="outputType != null" >
+        output_type = #{outputType,jdbcType=CHAR},
+      </if>
+      <if test="outputName != null" >
+        output_name = #{outputName,jdbcType=VARCHAR},
+      </if>
+      <if test="keySeq != null" >
+        key_seq = #{keySeq,jdbcType=CHAR},
+      </if>
+      <if test="seqName != null" >
+        seq_name = #{seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where info_code = #{infoCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo" >
+    update bmc_output_info
+    set tenant_id = #{tenantId,jdbcType=VARCHAR},
+      service_id = #{serviceId,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      table_prefix = #{tablePrefix,jdbcType=VARCHAR},
+      table_postfix = #{tablePostfix,jdbcType=VARCHAR},
+      output_type = #{outputType,jdbcType=CHAR},
+      output_name = #{outputName,jdbcType=VARCHAR},
+      key_seq = #{keySeq,jdbcType=CHAR},
+      seq_name = #{seqName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where info_code = #{infoCode,jdbcType=BIGINT}
+  </update>
+</mapper>
