@@ -23,7 +23,7 @@ public class BmcOutputInfoAtomImpl implements IBmcOutputInfoAtomSV {
 		BmcOutputInfoCriteria.Criteria criteria=example.createCriteria();
 		
 		criteria.andTenantIdEqualTo(tenantId);
-		criteria.andTablePostfixEqualTo(tablePrefix);
+		criteria.andTablePrefixEqualTo(tablePrefix);
 		
 		return mapper.selectByExample(example);
 	}

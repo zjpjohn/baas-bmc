@@ -22,6 +22,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ai.baas.bmc.api.detailbill.interfaces.IDetailBillQuerySV;
+import com.ai.baas.bmc.api.detailbill.params.QueryBillRequest;
 import com.ai.opt.baas.failbill.HBaseProxy;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,7 +39,8 @@ public class DetailBillTest {
 	    public Object getBean(String beanName) {
 	        return ctx.getBean(beanName);
 	    }
-	    
+	    @Autowired
+	    public IDetailBillQuerySV  IDetailBillQuerySV;
 	    public final static String FIELD_SPLIT = new String(new char[] {(char) 1 });
 		public final static String RECORD_SPLIT = new String(new char[] {(char) 2 });
 	  //详单数据添加
@@ -145,4 +148,15 @@ public class DetailBillTest {
 			}
 			
 		}
+
+@Test
+public void testGet(){
+	QueryBillRequest request=new QueryBillRequest();
+	request.setCustId("38");
+	request.setSearchTime("201605");
+	request.setServiceId("999999BHC282");
+	request.setSubsId("101");
+	request.setTenantId("VIV-BYD");
+	IDetailBillQuerySV.getDetailBill(request);
+}
 }
