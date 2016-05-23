@@ -26,6 +26,15 @@ public class CustInfo implements  Serializable{
 	 */
 	private String serviceId;
 	
+	/**
+	 * 客户标识
+	 */
+	private String custId;
+	/**
+	 * 订购标识
+	 */
+	private String subsId;
+	
 	
 	/**
 	 * 交易流水号
@@ -65,6 +74,18 @@ public class CustInfo implements  Serializable{
 	}
 	public void setTenantId(String tenantId) {
 		this.tenantId = tenantId;
+	}
+	public String getCustId() {
+		return custId;
+	}
+	public void setCustId(String custId) {
+		this.custId = custId;
+	}
+	public String getSubsId() {
+		return subsId;
+	}
+	public void setSubsId(String subsId) {
+		this.subsId = subsId;
 	}
 	
 }

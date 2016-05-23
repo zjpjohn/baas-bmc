@@ -64,6 +64,8 @@ public class CustInfoQueryBusiImpl implements ICustInfoQueryBusiSV {
 					custInfo.setCustName(custName);
 					custInfo.setTenantId(tenantId);
 					custInfo.setTradeSeq(tradeSeq);
+					custInfo.setCustId(bu.getCustId());
+					custInfo.setSubsId(bu.getSubsId());
 					pageList.add(custInfo);
 				}
 			
