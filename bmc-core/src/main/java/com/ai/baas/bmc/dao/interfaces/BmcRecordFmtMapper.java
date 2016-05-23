@@ -2,9 +2,8 @@ package com.ai.baas.bmc.dao.interfaces;
 
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmt;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmtCriteria;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface BmcRecordFmtMapper {
     int countByExample(BmcRecordFmtCriteria example);

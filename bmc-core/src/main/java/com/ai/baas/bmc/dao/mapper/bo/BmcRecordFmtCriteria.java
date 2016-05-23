@@ -793,6 +793,146 @@ public class BmcRecordFmtCriteria {
             addCriterion("comments not between", value1, value2, "comments");
             return (Criteria) this;
         }
+
+        public Criteria andNullableIsNull() {
+            addCriterion("nullable is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableIsNotNull() {
+            addCriterion("nullable is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableEqualTo(String value) {
+            addCriterion("nullable =", value, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableNotEqualTo(String value) {
+            addCriterion("nullable <>", value, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableGreaterThan(String value) {
+            addCriterion("nullable >", value, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableGreaterThanOrEqualTo(String value) {
+            addCriterion("nullable >=", value, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableLessThan(String value) {
+            addCriterion("nullable <", value, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableLessThanOrEqualTo(String value) {
+            addCriterion("nullable <=", value, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableLike(String value) {
+            addCriterion("nullable like", value, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableNotLike(String value) {
+            addCriterion("nullable not like", value, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableIn(List<String> values) {
+            addCriterion("nullable in", values, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableNotIn(List<String> values) {
+            addCriterion("nullable not in", values, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableBetween(String value1, String value2) {
+            addCriterion("nullable between", value1, value2, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andNullableNotBetween(String value1, String value2) {
+            addCriterion("nullable not between", value1, value2, "nullable");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnIsNull() {
+            addCriterion("is_sn is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnIsNotNull() {
+            addCriterion("is_sn is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnEqualTo(String value) {
+            addCriterion("is_sn =", value, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnNotEqualTo(String value) {
+            addCriterion("is_sn <>", value, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnGreaterThan(String value) {
+            addCriterion("is_sn >", value, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnGreaterThanOrEqualTo(String value) {
+            addCriterion("is_sn >=", value, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnLessThan(String value) {
+            addCriterion("is_sn <", value, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnLessThanOrEqualTo(String value) {
+            addCriterion("is_sn <=", value, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnLike(String value) {
+            addCriterion("is_sn like", value, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnNotLike(String value) {
+            addCriterion("is_sn not like", value, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnIn(List<String> values) {
+            addCriterion("is_sn in", values, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnNotIn(List<String> values) {
+            addCriterion("is_sn not in", values, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnBetween(String value1, String value2) {
+            addCriterion("is_sn between", value1, value2, "isSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSnNotBetween(String value1, String value2) {
+            addCriterion("is_sn not between", value1, value2, "isSn");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

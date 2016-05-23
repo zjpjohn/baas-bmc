@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.RtmSrcRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.RtmSrcRecord" >
+    <result column="INFO_ID" property="infoId" jdbcType="VARCHAR" />
+    <result column="FIELD_ID" property="fieldId" jdbcType="CHAR" />
+    <result column="FIELD_NAME" property="fieldName" jdbcType="VARCHAR" />
+    <result column="START_LOCAL" property="startLocal" jdbcType="CHAR" />
+    <result column="FIELD_LENGTH" property="fieldLength" jdbcType="CHAR" />
+    <result column="FIELD_TYPE" property="fieldType" jdbcType="CHAR" />
+    <result column="IS_SN" property="isSn" jdbcType="CHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    INFO_ID, FIELD_ID, FIELD_NAME, START_LOCAL, FIELD_LENGTH, FIELD_TYPE, IS_SN, REMARK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.RtmSrcRecordCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from rtm_src_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.RtmSrcRecordCriteria" >
+    delete from rtm_src_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.RtmSrcRecord" >
+    insert into rtm_src_record (INFO_ID, FIELD_ID, FIELD_NAME, 
+      START_LOCAL, FIELD_LENGTH, FIELD_TYPE, 
+      IS_SN, REMARK)
+    values (#{infoId,jdbcType=VARCHAR}, #{fieldId,jdbcType=CHAR}, #{fieldName,jdbcType=VARCHAR}, 
+      #{startLocal,jdbcType=CHAR}, #{fieldLength,jdbcType=CHAR}, #{fieldType,jdbcType=CHAR}, 
+      #{isSn,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.RtmSrcRecord" >
+    insert into rtm_src_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="infoId != null" >
+        INFO_ID,
+      </if>
+      <if test="fieldId != null" >
+        FIELD_ID,
+      </if>
+      <if test="fieldName != null" >
+        FIELD_NAME,
+      </if>
+      <if test="startLocal != null" >
+        START_LOCAL,
+      </if>
+      <if test="fieldLength != null" >
+        FIELD_LENGTH,
+      </if>
+      <if test="fieldType != null" >
+        FIELD_TYPE,
+      </if>
+      <if test="isSn != null" >
+        IS_SN,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="infoId != null" >
+        #{infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldId != null" >
+        #{fieldId,jdbcType=CHAR},
+      </if>
+      <if test="fieldName != null" >
+        #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="startLocal != null" >
+        #{startLocal,jdbcType=CHAR},
+      </if>
+      <if test="fieldLength != null" >
+        #{fieldLength,jdbcType=CHAR},
+      </if>
+      <if test="fieldType != null" >
+        #{fieldType,jdbcType=CHAR},
+      </if>
+      <if test="isSn != null" >
+        #{isSn,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.RtmSrcRecordCriteria" resultType="java.lang.Integer" >
+    select count(*) from rtm_src_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rtm_src_record
+    <set >
+      <if test="record.infoId != null" >
+        INFO_ID = #{record.infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fieldId != null" >
+        FIELD_ID = #{record.fieldId,jdbcType=CHAR},
+      </if>
+      <if test="record.fieldName != null" >
+        FIELD_NAME = #{record.fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startLocal != null" >
+        START_LOCAL = #{record.startLocal,jdbcType=CHAR},
+      </if>
+      <if test="record.fieldLength != null" >
+        FIELD_LENGTH = #{record.fieldLength,jdbcType=CHAR},
+      </if>
+      <if test="record.fieldType != null" >
+        FIELD_TYPE = #{record.fieldType,jdbcType=CHAR},
+      </if>
+      <if test="record.isSn != null" >
+        IS_SN = #{record.isSn,jdbcType=CHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rtm_src_record
+    set INFO_ID = #{record.infoId,jdbcType=VARCHAR},
+      FIELD_ID = #{record.fieldId,jdbcType=CHAR},
+      FIELD_NAME = #{record.fieldName,jdbcType=VARCHAR},
+      START_LOCAL = #{record.startLocal,jdbcType=CHAR},
+      FIELD_LENGTH = #{record.fieldLength,jdbcType=CHAR},
+      FIELD_TYPE = #{record.fieldType,jdbcType=CHAR},
+      IS_SN = #{record.isSn,jdbcType=CHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

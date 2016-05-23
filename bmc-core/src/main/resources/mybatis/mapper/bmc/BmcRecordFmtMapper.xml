@@ -12,6 +12,8 @@
     <result column="field_code" property="fieldCode" jdbcType="VARCHAR" />
     <result column="data_type" property="dataType" jdbcType="VARCHAR" />
     <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="nullable" property="nullable" jdbcType="VARCHAR" />
+    <result column="is_sn" property="isSn" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, tenant_id, service_id, source, format_type, field_serial, field_name, field_code, 
-    data_type, comments
+    data_type, comments, nullable, is_sn
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmtCriteria" >
     select
@@ -113,11 +115,13 @@
     insert into bmc_record_fmt (id, tenant_id, service_id, 
       source, format_type, field_serial, 
       field_name, field_code, data_type, 
-      comments)
+      comments, nullable, is_sn
+      )
     values (#{id,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, 
       #{source,jdbcType=VARCHAR}, #{formatType,jdbcType=SMALLINT}, #{fieldSerial,jdbcType=INTEGER}, 
       #{fieldName,jdbcType=VARCHAR}, #{fieldCode,jdbcType=VARCHAR}, #{dataType,jdbcType=VARCHAR}, 
-      #{comments,jdbcType=VARCHAR})
+      #{comments,jdbcType=VARCHAR}, #{nullable,jdbcType=VARCHAR}, #{isSn,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmt" >
     insert into bmc_record_fmt
@@ -152,6 +156,12 @@
       <if test="comments != null" >
         comments,
       </if>
+      <if test="nullable != null" >
+        nullable,
+      </if>
+      <if test="isSn != null" >
+        is_sn,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -183,6 +193,12 @@
       </if>
       <if test="comments != null" >
         #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="nullable != null" >
+        #{nullable,jdbcType=VARCHAR},
+      </if>
+      <if test="isSn != null" >
+        #{isSn,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -225,6 +241,12 @@
       <if test="record.comments != null" >
         comments = #{record.comments,jdbcType=VARCHAR},
       </if>
+      <if test="record.nullable != null" >
+        nullable = #{record.nullable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSn != null" >
+        is_sn = #{record.isSn,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -241,7 +263,9 @@
       field_name = #{record.fieldName,jdbcType=VARCHAR},
       field_code = #{record.fieldCode,jdbcType=VARCHAR},
       data_type = #{record.dataType,jdbcType=VARCHAR},
-      comments = #{record.comments,jdbcType=VARCHAR}
+      comments = #{record.comments,jdbcType=VARCHAR},
+      nullable = #{record.nullable,jdbcType=VARCHAR},
+      is_sn = #{record.isSn,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -276,6 +300,12 @@
       <if test="comments != null" >
         comments = #{comments,jdbcType=VARCHAR},
       </if>
+      <if test="nullable != null" >
+        nullable = #{nullable,jdbcType=VARCHAR},
+      </if>
+      <if test="isSn != null" >
+        is_sn = #{isSn,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -289,7 +319,9 @@
       field_name = #{fieldName,jdbcType=VARCHAR},
       field_code = #{fieldCode,jdbcType=VARCHAR},
       data_type = #{dataType,jdbcType=VARCHAR},
-      comments = #{comments,jdbcType=VARCHAR}
+      comments = #{comments,jdbcType=VARCHAR},
+      nullable = #{nullable,jdbcType=VARCHAR},
+      is_sn = #{isSn,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

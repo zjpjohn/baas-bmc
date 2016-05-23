@@ -1,12 +1,20 @@
-package com.ai.baas.bmc.dao.mapper.bo;
+package com.ai.baas.bmc.api.businessdatamaintain.params;
 
-public class BmcRecordFmt {
+import com.ai.baas.bmc.api.businessdatamaintain.interfaces.IBillingBusinessDataMaintainSV;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
+public class BmcRecord implements Serializable{
     private Integer id;
 
+    @NotNull(message="tenantId不能为空",groups={IBillingBusinessDataMaintainSV.BusinessDataImport.class})
     private String tenantId;
 
+    @NotNull(message="serviceId不能为空",groups={IBillingBusinessDataMaintainSV.BusinessDataImport.class})
     private String serviceId;
 
+    @NotNull(message="source不能为空",groups={IBillingBusinessDataMaintainSV.BusinessDataImport.class})
     private String source;
 
     private Short formatType;
