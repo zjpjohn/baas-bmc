@@ -3,6 +3,7 @@ package com.ai.baas.bmc.api.priceinfo.impl;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -64,6 +65,10 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
             result.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，更新失败"));
             return result;
         }
+        if(StringUtils.isBlank(record.getServiceType())){
+        	result.setResponseHeader(new ResponseHeader(false, "000001", "业务类型为空，更新失败"));
+        	return result;
+        }
         List<StanderdPriceInfoUsage> standerdPriceInfoUsageList = record.getUsageList();
         if(standerdPriceInfoUsageList.size()== 0 ){
             result.setResponseHeader(new ResponseHeader(false, "000001", "usageList为空，更新失败"));
@@ -71,8 +76,8 @@ public class PriceInfoSVImpl implements IPriceInfoSV {
         }
         if(standerdPriceInfoUsageList.size()!=0){
             for(StanderdPriceInfoUsage su : standerdPriceInfoUsageList){
-                if(StringUtil.isBlank(su.getSubServiceType())||StringUtil.isBlank(su.getSubServiceType())||(Double)su.getAmount()==null){
-                    result.setResponseHeader(new ResponseHeader(false, "000001", "标准资费使用量列表中的参数不能为空，更新失败"));
+                if((Double)su.getAmount()<0){
+                    result.setResponseHeader(new ResponseHeader(false, "000001", "标准资费使用量列表中的参数不能小于0，更新失败"));
                     return result;
                 }
             }
