@@ -61,9 +61,9 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 				Table table;
 				try {
 					StringBuilder sb = new StringBuilder();
-					sb.append("38").append(FIELD_SPLIT);
-					sb.append("101").append(FIELD_SPLIT);
-					sb.append("999999BHC282").append(FIELD_SPLIT);
+					sb.append(request.getCustId()).append(FIELD_SPLIT);
+					sb.append(request.getSubsId()).append(FIELD_SPLIT);
+					sb.append(request.getServiceId()).append(FIELD_SPLIT);
 					
 					String rowkey1=sb.toString();
 					table = MyHbaseUtil.getConnection().getTable(TableName.valueOf(tableName));
