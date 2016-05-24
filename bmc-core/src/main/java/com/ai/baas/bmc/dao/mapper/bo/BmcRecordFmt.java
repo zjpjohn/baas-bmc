@@ -5,7 +5,7 @@ public class BmcRecordFmt {
 
     private String tenantId;
 
-    private String serviceId;
+    private String serviceType;
 
     private String source;
 
@@ -41,12 +41,12 @@ public class BmcRecordFmt {
         this.tenantId = tenantId == null ? null : tenantId.trim();
     }
 
-    public String getServiceId() {
-        return serviceId;
+    public String getServiceType() {
+        return serviceType;
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId == null ? null : serviceId.trim();
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType == null ? null : serviceType.trim();
     }
 
     public String getSource() {

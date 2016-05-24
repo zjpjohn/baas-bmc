@@ -18,7 +18,7 @@ public class BmcRecord implements Serializable{
      * 服务id,必填
      */
     @NotNull(message="serviceId不能为空",groups={IBillingBusinessDataMaintainSV.BusinessDataImport.class})
-    private String serviceId;
+    private String serviceType;
 
     /**
      * 业务来源，必填
@@ -66,6 +66,14 @@ public class BmcRecord implements Serializable{
      */
     private String isSn;
 
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -80,14 +88,6 @@ public class BmcRecord implements Serializable{
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId == null ? null : tenantId.trim();
-    }
-
-    public String getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId == null ? null : serviceId.trim();
     }
 
     public String getSource() {

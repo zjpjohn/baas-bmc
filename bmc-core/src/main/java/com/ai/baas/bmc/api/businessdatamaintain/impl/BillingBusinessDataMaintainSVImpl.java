@@ -56,7 +56,7 @@ public class BillingBusinessDataMaintainSVImpl implements IBillingBusinessDataMa
 
                     RtmSrcInfo srcInfo = new RtmSrcInfo();
                     srcInfo.setTenantId(record.getTenantId());
-                    srcInfo.setInfoType(record.getServiceId());
+                    srcInfo.setInfoType(record.getServiceType());
                     iRtmSrcInfoAtom.addRecord(srcInfo);
 
                     RtmSrcRecord srcRecord = new RtmSrcRecord();
@@ -90,7 +90,7 @@ public class BillingBusinessDataMaintainSVImpl implements IBillingBusinessDataMa
         if(StringUtil.isBlank(businessDataQueryRequest.getTenantId())){
             throw new BusinessException("empty", "tenantId不能为空");
         }
-        if(StringUtil.isBlank(businessDataQueryRequest.getServiceId())){
+        if(StringUtil.isBlank(businessDataQueryRequest.getServiceType())){
             throw new BusinessException("empty", "serviceId不能为空");
         }
         if(StringUtil.isBlank(businessDataQueryRequest.getSource())){

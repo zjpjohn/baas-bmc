@@ -177,7 +177,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         StringBuilder stringBuilder = new StringBuilder();
         BmcRecordFmtCriteria criteria = new BmcRecordFmtCriteria();
         criteria.createCriteria().andFormatTypeEqualTo((short) 1).andTenantIdEqualTo(failedBill.getTenantId())
-        .andServiceIdEqualTo(failedBill.getServiceId()).andSourceEqualTo(failedBill.getSource());
+        .andServiceTypeEqualTo(failedBill.getServiceId()).andSourceEqualTo(failedBill.getSource());
         criteria.setOrderByClause(" field_serial ");
         List<BmcRecordFmt> bmcRecordFmts = bmcRecordFmtMapper.selectByExample(criteria);
 
@@ -205,7 +205,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         StringBuilder stringBuilder = new StringBuilder();
         BmcRecordFmtCriteria criteria = new BmcRecordFmtCriteria();
         criteria.createCriteria().andFormatTypeEqualTo((short) 1).andTenantIdEqualTo(param.getTenantId())
-        .andServiceIdEqualTo(param.getServiceId()).andSourceEqualTo(param.getSource());
+        .andServiceTypeEqualTo(param.getServiceId()).andSourceEqualTo(param.getSource());
         criteria.setOrderByClause(" field_serial ");
         List<BmcRecordFmt> bmcRecordFmts = bmcRecordFmtMapper.selectByExample(criteria);
 

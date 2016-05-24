@@ -22,12 +22,12 @@ public class BmcRecordFmtAtomImpl implements IBmcRecordFmtAtomSV {
         if(record != null){
             //1.如果存在，就先删除
             if(!StringUtil.isBlank(record.getTenantId()) && 
-                    !StringUtil.isBlank(record.getServiceId()) && !StringUtil.isBlank(record.getSource())){
+                    !StringUtil.isBlank(record.getServiceType()) && !StringUtil.isBlank(record.getSource())){
                 BmcRecordFmtCriteria example = new BmcRecordFmtCriteria();
                 BmcRecordFmtCriteria.Criteria criteria = example.or();
                 criteria.andFormatTypeEqualTo((short) 1)//1：Excel导入的，2：手动添加的。
                 .andTenantIdEqualTo(record.getTenantId())
-                .andServiceIdEqualTo(record.getServiceId())
+                .andServiceTypeEqualTo(record.getServiceType())
                 .andSourceEqualTo(record.getSource());
                 mapper.deleteByExample(example);
             }
@@ -42,7 +42,7 @@ public class BmcRecordFmtAtomImpl implements IBmcRecordFmtAtomSV {
         BmcRecordFmtCriteria example = new BmcRecordFmtCriteria();
         BmcRecordFmtCriteria.Criteria criteria = example.or();
         criteria.andTenantIdEqualTo(businessDataQueryRequest.getTenantId());
-        criteria.andServiceIdEqualTo(businessDataQueryRequest.getServiceId());
+        criteria.andServiceTypeEqualTo(businessDataQueryRequest.getServiceType());
         criteria.andSourceEqualTo(businessDataQueryRequest.getSource());
         return mapper.selectByExample(example);
     }

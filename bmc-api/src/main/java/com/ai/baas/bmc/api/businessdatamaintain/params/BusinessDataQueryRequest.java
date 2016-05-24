@@ -17,7 +17,7 @@ public class BusinessDataQueryRequest implements Serializable {
      * 服务id,必填
      */
     @NotNull(message="serviceId不能为空",groups={IBillingBusinessDataMaintainSV.GetDataFormatList.class})
-    private String serviceId;
+    private String serviceType;
 
     /**
      * 业务来源，必填
@@ -33,12 +33,12 @@ public class BusinessDataQueryRequest implements Serializable {
         this.tenantId = tenantId;
     }
 
-    public String getServiceId() {
-        return serviceId;
+    public String getServiceType() {
+        return serviceType;
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 
     public String getSource() {
