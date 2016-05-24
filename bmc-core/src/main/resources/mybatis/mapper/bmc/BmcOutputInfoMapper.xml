@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo" >
     <id column="info_code" property="infoCode" jdbcType="BIGINT" />
     <result column="tenant_id" property="tenantId" jdbcType="VARCHAR" />
-    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
     <result column="source" property="source" jdbcType="VARCHAR" />
     <result column="table_prefix" property="tablePrefix" jdbcType="VARCHAR" />
     <result column="table_postfix" property="tablePostfix" jdbcType="VARCHAR" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    info_code, tenant_id, service_id, source, table_prefix, table_postfix, output_type, 
+    info_code, tenant_id, service_type, source, table_prefix, table_postfix, output_type, 
     output_name, key_seq, seq_name, status, create_date
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfoCriteria" >
@@ -112,12 +112,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo" >
-    insert into bmc_output_info (info_code, tenant_id, service_id, 
+    insert into bmc_output_info (info_code, tenant_id, service_type, 
       source, table_prefix, table_postfix, 
       output_type, output_name, key_seq, 
       seq_name, status, create_date
       )
-    values (#{infoCode,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, 
+    values (#{infoCode,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}, 
       #{source,jdbcType=VARCHAR}, #{tablePrefix,jdbcType=VARCHAR}, #{tablePostfix,jdbcType=VARCHAR}, 
       #{outputType,jdbcType=CHAR}, #{outputName,jdbcType=VARCHAR}, #{keySeq,jdbcType=CHAR}, 
       #{seqName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}
@@ -132,8 +132,8 @@
       <if test="tenantId != null" >
         tenant_id,
       </if>
-      <if test="serviceId != null" >
-        service_id,
+      <if test="serviceType != null" >
+        service_type,
       </if>
       <if test="source != null" >
         source,
@@ -170,8 +170,8 @@
       <if test="tenantId != null" >
         #{tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="serviceId != null" >
-        #{serviceId,jdbcType=VARCHAR},
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
       </if>
       <if test="source != null" >
         #{source,jdbcType=VARCHAR},
@@ -217,8 +217,8 @@
       <if test="record.tenantId != null" >
         tenant_id = #{record.tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="record.serviceId != null" >
-        service_id = #{record.serviceId,jdbcType=VARCHAR},
+      <if test="record.serviceType != null" >
+        service_type = #{record.serviceType,jdbcType=VARCHAR},
       </if>
       <if test="record.source != null" >
         source = #{record.source,jdbcType=VARCHAR},
@@ -256,7 +256,7 @@
     update bmc_output_info
     set info_code = #{record.infoCode,jdbcType=BIGINT},
       tenant_id = #{record.tenantId,jdbcType=VARCHAR},
-      service_id = #{record.serviceId,jdbcType=VARCHAR},
+      service_type = #{record.serviceType,jdbcType=VARCHAR},
       source = #{record.source,jdbcType=VARCHAR},
       table_prefix = #{record.tablePrefix,jdbcType=VARCHAR},
       table_postfix = #{record.tablePostfix,jdbcType=VARCHAR},
@@ -276,8 +276,8 @@
       <if test="tenantId != null" >
         tenant_id = #{tenantId,jdbcType=VARCHAR},
       </if>
-      <if test="serviceId != null" >
-        service_id = #{serviceId,jdbcType=VARCHAR},
+      <if test="serviceType != null" >
+        service_type = #{serviceType,jdbcType=VARCHAR},
       </if>
       <if test="source != null" >
         source = #{source,jdbcType=VARCHAR},
@@ -312,7 +312,7 @@
   <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo" >
     update bmc_output_info
     set tenant_id = #{tenantId,jdbcType=VARCHAR},
-      service_id = #{serviceId,jdbcType=VARCHAR},
+      service_type = #{serviceType,jdbcType=VARCHAR},
       source = #{source,jdbcType=VARCHAR},
       table_prefix = #{tablePrefix,jdbcType=VARCHAR},
       table_postfix = #{tablePostfix,jdbcType=VARCHAR},

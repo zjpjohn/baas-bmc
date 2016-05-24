@@ -255,73 +255,73 @@ public class BmcOutputInfoCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdIsNull() {
-            addCriterion("service_id is null");
+        public Criteria andServiceTypeIsNull() {
+            addCriterion("service_type is null");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdIsNotNull() {
-            addCriterion("service_id is not null");
+        public Criteria andServiceTypeIsNotNull() {
+            addCriterion("service_type is not null");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdEqualTo(String value) {
-            addCriterion("service_id =", value, "serviceId");
+        public Criteria andServiceTypeEqualTo(String value) {
+            addCriterion("service_type =", value, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdNotEqualTo(String value) {
-            addCriterion("service_id <>", value, "serviceId");
+        public Criteria andServiceTypeNotEqualTo(String value) {
+            addCriterion("service_type <>", value, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdGreaterThan(String value) {
-            addCriterion("service_id >", value, "serviceId");
+        public Criteria andServiceTypeGreaterThan(String value) {
+            addCriterion("service_type >", value, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdGreaterThanOrEqualTo(String value) {
-            addCriterion("service_id >=", value, "serviceId");
+        public Criteria andServiceTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("service_type >=", value, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdLessThan(String value) {
-            addCriterion("service_id <", value, "serviceId");
+        public Criteria andServiceTypeLessThan(String value) {
+            addCriterion("service_type <", value, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdLessThanOrEqualTo(String value) {
-            addCriterion("service_id <=", value, "serviceId");
+        public Criteria andServiceTypeLessThanOrEqualTo(String value) {
+            addCriterion("service_type <=", value, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdLike(String value) {
-            addCriterion("service_id like", value, "serviceId");
+        public Criteria andServiceTypeLike(String value) {
+            addCriterion("service_type like", value, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdNotLike(String value) {
-            addCriterion("service_id not like", value, "serviceId");
+        public Criteria andServiceTypeNotLike(String value) {
+            addCriterion("service_type not like", value, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdIn(List<String> values) {
-            addCriterion("service_id in", values, "serviceId");
+        public Criteria andServiceTypeIn(List<String> values) {
+            addCriterion("service_type in", values, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdNotIn(List<String> values) {
-            addCriterion("service_id not in", values, "serviceId");
+        public Criteria andServiceTypeNotIn(List<String> values) {
+            addCriterion("service_type not in", values, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdBetween(String value1, String value2) {
-            addCriterion("service_id between", value1, value2, "serviceId");
+        public Criteria andServiceTypeBetween(String value1, String value2) {
+            addCriterion("service_type between", value1, value2, "serviceType");
             return (Criteria) this;
         }
 
-        public Criteria andServiceIdNotBetween(String value1, String value2) {
-            addCriterion("service_id not between", value1, value2, "serviceId");
+        public Criteria andServiceTypeNotBetween(String value1, String value2) {
+            addCriterion("service_type not between", value1, value2, "serviceType");
             return (Criteria) this;
         }
 

@@ -53,7 +53,7 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		GPRSResponse gr=new GPRSResponse();
 		if(!CollectionUtil.isEmpty(list)){
 			for(BmcOutputInfo info:list){
-				String serviceType=info.getServiceId();
+				String serviceType=info.getServiceType();
 				//获取该租户对应的标明前缀（即不包含时间部分）
 				String tableName=request.getTenantId()+"_"+serviceType+"_"+"DR"+"_"+request.getSearchTime();
 				tableNames.add(tableName);
