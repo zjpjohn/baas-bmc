@@ -16,18 +16,19 @@ public class BmcRecordFmtAtomImpl implements IBmcRecordFmtAtom {
 	
     @Override
     public void add(BmcRecordFmt record) {
-        
-        //1.如果存在，就先删除
-        BmcRecordFmtCriteria example = new BmcRecordFmtCriteria();
-        BmcRecordFmtCriteria.Criteria criteria = example.or();
-        criteria.andTenantIdEqualTo(record.getTenantId())
-                .andServiceIdEqualTo(record.getServiceId())
-                .andSourceEqualTo(record.getSource())
-                .andFormatTypeEqualTo((short) 1);//1：Excel导入的，2：手动添加的。
-        mapper.deleteByExample(example);
-        
-        //2.重新插入
-        mapper.insertSelective(record);
+        if(record != null){
+            //1.如果存在，就先删除
+            BmcRecordFmtCriteria example = new BmcRecordFmtCriteria();
+            BmcRecordFmtCriteria.Criteria criteria = example.or();
+            criteria.andTenantIdEqualTo(record.getTenantId())
+            .andServiceIdEqualTo(record.getServiceId())
+            .andSourceEqualTo(record.getSource())
+            .andFormatTypeEqualTo((short) 1);//1：Excel导入的，2：手动添加的。
+            mapper.deleteByExample(example);
+            
+            //2.重新插入
+            mapper.insertSelective(record);
+        }
     }
 
 }
