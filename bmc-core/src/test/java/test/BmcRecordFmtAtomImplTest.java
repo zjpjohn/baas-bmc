@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmt;
-import com.ai.baas.bmc.service.atom.interfaces.IBmcRecordFmtAtom;
+import com.ai.baas.bmc.service.atom.interfaces.IBmcRecordFmtAtomSV;
 
 import net.sf.json.JSONObject;
 
@@ -16,7 +16,7 @@ import net.sf.json.JSONObject;
 public class BmcRecordFmtAtomImplTest {
     
     @Autowired
-    IBmcRecordFmtAtom iBmcRecordFmtAtom;
+    IBmcRecordFmtAtomSV iBmcRecordFmtAtom;
     
     @Test
     public void test(){
