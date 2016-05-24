@@ -139,7 +139,7 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "account_period".getBytes());
 		if(cell != null){
 			String account_period=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setAccount_period(account_period);
+			param.setAccountPeriod(account_period);
 		}
 		
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "bsn".getBytes());
@@ -171,12 +171,12 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "product_id".getBytes());
 		if(cell != null){
 			String product_id=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setProduct_id(product_id);
+			param.setProductId(product_id);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "service_id".getBytes());
 		if(cell != null){
 			String service_id=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setService_id(service_id);
+			param.setServiceId(service_id);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "sn".getBytes());
 		if(cell != null){
@@ -206,27 +206,27 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "tenant_id".getBytes());
 		if(cell != null){
 			String tenant_id=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setTenant_id(tenant_id);
+			param.setTenantId(tenant_id);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "call_type".getBytes());
 		if(cell != null){
 			String call_type=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setCall_type(call_type);
+			param.setCallType(call_type);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "opp_number".getBytes());
 		if(cell != null){
 			String opp_number=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setOpp_number(opp_number);
+			param.setOppNumber(opp_number);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "visit_area".getBytes());
 		if(cell != null){
 			String visit_area=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setVisit_area(visit_area);
+			param.setVisitArea(visit_area);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "long_type".getBytes());
 		if(cell != null){
 			String long_type=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setLong_type(long_type);
+			param.setLongType(long_type);
 		}
 		
 		

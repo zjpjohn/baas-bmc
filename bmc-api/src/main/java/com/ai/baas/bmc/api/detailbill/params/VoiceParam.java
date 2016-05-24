@@ -12,7 +12,7 @@ public class VoiceParam implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private String account_period;
+	private String accountPeriod;
 	
 	private String bsn;
 	
@@ -32,11 +32,11 @@ public class VoiceParam implements Serializable{
 	/**
 	 * 产品Id
 	 */
-	private String product_id;
+	private String productId;
 	/**
 	 * 服务资源号码
 	 */
-	private String service_id;
+	private String serviceId;
 	
 	
 	private String sn;
@@ -59,35 +59,29 @@ public class VoiceParam implements Serializable{
 	/**
 	 * 租户Id
 	 */
-	private String tenant_id;
+	private String tenantId;
 	/**
 	 * 呼叫类型
 	 */
-	private String call_type;
+	private String callType;
 	/**
 	 * 对方号码
 	 */
-	private String opp_number;
+	private String oppNumber;
 	/**
 	 * 通话地点
 	 */
-	private String visit_area;
+	private String visitArea;
 	/**
 	 * 通话类型,比如本地通话，长途，漫游等
 	 */
-	private String long_type;
+	private String longType;
 	
     private String custId;
     
     private String subsId;
 
-	public String getAccount_period() {
-		return account_period;
-	}
-
-	public void setAccount_period(String account_period) {
-		this.account_period = account_period;
-	}
+	
 
 	public String getBsn() {
 		return bsn;
@@ -129,21 +123,7 @@ public class VoiceParam implements Serializable{
 		this.fee3 = fee3;
 	}
 
-	public String getProduct_id() {
-		return product_id;
-	}
-
-	public void setProduct_id(String product_id) {
-		this.product_id = product_id;
-	}
-
-	public String getService_id() {
-		return service_id;
-	}
-
-	public void setService_id(String service_id) {
-		this.service_id = service_id;
-	}
+	
 
 	public String getSn() {
 		return sn;
@@ -185,46 +165,7 @@ public class VoiceParam implements Serializable{
 		this.subject3 = subject3;
 	}
 
-	public String getTenant_id() {
-		return tenant_id;
-	}
-
-	public void setTenant_id(String tenant_id) {
-		this.tenant_id = tenant_id;
-	}
-
-	public String getCall_type() {
-		return call_type;
-	}
-
-	public void setCall_type(String call_type) {
-		this.call_type = call_type;
-	}
-
-	public String getOpp_number() {
-		return opp_number;
-	}
-
-	public void setOpp_number(String opp_number) {
-		this.opp_number = opp_number;
-	}
-
-	public String getVisit_area() {
-		return visit_area;
-	}
-
-	public void setVisit_area(String visit_area) {
-		this.visit_area = visit_area;
-	}
-
-	public String getLong_type() {
-		return long_type;
-	}
-
-	public void setLong_type(String long_type) {
-		this.long_type = long_type;
-	}
-
+	
 	public String getCustId() {
 		return custId;
 	}
@@ -239,6 +180,70 @@ public class VoiceParam implements Serializable{
 
 	public void setSubsId(String subsId) {
 		this.subsId = subsId;
+	}
+
+	public String getAccountPeriod() {
+		return accountPeriod;
+	}
+
+	public void setAccountPeriod(String accountPeriod) {
+		this.accountPeriod = accountPeriod;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
+	}
+
+	public String getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
+
+	public String getCallType() {
+		return callType;
+	}
+
+	public void setCallType(String callType) {
+		this.callType = callType;
+	}
+
+	public String getOppNumber() {
+		return oppNumber;
+	}
+
+	public void setOppNumber(String oppNumber) {
+		this.oppNumber = oppNumber;
+	}
+
+	public String getVisitArea() {
+		return visitArea;
+	}
+
+	public void setVisitArea(String visitArea) {
+		this.visitArea = visitArea;
+	}
+
+	public String getLongType() {
+		return longType;
+	}
+
+	public void setLongType(String longType) {
+		this.longType = longType;
 	}
     
     
