@@ -1,13 +1,15 @@
 package com.ai.baas.bmc.service.atom.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
+import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryRequest;
 import com.ai.baas.bmc.dao.interfaces.BmcRecordFmtMapper;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmt;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmtCriteria;
 import com.ai.baas.bmc.service.atom.interfaces.IBmcRecordFmtAtomSV;
 import com.ai.paas.ipaas.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class BmcRecordFmtAtomImpl implements IBmcRecordFmtAtomSV {
@@ -33,6 +35,16 @@ public class BmcRecordFmtAtomImpl implements IBmcRecordFmtAtomSV {
             //2.插入数据
             mapper.insertSelective(record);
         }
+    }
+
+    @Override
+    public List<BmcRecordFmt> query(BusinessDataQueryRequest businessDataQueryRequest) {
+        BmcRecordFmtCriteria example = new BmcRecordFmtCriteria();
+        BmcRecordFmtCriteria.Criteria criteria = example.or();
+        criteria.andTenantIdEqualTo(businessDataQueryRequest.getTenantId());
+        criteria.andServiceIdEqualTo(businessDataQueryRequest.getServiceId());
+        criteria.andSourceEqualTo(businessDataQueryRequest.getSource());
+        return mapper.selectByExample(example);
     }
 
 }

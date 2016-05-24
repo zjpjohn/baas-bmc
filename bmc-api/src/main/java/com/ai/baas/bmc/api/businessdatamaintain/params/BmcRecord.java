@@ -8,29 +8,62 @@ import java.io.Serializable;
 public class BmcRecord implements Serializable{
     private Integer id;
 
+    /**
+     * 租户id,必填
+     */
     @NotNull(message="tenantId不能为空",groups={IBillingBusinessDataMaintainSV.BusinessDataImport.class})
     private String tenantId;
 
+    /**
+     * 服务id,必填
+     */
     @NotNull(message="serviceId不能为空",groups={IBillingBusinessDataMaintainSV.BusinessDataImport.class})
     private String serviceId;
 
+    /**
+     * 业务来源，必填
+     */
     @NotNull(message="source不能为空",groups={IBillingBusinessDataMaintainSV.BusinessDataImport.class})
     private String source;
 
+    /**
+     * 是否通过导入
+     */
     private Short formatType;
 
+    /**
+     * 字段顺序
+     */
     private Integer fieldSerial;
 
+    /**
+     * 字段名称
+     */
     private String fieldName;
 
+    /**
+     * 字段编码
+     */
     private String fieldCode;
 
+    /**
+     * 字段类型
+     */
     private String dataType;
 
+    /**
+     * 备注
+     */
     private String comments;
 
+    /**
+     * 字段是否可空
+     */
     private String nullable;
 
+    /**
+     * 是否索引
+     */
     private String isSn;
 
     public Integer getId() {

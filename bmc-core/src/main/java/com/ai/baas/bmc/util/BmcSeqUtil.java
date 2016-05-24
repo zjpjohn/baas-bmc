@@ -15,6 +15,18 @@ public final class BmcSeqUtil {
     private BmcSeqUtil() {
     
     }
+
+    /**
+     * 获取recordId
+     * @return
+     * @author wangxy13
+     * @ApiDocMethod
+     * @ApiCode
+     */
+    public static String getRecordId() {
+        return SeqUtil.getNewId(SEQ.RECORD_FMT_ID_SEQ,10);
+    }
+
     /**
      * 获取priceCode
      * @return

@@ -7,12 +7,21 @@ import java.io.Serializable;
 
 public class BusinessDataQueryRequest implements Serializable {
 
+    /**
+     * 租户id,必填
+     */
     @NotNull(message="tenantId不能为空",groups={IBillingBusinessDataMaintainSV.GetDataFormatList.class})
     private String tenantId;
 
+    /**
+     * 服务id,必填
+     */
     @NotNull(message="serviceId不能为空",groups={IBillingBusinessDataMaintainSV.GetDataFormatList.class})
     private String serviceId;
 
+    /**
+     * 业务来源，必填
+     */
     @NotNull(message="source不能为空",groups={IBillingBusinessDataMaintainSV.GetDataFormatList.class})
     private String source;
 
