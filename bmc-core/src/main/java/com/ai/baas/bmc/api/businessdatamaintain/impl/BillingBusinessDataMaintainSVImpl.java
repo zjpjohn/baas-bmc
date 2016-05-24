@@ -86,16 +86,18 @@ public class BillingBusinessDataMaintainSVImpl implements IBillingBusinessDataMa
     @Override
     public BusinessDataQueryResponse getDataFormatList(BusinessDataQueryRequest businessDataQueryRequest) throws BusinessException, SystemException {
         BusinessDataQueryResponse queryResponse;
+
+        if(StringUtil.isBlank(businessDataQueryRequest.getTenantId())){
+            throw new BusinessException("empty", "tenantId不能为空");
+        }
+        if(StringUtil.isBlank(businessDataQueryRequest.getServiceId())){
+            throw new BusinessException("empty", "serviceId不能为空");
+        }
+        if(StringUtil.isBlank(businessDataQueryRequest.getSource())){
+            throw new BusinessException("empty", "source不能为空");
+        }
+
         try {
-            if(StringUtil.isBlank(businessDataQueryRequest.getTenantId())){
-                throw new BusinessException("empty", "tenantId不能为空");
-            }
-            if(StringUtil.isBlank(businessDataQueryRequest.getServiceId())){
-                throw new BusinessException("empty", "serviceId不能为空");
-            }
-            if(StringUtil.isBlank(businessDataQueryRequest.getSource())){
-                throw new BusinessException("empty", "source不能为空");
-            }
             List<BmcRecordFmt> recordList = iBmcRecordFmtAtom.query(businessDataQueryRequest);
             List<BmcRecord> records = new ArrayList<>();
             if(!CollectionUtil.isEmpty(recordList)){
