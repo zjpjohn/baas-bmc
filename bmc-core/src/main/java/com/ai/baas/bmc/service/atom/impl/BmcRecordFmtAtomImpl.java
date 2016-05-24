@@ -7,6 +7,7 @@ import com.ai.baas.bmc.dao.interfaces.BmcRecordFmtMapper;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmt;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmtCriteria;
 import com.ai.baas.bmc.service.atom.interfaces.IBmcRecordFmtAtomSV;
+import com.ai.paas.ipaas.util.StringUtil;
 
 @Component
 public class BmcRecordFmtAtomImpl implements IBmcRecordFmtAtomSV {
@@ -18,14 +19,16 @@ public class BmcRecordFmtAtomImpl implements IBmcRecordFmtAtomSV {
     public void add(BmcRecordFmt record) {
         if(record != null){
             //1.如果存在，就先删除
-            BmcRecordFmtCriteria example = new BmcRecordFmtCriteria();
-            BmcRecordFmtCriteria.Criteria criteria = example.or();
-            criteria.andFormatTypeEqualTo((short) 1)//1：Excel导入的，2：手动添加的。
-                    .andTenantIdEqualTo(record.getTenantId())
-                    .andServiceIdEqualTo(record.getServiceId())
-                    .andSourceEqualTo(record.getSource());
-            
-            mapper.deleteByExample(example);
+            if(!StringUtil.isBlank(record.getTenantId()) && 
+                    !StringUtil.isBlank(record.getServiceId()) && !StringUtil.isBlank(record.getSource())){
+                BmcRecordFmtCriteria example = new BmcRecordFmtCriteria();
+                BmcRecordFmtCriteria.Criteria criteria = example.or();
+                criteria.andFormatTypeEqualTo((short) 1)//1：Excel导入的，2：手动添加的。
+                .andTenantIdEqualTo(record.getTenantId())
+                .andServiceIdEqualTo(record.getServiceId())
+                .andSourceEqualTo(record.getSource());
+                mapper.deleteByExample(example);
+            }
             
             //2.插入数据
             mapper.insertSelective(record);
