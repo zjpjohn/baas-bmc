@@ -2,10 +2,9 @@ package com.ai.baas.bmc.api.feerebatch.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBill;
-import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillPagerResponse;
 import com.ai.baas.bmc.api.feeReBatch.interfaces.IFeeReBatchSV;
 import com.ai.baas.bmc.api.feeReBatch.params.FeeParam;
 import com.ai.baas.bmc.api.feeReBatch.params.FeeParamPagerResponse;
@@ -28,6 +27,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 @Component
 public class FeeReBatchSVImpl implements IFeeReBatchSV{
 
+	@Autowired
 	private IFeeReBatchBusi feeReBatchBusi;
 	
 	@Override

@@ -1,10 +1,12 @@
 package com.ai.opt.baas.failbill;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hbase.KeyValue;
@@ -30,6 +32,7 @@ import com.ai.baas.bmc.api.failedbillmaintain.interfaces.IFailedBillMaintainSV;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillCriteria;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillPagerResponse;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillParam;
+import com.ai.baas.bmc.api.feeReBatch.params.FeeParam;
 import com.ai.opt.base.vo.BaseResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -206,7 +209,7 @@ public class FailBillTest {
 		@Test
 	    public void QueryAll(){  
 	        try {  
-	        	Table table = HBaseProxy.getConnection().getTable(TableName.valueOf("bmc_failure_bill"));
+	        	Table table = HBaseProxy.getConnection().getTable(TableName.valueOf("VIV-BYD_VOICE_DR_201605"));
 	            ResultScanner rs = table.getScanner(new Scan());  
 	            for (Result r : rs) {  
 	                System.out.println("获得到rowkey:" + new String(r.getRow()));  
@@ -242,10 +245,14 @@ public class FailBillTest {
 			return sb.toString();
 		}
 		
-		public static void main(String[] args) {
-			String conf = "{\"baas-bmc-topic\":\"MDS003\"}";
-			JSONObject data = JSON.parseObject(conf);
-            String mdsId = data.getString("baas-bmc-topic");
-            System.out.println(mdsId);
+		public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
+			FeeParam param = new FeeParam();
+			Class paramClass = param.getClass();
+			Field[] fs = paramClass.getDeclaredFields();
+			for(Field f:fs){
+				f.setAccessible(true);
+				f.set(param, "asdwd");
+			}
+			System.out.println(param);
 		}
 }

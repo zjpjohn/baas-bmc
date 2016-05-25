@@ -3,6 +3,7 @@ package com.ai.baas.bmc.business.impl;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.apache.hadoop.hbase.filter.PageFilter;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBill;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillParam;
@@ -45,6 +47,7 @@ import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.HBasePager;
 import com.ai.opt.base.vo.ResponseHeader;
 
+@Service
 public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
 
 	@Override
@@ -57,14 +60,9 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
                     CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getTenantId().getBytes()));
             filterList.addFilter(filter);
         }
-        if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
+        if (criteria.getServiceId() != null && criteria.getServiceId().length() > 0) {
             Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "service_id".getBytes(),
                     CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getServiceId().getBytes()));
-            filterList.addFilter(filter);
-        }
-        if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
-            Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "account_period".getBytes(),
-                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getAccountPeriod().getBytes()));
             filterList.addFilter(filter);
         }
         if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
@@ -72,6 +70,12 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
                     CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getServiceType().getBytes()));
             filterList.addFilter(filter);
         }
+        if (criteria.getAccountPeriod() != null && criteria.getAccountPeriod().length() > 0) {
+            Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "account_period".getBytes(),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getAccountPeriod().getBytes()));
+            filterList.addFilter(filter);
+        }
+       
         Scan scan = new Scan();
         Filter countFilter=new PageFilter(1000);
         filterList.addFilter(countFilter);
@@ -99,19 +103,19 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
                     CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getTenantId().getBytes()));
             filterList.addFilter(filter);
         }
-        if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
+        if (criteria.getServiceId() != null && criteria.getServiceId().length() > 0) {
             Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "service_id".getBytes(),
                     CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getServiceId().getBytes()));
             filterList.addFilter(filter);
         }
         if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
-            Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "account_period".getBytes(),
-                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getAccountPeriod().getBytes()));
-            filterList.addFilter(filter);
-        }
-        if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
             Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "service_type".getBytes(),
                     CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getServiceType().getBytes()));
+            filterList.addFilter(filter);
+        }
+        if (criteria.getAccountPeriod() != null && criteria.getAccountPeriod().length() > 0) {
+            Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "account_period".getBytes(),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getAccountPeriod().getBytes()));
             filterList.addFilter(filter);
         }
         Scan scan = new Scan();
@@ -139,11 +143,12 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
 		Field[] fs = paramClass.getDeclaredFields();
 		Map<String, String> attMaps = param.getCommonAttrMap();
 		Set<String> keySet = attMaps.keySet();
-		Set<String> valueSet = (Set<String>) attMaps.values();
+		Collection<String> valueSet = attMaps.values();
 		param.setRowKey(new String(result.getRow()));
 		//设置公共属性
 		for(Field f:fs){
 			if(keySet.contains(f.getName()) && f.getType().toString().endsWith("String")){
+				f.setAccessible(true);
 				f.set(param, this.getAttrValue(result, attMaps.get(f.getName())));
 			}
 		}
