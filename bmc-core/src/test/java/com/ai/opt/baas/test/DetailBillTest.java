@@ -155,7 +155,7 @@ public class DetailBillTest {
 public void testGet(){
 	QueryBillRequest request=new QueryBillRequest();
 	request.setCustId("38");
-	request.setSearchTime("201605");
+	request.setSearchTime("2016-05");
 	request.setServiceId("999999BHC282");
 	request.setSubsId("101");
 	request.setTenantId("VIV-BYD");

@@ -77,7 +77,8 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			for(BmcOutputInfo info:list){
 				String serviceType=info.getServiceType();
 				//获取该租户对应的标明前缀（即不包含时间部分）
-				String tableName=request.getTenantId()+"_"+serviceType+"_"+"DR"+"_"+request.getSearchTime();
+				//DateUtil.
+				String tableName=request.getTenantId()+"_"+serviceType+"_"+"DR"+"_"+request.getSearchTime().replace("-", "");
 				tableNames.add(tableName);
 			
 				Table table;
