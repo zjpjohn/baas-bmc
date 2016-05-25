@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
@@ -14,7 +15,6 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
 import com.ai.baas.bmc.service.atom.interfaces.ICpPriceInfoAtom;
 import com.ai.baas.bmc.util.DshmUtil;
-import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.fastjson.JSON;
@@ -216,5 +216,16 @@ public class CpPriceInfoAtomImpl implements ICpPriceInfoAtom {
         List<CpPriceInfo>  cpPriceInfoList=cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria);
         return cpPriceInfoList;
     }
+
+
+
+	@Override
+	public List<CpPriceInfo> getActiveProduct(ProductQueryByIdListVO vo) {
+		CpPriceInfoCriteria cpPriceInfoCriteria = new CpPriceInfoCriteria();
+		CpPriceInfoCriteria.Criteria criteriaCpPriceInfo= cpPriceInfoCriteria.createCriteria();
+		criteriaCpPriceInfo.andTenantIdEqualTo(vo.getTenantId());
+		criteriaCpPriceInfo.andPriceCodeIn(vo.getProductIdList());
+		return cpPriceInfoMapper.selectByExample(cpPriceInfoCriteria);
+	}
 }
 

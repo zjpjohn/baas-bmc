@@ -10,13 +10,14 @@ import java.io.Serializable;
  */
 public class GPRSParam implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String custId;
-	private String sbsId;
+	private String subsId;
 	private String serviceId;
 	/**
 	 * 计费类型
 	 */
-	private String gprsCu;
+	private String calType;
 	/**
 	 * 起始时间
 	 */
@@ -37,17 +38,22 @@ public class GPRSParam implements Serializable {
 	 * 费用
 	 */
 	private String fee1;
+	/**
+	 * 是否是定向流量
+	 */
+	private String isSpecial;
 	public String getCustId() {
 		return custId;
 	}
 	public void setCustId(String custId) {
 		this.custId = custId;
 	}
-	public String getSbsId() {
-		return sbsId;
+	
+	public String getSubsId() {
+		return subsId;
 	}
-	public void setSbsId(String sbsId) {
-		this.sbsId = sbsId;
+	public void setSubsId(String subsId) {
+		this.subsId = subsId;
 	}
 	public String getServiceId() {
 		return serviceId;
@@ -55,11 +61,12 @@ public class GPRSParam implements Serializable {
 	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
 	}
-	public String getGprsCu() {
-		return gprsCu;
+	
+	public String getCalType() {
+		return calType;
 	}
-	public void setGprsCu(String gprsCu) {
-		this.gprsCu = gprsCu;
+	public void setCalType(String calType) {
+		this.calType = calType;
 	}
 	public String getStartTime() {
 		return startTime;
@@ -90,6 +97,12 @@ public class GPRSParam implements Serializable {
 	}
 	public void setFee1(String fee1) {
 		this.fee1 = fee1;
+	}
+	public String getIsSpecial() {
+		return isSpecial;
+	}
+	public void setIsSpecial(String isSpecial) {
+		this.isSpecial = isSpecial;
 	}
 	
 	

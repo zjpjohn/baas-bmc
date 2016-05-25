@@ -20,6 +20,10 @@ public class DetailBillResponse extends BaseResponse {
 	 * 总钱数
 	 */
 	private Long totalCount;
+	/**
+	 * 产品名称
+	 */
+	private List<String> productNames;
 	public VoiceResponse getVoice() {
 		return voice;
 	}
@@ -37,6 +41,12 @@ public class DetailBillResponse extends BaseResponse {
 	}
 	public void setTotalCount(Long totalCount) {
 		this.totalCount = totalCount;
+	}
+	public List<String> getProductNames() {
+		return productNames;
+	}
+	public void setProductNames(List<String> productNames) {
+		this.productNames = productNames;
 	}
 	
 	

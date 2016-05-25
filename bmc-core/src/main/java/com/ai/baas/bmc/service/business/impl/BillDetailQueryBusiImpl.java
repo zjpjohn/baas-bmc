@@ -1,7 +1,10 @@
 package com.ai.baas.bmc.service.business.impl;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,20 +28,34 @@ import com.ai.baas.bmc.api.detailbill.params.GPRSResponse;
 import com.ai.baas.bmc.api.detailbill.params.QueryBillRequest;
 import com.ai.baas.bmc.api.detailbill.params.VoiceParam;
 import com.ai.baas.bmc.api.detailbill.params.VoiceResponse;
+import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.constants.ExceptCodeConstant;
+import com.ai.baas.bmc.dao.mapper.bo.BlSubsComm;
 import com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo;
+import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
+import com.ai.baas.bmc.service.atom.interfaces.IBlCustInfoAtomSV;
+import com.ai.baas.bmc.service.atom.interfaces.IBlSubsCommonAtomSV;
+import com.ai.baas.bmc.service.atom.interfaces.IBlUserInfoAtomSV;
 import com.ai.baas.bmc.service.atom.interfaces.IBmcOutputInfoAtomSV;
+import com.ai.baas.bmc.service.atom.interfaces.ICpPriceInfoAtom;
 import com.ai.baas.bmc.service.business.interfaces.IBillDetailQueryBusiSV;
 import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.CollectionUtil;
-import com.alibaba.fastjson.JSON;
+import com.ai.opt.sdk.util.DateUtil;
 @Service
 public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 
 	@Autowired
 	private IBmcOutputInfoAtomSV iBmcOutputInfoAtomSV;
-	
+	@Autowired
+	private IBlCustInfoAtomSV iBlCustInfoAtomSV;
+	@Autowired
+	private IBlUserInfoAtomSV iBlUserInfoAtomSV;
+	@Autowired
+	private IBlSubsCommonAtomSV iBlSubsCommonAtomSV;
+	@Autowired
+	private ICpPriceInfoAtom iCpPriceInfoAtom;
 	public final static String FIELD_SPLIT = new String(new char[] {(char) 1 });
 	 
 	public final static String RECORD_SPLIT = new String(new char[] {(char) 2 });
@@ -51,6 +68,11 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		List<GPRSParam> gps=new ArrayList<GPRSParam>();
 		VoiceResponse vr=new VoiceResponse();
 		GPRSResponse gr=new GPRSResponse();
+		Long voiceSubTotal=0L;
+		Long voiceSubMoney=0L;
+		Long gprsSubTotal=0L;
+		Long gprsSubMoney=0L;
+	   
 		if(!CollectionUtil.isEmpty(list)){
 			for(BmcOutputInfo info:list){
 				String serviceType=info.getServiceType();
@@ -81,36 +103,20 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 						
 						 if("VOICE".equals(serviceType)){
 							 VoiceParam voiceParam=setVoiceParamValue(result);
+							 voiceSubMoney=voiceSubMoney+ Long.valueOf(voiceParam.getFee1())+Long.valueOf(voiceParam.getFee2())+Long.valueOf(voiceParam.getFee3());
+							 voiceSubTotal=voiceSubTotal+Long.valueOf(voiceParam.getDuration());
 							 voices.add(voiceParam);
 						 }
 						 
 						 if("GPRS".equals(serviceType)){
 							 GPRSParam gParam=setGPRSParamValut(result); 
+							 gprsSubMoney=gprsSubMoney+Long.valueOf(gParam.getFee1());
+							 gprsSubTotal=gprsSubMoney+Long.valueOf(gParam.getGprsDown())+Long.valueOf(gParam.getGprsUp());
 							 gps.add(gParam);
 						 }
 					}
 					
 					
-					
-					/*
-					for (Result r : rs) {// 按行去遍历
-					    if("VOICE".equals(serviceType)){
-					    	for(KeyValue keyValue : r.raw()){
-					    		
-					    			if (Bytes.toString(keyValue.getQualifier()).equals("duration")) {
-										String line = Bytes.toString(keyValue.getValue());
-										System.out.println("---"+line);
-									}
-					    		
-					    	}
-					    }
-						
-						
-						  for (KeyValue keyValue : r.raw()) {  
-			                    System.out.println("列：" + new String(keyValue.getFamily()) + "_" +Bytes.toString(keyValue.getQualifier())
-			                            + "====值:" + new String(keyValue.getValue()));  
-			                }  
-					}*/
 					rs.close();
 					table.close();			
 				} catch (IOException e) {
@@ -123,10 +129,54 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			}
 		}
 		vr.setVoice(voices);
+		vr.setTotalMoney(voiceSubMoney);
+		vr.setVoiceTotal(voiceSubTotal);
 		gr.setGprs(gps);
+		gr.setGprsTotal(gprsSubTotal);
+		gr.setTotalMoney(gprsSubMoney);
 		DetailBillResponse response=new DetailBillResponse();
 		response.setGprs(gr);
 		response.setVoice(vr);
+		response.setProductNames(null);
+		
+		
+		//查询产品
+		List<String> pids=new ArrayList<String>();
+		List<String> pNames=new ArrayList<String>();
+		List<BlSubsComm> commonList=iBlSubsCommonAtomSV.getSubsCommon(request.getSubsId(), request.getTenantId());
+		for(BlSubsComm comm:commonList){
+			Long st=getDate(request.getSearchTime());
+//			System.out.println("生效时间————————》"+comm.getActiveTime());
+//			System.out.println("转化后-----》"+DateUtil.getDateString(comm.getActiveTime(), "YYYYMM"));
+			
+			Long activeTime=getDate(DateUtil.getDateString(comm.getActiveTime(), "YYYYMM"));
+			System.out.println(st>activeTime||st==activeTime);
+//			System.out.println("失效时间—————————》"+comm.getInactiveTime());
+			//DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM");
+//			System.out.println("转化后-----》"+DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM"));
+			Long inactiveTime=getDate(DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM"));
+			
+			System.out.println(st<inactiveTime||st==inactiveTime);
+
+			if((st>activeTime||st==activeTime)&&(st<inactiveTime||st==inactiveTime)){
+				pids.add(comm.getProductId());	
+			}
+			
+		}
+		ProductQueryByIdListVO vo=new ProductQueryByIdListVO();
+		vo.setProductIdList(pids);
+		vo.setTenantId(request.getTenantId());
+		List<CpPriceInfo> pList=iCpPriceInfoAtom.getActiveProduct(vo);
+		
+		//pNames
+	 if(!CollectionUtil.isEmpty(pList)){
+		for(CpPriceInfo info:pList){
+			pNames.add(info.getPriceName());	
+		}
+	 }
+	 response.setProductNames(pNames);	
+	
+		
 		ResponseHeader rh=new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
 		response.setResponseHeader(rh);
 		return response;
@@ -228,6 +278,11 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			String long_type=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
 			param.setLongType(long_type);
 		}
+		cell=result.getColumnLatestCell("detail_bill".getBytes(), "start_time".getBytes());
+		if(cell != null){
+			String long_type=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
+			param.setLongType(long_type);
+		}
 		
 		
 		return param;
@@ -248,10 +303,10 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			String fee1=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
 			param.setFee1(fee1);
 		}
-		cell=result.getColumnLatestCell("detail_bill".getBytes(), "gprs_cu".getBytes());
+		cell=result.getColumnLatestCell("detail_bill".getBytes(), "cal_type".getBytes());
 		if(cell != null){
 			String gprsCu=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setGprsCu(gprsCu);
+			param.setCalType(gprsCu);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "gprs_down".getBytes());
 		if(cell != null){
@@ -263,10 +318,10 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			String gprsUp=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
 			param.setGprsUp(gprsUp);
 		}
-		cell=result.getColumnLatestCell("detail_bill".getBytes(), "sbs_id".getBytes());
+		cell=result.getColumnLatestCell("detail_bill".getBytes(), "subs_id".getBytes());
 		if(cell != null){
 			String sbsId=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setSbsId(sbsId);
+			param.setSubsId(sbsId);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "service_id".getBytes());
 		if(cell != null){
@@ -283,7 +338,25 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			String visitArea=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
 			param.setVisitArea(visitArea);
 		}
+		cell=result.getColumnLatestCell("detail_bill".getBytes(), "is_special".getBytes());
+		if(cell != null){
+			String isSpecial=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
+			param.setIsSpecial(isSpecial);
+		}
 		return param; 
 		
+	}
+	
+	
+	private Long getDate(String date){
+		SimpleDateFormat sdf= new SimpleDateFormat("YYYYMM");
+		Date d = null;
+		try {
+			d = sdf.parse(date);
+		} catch (ParseException e) {
+		
+			e.printStackTrace();
+		}
+		return d.getTime()/1000;
 	}
 }

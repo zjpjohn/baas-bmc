@@ -15,7 +15,9 @@ public class VoiceParam implements Serializable{
 	private String accountPeriod;
 	
 	private String bsn;
-	
+	/**
+	 * 通话时长
+	 */
 	private String duration;
 	/**
 	 * 本地通话费用
@@ -37,7 +39,14 @@ public class VoiceParam implements Serializable{
 	 * 服务资源号码
 	 */
 	private String serviceId;
-	
+	/**
+	 * 服务类型
+	 */
+	private String serviceType;
+	/**
+	 * 开始时间
+	 */
+	private String startTime;
 	
 	private String sn;
 	/**
@@ -244,6 +253,22 @@ public class VoiceParam implements Serializable{
 
 	public void setLongType(String longType) {
 		this.longType = longType;
+	}
+
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
     
     

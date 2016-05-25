@@ -25,6 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.ai.baas.bmc.api.detailbill.interfaces.IDetailBillQuerySV;
 import com.ai.baas.bmc.api.detailbill.params.QueryBillRequest;
 import com.ai.opt.baas.failbill.HBaseProxy;
+import com.alibaba.fastjson.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/context/core-context.xml"})
@@ -75,6 +76,7 @@ public class DetailBillTest {
 				put.addColumn("detail_bill".getBytes(), "fee3".getBytes(), "321".getBytes());
 				put.addColumn("detail_bill".getBytes(), "product_id".getBytes(), "xxxx".getBytes());
 				put.addColumn("detail_bill".getBytes(), "service_id".getBytes(), "999999BHC282".getBytes());
+				put.addColumn("detail_bill".getBytes(), "service_Type".getBytes(), "VOICE".getBytes());
 				put.addColumn("detail_bill".getBytes(), "sn".getBytes(), "1456281622845".getBytes());
 				put.addColumn("detail_bill".getBytes(), "source".getBytes(), "VOICE".getBytes());
 				put.addColumn("detail_bill".getBytes(), "subject1".getBytes(), "通话1".getBytes());
@@ -157,6 +159,6 @@ public void testGet(){
 	request.setServiceId("999999BHC282");
 	request.setSubsId("101");
 	request.setTenantId("VIV-BYD");
-	IDetailBillQuerySV.getDetailBill(request);
+	System.out.println(JSON.toJSONString(IDetailBillQuerySV.getDetailBill(request)));
 }
 }
