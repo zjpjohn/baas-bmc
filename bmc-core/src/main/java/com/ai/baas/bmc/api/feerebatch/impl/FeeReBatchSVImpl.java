@@ -16,6 +16,7 @@ import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.HBasePager;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 /**
@@ -36,6 +37,15 @@ public class FeeReBatchSVImpl implements IFeeReBatchSV{
 		FeeParamPagerResponse response = new FeeParamPagerResponse();
         HBasePager<FeeParam> hBasePager = criteria.getPager();
         ResponseHeader header = new ResponseHeader(true, "000000", "Success");
+        if(StringUtil.isBlank(criteria.getTenantId())){
+	           throw new BusinessException("400", "租户ID不能为空");
+	       }
+		if(StringUtil.isBlank(criteria.getServiceType())){
+	           throw new BusinessException("400", "业务类型不能为空");
+	       }
+		if(StringUtil.isBlank(criteria.getAccountPeriod())){
+	           throw new BusinessException("400", "账期不能为空");
+	       }
         try {
             if (hBasePager == null) {
                 hBasePager = new HBasePager<FeeParam>();
@@ -48,16 +58,28 @@ public class FeeReBatchSVImpl implements IFeeReBatchSV{
             header.setIsSuccess(false);
             header.setResultMessage(e.getMessage());
         } catch (Exception e) {
-            throw new SystemException("查询错单出错", e);
+            throw new SystemException("查询出错", e);
         }
         response.setResponseHeader(header);
         return response;
 	}
 
 	@Override
-	public BaseResponse batchResendFailedBill(FeeReBatchParam param) {
+	public BaseResponse batchResendFee(FeeReBatchParam param) {
 		// TODO Auto-generated method stub
 		ResponseHeader responseHeader = new ResponseHeader(true, "000000", "Success");
+		if(StringUtil.isBlank(param.getCriteria().getTenantId())){
+	           throw new BusinessException("400", "租户ID不能为空");
+	       }
+		if(StringUtil.isBlank(param.getCriteria().getServiceType())){
+	           throw new BusinessException("400", "业务类型不能为空");
+	       }
+		if(StringUtil.isBlank(param.getCriteria().getReBatchType())){
+	           throw new BusinessException("400", "回退类型不能为空");
+	       }
+		if(StringUtil.isBlank(param.getCriteria().getAccountPeriod())){
+	           throw new BusinessException("400", "账期不能为空");
+	       }
         try {
         	feeReBatchBusi.batchResendFee(param);
         } catch (BusinessException e) {
@@ -65,7 +87,7 @@ public class FeeReBatchSVImpl implements IFeeReBatchSV{
             responseHeader.setIsSuccess(false);
             responseHeader.setResultMessage(e.getMessage());
         } catch (Exception e) {
-            throw new SystemException("重发单条错单出错", e);
+            throw new SystemException("费用重批出错", e);
         }
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setResponseHeader(responseHeader);

@@ -36,9 +36,12 @@ import com.ai.baas.bmc.api.feeReBatch.interfaces.IFeeReBatchSV;
 import com.ai.baas.bmc.api.feeReBatch.params.FeeParam;
 import com.ai.baas.bmc.api.feeReBatch.params.FeeParamPagerResponse;
 import com.ai.baas.bmc.api.feeReBatch.params.FeeReBatchCriteria;
+import com.ai.baas.bmc.api.feeReBatch.params.FeeReBatchParam;
 import com.ai.opt.base.vo.BaseResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+
+import net.sf.json.JSONArray;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/context/core-context.xml" })
@@ -46,16 +49,100 @@ public class FeeTest {
 	 @Autowired
 	 IFeeReBatchSV feeReBatchSV;
 	 
+    public final static String FIELD_SPLIT = new String(new char[] {(char) 1 });
+	public final static String RECORD_SPLIT = new String(new char[] {(char) 2 });
+	 
 	 @Test
 	    public void queryTest2(){
 		    FeeReBatchCriteria queryInfo = new FeeReBatchCriteria();
-	    	queryInfo.setTenantId("VIV-BYD");
-	    	queryInfo.setServiceType("VOICE");
-	    	queryInfo.setAccountPeriod("20160523");
+//	    	queryInfo.setTenantId("VIV-BYD");
+//	    	queryInfo.setServiceType("VOICE");
+//	    	queryInfo.setAccountPeriod("2016051212");
+	    	
+	    	String str = "{\"serviceType\":\"VOICE\",\"tenantPwd\":\"\",\"pager\":null,\"tenantId\":\"VIV-BYD\",\"accountPeriod\":\"201605\",\"serviceId\":\"\",\"reBatchType\":\"\"}";
+	    	queryInfo = JSONObject.parseObject(str, queryInfo.getClass());
 //	    	queryInfo.setErrorCode();
+	    	JSONArray.fromObject(queryInfo);
 	    	FeeParamPagerResponse list = feeReBatchSV.queryFeeReBatch(queryInfo);
 	    	System.out.println("标准资费查询出参:"+JSON.toJSONString(list));
 	    }
 	 
+	 @Test
+	    public void testReBatch(){
+		  	FeeReBatchParam param = new FeeReBatchParam();
+		    FeeReBatchCriteria queryInfo = new FeeReBatchCriteria();
+	    	queryInfo.setTenantId("VIV-BYD");
+	    	queryInfo.setServiceType("VOICE");
+	    	queryInfo.setAccountPeriod("2016051212");
+	    	queryInfo.setReBatchType("test");
+	    	param.setCriteria(queryInfo);
+	    	BaseResponse response = feeReBatchSV.batchResendFee(param);
+	    	System.out.println("标准资费查询出参:"+JSON.toJSONString(response));
+	    }
+	 
+	//详单数据添加
+	 @Test
+		public void addTRData(){
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append("VIV-BYD").append(FIELD_SPLIT);
+			sb.append("999999BHC123").append(FIELD_SPLIT);
+			sb.append("VOICE").append(FIELD_SPLIT);
+			sb.append("1456281622845").append(FIELD_SPLIT);
+			sb.append("1459440000000");
+			String rowkey1=sb.toString();
+			
+			
+			
+			
+			Connection conn = HBaseProxy.getConnection();
+			byte[] rowKey = rowkey1.getBytes();
+			Table table = null;
+			try {
+				table = conn.getTable(TableName
+						.valueOf("VIV-BYD_VOICE_DR_201605"));
+
+				Put put = new Put(rowKey);
+				
+			
+				//添加各个列族里面的数据
+				put.addColumn("detail_bill".getBytes(), "account_period".getBytes(), "2016051212".getBytes());
+				put.addColumn("detail_bill".getBytes(), "tenant_id".getBytes(), "VIV-BYD".getBytes());
+				put.addColumn("detail_bill".getBytes(), "service_id".getBytes(), "999999BHC123".getBytes());
+				put.addColumn("detail_bill".getBytes(), "service_type".getBytes(), "VOICE".getBytes());
+				put.addColumn("detail_bill".getBytes(), "bsn".getBytes(), "1459440000000".getBytes());
+				put.addColumn("detail_bill".getBytes(), "duration".getBytes(), "14562816".getBytes());
+				put.addColumn("detail_bill".getBytes(), "custNo".getBytes(), "123123".getBytes());
+				put.addColumn("detail_bill".getBytes(), "userNo".getBytes(), "123".getBytes());
+				put.addColumn("detail_bill".getBytes(), "call_number".getBytes(), "321".getBytes());
+				put.addColumn("detail_bill".getBytes(), "called_number".getBytes(), "122".getBytes());
+				put.addColumn("detail_bill".getBytes(), "start_time".getBytes(), "2016051212".getBytes());
+				put.addColumn("detail_bill".getBytes(), "fee".getBytes(), "12333".getBytes());
+				put.addColumn("detail_bill".getBytes(), "product_id".getBytes(), "xxxx".getBytes());
+				put.addColumn("detail_bill".getBytes(), "sn".getBytes(), "1456281622845".getBytes());
+				put.addColumn("detail_bill".getBytes(), "source".getBytes(), "VOICE".getBytes());
+				put.addColumn("detail_bill".getBytes(), "call_type".getBytes(), "被叫".getBytes());
+				put.addColumn("detail_bill".getBytes(), "opp_number".getBytes(), "13523411234".getBytes());
+				put.addColumn("detail_bill".getBytes(), "visit_area".getBytes(), "北京12".getBytes());
+				put.addColumn("detail_bill".getBytes(), "long_type".getBytes(), "local".getBytes());
+				put.addColumn("detail_bill".getBytes(), "call_duration".getBytes(), "test2".getBytes());
+				put.addColumn("detail_bill".getBytes(), "total_flow".getBytes(), "00001".getBytes());
+//				String data = getData();
+//				put.addColumn("detail".getBytes(), "record".getBytes(), data.getBytes());
+				table.put(put);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (table != null) {
+					try {
+						table.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}
 	 
 }

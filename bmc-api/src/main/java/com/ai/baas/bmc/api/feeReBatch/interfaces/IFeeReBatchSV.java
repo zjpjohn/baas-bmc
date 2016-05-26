@@ -38,5 +38,5 @@ public interface IFeeReBatchSV {
      * @ApiDocMethod
      * @ApiCode bmc-feerebatch-00002
      */
-    BaseResponse batchResendFailedBill(FeeReBatchParam param);
+    BaseResponse batchResendFee(FeeReBatchParam param);
 }
