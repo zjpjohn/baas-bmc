@@ -50,8 +50,8 @@ public class DetailBillTest {
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append("38").append(FIELD_SPLIT);
-			sb.append("101").append(FIELD_SPLIT);
-			sb.append("999999BHC282").append(FIELD_SPLIT);
+			sb.append("100").append(FIELD_SPLIT);
+			sb.append("999999BHC436").append(FIELD_SPLIT);
 			sb.append("snsnsns1").append(FIELD_SPLIT);
 			sb.append("1459440000001");
 			String rowkey1=sb.toString();
@@ -64,19 +64,21 @@ public class DetailBillTest {
 			Table table = null;
 			try {
 				table = conn.getTable(TableName
-						.valueOf("VIV-BYD_VOICE_DR_201604"));
+						.valueOf("VIV-BYD_VOICE_DR_201605"));
 
 				Put put = new Put(rowKey);
 				//添加各个列族里面的数据
 				put.addColumn("detail_bill".getBytes(), "account_period".getBytes(), "2016".getBytes());
 				put.addColumn("detail_bill".getBytes(), "bsn".getBytes(), "1456281622845".getBytes());
 				put.addColumn("detail_bill".getBytes(), "duration".getBytes(), "14562816".getBytes());
-				put.addColumn("detail_bill".getBytes(), "fee1".getBytes(), "123123".getBytes());
-				put.addColumn("detail_bill".getBytes(), "fee2".getBytes(), "123".getBytes());
-				put.addColumn("detail_bill".getBytes(), "fee3".getBytes(), "321".getBytes());
+				put.addColumn("detail_bill".getBytes(), "fee1".getBytes(), "123123111111".getBytes());
+				put.addColumn("detail_bill".getBytes(), "fee2".getBytes(), "12312321".getBytes());
+				put.addColumn("detail_bill".getBytes(), "fee3".getBytes(), "321123213".getBytes());
 				put.addColumn("detail_bill".getBytes(), "product_id".getBytes(), "xxxx".getBytes());
 				put.addColumn("detail_bill".getBytes(), "service_id".getBytes(), "999999BHC282".getBytes());
-				put.addColumn("detail_bill".getBytes(), "service_Type".getBytes(), "VOICE".getBytes());
+				put.addColumn("detail_bill".getBytes(), "service_type".getBytes(), "VOICE".getBytes());
+				put.addColumn("detail_bill".getBytes(), "start_time".getBytes(), "123213213213".getBytes());
+				put.addColumn("detail_bill".getBytes(), "cal_type".getBytes(), "VOICE".getBytes());
 				put.addColumn("detail_bill".getBytes(), "sn".getBytes(), "1456281622845".getBytes());
 				put.addColumn("detail_bill".getBytes(), "source".getBytes(), "VOICE".getBytes());
 				put.addColumn("detail_bill".getBytes(), "subject1".getBytes(), "通话1".getBytes());

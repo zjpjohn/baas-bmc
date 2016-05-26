@@ -284,6 +284,11 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			String long_type=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
 			param.setLongType(long_type);
 		}
+		cell=result.getColumnLatestCell("detail_bill".getBytes(), "service_type".getBytes());
+		if(cell != null){
+			String serviceType=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
+			param.setServiceType(serviceType);
+		}
 		
 		
 		return param;
