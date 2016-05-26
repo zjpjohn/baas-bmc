@@ -24,6 +24,7 @@ import org.apache.hadoop.hbase.filter.CompareFilter;
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.PageFilter;
+import org.apache.hadoop.hbase.filter.RegexStringComparator;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
         }
         if (criteria.getAccountPeriod() != null && criteria.getAccountPeriod().length() > 0) {
             Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "account_period".getBytes(),
-                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getAccountPeriod().getBytes()));
+                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator(criteria.getAccountPeriod().substring(0, 6)+"*"));
             filterList.addFilter(filter);
         }
        
