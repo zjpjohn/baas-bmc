@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.AccOweInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.AccOweInfo" >
+    <result column="SYSTEM_ID" property="systemId" jdbcType="VARCHAR" />
+    <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <result column="ACCT_ID" property="acctId" jdbcType="VARCHAR" />
+    <result column="BALANCE" property="balance" jdbcType="INTEGER" />
+    <result column="MONTH" property="month" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SYSTEM_ID, TENANT_ID, ACCT_ID, BALANCE, MONTH, CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.AccOweInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from acc_owe_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.AccOweInfoCriteria" >
+    delete from acc_owe_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.AccOweInfo" >
+    insert into acc_owe_info (SYSTEM_ID, TENANT_ID, ACCT_ID, 
+      BALANCE, MONTH, CREATE_TIME
+      )
+    values (#{systemId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{acctId,jdbcType=VARCHAR}, 
+      #{balance,jdbcType=INTEGER}, #{month,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.AccOweInfo" >
+    insert into acc_owe_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="acctId != null" >
+        ACCT_ID,
+      </if>
+      <if test="balance != null" >
+        BALANCE,
+      </if>
+      <if test="month != null" >
+        MONTH,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="systemId != null" >
+        #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="acctId != null" >
+        #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.AccOweInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from acc_owe_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update acc_owe_info
+    <set >
+      <if test="record.systemId != null" >
+        SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acctId != null" >
+        ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balance != null" >
+        BALANCE = #{record.balance,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null" >
+        MONTH = #{record.month,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update acc_owe_info
+    set SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
+      BALANCE = #{record.balance,jdbcType=INTEGER},
+      MONTH = #{record.month,jdbcType=CHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

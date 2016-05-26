@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.BmcUseQueryMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BmcUseQuery" >
+    <id column="UNIQUE_ID" property="uniqueId" jdbcType="INTEGER" />
+    <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="VARCHAR" />
+    <result column="BEGIN_MONTH" property="beginMonth" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="INTEGER" />
+    <result column="SERVICE_TYPE" property="serviceType" jdbcType="VARCHAR" />
+    <result column="SERVICE_NUM" property="serviceNum" jdbcType="VARCHAR" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="INTEGER" />
+    <result column="VISIT_AREA" property="visitArea" jdbcType="VARCHAR" />
+    <result column="RES_TYPE" property="resType" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="INTEGER" />
+    <result column="PRODUCT_AMOUNT" property="productAmount" jdbcType="INTEGER" />
+    <result column="MSG_SEQ" property="msgSeq" jdbcType="VARCHAR" />
+    <result column="SUBS_ID" property="subsId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UNIQUE_ID, TENANT_ID, SYSTEM_ID, BEGIN_MONTH, CUST_ID, SERVICE_TYPE, SERVICE_NUM, 
+    PRODUCT_ID, VISIT_AREA, RES_TYPE, AMOUNT, PRODUCT_AMOUNT, MSG_SEQ, SUBS_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcUseQueryCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bmc_use_query
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bmc_use_query
+    where UNIQUE_ID = #{uniqueId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer" >
+    delete from bmc_use_query
+    where UNIQUE_ID = #{uniqueId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcUseQueryCriteria" >
+    delete from bmc_use_query
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcUseQuery" >
+    insert into bmc_use_query (UNIQUE_ID, TENANT_ID, SYSTEM_ID, 
+      BEGIN_MONTH, CUST_ID, SERVICE_TYPE, 
+      SERVICE_NUM, PRODUCT_ID, VISIT_AREA, 
+      RES_TYPE, AMOUNT, PRODUCT_AMOUNT, 
+      MSG_SEQ, SUBS_ID)
+    values (#{uniqueId,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}, #{systemId,jdbcType=VARCHAR}, 
+      #{beginMonth,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER}, #{serviceType,jdbcType=VARCHAR}, 
+      #{serviceNum,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{visitArea,jdbcType=VARCHAR}, 
+      #{resType,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{productAmount,jdbcType=INTEGER}, 
+      #{msgSeq,jdbcType=VARCHAR}, #{subsId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcUseQuery" >
+    insert into bmc_use_query
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uniqueId != null" >
+        UNIQUE_ID,
+      </if>
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="beginMonth != null" >
+        BEGIN_MONTH,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="serviceType != null" >
+        SERVICE_TYPE,
+      </if>
+      <if test="serviceNum != null" >
+        SERVICE_NUM,
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID,
+      </if>
+      <if test="visitArea != null" >
+        VISIT_AREA,
+      </if>
+      <if test="resType != null" >
+        RES_TYPE,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="productAmount != null" >
+        PRODUCT_AMOUNT,
+      </if>
+      <if test="msgSeq != null" >
+        MSG_SEQ,
+      </if>
+      <if test="subsId != null" >
+        SUBS_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uniqueId != null" >
+        #{uniqueId,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="beginMonth != null" >
+        #{beginMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceNum != null" >
+        #{serviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="visitArea != null" >
+        #{visitArea,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="productAmount != null" >
+        #{productAmount,jdbcType=INTEGER},
+      </if>
+      <if test="msgSeq != null" >
+        #{msgSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="subsId != null" >
+        #{subsId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcUseQueryCriteria" resultType="java.lang.Integer" >
+    select count(*) from bmc_use_query
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bmc_use_query
+    <set >
+      <if test="record.uniqueId != null" >
+        UNIQUE_ID = #{record.uniqueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemId != null" >
+        SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginMonth != null" >
+        BEGIN_MONTH = #{record.beginMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceType != null" >
+        SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceNum != null" >
+        SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.visitArea != null" >
+        VISIT_AREA = #{record.visitArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resType != null" >
+        RES_TYPE = #{record.resType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        AMOUNT = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.productAmount != null" >
+        PRODUCT_AMOUNT = #{record.productAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgSeq != null" >
+        MSG_SEQ = #{record.msgSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subsId != null" >
+        SUBS_ID = #{record.subsId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bmc_use_query
+    set UNIQUE_ID = #{record.uniqueId,jdbcType=INTEGER},
+      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      BEGIN_MONTH = #{record.beginMonth,jdbcType=VARCHAR},
+      CUST_ID = #{record.custId,jdbcType=INTEGER},
+      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
+      PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
+      VISIT_AREA = #{record.visitArea,jdbcType=VARCHAR},
+      RES_TYPE = #{record.resType,jdbcType=VARCHAR},
+      AMOUNT = #{record.amount,jdbcType=INTEGER},
+      PRODUCT_AMOUNT = #{record.productAmount,jdbcType=INTEGER},
+      MSG_SEQ = #{record.msgSeq,jdbcType=VARCHAR},
+      SUBS_ID = #{record.subsId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcUseQuery" >
+    update bmc_use_query
+    <set >
+      <if test="tenantId != null" >
+        TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID = #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="beginMonth != null" >
+        BEGIN_MONTH = #{beginMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceType != null" >
+        SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceNum != null" >
+        SERVICE_NUM = #{serviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="visitArea != null" >
+        VISIT_AREA = #{visitArea,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        RES_TYPE = #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="productAmount != null" >
+        PRODUCT_AMOUNT = #{productAmount,jdbcType=INTEGER},
+      </if>
+      <if test="msgSeq != null" >
+        MSG_SEQ = #{msgSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="subsId != null" >
+        SUBS_ID = #{subsId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UNIQUE_ID = #{uniqueId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcUseQuery" >
+    update bmc_use_query
+    set TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      SYSTEM_ID = #{systemId,jdbcType=VARCHAR},
+      BEGIN_MONTH = #{beginMonth,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=INTEGER},
+      SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      SERVICE_NUM = #{serviceNum,jdbcType=VARCHAR},
+      PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      VISIT_AREA = #{visitArea,jdbcType=VARCHAR},
+      RES_TYPE = #{resType,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=INTEGER},
+      PRODUCT_AMOUNT = #{productAmount,jdbcType=INTEGER},
+      MSG_SEQ = #{msgSeq,jdbcType=VARCHAR},
+      SUBS_ID = #{subsId,jdbcType=INTEGER}
+    where UNIQUE_ID = #{uniqueId,jdbcType=INTEGER}
+  </update>
+</mapper>

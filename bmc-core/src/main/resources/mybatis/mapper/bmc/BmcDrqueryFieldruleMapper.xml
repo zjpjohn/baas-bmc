@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.BmcDrqueryFieldruleMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryFieldrule" >
+    <result column="tableid" property="tableid" jdbcType="VARCHAR" />
+    <result column="field_desc" property="fieldDesc" jdbcType="VARCHAR" />
+    <result column="field_name" property="fieldName" jdbcType="VARCHAR" />
+    <result column="field_type" property="fieldType" jdbcType="INTEGER" />
+    <result column="field_length" property="fieldLength" jdbcType="INTEGER" />
+    <result column="parent_node" property="parentNode" jdbcType="VARCHAR" />
+    <result column="src_content" property="srcContent" jdbcType="VARCHAR" />
+    <result column="default_output" property="defaultOutput" jdbcType="INTEGER" />
+    <result column="src_where" property="srcWhere" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tableid, field_desc, field_name, field_type, field_length, parent_node, src_content, 
+    default_output, src_where
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryFieldruleCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bmc_drquery_fieldrule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryFieldruleCriteria" >
+    delete from bmc_drquery_fieldrule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryFieldrule" >
+    insert into bmc_drquery_fieldrule (tableid, field_desc, field_name, 
+      field_type, field_length, parent_node, 
+      src_content, default_output, src_where
+      )
+    values (#{tableid,jdbcType=VARCHAR}, #{fieldDesc,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, 
+      #{fieldType,jdbcType=INTEGER}, #{fieldLength,jdbcType=INTEGER}, #{parentNode,jdbcType=VARCHAR}, 
+      #{srcContent,jdbcType=VARCHAR}, #{defaultOutput,jdbcType=INTEGER}, #{srcWhere,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryFieldrule" >
+    insert into bmc_drquery_fieldrule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tableid != null" >
+        tableid,
+      </if>
+      <if test="fieldDesc != null" >
+        field_desc,
+      </if>
+      <if test="fieldName != null" >
+        field_name,
+      </if>
+      <if test="fieldType != null" >
+        field_type,
+      </if>
+      <if test="fieldLength != null" >
+        field_length,
+      </if>
+      <if test="parentNode != null" >
+        parent_node,
+      </if>
+      <if test="srcContent != null" >
+        src_content,
+      </if>
+      <if test="defaultOutput != null" >
+        default_output,
+      </if>
+      <if test="srcWhere != null" >
+        src_where,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tableid != null" >
+        #{tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldDesc != null" >
+        #{fieldDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null" >
+        #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldType != null" >
+        #{fieldType,jdbcType=INTEGER},
+      </if>
+      <if test="fieldLength != null" >
+        #{fieldLength,jdbcType=INTEGER},
+      </if>
+      <if test="parentNode != null" >
+        #{parentNode,jdbcType=VARCHAR},
+      </if>
+      <if test="srcContent != null" >
+        #{srcContent,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultOutput != null" >
+        #{defaultOutput,jdbcType=INTEGER},
+      </if>
+      <if test="srcWhere != null" >
+        #{srcWhere,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryFieldruleCriteria" resultType="java.lang.Integer" >
+    select count(*) from bmc_drquery_fieldrule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bmc_drquery_fieldrule
+    <set >
+      <if test="record.tableid != null" >
+        tableid = #{record.tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fieldDesc != null" >
+        field_desc = #{record.fieldDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fieldName != null" >
+        field_name = #{record.fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fieldType != null" >
+        field_type = #{record.fieldType,jdbcType=INTEGER},
+      </if>
+      <if test="record.fieldLength != null" >
+        field_length = #{record.fieldLength,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentNode != null" >
+        parent_node = #{record.parentNode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.srcContent != null" >
+        src_content = #{record.srcContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultOutput != null" >
+        default_output = #{record.defaultOutput,jdbcType=INTEGER},
+      </if>
+      <if test="record.srcWhere != null" >
+        src_where = #{record.srcWhere,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bmc_drquery_fieldrule
+    set tableid = #{record.tableid,jdbcType=VARCHAR},
+      field_desc = #{record.fieldDesc,jdbcType=VARCHAR},
+      field_name = #{record.fieldName,jdbcType=VARCHAR},
+      field_type = #{record.fieldType,jdbcType=INTEGER},
+      field_length = #{record.fieldLength,jdbcType=INTEGER},
+      parent_node = #{record.parentNode,jdbcType=VARCHAR},
+      src_content = #{record.srcContent,jdbcType=VARCHAR},
+      default_output = #{record.defaultOutput,jdbcType=INTEGER},
+      src_where = #{record.srcWhere,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

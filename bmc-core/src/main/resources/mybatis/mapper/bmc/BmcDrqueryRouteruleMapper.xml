@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.BmcDrqueryRouteruleMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryRouterule" >
+    <result column="tenantId" property="tenantid" jdbcType="VARCHAR" />
+    <result column="systemId" property="systemid" jdbcType="VARCHAR" />
+    <result column="serviceType" property="servicetype" jdbcType="VARCHAR" />
+    <result column="Tableid" property="tableid" jdbcType="VARCHAR" />
+    <result column="tablename" property="tablename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tenantId, systemId, serviceType, Tableid, tablename
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryRouteruleCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bmc_drquery_routerule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryRouteruleCriteria" >
+    delete from bmc_drquery_routerule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryRouterule" >
+    insert into bmc_drquery_routerule (tenantId, systemId, serviceType, 
+      Tableid, tablename)
+    values (#{tenantid,jdbcType=VARCHAR}, #{systemid,jdbcType=VARCHAR}, #{servicetype,jdbcType=VARCHAR}, 
+      #{tableid,jdbcType=VARCHAR}, #{tablename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryRouterule" >
+    insert into bmc_drquery_routerule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tenantid != null" >
+        tenantId,
+      </if>
+      <if test="systemid != null" >
+        systemId,
+      </if>
+      <if test="servicetype != null" >
+        serviceType,
+      </if>
+      <if test="tableid != null" >
+        Tableid,
+      </if>
+      <if test="tablename != null" >
+        tablename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tenantid != null" >
+        #{tenantid,jdbcType=VARCHAR},
+      </if>
+      <if test="systemid != null" >
+        #{systemid,jdbcType=VARCHAR},
+      </if>
+      <if test="servicetype != null" >
+        #{servicetype,jdbcType=VARCHAR},
+      </if>
+      <if test="tableid != null" >
+        #{tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="tablename != null" >
+        #{tablename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcDrqueryRouteruleCriteria" resultType="java.lang.Integer" >
+    select count(*) from bmc_drquery_routerule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bmc_drquery_routerule
+    <set >
+      <if test="record.tenantid != null" >
+        tenantId = #{record.tenantid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemid != null" >
+        systemId = #{record.systemid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servicetype != null" >
+        serviceType = #{record.servicetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tableid != null" >
+        Tableid = #{record.tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tablename != null" >
+        tablename = #{record.tablename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bmc_drquery_routerule
+    set tenantId = #{record.tenantid,jdbcType=VARCHAR},
+      systemId = #{record.systemid,jdbcType=VARCHAR},
+      serviceType = #{record.servicetype,jdbcType=VARCHAR},
+      Tableid = #{record.tableid,jdbcType=VARCHAR},
+      tablename = #{record.tablename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

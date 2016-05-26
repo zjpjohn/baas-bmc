@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.context;
 
 public class Constants {
+	public static String DR_QUERY_FAIMLY= "detail_bill";
 	/**
 	 * 服务端的信息
 	 * @author biancx
