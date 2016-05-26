@@ -10,10 +10,10 @@ public interface IBmcRecordFmtAtomSV {
     
     /**
      * 新增数据
-     * @param record
+     * @param records
      * @author liangbs
      */
-	public void add(BmcRecordFmt record);
+	public void addRecordList(List<BmcRecord> records);
 
     /**
      * 新增数据

@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.service.atom.impl;
 
+import com.ai.baas.bmc.api.businessdatamaintain.params.BmcRecord;
 import com.ai.baas.bmc.dao.interfaces.RtmSrcInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.RtmSrcInfo;
 import com.ai.baas.bmc.dao.mapper.bo.RtmSrcInfoCriteria;
@@ -18,15 +19,24 @@ public class RtmSrcInfoAtomImpl implements IRtmSrcInfoAtomSV {
     private RtmSrcInfoMapper srcInfoMapper;
 
     @Override
-    public void addRecord(RtmSrcInfo srcInfo) {
-        if(!StringUtil.isBlank(srcInfo.getTenantId())&&!StringUtil.isBlank(srcInfo.getInfoType())){
-            RtmSrcInfoCriteria example = new RtmSrcInfoCriteria();
-            RtmSrcInfoCriteria.Criteria criteria = example.or();
-            criteria.andTenantIdEqualTo(srcInfo.getTenantId());
-            criteria.andInfoTypeEqualTo(srcInfo.getInfoType());
-            List<RtmSrcInfo> rtmSrcInfos = srcInfoMapper.selectByExample(example);
-            if(CollectionUtil.isEmpty(rtmSrcInfos)){
-                srcInfoMapper.insertSelective(srcInfo);
+    public void addRecordList(List<BmcRecord> srcInfos) {
+        if(!CollectionUtil.isEmpty(srcInfos)){
+            BmcRecord record = srcInfos.get(0);
+            if(!StringUtil.isBlank(record.getTenantId())&&!StringUtil.isBlank(record.getServiceType())){
+                RtmSrcInfoCriteria example = new RtmSrcInfoCriteria();
+                RtmSrcInfoCriteria.Criteria criteria = example.or();
+                criteria.andTenantIdEqualTo(record.getTenantId());
+                criteria.andInfoTypeEqualTo(record.getServiceType());
+                List<RtmSrcInfo> rtmSrcInfos = srcInfoMapper.selectByExample(example);
+                if(CollectionUtil.isEmpty(rtmSrcInfos)){
+                    RtmSrcInfo srcInfo = new RtmSrcInfo();
+                    srcInfo.setTenantId(record.getTenantId());
+                    srcInfo.setInfoType(record.getServiceType());
+                    srcInfo.setFieldSplitFlag(String.valueOf((char)1));
+                    srcInfo.setRecordSplitFlag(String.valueOf((char)2));
+                    srcInfo.setInfoSplitFlag(String.valueOf((char)3));
+                    srcInfoMapper.insertSelective(srcInfo);
+                }
             }
         }
     }

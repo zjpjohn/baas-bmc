@@ -5,12 +5,9 @@ import com.ai.baas.bmc.api.businessdatamaintain.params.BmcRecord;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryResponse;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmt;
-import com.ai.baas.bmc.dao.mapper.bo.RtmSrcInfo;
-import com.ai.baas.bmc.dao.mapper.bo.RtmSrcRecord;
 import com.ai.baas.bmc.service.atom.interfaces.IBmcRecordFmtAtomSV;
 import com.ai.baas.bmc.service.atom.interfaces.IRtmSrcInfoAtomSV;
 import com.ai.baas.bmc.service.atom.interfaces.IRtmSrcRecordAtomSV;
-import com.ai.baas.bmc.util.BmcSeqUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
@@ -25,7 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service(validation="true")
 @Component
@@ -48,26 +47,24 @@ public class BillingBusinessDataMaintainSVImpl implements IBillingBusinessDataMa
         BaseResponse response;
         try {
             if(!CollectionUtil.isEmpty(importData)){
+                Map<String,List<BmcRecord>> dataMap = new HashMap<>();
                 for (BmcRecord record:importData) {
-                    BmcRecordFmt recordFmt = new BmcRecordFmt();
-                    BeanUtils.copyProperties(recordFmt,record);
-                    recordFmt.setId(Integer.parseInt(BmcSeqUtil.getRecordId()));
-                    iBmcRecordFmtAtom.add(recordFmt);
-
-                    RtmSrcInfo srcInfo = new RtmSrcInfo();
-                    srcInfo.setTenantId(record.getTenantId());
-                    srcInfo.setInfoType(record.getServiceType());
-                    iRtmSrcInfoAtom.addRecord(srcInfo);
-
-                    RtmSrcRecord srcRecord = new RtmSrcRecord();
-                    srcRecord.setInfoId(record.getSource());
-                    srcRecord.setFieldId(String.valueOf(record.getFieldSerial()));
-                    srcRecord.setFieldName(record.getFieldCode());
-                    srcRecord.setFieldLength("1");
-                    srcRecord.setStartLocal("0");
-                    srcRecord.setIsSn(record.getIsSn());
-                    srcRecord.setFieldType("String");
-                    iRtmSrcRecordAtom.addRecord(srcRecord);
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(record.getTenantId()).append(record.getServiceType()).append(record.getSource());
+                    String key = builder.toString();
+                    if(dataMap.containsKey(key)){
+                        List<BmcRecord> records = dataMap.get(key);
+                        records.add(record);
+                    }else{
+                        List<BmcRecord> bmcRecords = new ArrayList<>();
+                        bmcRecords.add(record);
+                        dataMap.put(key,bmcRecords);
+                    }
+                }
+                for(List<BmcRecord> bmcRecordList:dataMap.values()){
+                    iBmcRecordFmtAtom.addRecordList(bmcRecordList);
+                    iRtmSrcInfoAtom.addRecordList(bmcRecordList);
+                    iRtmSrcRecordAtom.addRecordList(bmcRecordList);
                 }
             }
             response = new BaseResponse();

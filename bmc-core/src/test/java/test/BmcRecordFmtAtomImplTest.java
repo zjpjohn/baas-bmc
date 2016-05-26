@@ -26,6 +26,6 @@ public class BmcRecordFmtAtomImplTest {
         record.setSource("TEST");
         record.setServiceType("TEST");
         System.out.println("入参:"+ JSONObject.fromObject(record));
-        iBmcRecordFmtAtom.add(record);
+        //iBmcRecordFmtAtom.add(record);
     }
 }
