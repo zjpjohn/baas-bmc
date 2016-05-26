@@ -9,8 +9,8 @@ import com.ai.opt.base.vo.BaseResponse;
 public class ReBillingBussinessImpl implements IReBillingBussiness {
 
     @Override
-    public BaseResponse reBilling(ReBillingParam param) throws BusinessException, SystemException {
-        return null;
+    public long reBilling(ReBillingParam param) throws BusinessException, SystemException {
+        return 0;
     }
 
 }

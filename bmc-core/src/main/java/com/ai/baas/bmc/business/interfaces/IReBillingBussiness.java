@@ -16,5 +16,5 @@ public interface IReBillingBussiness {
      * @ApiDocMethod
      * @ApiCode BMC_0028
      */
-    public BaseResponse reBilling (ReBillingParam param) throws BusinessException,SystemException;
+    public long reBilling (ReBillingParam param) throws BusinessException,SystemException;
 }
