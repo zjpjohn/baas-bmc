@@ -85,10 +85,10 @@ public class DetailBillTest {
 				put.addColumn("detail_bill".getBytes(), "subject2".getBytes(), "通话1".getBytes());
 				put.addColumn("detail_bill".getBytes(), "subject3".getBytes(), "于心1".getBytes());
 				put.addColumn("detail_bill".getBytes(), "tenant_id".getBytes(), "VIV-BYD".getBytes());
-				put.addColumn("detail_bill".getBytes(), "call_type".getBytes(), "被叫".getBytes());
+				put.addColumn("detail_bill".getBytes(), "call_type".getBytes(), "MO".getBytes());
 				put.addColumn("detail_bill".getBytes(), "opp_number".getBytes(), "13523411234".getBytes());
 				put.addColumn("detail_bill".getBytes(), "visit_area".getBytes(), "北京1".getBytes());
-				put.addColumn("detail_bill".getBytes(), "long_type".getBytes(), "local".getBytes());
+				put.addColumn("detail_bill".getBytes(), "long_type".getBytes(), "LOCAL".getBytes());
 			
 				
 //				String data = getData();
@@ -109,6 +109,66 @@ public class DetailBillTest {
 			
 		}
 		
+		@Test
+		public void addTRGprsData(){
+			
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append("38").append(FIELD_SPLIT);
+			sb.append("100").append(FIELD_SPLIT);
+			sb.append("999999BHC436").append(FIELD_SPLIT);
+			sb.append("snsnsns1").append(FIELD_SPLIT);
+			sb.append("1459440000001");
+			String rowkey1=sb.toString();
+			
+			
+			
+			
+			Connection conn = HBaseProxy.getConnection();
+			byte[] rowKey = rowkey1.getBytes();
+			Table table = null;
+			try {
+				table = conn.getTable(TableName
+						.valueOf("VIV-BYD_GPRS_DR_201605"));
+
+				Put put = new Put(rowKey);
+				//添加各个列族里面的数据
+				put.addColumn("detail_bill".getBytes(), "cust_id".getBytes(), "38".getBytes());
+				put.addColumn("detail_bill".getBytes(), "cal_type".getBytes(), "GPRS1".getBytes());
+				put.addColumn("detail_bill".getBytes(), "gprs_down".getBytes(), "14562816000".getBytes());
+				put.addColumn("detail_bill".getBytes(), "fee1".getBytes(), "123123111111".getBytes());
+				
+				put.addColumn("detail_bill".getBytes(), "gprs_up".getBytes(), "1024000000".getBytes());
+				put.addColumn("detail_bill".getBytes(), "service_id".getBytes(), "999999BHC282".getBytes());
+				put.addColumn("detail_bill".getBytes(), "subs_id".getBytes(), "100".getBytes());
+				put.addColumn("detail_bill".getBytes(), "start_time".getBytes(), "123213213213".getBytes());
+				
+				put.addColumn("detail_bill".getBytes(), "sn".getBytes(), "1456281622845".getBytes());
+				
+				
+				put.addColumn("detail_bill".getBytes(), "tenant_id".getBytes(), "VIV-BYD".getBytes());
+				
+				put.addColumn("detail_bill".getBytes(), "is_special".getBytes(), "YES".getBytes());
+				put.addColumn("detail_bill".getBytes(), "visit_area".getBytes(), "北京".getBytes());
+				
+			
+				
+//				String data = getData();
+//				put.addColumn("detail".getBytes(), "record".getBytes(), data.getBytes());
+				table.put(put);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (table != null) {
+					try {
+						table.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		//详单查询测试
 		@Test
 		public void queryTR(){
@@ -158,8 +218,8 @@ public void testGet(){
 	QueryBillRequest request=new QueryBillRequest();
 	request.setCustId("38");
 	request.setSearchTime("2016-05");
-	request.setServiceId("999999BHC282");
-	request.setSubsId("101");
+	request.setServiceId("999999BHC436");
+	request.setSubsId("100");
 	request.setTenantId("VIV-BYD");
 	System.out.println(JSON.toJSONString(IDetailBillQuerySV.getDetailBill(request)));
 }
