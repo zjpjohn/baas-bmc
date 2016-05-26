@@ -281,8 +281,8 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "start_time".getBytes());
 		if(cell != null){
-			String long_type=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
-			param.setLongType(long_type);
+			String startTime=Bytes.toString(cell.getValueArray(),cell.getValueOffset(), cell.getValueLength());
+			param.setStartTime(startTime);
 		}
 		cell=result.getColumnLatestCell("detail_bill".getBytes(), "service_type".getBytes());
 		if(cell != null){
