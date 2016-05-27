@@ -469,7 +469,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
     }
 
     private void sendKafka(String type, BlUserinfo aBluserinfo, BlSubsComm aBlSubsComm) {
-        String mdsns = "baas-ResourceClient-topic";//
+        String mdsns = "baas-ResourceClient-topic"; //"baas-ResourceClient-topic";//
         IMessageSender msgSender = MDSClientFactory.getSenderClient(mdsns);
         
         if(type.equals("USR")){
@@ -491,7 +491,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             subsCommObject.put("PRODUCT_ID", aBlSubsComm.getProductId());
             subsCommObject.put("SUBS_PRODUCT_ID", aBlSubsComm.getSubsProductId());
             int part=0;
-            msgSender.send(aBlSubsComm.toString(), part);//第二个参数为分区键，如果不分区，传入0           
+            msgSender.send(subsCommObject.toString(), part);//第二个参数为分区键，如果不分区，传入0           
         }
         
     }
