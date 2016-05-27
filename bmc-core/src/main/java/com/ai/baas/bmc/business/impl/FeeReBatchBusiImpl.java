@@ -123,15 +123,28 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
         scan.setFilter(filterList);
         ResultScanner resultScanner = table.getScanner(scan);
         Iterator<Result> resultIterator = resultScanner.iterator();
+        String dupTableName = this.buildDuplicateBillTableName(criteria);
         //逐条发送和删除费用数据
         while (resultIterator.hasNext()) {
             Result result = resultIterator.next();
             FeeParam feeParam = getFeeParam(result);
             String message = generateMessage(feeParam);
+            cleanDuplicateData(dupTableName, feeParam.getBsn());
             cleanFeeData(feeParam, tableName);
             MDSUtil.sendMessage(BmcConstants.MDSNS.BMC_KAFKA_TOPIC,message);
         }
 	}
+	
+	private void cleanDuplicateData(String tabName, String rowKey) throws IOException {
+        Table duplicateionBill = MyHbaseUtil.getTable(tabName);
+        Delete duplicateDelete = new Delete(rowKey.getBytes());
+        duplicateionBill.delete(duplicateDelete);
+    }
+
+    private String buildDuplicateBillTableName(FeeReBatchCriteria criteria) {
+        return criteria.getTenantId() + "_" + criteria.getServiceType() + "_dup_" 
+        		+ criteria.getAccountPeriod().substring(0, 6);
+    }
 	
 	private String buildTableName(FeeReBatchCriteria criteria){
 		return criteria.getTenantId()+"_"+criteria.getServiceType()+

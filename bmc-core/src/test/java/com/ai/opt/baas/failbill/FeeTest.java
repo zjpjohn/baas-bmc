@@ -76,6 +76,7 @@ public class FeeTest {
 	    	queryInfo.setAccountPeriod("2016051212");
 	    	queryInfo.setReBatchType("test");
 	    	param.setCriteria(queryInfo);
+	    	JSONArray.fromObject(param);
 	    	BaseResponse response = feeReBatchSV.batchResendFee(param);
 	    	System.out.println("标准资费查询出参:"+JSON.toJSONString(response));
 	    }
