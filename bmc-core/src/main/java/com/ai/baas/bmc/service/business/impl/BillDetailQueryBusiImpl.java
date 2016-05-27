@@ -16,6 +16,8 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.filter.CompareFilter;
 import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.filter.FilterList;
+import org.apache.hadoop.hbase.filter.PageFilter;
 import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.filter.SubstringComparator;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -39,7 +41,6 @@ import com.ai.baas.bmc.service.atom.interfaces.IBmcOutputInfoAtomSV;
 import com.ai.baas.bmc.service.atom.interfaces.ICpPriceInfoAtom;
 import com.ai.baas.bmc.service.business.interfaces.IBillDetailQueryBusiSV;
 import com.ai.baas.bmc.util.MyHbaseUtil;
-import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
@@ -88,16 +89,28 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 					
 					String rowkey1=sb.toString();
 					table = MyHbaseUtil.getConnection().getTable(TableName.valueOf(tableName));
+					FilterList flist = new FilterList(FilterList.Operator.MUST_PASS_ONE); 
 					 Filter filter1 = new RowFilter(CompareFilter.CompareOp.EQUAL,
 		                     new SubstringComparator(rowkey1));
+					 flist.addFilter(filter1);
+					 
+					 Filter pfilter = new PageFilter(5000);
+					 flist.addFilter(pfilter);
+					 
+					 
+					 
 					Scan scan = new Scan();
 					
 					scan.setFilter(filter1);
-				    rs = table.getScanner(scan);
-					Iterator<Result> resultIterator=rs.iterator();
 					
-					while(resultIterator.hasNext()){
-						 Result result = resultIterator.next();
+				    rs = table.getScanner(scan);
+				    //rs.next(5000); ////待测试
+					//Iterator<Result> resultIterator=rs.iterator();
+					
+					//while(resultIterator.hasNext()){
+						
+						for(Result result : rs.next(5000)){
+						// Result result = resultIterator.next();
 						//如果是语音，需要给语音相关的实体类赋值，如果是流量则需要给流量的数据赋值
 						
 						 if("VOICE".equals(serviceType)){
@@ -159,14 +172,11 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		List<BlSubsComm> commonList=iBlSubsCommonAtomSV.getSubsCommon(request.getSubsId(), request.getTenantId());
 		for(BlSubsComm comm:commonList){
 			Long st=getDate(request.getSearchTime());
-//			System.out.println("生效时间————————》"+comm.getActiveTime());
-//			System.out.println("转化后-----》"+DateUtil.getDateString(comm.getActiveTime(), "YYYYMM"));
+
 			
 			Long activeTime=getDate(DateUtil.getDateString(comm.getActiveTime(), "YYYYMM"));
 			System.out.println(st>activeTime||st==activeTime);
-//			System.out.println("失效时间—————————》"+comm.getInactiveTime());
-			//DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM");
-//			System.out.println("转化后-----》"+DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM"));
+
 			Long inactiveTime=getDate(DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM"));
 			
 			System.out.println(st<inactiveTime||st==inactiveTime);

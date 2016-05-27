@@ -52,7 +52,7 @@ public class DetailBillTest {
 			sb.append("38").append(FIELD_SPLIT);
 			sb.append("100").append(FIELD_SPLIT);
 			sb.append("999999BHC436").append(FIELD_SPLIT);
-			sb.append("snsnsns1").append(FIELD_SPLIT);
+			sb.append("sn111q").append(FIELD_SPLIT);
 			sb.append("1459440000001");
 			String rowkey1=sb.toString();
 			
