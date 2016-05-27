@@ -112,7 +112,8 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 						 if("GPRS".equals(serviceType)){
 							 GPRSParam gParam=setGPRSParamValut(result); 
 							 gprsSubMoney=gprsSubMoney+Long.valueOf(gParam.getFee1());
-							 gprsSubTotal=gprsSubMoney+Long.valueOf(gParam.getGprsDown())+Long.valueOf(gParam.getGprsUp());
+							
+							 gprsSubTotal=gprsSubTotal+Long.valueOf(gParam.getGprsDown())+Long.valueOf(gParam.getGprsUp());
 							 gps.add(gParam);
 						 }
 					}
