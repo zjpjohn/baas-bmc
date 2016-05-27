@@ -5,6 +5,8 @@ public class StatYyyymmKey {
 
     private String subsId;
 
+    private String source;
+
     public String getCustId() {
         return custId;
     }
@@ -19,5 +21,13 @@ public class StatYyyymmKey {
 
     public void setSubsId(String subsId) {
         this.subsId = subsId == null ? null : subsId.trim();
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source == null ? null : source.trim();
     }
 }

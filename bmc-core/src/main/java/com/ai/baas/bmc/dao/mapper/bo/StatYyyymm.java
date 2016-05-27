@@ -13,8 +13,6 @@ public class StatYyyymm extends StatYyyymmKey {
 
     private Double duration;
 
-    private String source;
-
     private Timestamp updateTime;
 
     public String getServiceNum() {
@@ -55,14 +53,6 @@ public class StatYyyymm extends StatYyyymmKey {
 
     public void setDuration(Double duration) {
         this.duration = duration;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source == null ? null : source.trim();
     }
 
     public Timestamp getUpdateTime() {
