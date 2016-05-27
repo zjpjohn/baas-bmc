@@ -23,7 +23,7 @@ public interface ICustInfoQuerySV {
 	 * @ApiCode
 	 */
 	CustInfoResponse getCustInfos(QueryCustInfoRequest param) throws BusinessException, SystemException;
-    
+    @interface GetCustInfos{}
     
     
 }

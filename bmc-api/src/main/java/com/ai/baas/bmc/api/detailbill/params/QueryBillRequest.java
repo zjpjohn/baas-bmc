@@ -1,15 +1,25 @@
 package com.ai.baas.bmc.api.detailbill.params;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.opt.base.vo.BaseInfo;
 
 public class QueryBillRequest extends BaseInfo {
 
 	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 流水号
+	 */
+	@NotBlank(message="消息流水号不能为空")
 	private String tradeSeq;
+	@NotBlank(message="custId不能为空")
 	private String custId;
+	@NotBlank(message="serviceId不能为空")
 	private String serviceId;
+	@NotBlank(message="subsId不能为空")
 	private String subsId;
+	@NotBlank(message="查询时间不能为空")
 	private String searchTime;
 	public String getCustId() {
 		return custId;

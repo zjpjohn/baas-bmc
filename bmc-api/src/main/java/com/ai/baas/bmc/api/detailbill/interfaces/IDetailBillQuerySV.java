@@ -23,4 +23,5 @@ public interface IDetailBillQuerySV {
 	 * @ApiCode
 	 */
 	public DetailBillResponse getDetailBill(QueryBillRequest request) throws BusinessException,SystemException;
+	@interface GetDetailBill{}
 }
