@@ -1,11 +1,15 @@
 package com.ai.baas.bmc.api.feeReBatch.params;
 
+import java.io.Serializable;
+
 /**
  * 费用批量回退入參
  * @author wangluyang
  *
  */
-public class FeeReBatchParam {
+public class FeeReBatchParam implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 查询条件

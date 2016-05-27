@@ -48,15 +48,6 @@ public class FeeParam extends BaseInfo{
     
     private String custNo;
     private String userNo;
-    private String upstreamFlow;
-    private String downFlow;
-    private String totalFlow;
-    private String fee;
-    
-    private String callNumber;
-    private String calledNumber;
-    private String startDate;
-    private String callDuration;
     
 	private Map<String, String> feePacket;
 	
@@ -146,86 +137,6 @@ public class FeeParam extends BaseInfo{
 
 	public void setUserNo(String userNo) {
 		this.userNo = userNo;
-	}
-
-
-	public String getUpstreamFlow() {
-		return upstreamFlow;
-	}
-
-
-	public void setUpstreamFlow(String upstreamFlow) {
-		this.upstreamFlow = upstreamFlow;
-	}
-
-
-	public String getDownFlow() {
-		return downFlow;
-	}
-
-
-	public void setDownFlow(String downFlow) {
-		this.downFlow = downFlow;
-	}
-
-
-	public String getTotalFlow() {
-		return totalFlow;
-	}
-
-
-	public void setTotalFlow(String totalFlow) {
-		this.totalFlow = totalFlow;
-	}
-
-
-	public String getFee() {
-		return fee;
-	}
-
-
-	public void setFee(String fee) {
-		this.fee = fee;
-	}
-
-
-	public String getCallNumber() {
-		return callNumber;
-	}
-
-
-	public void setCallNumber(String callNumber) {
-		this.callNumber = callNumber;
-	}
-
-
-	public String getCalledNumber() {
-		return calledNumber;
-	}
-
-
-	public void setCalledNumber(String calledNumber) {
-		this.calledNumber = calledNumber;
-	}
-
-
-	public String getStartDate() {
-		return startDate;
-	}
-
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-
-	public String getCallDuration() {
-		return callDuration;
-	}
-
-
-	public void setCallDuration(String callDuration) {
-		this.callDuration = callDuration;
 	}
 
 
