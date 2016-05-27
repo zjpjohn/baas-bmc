@@ -61,7 +61,8 @@ import com.ai.baas.bmc.service.business.interfaces.BmcSv;
 import com.ai.baas.bmc.service.business.interfaces.IQueryBillSvc;
 import com.ai.baas.bmc.service.business.interfaces.IUseQuantityQuerySvc;
 import com.ai.baas.bmc.util.CheckUtil;
-import com.ai.opt.baas.failbill.HBaseProxy;
+import com.ai.baas.bmc.util.MyHbaseUtil;
+//import com.ai.opt.baas.failbill.HBaseProxy;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.util.BeanUtils;
@@ -78,7 +79,7 @@ import com.google.gson.reflect.TypeToken;
 public class DrQueryImpl implements IDrQuery {
     private static final Logger log = LogManager.getLogger(DrQueryImpl.class);
     
-    private org.apache.hadoop.hbase.client.Connection conn = HBaseProxy.getConnection();
+    //private org.apache.hadoop.hbase.client.Connection conn = HBaseProxy.getConnection();
     
     //add by shihua 2016-04-19 
     @Autowired
@@ -860,8 +861,8 @@ public class DrQueryImpl implements IDrQuery {
 		}
 		Table table = null;
 		try {
-			table = conn.getTable(TableName.valueOf(routerule.getTablename()+nowString));
-		} catch (IOException e) {
+			table = MyHbaseUtil.getTable(routerule.getTablename()+nowString);//conn.getTable(TableName.valueOf(routerule.getTablename()+nowString));
+		} catch (Exception e) {
 			log.error("获取hbase表对象失败，请检查配置！",e);
         	drres.setReturnCode("BMC-000004" + "表信息配置错误，请检查配置！" );
             return drres;
