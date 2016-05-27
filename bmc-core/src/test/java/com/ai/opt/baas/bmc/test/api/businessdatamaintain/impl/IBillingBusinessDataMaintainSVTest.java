@@ -2,6 +2,8 @@ package com.ai.opt.baas.bmc.test.api.businessdatamaintain.impl;
 
 import com.ai.baas.bmc.api.businessdatamaintain.interfaces.IBillingBusinessDataMaintainSV;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BmcRecord;
+import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryRequest;
+import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +43,16 @@ public class IBillingBusinessDataMaintainSVTest {
     }
 
     @Test
-    public void testASCII(){
+    public void testQuery(){
         System.out.println("=============================");
         System.out.println(String.valueOf((char)1));
         System.out.println(String.valueOf((char)2));
         System.out.println(String.valueOf((char)3));
+        BusinessDataQueryRequest req = new BusinessDataQueryRequest();
+        req.setTenantId("Test-1");
+        req.setServiceType("voice-test");
+        req.setSource("mvne");
+        BusinessDataQueryResponse dataFormatList = iBillingBusinessDataMaintainSV.getDataFormatList(req);
+        List<BmcRecord> recordList = dataFormatList.getRecordList();
     }
 }
