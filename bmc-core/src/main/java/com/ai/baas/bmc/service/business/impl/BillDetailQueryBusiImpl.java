@@ -123,9 +123,15 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 					throw new BusinessException("888888", "数据不存在");
 					
 				}finally{
-					rs.close();
+					if(null!=rs){
+						rs.close();
+					}
+					
 					try {
-						table.close();
+						if(null!=table){
+							table.close();
+						}
+						
 					} catch (IOException e) {
 						logger.info(e.getMessage());
 					}
