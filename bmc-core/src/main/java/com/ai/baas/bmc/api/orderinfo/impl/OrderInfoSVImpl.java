@@ -188,10 +188,17 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
                         resultParams.setResponseHeader(new ResponseHeader(false,"000001","产品列表中的参数不能为空"));
                         return resultParams;
                     }
-                    if(pt.getProductType().equals("bill")&&pt.getProductNumber()!=1){
+                    
+                    if((pt.getProductType().equals("bill"))&&pt.getProductNumber()!=1){
                         resultParams.setResponseHeader(new ResponseHeader(false,"000001","订购账单产品ProductNumber必须为1,订购失败"));
                         return resultParams;
                     }
+                    
+                    if(pt.getSubsProductId()!=null&&pt.getProductNumber()!=1){
+                        resultParams.setResponseHeader(new ResponseHeader(false,"000001","传入subsProductId时，订购账单产品的ProductNumber必须为1,订购失败"));
+                        return resultParams;
+                    }
+                    
                     if(!pt.getProductType().equals("bill")&&!pt.getProductType().equals("dr")){
                         resultParams.setResponseHeader(new ResponseHeader(false,"000001","订购账单产品productType必须为dr或bill,订购失败"));
                         return resultParams;

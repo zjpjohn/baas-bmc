@@ -43,8 +43,8 @@ public class OrderinfoTest {
         a.setTenantId("11111");               
         a.setExtCustId("1111");//外部客户ID
         
-        a.setServiceId("1234555555");
-        a.setTradeSeq("91112a122223sfd91111");
+        a.setServiceId("12345555551111");
+        a.setTradeSeq("91115412312391111");
 
         a.setUsetype("Test");
         a.setState("Normal");
@@ -59,16 +59,17 @@ public class OrderinfoTest {
         a.setRemark("666666");
             o.setExtName("connectPhone");
             o.setExtValue("11111999999");
-            o.setUpdateFlag("U");
+            o.setUpdateFlag("N");
             orderExtList.add(o);
        a.setOrderExtInfo(orderExtList);
                 
 //           p.setProductId("5555");
 //           p.setProductType("bill");
        
-            p.setProductId("0000001625");
+            p.setProductId("0000001501");
             p.setProductType("dr");
-            p.setProductNumber(1);
+            p.setSubsProductId("5");
+            p.setProductNumber(4);
             p.setResBonusFlag("Y");
             p.setActiveTime("20160406235959");
             p.setInactiveTime("20200411235959");

@@ -2,7 +2,11 @@ package com.ai.baas.bmc.dao.mapper.bo;
 
 import java.sql.Timestamp;
 
-public class BlUserinfo extends BlUserinfoKey {
+public class BlUserinfo {
+    private String subsId;
+
+    private String tenantId;
+
     private String custId;
 
     private String acctId;
@@ -19,6 +23,8 @@ public class BlUserinfo extends BlUserinfoKey {
 
     private String devId;
 
+    private Timestamp activeTime;
+
     private Timestamp inactiveTime;
 
     private String remark;
@@ -28,6 +34,24 @@ public class BlUserinfo extends BlUserinfoKey {
     private String userType;
 
     private String userState;
+
+    private String policyId;
+
+    public String getSubsId() {
+        return subsId;
+    }
+
+    public void setSubsId(String subsId) {
+        this.subsId = subsId == null ? null : subsId.trim();
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId == null ? null : tenantId.trim();
+    }
 
     public String getCustId() {
         return custId;
@@ -93,6 +117,14 @@ public class BlUserinfo extends BlUserinfoKey {
         this.devId = devId == null ? null : devId.trim();
     }
 
+    public Timestamp getActiveTime() {
+        return activeTime;
+    }
+
+    public void setActiveTime(Timestamp activeTime) {
+        this.activeTime = activeTime;
+    }
+
     public Timestamp getInactiveTime() {
         return inactiveTime;
     }
@@ -131,5 +163,13 @@ public class BlUserinfo extends BlUserinfoKey {
 
     public void setUserState(String userState) {
         this.userState = userState == null ? null : userState.trim();
+    }
+
+    public String getPolicyId() {
+        return policyId;
+    }
+
+    public void setPolicyId(String policyId) {
+        this.policyId = policyId == null ? null : policyId.trim();
     }
 }

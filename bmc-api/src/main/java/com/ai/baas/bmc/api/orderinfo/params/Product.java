@@ -30,6 +30,13 @@ public class Product implements Serializable {
     private String productId;
     
     /**
+     * 产品实例ID<br>
+     * VARCHAR(32)
+     */
+    @Size(max=32,groups={IOrderInfoSV.OrderInfo.class})
+    private String subsProductId;
+    
+    /**
      * 产品类型<br>
      * 取值范围：dr:详单, bill:账单
      * 必填<br>
@@ -140,6 +147,14 @@ public class Product implements Serializable {
 
     public void setProductType(String productType) {
         this.productType = productType;
+    }
+
+    public String getSubsProductId() {
+        return subsProductId;
+    }
+
+    public void setSubsProductId(String subsProductId) {
+        this.subsProductId = subsProductId;
     }
 
     

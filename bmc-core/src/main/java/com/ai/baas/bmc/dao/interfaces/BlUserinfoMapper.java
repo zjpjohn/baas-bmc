@@ -1,21 +1,16 @@
 package com.ai.baas.bmc.dao.interfaces;
 
-
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.ai.baas.bmc.dao.mapper.bo.BlUserinfo;
 import com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria;
-import com.ai.baas.bmc.dao.mapper.bo.BlUserinfoKey;
-
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface BlUserinfoMapper {
     int countByExample(BlUserinfoCriteria example);
 
     int deleteByExample(BlUserinfoCriteria example);
 
-    int deleteByPrimaryKey(BlUserinfoKey key);
+    int deleteByPrimaryKey(String subsId);
 
     int insert(BlUserinfo record);
 
@@ -23,7 +18,7 @@ public interface BlUserinfoMapper {
 
     List<BlUserinfo> selectByExample(BlUserinfoCriteria example);
 
-    BlUserinfo selectByPrimaryKey(BlUserinfoKey key);
+    BlUserinfo selectByPrimaryKey(String subsId);
 
     int updateByExampleSelective(@Param("record") BlUserinfo record, @Param("example") BlUserinfoCriteria example);
 

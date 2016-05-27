@@ -125,76 +125,6 @@ public class BlUserinfoCriteria {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andTenantIdIsNull() {
-            addCriterion("TENANT_ID is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdIsNotNull() {
-            addCriterion("TENANT_ID is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdEqualTo(String value) {
-            addCriterion("TENANT_ID =", value, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdNotEqualTo(String value) {
-            addCriterion("TENANT_ID <>", value, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdGreaterThan(String value) {
-            addCriterion("TENANT_ID >", value, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdGreaterThanOrEqualTo(String value) {
-            addCriterion("TENANT_ID >=", value, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdLessThan(String value) {
-            addCriterion("TENANT_ID <", value, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdLessThanOrEqualTo(String value) {
-            addCriterion("TENANT_ID <=", value, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdLike(String value) {
-            addCriterion("TENANT_ID like", value, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdNotLike(String value) {
-            addCriterion("TENANT_ID not like", value, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdIn(List<String> values) {
-            addCriterion("TENANT_ID in", values, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdNotIn(List<String> values) {
-            addCriterion("TENANT_ID not in", values, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdBetween(String value1, String value2) {
-            addCriterion("TENANT_ID between", value1, value2, "tenantId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTenantIdNotBetween(String value1, String value2) {
-            addCriterion("TENANT_ID not between", value1, value2, "tenantId");
-            return (Criteria) this;
-        }
-
         public Criteria andSubsIdIsNull() {
             addCriterion("SUBS_ID is null");
             return (Criteria) this;
@@ -265,63 +195,73 @@ public class BlUserinfoCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeIsNull() {
-            addCriterion("ACTIVE_TIME is null");
+        public Criteria andTenantIdIsNull() {
+            addCriterion("TENANT_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeIsNotNull() {
-            addCriterion("ACTIVE_TIME is not null");
+        public Criteria andTenantIdIsNotNull() {
+            addCriterion("TENANT_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeEqualTo(Timestamp value) {
-            addCriterion("ACTIVE_TIME =", value, "activeTime");
+        public Criteria andTenantIdEqualTo(String value) {
+            addCriterion("TENANT_ID =", value, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeNotEqualTo(Timestamp value) {
-            addCriterion("ACTIVE_TIME <>", value, "activeTime");
+        public Criteria andTenantIdNotEqualTo(String value) {
+            addCriterion("TENANT_ID <>", value, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeGreaterThan(Timestamp value) {
-            addCriterion("ACTIVE_TIME >", value, "activeTime");
+        public Criteria andTenantIdGreaterThan(String value) {
+            addCriterion("TENANT_ID >", value, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeGreaterThanOrEqualTo(Timestamp value) {
-            addCriterion("ACTIVE_TIME >=", value, "activeTime");
+        public Criteria andTenantIdGreaterThanOrEqualTo(String value) {
+            addCriterion("TENANT_ID >=", value, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeLessThan(Timestamp value) {
-            addCriterion("ACTIVE_TIME <", value, "activeTime");
+        public Criteria andTenantIdLessThan(String value) {
+            addCriterion("TENANT_ID <", value, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeLessThanOrEqualTo(Timestamp value) {
-            addCriterion("ACTIVE_TIME <=", value, "activeTime");
+        public Criteria andTenantIdLessThanOrEqualTo(String value) {
+            addCriterion("TENANT_ID <=", value, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeIn(List<Timestamp> values) {
-            addCriterion("ACTIVE_TIME in", values, "activeTime");
+        public Criteria andTenantIdLike(String value) {
+            addCriterion("TENANT_ID like", value, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeNotIn(List<Timestamp> values) {
-            addCriterion("ACTIVE_TIME not in", values, "activeTime");
+        public Criteria andTenantIdNotLike(String value) {
+            addCriterion("TENANT_ID not like", value, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeBetween(Timestamp value1, Timestamp value2) {
-            addCriterion("ACTIVE_TIME between", value1, value2, "activeTime");
+        public Criteria andTenantIdIn(List<String> values) {
+            addCriterion("TENANT_ID in", values, "tenantId");
             return (Criteria) this;
         }
 
-        public Criteria andActiveTimeNotBetween(Timestamp value1, Timestamp value2) {
-            addCriterion("ACTIVE_TIME not between", value1, value2, "activeTime");
+        public Criteria andTenantIdNotIn(List<String> values) {
+            addCriterion("TENANT_ID not in", values, "tenantId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTenantIdBetween(String value1, String value2) {
+            addCriterion("TENANT_ID between", value1, value2, "tenantId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTenantIdNotBetween(String value1, String value2) {
+            addCriterion("TENANT_ID not between", value1, value2, "tenantId");
             return (Criteria) this;
         }
 
@@ -875,6 +815,66 @@ public class BlUserinfoCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andActiveTimeIsNull() {
+            addCriterion("ACTIVE_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeIsNotNull() {
+            addCriterion("ACTIVE_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeEqualTo(Timestamp value) {
+            addCriterion("ACTIVE_TIME =", value, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeNotEqualTo(Timestamp value) {
+            addCriterion("ACTIVE_TIME <>", value, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeGreaterThan(Timestamp value) {
+            addCriterion("ACTIVE_TIME >", value, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeGreaterThanOrEqualTo(Timestamp value) {
+            addCriterion("ACTIVE_TIME >=", value, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeLessThan(Timestamp value) {
+            addCriterion("ACTIVE_TIME <", value, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeLessThanOrEqualTo(Timestamp value) {
+            addCriterion("ACTIVE_TIME <=", value, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeIn(List<Timestamp> values) {
+            addCriterion("ACTIVE_TIME in", values, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeNotIn(List<Timestamp> values) {
+            addCriterion("ACTIVE_TIME not in", values, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeBetween(Timestamp value1, Timestamp value2) {
+            addCriterion("ACTIVE_TIME between", value1, value2, "activeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveTimeNotBetween(Timestamp value1, Timestamp value2) {
+            addCriterion("ACTIVE_TIME not between", value1, value2, "activeTime");
+            return (Criteria) this;
+        }
+
         public Criteria andInactiveTimeIsNull() {
             addCriterion("INACTIVE_TIME is null");
             return (Criteria) this;
@@ -1212,6 +1212,76 @@ public class BlUserinfoCriteria {
 
         public Criteria andUserStateNotBetween(String value1, String value2) {
             addCriterion("USER_STATE not between", value1, value2, "userState");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdIsNull() {
+            addCriterion("policy_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdIsNotNull() {
+            addCriterion("policy_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdEqualTo(String value) {
+            addCriterion("policy_id =", value, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdNotEqualTo(String value) {
+            addCriterion("policy_id <>", value, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdGreaterThan(String value) {
+            addCriterion("policy_id >", value, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdGreaterThanOrEqualTo(String value) {
+            addCriterion("policy_id >=", value, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdLessThan(String value) {
+            addCriterion("policy_id <", value, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdLessThanOrEqualTo(String value) {
+            addCriterion("policy_id <=", value, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdLike(String value) {
+            addCriterion("policy_id like", value, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdNotLike(String value) {
+            addCriterion("policy_id not like", value, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdIn(List<String> values) {
+            addCriterion("policy_id in", values, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdNotIn(List<String> values) {
+            addCriterion("policy_id not in", values, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdBetween(String value1, String value2) {
+            addCriterion("policy_id between", value1, value2, "policyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPolicyIdNotBetween(String value1, String value2) {
+            addCriterion("policy_id not between", value1, value2, "policyId");
             return (Criteria) this;
         }
     }

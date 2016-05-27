@@ -39,14 +39,17 @@ import com.ai.baas.bmc.dao.mapper.bo.BlUserinfo;
 import com.ai.baas.bmc.dao.mapper.bo.BlUserinfoExt;
 import com.ai.baas.bmc.dao.mapper.bo.BlUserinfoExtCriteria;
 import com.ai.baas.bmc.util.DshmUtil;
+import com.ai.baas.bmc.util.KafkaUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.baas.bmc.util.MyHbaseUtil.CellTemp;
 import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.sdk.components.mds.MDSClientFactory;
 import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.util.StringUtil;
+import com.ai.paas.ipaas.mds.IMessageSender;
 import com.alibaba.fastjson.JSON;
 
 import net.sf.json.JSONObject;
@@ -266,6 +269,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
 
         aBlSubsCommMapper.updateByExampleSelective(aBlSubsComm, blSubsCommCriteria);
         
+        
+        
         // 刷新产品订购信息的内存表
         json.put("subs_id", aBlSubsComm.getSubsId());
         json.put("subs_product_id", aBlSubsComm.getSubsProductId());
@@ -276,6 +281,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         json.put("product_type", aBlSubsComm.getProductType());
         DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),0);//0为更新
         LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());        
+        
+        sendKafka("COM",null,aBlSubsComm);
     }
     
     // 产品订购信息表操作
@@ -284,7 +291,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         for (int i = 0; i < product.getProductNumber(); i++) {
             BlSubsComm aBlSubsComm = new BlSubsComm();
             JSONObject json = new JSONObject();
-            
+      
             //时间格式转换
             Date dDate = null;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -307,8 +314,14 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             aBlSubsComm.setProductType(product.getProductType());//新增字段
             
             aBlSubsComm.setSubsId(userInfo.getSubsId());
-            aBlSubsComm.setSubsProductId(
-                    aISysSequenceSvc.terrigerSysSequence("SUBS_PRODUCT_ID", 1).get(0));
+            
+            if(product.getSubsProductId()!=null){
+                aBlSubsComm.setSubsProductId(product.getSubsProductId());
+            }else{
+                aBlSubsComm.setSubsProductId(
+                        aISysSequenceSvc.terrigerSysSequence("SUBS_PRODUCT_ID", 1).get(0));
+            }
+            
             aBlSubsComm.setProductId(product.getProductId());
             aBlSubsComm.setResBonusFlag(product.getResBonusFlag());
             aBlSubsComm.setTenantId(userInfo.getTenantId());
@@ -324,7 +337,9 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             json.put("cust_id", aBlSubsComm.getCustId());
             json.put("product_type", aBlSubsComm.getProductType());
             DshmUtil.getIdshmSV().initLoader("bl_subs_comm", json.toString(),1);
-            LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());             
+            LoggerUtil.log.debug("刷新产品订购信息表共享内存：" + json.toString());            
+            
+            sendKafka("COM",null,aBlSubsComm);
           }
 //        String PRODUCT_ID = product.getProductId();
         
@@ -343,6 +358,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         BlUserinfo aBluserinfo = new BlUserinfo();
         // 刷新用户的内存表
         JSONObject json = new JSONObject();
+        
+        
         
         aBluserinfo.setCustId(custId);
         aBluserinfo.setTenantId(orderInfoParams.getTenantId());
@@ -372,7 +389,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         }catch (ParseException e){
             throw new SystemException("时间格式转换异常");
         }
-
+        aBluserinfo.setPolicyId(orderInfoParams.getScoutPolocyID()); 
         //aBluserinfo.setActiveTime(DateUtil.getTimestamp(orderInfoParams.getActiveTime(), DateUtil.YYYYMMDDHHMMSS));
         aBluserinfo.setServiceId(orderInfoParams.getServiceId());
         // 受理时间设为订购时间
@@ -426,6 +443,7 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
         json.put("user_type", aBluserinfo.getUserType());
         json.put("user_state", aBluserinfo.getUserState());
         json.put("serv_type", aBluserinfo.getServType());//新增
+        json.put("policy_id", aBluserinfo.getPolicyId());
 //        DshmUtil.getIdshmSV().initDel(TableCon.BL_USERINFO, json.toString());
         // 如果subsId为空则认为需要插入，否则执行更新
         if (StringUtil.isBlank(subsId)) {
@@ -444,7 +462,38 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
                 writeBlUserinfoExt(aBluserinfo.getSubsId(), orderExt, orderInfoParams.getTenantId());
             }
         }
+        
+        sendKafka("USR",aBluserinfo,null);//触发入账
+        
         return aBluserinfo;
+    }
+
+    private void sendKafka(String type, BlUserinfo aBluserinfo, BlSubsComm aBlSubsComm) {
+        String mdsns = "baas-ResourceClient-topic";//
+        IMessageSender msgSender = MDSClientFactory.getSenderClient(mdsns);
+        
+        if(type.equals("USR")){
+            JSONObject userInfoObject = new JSONObject();
+            userInfoObject.put("SUBS_ID", aBluserinfo.getSubsId());
+            userInfoObject.put("TENANT_ID", aBluserinfo.getTenantId());
+            userInfoObject.put("MSG_TYPE", "USR");//表示来自bl_userinfo表的触发消息
+            userInfoObject.put("USER_STATE",aBluserinfo.getUserState());
+            int part=0;
+            msgSender.send(userInfoObject.toString(), part);//第二个参数为分区键，如果不分区，传入0
+        }
+        
+        if(type.equals("COM")){
+            JSONObject subsCommObject = new JSONObject();
+            
+            subsCommObject.put("MSG_TYPE", "COM");
+            subsCommObject.put("SUBS_ID", aBlSubsComm.getSubsId());
+            subsCommObject.put("TENANT_ID", aBlSubsComm.getTenantId());
+            subsCommObject.put("PRODUCT_ID", aBlSubsComm.getProductId());
+            subsCommObject.put("SUBS_PRODUCT_ID", aBlSubsComm.getSubsProductId());
+            int part=0;
+            msgSender.send(aBlSubsComm.toString(), part);//第二个参数为分区键，如果不分区，传入0           
+        }
+        
     }
 
     // 用户扩展信息表操作

@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.baas.bmc.dao.interfaces.BlUserinfoMapper" >
   <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
-    <id column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
     <id column="SUBS_ID" property="subsId" jdbcType="VARCHAR" />
-    <id column="ACTIVE_TIME" property="activeTime" jdbcType="TIMESTAMP" />
+    <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
     <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
     <result column="ACCT_ID" property="acctId" jdbcType="VARCHAR" />
     <result column="SERVICE_ID" property="serviceId" jdbcType="VARCHAR" />
@@ -13,11 +12,13 @@
     <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
     <result column="CHL_ID" property="chlId" jdbcType="VARCHAR" />
     <result column="DEV_ID" property="devId" jdbcType="VARCHAR" />
+    <result column="ACTIVE_TIME" property="activeTime" jdbcType="TIMESTAMP" />
     <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="TIMESTAMP" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="SERV_TYPE" property="servType" jdbcType="VARCHAR" />
     <result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
     <result column="USER_STATE" property="userState" jdbcType="VARCHAR" />
+    <result column="policy_id" property="policyId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,8 +79,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    TENANT_ID, SUBS_ID, ACTIVE_TIME, CUST_ID, ACCT_ID, SERVICE_ID, DEAL_TIME, PROVINCE_CODE, 
-    CITY_CODE, CHL_ID, DEV_ID, INACTIVE_TIME, REMARK, SERV_TYPE, USER_TYPE, USER_STATE
+    SUBS_ID, TENANT_ID, CUST_ID, ACCT_ID, SERVICE_ID, DEAL_TIME, PROVINCE_CODE, CITY_CODE, 
+    CHL_ID, DEV_ID, ACTIVE_TIME, INACTIVE_TIME, REMARK, SERV_TYPE, USER_TYPE, USER_STATE, 
+    policy_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" >
     select
@@ -98,19 +100,15 @@
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from bl_userinfo
-    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
-      and SUBS_ID = #{subsId,jdbcType=VARCHAR}
-      and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
+    where SUBS_ID = #{subsId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoKey" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from bl_userinfo
-    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
-      and SUBS_ID = #{subsId,jdbcType=VARCHAR}
-      and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
+    where SUBS_ID = #{subsId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" >
     delete from bl_userinfo
@@ -119,30 +117,27 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
-    insert into bl_userinfo (TENANT_ID, SUBS_ID, ACTIVE_TIME, 
-      CUST_ID, ACCT_ID, SERVICE_ID, 
-      DEAL_TIME, PROVINCE_CODE, CITY_CODE, 
-      CHL_ID, DEV_ID, INACTIVE_TIME, 
+    insert into bl_userinfo (SUBS_ID, TENANT_ID, CUST_ID, 
+      ACCT_ID, SERVICE_ID, DEAL_TIME, 
+      PROVINCE_CODE, CITY_CODE, CHL_ID, 
+      DEV_ID, ACTIVE_TIME, INACTIVE_TIME, 
       REMARK, SERV_TYPE, USER_TYPE, 
-      USER_STATE)
-    values (#{tenantId,jdbcType=VARCHAR}, #{subsId,jdbcType=VARCHAR}, #{activeTime,jdbcType=TIMESTAMP}, 
-      #{custId,jdbcType=VARCHAR}, #{acctId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, 
-      #{dealTime,jdbcType=TIMESTAMP}, #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
-      #{chlId,jdbcType=VARCHAR}, #{devId,jdbcType=VARCHAR}, #{inactiveTime,jdbcType=TIMESTAMP}, 
+      USER_STATE, policy_id)
+    values (#{subsId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, 
+      #{acctId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, #{dealTime,jdbcType=TIMESTAMP}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{chlId,jdbcType=VARCHAR}, 
+      #{devId,jdbcType=VARCHAR}, #{activeTime,jdbcType=TIMESTAMP}, #{inactiveTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR}, #{servType,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
-      #{userState,jdbcType=VARCHAR})
+      #{userState,jdbcType=VARCHAR}, #{policyId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
     insert into bl_userinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="tenantId != null" >
-        TENANT_ID,
-      </if>
       <if test="subsId != null" >
         SUBS_ID,
       </if>
-      <if test="activeTime != null" >
-        ACTIVE_TIME,
+      <if test="tenantId != null" >
+        TENANT_ID,
       </if>
       <if test="custId != null" >
         CUST_ID,
@@ -168,6 +163,9 @@
       <if test="devId != null" >
         DEV_ID,
       </if>
+      <if test="activeTime != null" >
+        ACTIVE_TIME,
+      </if>
       <if test="inactiveTime != null" >
         INACTIVE_TIME,
       </if>
@@ -183,16 +181,16 @@
       <if test="userState != null" >
         USER_STATE,
       </if>
+      <if test="policyId != null" >
+        policy_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="tenantId != null" >
-        #{tenantId,jdbcType=VARCHAR},
-      </if>
       <if test="subsId != null" >
         #{subsId,jdbcType=VARCHAR},
       </if>
-      <if test="activeTime != null" >
-        #{activeTime,jdbcType=TIMESTAMP},
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
       </if>
       <if test="custId != null" >
         #{custId,jdbcType=VARCHAR},
@@ -218,6 +216,9 @@
       <if test="devId != null" >
         #{devId,jdbcType=VARCHAR},
       </if>
+      <if test="activeTime != null" >
+        #{activeTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="inactiveTime != null" >
         #{inactiveTime,jdbcType=TIMESTAMP},
       </if>
@@ -233,6 +234,9 @@
       <if test="userState != null" >
         #{userState,jdbcType=VARCHAR},
       </if>
+      <if test="policyId != null" >
+        #{policyId,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfoCriteria" resultType="java.lang.Integer" >
@@ -244,14 +248,11 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update bl_userinfo
     <set >
-      <if test="record.tenantId != null" >
-        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
-      </if>
       <if test="record.subsId != null" >
         SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
       </if>
-      <if test="record.activeTime != null" >
-        ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
       </if>
       <if test="record.custId != null" >
         CUST_ID = #{record.custId,jdbcType=VARCHAR},
@@ -277,6 +278,9 @@
       <if test="record.devId != null" >
         DEV_ID = #{record.devId,jdbcType=VARCHAR},
       </if>
+      <if test="record.activeTime != null" >
+        ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.inactiveTime != null" >
         INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
       </if>
@@ -292,6 +296,9 @@
       <if test="record.userState != null" >
         USER_STATE = #{record.userState,jdbcType=VARCHAR},
       </if>
+      <if test="record.policyId != null" >
+        policy_id = #{record.policyId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -299,9 +306,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update bl_userinfo
-    set TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
-      SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
-      ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
+    set SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
+      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
       CUST_ID = #{record.custId,jdbcType=VARCHAR},
       ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
       SERVICE_ID = #{record.serviceId,jdbcType=VARCHAR},
@@ -310,11 +316,13 @@
       CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
       CHL_ID = #{record.chlId,jdbcType=VARCHAR},
       DEV_ID = #{record.devId,jdbcType=VARCHAR},
+      ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
       INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
       REMARK = #{record.remark,jdbcType=VARCHAR},
       SERV_TYPE = #{record.servType,jdbcType=VARCHAR},
       USER_TYPE = #{record.userType,jdbcType=VARCHAR},
-      USER_STATE = #{record.userState,jdbcType=VARCHAR}
+      USER_STATE = #{record.userState,jdbcType=VARCHAR},
+      policy_id = #{record.policyId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -322,6 +330,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
     update bl_userinfo
     <set >
+      <if test="tenantId != null" >
+        TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      </if>
       <if test="custId != null" >
         CUST_ID = #{custId,jdbcType=VARCHAR},
       </if>
@@ -346,6 +357,9 @@
       <if test="devId != null" >
         DEV_ID = #{devId,jdbcType=VARCHAR},
       </if>
+      <if test="activeTime != null" >
+        ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="inactiveTime != null" >
         INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
       </if>
@@ -361,14 +375,16 @@
       <if test="userState != null" >
         USER_STATE = #{userState,jdbcType=VARCHAR},
       </if>
+      <if test="policyId != null" >
+        policy_id = #{policyId,jdbcType=VARCHAR},
+      </if>
     </set>
-    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
-      and SUBS_ID = #{subsId,jdbcType=VARCHAR}
-      and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
+    where SUBS_ID = #{subsId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlUserinfo" >
     update bl_userinfo
-    set CUST_ID = #{custId,jdbcType=VARCHAR},
+    set TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
       ACCT_ID = #{acctId,jdbcType=VARCHAR},
       SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
       DEAL_TIME = #{dealTime,jdbcType=TIMESTAMP},
@@ -376,13 +392,13 @@
       CITY_CODE = #{cityCode,jdbcType=VARCHAR},
       CHL_ID = #{chlId,jdbcType=VARCHAR},
       DEV_ID = #{devId,jdbcType=VARCHAR},
+      ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP},
       INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
       REMARK = #{remark,jdbcType=VARCHAR},
       SERV_TYPE = #{servType,jdbcType=VARCHAR},
       USER_TYPE = #{userType,jdbcType=VARCHAR},
-      USER_STATE = #{userState,jdbcType=VARCHAR}
-    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
-      and SUBS_ID = #{subsId,jdbcType=VARCHAR}
-      and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
+      USER_STATE = #{userState,jdbcType=VARCHAR},
+      policy_id = #{policyId,jdbcType=VARCHAR}
+    where SUBS_ID = #{subsId,jdbcType=VARCHAR}
   </update>
 </mapper>

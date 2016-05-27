@@ -117,6 +117,13 @@ public class OrderInfoParams extends BaseInfo {
     private String devId;
 
     /**
+     * 信控方案标识<br>
+     * VARCHAR(32)
+     */
+    @Size(max=32,groups={IOrderInfoSV.OrderInfo.class})
+    private String scoutPolocyID;
+    
+    /**
      * 生效时间<br>
      * 格式：YYYYMMDDHH24MISS<br>
      * 必填<br>
@@ -281,6 +288,14 @@ public class OrderInfoParams extends BaseInfo {
 
     public void setServType(String servType) {
         ServType = servType;
+    }
+
+    public String getScoutPolocyID() {
+        return scoutPolocyID;
+    }
+
+    public void setScoutPolocyID(String scoutPolocyID) {
+        this.scoutPolocyID = scoutPolocyID;
     }
 
 }
