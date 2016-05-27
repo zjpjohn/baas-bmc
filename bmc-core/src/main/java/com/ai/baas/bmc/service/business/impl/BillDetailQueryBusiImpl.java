@@ -19,6 +19,7 @@ import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.filter.SubstringComparator;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,25 +34,21 @@ import com.ai.baas.bmc.constants.ExceptCodeConstant;
 import com.ai.baas.bmc.dao.mapper.bo.BlSubsComm;
 import com.ai.baas.bmc.dao.mapper.bo.BmcOutputInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
-import com.ai.baas.bmc.service.atom.interfaces.IBlCustInfoAtomSV;
 import com.ai.baas.bmc.service.atom.interfaces.IBlSubsCommonAtomSV;
-import com.ai.baas.bmc.service.atom.interfaces.IBlUserInfoAtomSV;
 import com.ai.baas.bmc.service.atom.interfaces.IBmcOutputInfoAtomSV;
 import com.ai.baas.bmc.service.atom.interfaces.ICpPriceInfoAtom;
 import com.ai.baas.bmc.service.business.interfaces.IBillDetailQueryBusiSV;
 import com.ai.baas.bmc.util.MyHbaseUtil;
+import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
 @Service
 public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
-
+	private Logger logger = Logger.getLogger(BillDetailQueryBusiImpl.class);
 	@Autowired
 	private IBmcOutputInfoAtomSV iBmcOutputInfoAtomSV;
-	@Autowired
-	private IBlCustInfoAtomSV iBlCustInfoAtomSV;
-	@Autowired
-	private IBlUserInfoAtomSV iBlUserInfoAtomSV;
+	
 	@Autowired
 	private IBlSubsCommonAtomSV iBlSubsCommonAtomSV;
 	@Autowired
@@ -81,7 +78,8 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 				String tableName=request.getTenantId()+"_"+serviceType+"_"+"DR"+"_"+request.getSearchTime().replace("-", "");
 				tableNames.add(tableName);
 			
-				Table table;
+				Table table=null;
+				ResultScanner rs=null;
 				try {
 					StringBuilder sb = new StringBuilder();
 					sb.append(request.getCustId()).append(FIELD_SPLIT);
@@ -95,7 +93,7 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 					Scan scan = new Scan();
 					
 					scan.setFilter(filter1);
-					ResultScanner rs = table.getScanner(scan);
+				    rs = table.getScanner(scan);
 					Iterator<Result> resultIterator=rs.iterator();
 					
 					while(resultIterator.hasNext()){
@@ -119,11 +117,18 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 					}
 					
 					
-					rs.close();
-					table.close();			
+								
 				} catch (IOException e) {
+					logger.error(e.getMessage());
+					throw new BusinessException("888888", "数据不存在");
 					
-					e.printStackTrace();
+				}finally{
+					rs.close();
+					try {
+						table.close();
+					} catch (IOException e) {
+						logger.info(e.getMessage());
+					}
 				}
 				
 				
@@ -362,7 +367,7 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			d = sdf.parse(date);
 		} catch (ParseException e) {
 		
-			e.printStackTrace();
+			logger.info("date transfer error");
 		}
 		return d.getTime()/1000;
 	}
