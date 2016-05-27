@@ -116,7 +116,7 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
         }
         if (criteria.getAccountPeriod() != null && criteria.getAccountPeriod().length() > 0) {
             Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "account_period".getBytes(),
-                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getAccountPeriod().getBytes()));
+                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator(criteria.getAccountPeriod().substring(0, 6)+"*"));
             filterList.addFilter(filter);
         }
         Scan scan = new Scan();
