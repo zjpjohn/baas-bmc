@@ -42,8 +42,18 @@ public class CurrMonthUsgQueryReq extends BaseInfo{
 	 * 结束账期 yyyymm
 	 */
 	private String endMonth;
+	/**
+	 * 通道类型
+	 */
+	private String apnCode;
 	
-//	public String getSystemId() {
+public String getApnCode() {
+		return apnCode;
+	}
+	public void setApnCode(String apnCode) {
+		this.apnCode = apnCode;
+	}
+	//	public String getSystemId() {
 //		return systemId;
 //	}
 //	public void setSystemId(String systemId) {

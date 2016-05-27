@@ -57,6 +57,7 @@ public class CurrMonthUsgQueryAtomImpl implements ICurrMonthUsgQueryAtom {
 		String custId = req.getCustId();
 		String subsId = req.getSubsId();
 		String serviceNum = req.getServiceNum();
+		String apnCode = req.getApnCode();
 		Map<String,List<StatYyyymm>> statMap = new HashMap<String,List<StatYyyymm>>();
 		List<String> tbSufixs = getTbSufixs(req.getBeginMonth(),req.getEndMonth());
 		LOG.info(("query month:"+JSON.toJSONString(tbSufixs)));
@@ -74,7 +75,11 @@ public class CurrMonthUsgQueryAtomImpl implements ICurrMonthUsgQueryAtom {
 			}
 			if(!StringUtil.isBlank(serviceNum)){
 				criteria.andServiceNumEqualTo(serviceNum);
-			}	
+			}
+			if(!StringUtil.isBlank(apnCode)){
+				criteria.andSourceEqualTo(apnCode);
+			}
+			
 			List<StatYyyymm> list = statYyyymmMapper.selectByExample(tbPre, tbSufix, example);
 			statMap.put(tbSufix, list);
 			
