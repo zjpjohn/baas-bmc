@@ -6,6 +6,7 @@ public class QueryBillRequest extends BaseInfo {
 
 	
 	private static final long serialVersionUID = 1L;
+	private String tradeSeq;
 	private String custId;
 	private String serviceId;
 	private String subsId;
@@ -33,6 +34,12 @@ public class QueryBillRequest extends BaseInfo {
 	}
 	public void setSearchTime(String searchTime) {
 		this.searchTime = searchTime;
+	}
+	public String getTradeSeq() {
+		return tradeSeq;
+	}
+	public void setTradeSeq(String tradeSeq) {
+		this.tradeSeq = tradeSeq;
 	}
 	
 	
