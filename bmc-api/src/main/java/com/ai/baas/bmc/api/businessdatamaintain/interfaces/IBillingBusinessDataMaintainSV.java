@@ -1,14 +1,11 @@
 package com.ai.baas.bmc.api.businessdatamaintain.interfaces;
 
-import com.ai.baas.bmc.api.businessdatamaintain.params.BmcRecord;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataImportRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryResponse;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
-
-import java.util.List;
 
 /**
  * 计费业务数据格式维护
