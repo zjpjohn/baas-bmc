@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.businessdatamaintain.interfaces;
 
 import com.ai.baas.bmc.api.businessdatamaintain.params.BmcRecord;
+import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataImportRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryResponse;
 import com.ai.opt.base.exception.BusinessException;
@@ -20,7 +21,7 @@ public interface IBillingBusinessDataMaintainSV {
 
     /**
      * 计费业务数据格式导入
-     * @param importData
+     * @param importRequest
      * @return
      * @throws BusinessException
      * @throws SystemException
@@ -28,7 +29,7 @@ public interface IBillingBusinessDataMaintainSV {
      * @ApiDocMethod
      * @ApiCode
      */
-    BaseResponse businessDataImport(List<BmcRecord> importData) throws BusinessException,SystemException;
+    BaseResponse businessDataImport(BusinessDataImportRequest importRequest) throws BusinessException,SystemException;
     @interface BusinessDataImport{}
 
     /**

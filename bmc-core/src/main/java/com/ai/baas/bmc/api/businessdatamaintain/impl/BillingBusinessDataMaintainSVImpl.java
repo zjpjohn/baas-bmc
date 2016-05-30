@@ -2,6 +2,7 @@ package com.ai.baas.bmc.api.businessdatamaintain.impl;
 
 import com.ai.baas.bmc.api.businessdatamaintain.interfaces.IBillingBusinessDataMaintainSV;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BmcRecord;
+import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataImportRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryResponse;
 import com.ai.baas.bmc.dao.mapper.bo.BmcRecordFmt;
@@ -42,13 +43,13 @@ public class BillingBusinessDataMaintainSVImpl implements IBillingBusinessDataMa
     private IRtmSrcRecordAtomSV iRtmSrcRecordAtom;
 
     @Override
-    public BaseResponse businessDataImport(List<BmcRecord> importData) throws BusinessException, SystemException {
+    public BaseResponse businessDataImport(BusinessDataImportRequest importRequest) throws BusinessException, SystemException {
 
         BaseResponse response;
         try {
-            if(!CollectionUtil.isEmpty(importData)){
+            if(importRequest!=null&&!CollectionUtil.isEmpty(importRequest.getImportData())){
                 Map<String,List<BmcRecord>> dataMap = new HashMap<>();
-                for (BmcRecord record:importData) {
+                for (BmcRecord record:importRequest.getImportData()) {
                     StringBuilder builder = new StringBuilder();
                     builder.append(record.getTenantId()).append(record.getServiceType()).append(record.getSource());
                     String key = builder.toString();

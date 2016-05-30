@@ -2,8 +2,11 @@ package com.ai.opt.baas.bmc.test.api.businessdatamaintain.impl;
 
 import com.ai.baas.bmc.api.businessdatamaintain.interfaces.IBillingBusinessDataMaintainSV;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BmcRecord;
+import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataImportRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryRequest;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryResponse;
+import com.ai.opt.base.vo.BaseResponse;
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +42,12 @@ public class IBillingBusinessDataMaintainSVTest {
 
             recordList.add(record);
         }
-        iBillingBusinessDataMaintainSV.businessDataImport(recordList);
+        BusinessDataImportRequest importRequest = new BusinessDataImportRequest();
+        importRequest.setImportData(recordList);
+        String str = JSON.toJSONString(importRequest);
+        System.out.println(str);
+        BaseResponse response = iBillingBusinessDataMaintainSV.businessDataImport(importRequest);
+        System.out.println(JSON.toJSONString(response));
     }
 
     @Test
