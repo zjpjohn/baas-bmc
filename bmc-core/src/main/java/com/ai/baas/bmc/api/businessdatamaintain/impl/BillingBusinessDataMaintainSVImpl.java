@@ -50,6 +50,15 @@ public class BillingBusinessDataMaintainSVImpl implements IBillingBusinessDataMa
             if(importRequest!=null&&!CollectionUtil.isEmpty(importRequest.getImportData())){
                 Map<String,List<BmcRecord>> dataMap = new HashMap<>();
                 for (BmcRecord record:importRequest.getImportData()) {
+                    if(StringUtil.isBlank(record.getTenantId())){
+                        throw new BusinessException("000001","tenantId不能为空");
+                    }
+                    if(StringUtil.isBlank(record.getServiceType())){
+                        throw new BusinessException("000002","serviceType不能为空");
+                    }
+                    if(StringUtil.isBlank(record.getSource())){
+                        throw new BusinessException("000003","source不能为空");
+                    }
                     StringBuilder builder = new StringBuilder();
                     builder.append(record.getTenantId()).append(record.getServiceType()).append(record.getSource());
                     String key = builder.toString();
@@ -74,6 +83,9 @@ public class BillingBusinessDataMaintainSVImpl implements IBillingBusinessDataMa
             header.setResultCode("000000");
             header.setResultMessage("计费数据格式导入成功");
             response.setResponseHeader(header);
+        } catch (BusinessException e) {
+            LOG.error("计费数据格式导入失败",e);
+            throw e;
         } catch (Exception e) {
             LOG.error("计费数据格式导入失败",e);
             throw new SystemException("计费数据格式导入失败",e);
