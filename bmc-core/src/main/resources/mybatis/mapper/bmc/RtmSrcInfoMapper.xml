@@ -102,6 +102,14 @@
       #{recordSplitFlag,jdbcType=VARCHAR}, #{fieldSplitFlag,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}
       )
   </insert>
+  <insert id="insertSpec" parameterType="com.ai.baas.bmc.dao.mapper.bo.RtmSrcInfo" >
+    insert into rtm_src_info (TENANT_ID, INFO_TYPE, INFO_SPLIT_FLAG,
+    record_split_flag, field_split_flag, COMMENTS
+    )
+    values (#{tenantId,jdbcType=VARCHAR}, #{infoType,jdbcType=VARCHAR}, 0x03,
+    0x02, 0x01, #{comments,jdbcType=VARCHAR}
+    )
+  </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.RtmSrcInfo" >
     insert into rtm_src_info
     <trim prefix="(" suffix=")" suffixOverrides="," >

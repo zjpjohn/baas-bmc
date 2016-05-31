@@ -32,10 +32,7 @@ public class RtmSrcInfoAtomImpl implements IRtmSrcInfoAtomSV {
                     RtmSrcInfo srcInfo = new RtmSrcInfo();
                     srcInfo.setTenantId(record.getTenantId());
                     srcInfo.setInfoType(record.getServiceType());
-                    srcInfo.setFieldSplitFlag(String.valueOf((char)1));
-                    srcInfo.setRecordSplitFlag(String.valueOf((char)2));
-                    srcInfo.setInfoSplitFlag(String.valueOf((char)3));
-                    srcInfoMapper.insertSelective(srcInfo);
+                    srcInfoMapper.insertSpec(srcInfo);
                 }
             }
         }

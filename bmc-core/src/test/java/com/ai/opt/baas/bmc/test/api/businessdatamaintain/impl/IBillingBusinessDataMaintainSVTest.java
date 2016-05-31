@@ -3,9 +3,8 @@ package com.ai.opt.baas.bmc.test.api.businessdatamaintain.impl;
 import com.ai.baas.bmc.api.businessdatamaintain.interfaces.IBillingBusinessDataMaintainSV;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BmcRecord;
 import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataImportRequest;
-import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryRequest;
-import com.ai.baas.bmc.api.businessdatamaintain.params.BusinessDataQueryResponse;
-import com.ai.opt.base.vo.BaseResponse;
+import com.ai.baas.bmc.dao.interfaces.RtmSrcInfoMapper;
+import com.ai.baas.bmc.dao.mapper.bo.RtmSrcInfo;
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +21,9 @@ public class IBillingBusinessDataMaintainSVTest {
 
     @Autowired
     private IBillingBusinessDataMaintainSV iBillingBusinessDataMaintainSV;
+
+    @Autowired
+    private RtmSrcInfoMapper srcInfoMapper;
 
     @Test
     public void businessDataImportTest(){
@@ -44,23 +46,27 @@ public class IBillingBusinessDataMaintainSVTest {
         }
         BusinessDataImportRequest importRequest = new BusinessDataImportRequest();
         importRequest.setImportData(recordList);
+        importRequest.setTenantId("Test-1");
         String str = JSON.toJSONString(importRequest);
         System.out.println(str);
-        BaseResponse response = iBillingBusinessDataMaintainSV.businessDataImport(importRequest);
-        System.out.println(JSON.toJSONString(response));
+        //BaseResponse response = iBillingBusinessDataMaintainSV.businessDataImport(importRequest);
+        //System.out.println(JSON.toJSONString(response));
     }
 
     @Test
     public void testQuery(){
         System.out.println("=============================");
-        System.out.println(String.valueOf((char)1));
-        System.out.println(String.valueOf((char)2));
-        System.out.println(String.valueOf((char)3));
-        BusinessDataQueryRequest req = new BusinessDataQueryRequest();
+        /*BusinessDataQueryRequest req = new BusinessDataQueryRequest();
         req.setTenantId("Test-1");
         req.setServiceType("voice-test");
         req.setSource("mvne");
+        JSON.toJSONString(req);
         BusinessDataQueryResponse dataFormatList = iBillingBusinessDataMaintainSV.getDataFormatList(req);
-        List<BmcRecord> recordList = dataFormatList.getRecordList();
+        JSON.toJSONString(dataFormatList);
+        List<BmcRecord> recordList = dataFormatList.getRecordList();*/
+        RtmSrcInfo record = new RtmSrcInfo();
+        record.setTenantId("test112");
+        record.setInfoType("test112");
+        srcInfoMapper.insertSpec(record);
     }
 }

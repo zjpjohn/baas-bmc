@@ -12,6 +12,8 @@ public interface RtmSrcInfoMapper {
 
     int insert(RtmSrcInfo record);
 
+    int insertSpec(RtmSrcInfo record);
+
     int insertSelective(RtmSrcInfo record);
 
     List<RtmSrcInfo> selectByExample(RtmSrcInfoCriteria example);
