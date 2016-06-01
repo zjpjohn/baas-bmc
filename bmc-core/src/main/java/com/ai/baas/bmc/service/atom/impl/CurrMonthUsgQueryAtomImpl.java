@@ -63,7 +63,7 @@ public class CurrMonthUsgQueryAtomImpl implements ICurrMonthUsgQueryAtom {
 		LOG.info(("query month:"+JSON.toJSONString(tbSufixs)));
 		List<MonthVO> monthList = new ArrayList<MonthVO>();
 		resp.setMonthList(monthList);
-		String tbPre = "";//(systemId.toLowerCase() + "_"+tenantId.toLowerCase()).replace("-", "_");
+		String tbPre = tenantId.toLowerCase().replace("-", "_");//(systemId.toLowerCase() + "_"+tenantId.toLowerCase()).replace("-", "_");
 		for(String tbSufix:tbSufixs){
 			StatYyyymmCriteria example = new StatYyyymmCriteria();
 			Criteria criteria = example.createCriteria();
