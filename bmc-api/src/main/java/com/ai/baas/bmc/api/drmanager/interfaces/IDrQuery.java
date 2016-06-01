@@ -122,7 +122,7 @@ public interface IDrQuery
      * 定义见DrQueryInputObject 或者参见 BMC-0001接口[String drQuery(String param)] 
      * @return DrQueryOutputObject
      *	定义见 DrQueryOutputObject类 或者参见 BMC-0001接口[String billQuery(String param)]
-     * @author zhanghy6
+     * @author zhangzd
      * @ApiDocMethod
      * @ApiCode BMC-0002
      */
