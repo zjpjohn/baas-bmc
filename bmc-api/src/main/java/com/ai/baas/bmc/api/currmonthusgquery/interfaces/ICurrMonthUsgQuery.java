@@ -15,9 +15,14 @@ public interface ICurrMonthUsgQuery {
 	
 	
 	/**
-	 * 当月使用量查询
+	 * 当前使用量查询
 	 * @param req
 	 * @return
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author zhangzd
+	 * @ApiDocMethod
+	 * @ApiCode BMC-10001
 	 */
 	CurrMonthUsgQueryResp currMonthUsgQuery(CurrMonthUsgQueryReq req) throws BusinessException,SystemException ;
 	
