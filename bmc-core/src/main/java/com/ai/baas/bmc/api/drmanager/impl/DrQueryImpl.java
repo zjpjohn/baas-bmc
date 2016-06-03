@@ -861,7 +861,7 @@ public class DrQueryImpl implements IDrQuery {
 		}
 		Table table = null;
 		try {
-			table = MyHbaseUtil.getTable(routerule.getTablename()+"_"+nowString);//conn.getTable(TableName.valueOf(routerule.getTablename()+nowString));
+			table = MyHbaseUtil.getTable(routerule.getTablename()+nowString);//conn.getTable(TableName.valueOf(routerule.getTablename()+nowString));
 		} catch (Exception e) {
 			log.error("获取hbase表对象失败，请检查配置！",e);
         	drres.setReturnCode("BMC-000004" + "表信息配置错误，请检查配置！" );
