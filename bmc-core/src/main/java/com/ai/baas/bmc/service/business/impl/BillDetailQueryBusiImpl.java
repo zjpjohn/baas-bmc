@@ -68,9 +68,9 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		VoiceResponse vr=new VoiceResponse();
 		GPRSResponse gr=new GPRSResponse();
 		Long voiceSubTotal=0L;
-		Double voiceSubMoney=null;
+		Double voiceSubMoney=0.0;
 		Long gprsSubTotal=0L;
-		Double gprsSubMoney=null;
+		Double gprsSubMoney=0.0;
 	   
 		if(!CollectionUtil.isEmpty(list)){
 			for(BmcOutputInfo info:list){
