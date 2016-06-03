@@ -76,6 +76,9 @@
             <tx:method name="insert*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="t*" propagation="REQUIRED"/>
+            <tx:method name="I*" propagation="REQUIRED"/>
+            <tx:method name="f*" propagation="REQUIRED"/>
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
