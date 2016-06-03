@@ -29,6 +29,7 @@ import com.ai.baas.bmc.service.business.productInfo.interfaces.ICpFactorInfoSvc;
 import com.ai.baas.bmc.service.business.productInfo.interfaces.ICpPackageInfoSvc;
 import com.ai.baas.bmc.service.business.productInfo.interfaces.ICpPriceDetailSvc;
 import com.ai.baas.bmc.service.business.productInfo.interfaces.ICpPriceInfoSvc;
+import com.ai.baas.bmc.util.BmcSeqUtil;
 import com.ai.baas.dshm.api.dshmprocess.interfaces.IdshmSV;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -340,7 +341,12 @@ public class ProductInfoSVImpl implements IProductInfoSV{
       //SystemId
 //        cpPriceInfo.setSystemId(product.getSystemId());
 //        object.put("SYSTEM_ID",product.getSystemId());
-
+    	//
+    	Long priceInfoid = BmcSeqUtil.getPriceInfoId();
+		
+		cpPriceInfo.setPriceInfoId(priceInfoid);
+		object.put("PRICE_INFO_ID", priceInfoid);
+		
         //TenantId
         cpPriceInfo.setTenantId(product.getTenantId());
         object.put("TENANT_ID", product.getTenantId());
