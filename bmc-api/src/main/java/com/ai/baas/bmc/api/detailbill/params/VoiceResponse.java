@@ -9,7 +9,7 @@ public class VoiceResponse implements Serializable{
 	/**
 	 * 通话 总钱数
 	 */
-	private Long totalMoney;
+	private Double totalMoney;
 	/**
 	 * 总秒数
 	 */
@@ -18,12 +18,7 @@ public class VoiceResponse implements Serializable{
 	 * 语音详细信息
 	 */
 	private List<VoiceParam> voice;
-	public Long getTotalMoney() {
-		return totalMoney;
-	}
-	public void setTotalMoney(Long totalMoney) {
-		this.totalMoney = totalMoney;
-	}
+	
 	public Long getVoiceTotal() {
 		return voiceTotal;
 	}
@@ -35,6 +30,12 @@ public class VoiceResponse implements Serializable{
 	}
 	public void setVoice(List<VoiceParam> voice) {
 		this.voice = voice;
+	}
+	public Double getTotalMoney() {
+		return totalMoney;
+	}
+	public void setTotalMoney(Double totalMoney) {
+		this.totalMoney = totalMoney;
 	}
 	
 	

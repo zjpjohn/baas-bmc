@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.service.business.impl;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,9 +68,9 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		VoiceResponse vr=new VoiceResponse();
 		GPRSResponse gr=new GPRSResponse();
 		Long voiceSubTotal=0L;
-		Long voiceSubMoney=0L;
+		Double voiceSubMoney=null;
 		Long gprsSubTotal=0L;
-		Long gprsSubMoney=0L;
+		Double gprsSubMoney=null;
 	   
 		if(!CollectionUtil.isEmpty(list)){
 			for(BmcOutputInfo info:list){
@@ -115,14 +116,17 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 						
 						 if("VOICE".equals(serviceType)){
 							 VoiceParam voiceParam=setVoiceParamValue(result);
-							 voiceSubMoney=voiceSubMoney+ Long.valueOf(voiceParam.getFee1())+Long.valueOf(voiceParam.getFee2())+Long.valueOf(voiceParam.getFee3());
+							// voiceSubMoney=voiceSubMoney+ Long.valueOf(voiceParam.getFee1())+Long.valueOf(voiceParam.getFee2())+Long.valueOf(voiceParam.getFee3());
+							 
+							 voiceSubMoney=new BigDecimal(voiceSubMoney).add(new BigDecimal(voiceParam.getFee1())).add(new BigDecimal(voiceParam.getFee2())).add(new BigDecimal(voiceParam.getFee3())).doubleValue();
+
 							 voiceSubTotal=voiceSubTotal+Long.valueOf(voiceParam.getDuration());
 							 voices.add(voiceParam);
 						 }
 						 
 						 if("GPRS".equals(serviceType)){
 							 GPRSParam gParam=setGPRSParamValut(result); 
-							 gprsSubMoney=gprsSubMoney+Long.valueOf(gParam.getFee1());
+							 gprsSubMoney=new BigDecimal(gprsSubMoney).add(new BigDecimal(gParam.getFee1())).doubleValue();
 							
 							 gprsSubTotal=gprsSubTotal+Long.valueOf(gParam.getGprsDown())+Long.valueOf(gParam.getGprsUp());
 							 gps.add(gParam);
@@ -155,11 +159,11 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			}
 		}
 		vr.setVoice(voices);
-		vr.setTotalMoney(voiceSubMoney);
+		vr.setTotalMoney(voiceSubMoney);   
 		vr.setVoiceTotal(voiceSubTotal);
 		gr.setGprs(gps);
 		gr.setGprsTotal(gprsSubTotal);
-		gr.setTotalMoney(gprsSubMoney);
+		gr.setTotalMoney(gprsSubMoney);     
 		DetailBillResponse response=new DetailBillResponse();
 		response.setGprs(gr);
 		response.setVoice(vr);

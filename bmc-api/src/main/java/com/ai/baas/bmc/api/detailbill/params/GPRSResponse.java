@@ -11,7 +11,7 @@ public class GPRSResponse  implements Serializable{
 	/**
 	 * gprs 总钱数
 	 */
-	private Long totalMoney;
+	private Double totalMoney;
 	/**
 	 * 总流量
 	 */
@@ -20,10 +20,11 @@ public class GPRSResponse  implements Serializable{
 	 * 详细信息
 	 */
 	private List<GPRSParam> gprs;
-	public Long getTotalMoney() {
+	
+	public Double getTotalMoney() {
 		return totalMoney;
 	}
-	public void setTotalMoney(Long totalMoney) {
+	public void setTotalMoney(Double totalMoney) {
 		this.totalMoney = totalMoney;
 	}
 	public Long getGprsTotal() {

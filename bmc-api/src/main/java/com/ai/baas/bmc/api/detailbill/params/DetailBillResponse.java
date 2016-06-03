@@ -19,7 +19,7 @@ public class DetailBillResponse extends BaseResponse {
 	/**
 	 * 总钱数
 	 */
-	private Long totalCount;
+	private Double totalCount;
 	/**
 	 * 产品名称
 	 */
@@ -36,10 +36,11 @@ public class DetailBillResponse extends BaseResponse {
 	public void setGprs(GPRSResponse gprs) {
 		this.gprs = gprs;
 	}
-	public Long getTotalCount() {
+	
+	public Double getTotalCount() {
 		return totalCount;
 	}
-	public void setTotalCount(Long totalCount) {
+	public void setTotalCount(Double totalCount) {
 		this.totalCount = totalCount;
 	}
 	public List<String> getProductNames() {
