@@ -463,6 +463,76 @@ public class BlSubscommExtCriteria {
             addCriterion("EXT_VALUE not between", value1, value2, "extValue");
             return (Criteria) this;
         }
+
+        public Criteria andSubsIdIsNull() {
+            addCriterion("SUBS_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdIsNotNull() {
+            addCriterion("SUBS_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdEqualTo(String value) {
+            addCriterion("SUBS_ID =", value, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdNotEqualTo(String value) {
+            addCriterion("SUBS_ID <>", value, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdGreaterThan(String value) {
+            addCriterion("SUBS_ID >", value, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdGreaterThanOrEqualTo(String value) {
+            addCriterion("SUBS_ID >=", value, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdLessThan(String value) {
+            addCriterion("SUBS_ID <", value, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdLessThanOrEqualTo(String value) {
+            addCriterion("SUBS_ID <=", value, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdLike(String value) {
+            addCriterion("SUBS_ID like", value, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdNotLike(String value) {
+            addCriterion("SUBS_ID not like", value, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdIn(List<String> values) {
+            addCriterion("SUBS_ID in", values, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdNotIn(List<String> values) {
+            addCriterion("SUBS_ID not in", values, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdBetween(String value1, String value2) {
+            addCriterion("SUBS_ID between", value1, value2, "subsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubsIdNotBetween(String value1, String value2) {
+            addCriterion("SUBS_ID not between", value1, value2, "subsId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

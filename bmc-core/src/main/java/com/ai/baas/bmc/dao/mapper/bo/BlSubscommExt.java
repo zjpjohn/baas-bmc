@@ -11,6 +11,8 @@ public class BlSubscommExt {
 
     private String extValue;
 
+    private String subsId;
+
     public Integer getExtId() {
         return extId;
     }
@@ -49,5 +51,13 @@ public class BlSubscommExt {
 
     public void setExtValue(String extValue) {
         this.extValue = extValue == null ? null : extValue.trim();
+    }
+
+    public String getSubsId() {
+        return subsId;
+    }
+
+    public void setSubsId(String subsId) {
+        this.subsId = subsId == null ? null : subsId.trim();
     }
 }

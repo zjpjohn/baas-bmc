@@ -7,6 +7,7 @@
     <result column="SUBS_PRODUCT_ID" property="subsProductId" jdbcType="VARCHAR" />
     <result column="EXT_NAME" property="extName" jdbcType="VARCHAR" />
     <result column="EXT_VALUE" property="extValue" jdbcType="VARCHAR" />
+    <result column="SUBS_ID" property="subsId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    EXT_ID, PRODUCT_ID, SUBS_PRODUCT_ID, EXT_NAME, EXT_VALUE
+    EXT_ID, PRODUCT_ID, SUBS_PRODUCT_ID, EXT_NAME, EXT_VALUE, SUBS_ID
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlSubscommExtCriteria" >
     select
@@ -104,9 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlSubscommExt" >
     insert into bl_subscomm_ext (EXT_ID, PRODUCT_ID, SUBS_PRODUCT_ID, 
-      EXT_NAME, EXT_VALUE)
+      EXT_NAME, EXT_VALUE, SUBS_ID
+      )
     values (#{extId,jdbcType=INTEGER}, #{productId,jdbcType=VARCHAR}, #{subsProductId,jdbcType=VARCHAR}, 
-      #{extName,jdbcType=VARCHAR}, #{extValue,jdbcType=VARCHAR})
+      #{extName,jdbcType=VARCHAR}, #{extValue,jdbcType=VARCHAR}, #{subsId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlSubscommExt" >
     insert into bl_subscomm_ext
@@ -126,6 +129,9 @@
       <if test="extValue != null" >
         EXT_VALUE,
       </if>
+      <if test="subsId != null" >
+        SUBS_ID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="extId != null" >
@@ -142,6 +148,9 @@
       </if>
       <if test="extValue != null" >
         #{extValue,jdbcType=VARCHAR},
+      </if>
+      <if test="subsId != null" >
+        #{subsId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -169,6 +178,9 @@
       <if test="record.extValue != null" >
         EXT_VALUE = #{record.extValue,jdbcType=VARCHAR},
       </if>
+      <if test="record.subsId != null" >
+        SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -180,7 +192,8 @@
       PRODUCT_ID = #{record.productId,jdbcType=VARCHAR},
       SUBS_PRODUCT_ID = #{record.subsProductId,jdbcType=VARCHAR},
       EXT_NAME = #{record.extName,jdbcType=VARCHAR},
-      EXT_VALUE = #{record.extValue,jdbcType=VARCHAR}
+      EXT_VALUE = #{record.extValue,jdbcType=VARCHAR},
+      SUBS_ID = #{record.subsId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -200,6 +213,9 @@
       <if test="extValue != null" >
         EXT_VALUE = #{extValue,jdbcType=VARCHAR},
       </if>
+      <if test="subsId != null" >
+        SUBS_ID = #{subsId,jdbcType=VARCHAR},
+      </if>
     </set>
     where EXT_ID = #{extId,jdbcType=INTEGER}
   </update>
@@ -208,7 +224,8 @@
     set PRODUCT_ID = #{productId,jdbcType=VARCHAR},
       SUBS_PRODUCT_ID = #{subsProductId,jdbcType=VARCHAR},
       EXT_NAME = #{extName,jdbcType=VARCHAR},
-      EXT_VALUE = #{extValue,jdbcType=VARCHAR}
+      EXT_VALUE = #{extValue,jdbcType=VARCHAR},
+      SUBS_ID = #{subsId,jdbcType=VARCHAR}
     where EXT_ID = #{extId,jdbcType=INTEGER}
   </update>
 </mapper>
