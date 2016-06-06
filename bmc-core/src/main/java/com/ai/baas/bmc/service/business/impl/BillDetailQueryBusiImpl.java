@@ -174,34 +174,38 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		List<String> pids=new ArrayList<String>();
 		List<String> pNames=new ArrayList<String>();
 		List<BlSubsComm> commonList=iBlSubsCommonAtomSV.getSubsCommon(request.getSubsId(), request.getTenantId());
-		for(BlSubsComm comm:commonList){
-			Long st=getDate(request.getSearchTime());
+		if(!CollectionUtil.isEmpty(commonList)){
+			for(BlSubsComm comm:commonList){
+				Long st=getDate(request.getSearchTime());
 
-			
-			Long activeTime=getDate(DateUtil.getDateString(comm.getActiveTime(), "YYYYMM"));
-			System.out.println(st>activeTime||st==activeTime);
+				
+				Long activeTime=getDate(DateUtil.getDateString(comm.getActiveTime(), "YYYYMM"));
+				System.out.println(st>activeTime||st==activeTime);
 
-			Long inactiveTime=getDate(DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM"));
-			
-			System.out.println(st<inactiveTime||st==inactiveTime);
+				Long inactiveTime=getDate(DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM"));
+				
+				System.out.println(st<inactiveTime||st==inactiveTime);
 
-			if((st>activeTime||st==activeTime)&&(st<inactiveTime||st==inactiveTime)){
-				pids.add(comm.getProductId());	
+				if((st>activeTime||st==activeTime)&&(st<inactiveTime||st==inactiveTime)){
+					pids.add(comm.getProductId());	
+				}
+				
 			}
+			ProductQueryByIdListVO vo=new ProductQueryByIdListVO();
+			vo.setProductIdList(pids);
+			vo.setTenantId(request.getTenantId());
+			List<CpPriceInfo> pList=iCpPriceInfoAtom.getActiveProduct(vo);
 			
+			//pNames
+		 if(!CollectionUtil.isEmpty(pList)){
+			for(CpPriceInfo info:pList){
+				pNames.add(info.getPriceName());	
+			}
+		 }
+		 response.setProductNames(pNames);	
 		}
-		ProductQueryByIdListVO vo=new ProductQueryByIdListVO();
-		vo.setProductIdList(pids);
-		vo.setTenantId(request.getTenantId());
-		List<CpPriceInfo> pList=iCpPriceInfoAtom.getActiveProduct(vo);
 		
-		//pNames
-	 if(!CollectionUtil.isEmpty(pList)){
-		for(CpPriceInfo info:pList){
-			pNames.add(info.getPriceName());	
-		}
-	 }
-	 response.setProductNames(pNames);	
+		
 	
 		
 		ResponseHeader rh=new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
