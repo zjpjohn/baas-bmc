@@ -192,10 +192,13 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 				
 			}
 			ProductQueryByIdListVO vo=new ProductQueryByIdListVO();
-			vo.setProductIdList(pids);
-			vo.setTenantId(request.getTenantId());
-			List<CpPriceInfo> pList=iCpPriceInfoAtom.getActiveProduct(vo);
 			
+			List<CpPriceInfo> pList=null;
+			if(!CollectionUtil.isEmpty(pids)){
+				vo.setProductIdList(pids);
+				vo.setTenantId(request.getTenantId());
+				pList=iCpPriceInfoAtom.getActiveProduct(vo);
+			}
 			//pNames
 		 if(!CollectionUtil.isEmpty(pList)){
 			for(CpPriceInfo info:pList){
