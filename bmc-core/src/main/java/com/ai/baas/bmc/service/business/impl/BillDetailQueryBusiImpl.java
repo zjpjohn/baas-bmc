@@ -45,6 +45,7 @@ import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.DateUtil;
+import com.alibaba.fastjson.JSON;
 @Service
 public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 	private Logger logger = Logger.getLogger(BillDetailQueryBusiImpl.class);
@@ -176,18 +177,18 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		List<BlSubsComm> commonList=iBlSubsCommonAtomSV.getSubsCommon(request.getSubsId(), request.getTenantId());
 		if(!CollectionUtil.isEmpty(commonList)){
 			for(BlSubsComm comm:commonList){
-				Long st=getDate(request.getSearchTime());
+				Long st=date2Long(request.getSearchTime());
 
 				
-				Long activeTime=getDate(DateUtil.getDateString(comm.getActiveTime(), "YYYYMM"));
+				Long activeTime=date2Long(DateUtil.getDateString(comm.getActiveTime(), DateUtil.YYYYMM));
 				System.out.println(st>activeTime||st==activeTime);
 
-				Long inactiveTime=getDate(DateUtil.getDateString(comm.getInactiveTime(), "YYYYMM"));
+				Long inactiveTime=date2Long(DateUtil.getDateString(comm.getInactiveTime(), DateUtil.YYYYMM));
 				
-				System.out.println(st<inactiveTime||st==inactiveTime);
 
-				if((st>activeTime||st==activeTime)&&(st<inactiveTime||st==inactiveTime)){
+				if((st.longValue()>=activeTime.longValue())&&(inactiveTime.longValue()>=st.longValue())){
 					pids.add(comm.getProductId());	
+					System.out.println(JSON.toJSONString(pids));
 				}
 				
 			}
@@ -202,7 +203,7 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 			//pNames
 		 if(!CollectionUtil.isEmpty(pList)){
 			for(CpPriceInfo info:pList){
-				pNames.add(info.getPriceName());	
+				pNames.add(info.getPriceName());
 			}
 		 }
 		 response.setProductNames(pNames);	
@@ -387,8 +388,8 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 	}
 	
 	
-	private Long getDate(String date){
-		SimpleDateFormat sdf= new SimpleDateFormat("YYYYMM");
+	private Long date2Long(String date){
+	/*	SimpleDateFormat sdf= new SimpleDateFormat("YYYYMM");
 		Date d = null;
 		try {
 			d = sdf.parse(date);
@@ -396,6 +397,7 @@ public class BillDetailQueryBusiImpl implements IBillDetailQueryBusiSV {
 		
 			logger.info("date transfer error");
 		}
-		return d.getTime()/1000;
+		return d.getTime()/1000;*/
+		return Long.parseLong(date.replace("-", ""));
 	}
 }
