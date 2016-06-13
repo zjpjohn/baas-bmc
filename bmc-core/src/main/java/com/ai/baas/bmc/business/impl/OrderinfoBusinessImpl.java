@@ -136,6 +136,38 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             throw new BusinessException("000001","amc_product_info表中，该productId： "+productId+" 不存在");
         }
     }
+    private boolean checkExist(Product p, String tenantId, BlUserinfo aBlUserinfo) {
+      //判断subsProductId唯一，bl_subs_comm表中，subsproductId是否存在，如果存在，existFlag=true ，抛异常，如果不,存在 existFlag=false insert                   
+        Map<String, String> checkOnly = new TreeMap<String, String>();
+        checkOnly.put("product_id", p.getProductId());
+        checkOnly.put("product_type",p.getProductType());
+        checkOnly.put("tenant_id", tenantId);
+        checkOnly.put("subs_id", aBlUserinfo.getSubsId());
+        checkOnly.put("subs_product_id", p.getSubsProductId());
+        
+        List<Map<String, String>> amcResult = DshmUtil.getClient().list("bl_subs_comm")
+                .where(checkOnly).executeQuery(DshmUtil.getCacheClient());
+       
+        System.out.println("bluserinfoList："+JSON.toJSONString(amcResult));
+        String product_id = null;
+        String subsProduct_Id = null;
+        boolean existFlag = true;
+       //获得缓存中第一条有效数据
+        if (!(amcResult == null || amcResult.isEmpty())) {
+            for(Map<String, String> r : amcResult){
+                if(!r.isEmpty()){
+                    product_id = r.get("product_id");    
+                    subsProduct_Id = r.get("subsProduct_id");
+                    existFlag = false;//productId已存在，更新数据
+                    System.out.println("product_id : "+product_id+ "subsProduct_Id :"+subsProduct_Id+" 已存在，更新" ); 
+                    break;
+                }          
+            }
+        }
+        System.out.println("productId : "+product_id+" existFlag : "+existFlag);
+        return existFlag;
+    }
+    
     
     private boolean checkOnly(String productId,String productType,String tenantId,BlUserinfo BlUserinfo){
       //判断唯一，bl_subs_comm表中，productId是否存在，如果存在，existFlag=true ，update，如果不,存在 existFlag=false insert                   
@@ -211,7 +243,16 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
                 if(p.getProductType().equals("dr")){
                     //校验产品ID
                     checkDr(p.getProductId(),orderInfoParams.getTenantId());
-                    writeBlSubsComm(aBlUserinfo, p);
+                    boolean existFlag = false;
+                    //校验手动填写的subsProductId
+                    if(p.getSubsProductId()!=null){
+                        existFlag = checkExist(p,orderInfoParams.getTenantId(),aBlUserinfo);
+                    }
+                    if(existFlag){
+                        writeBlSubsComm(aBlUserinfo, p);
+                    }else{
+                        throw new BusinessException("BMC-000001", "subsProductId已经存在");
+                    }
                 }
                 if(p.getProductType().equals("bill")){
                     //校验 查amc_product_info表是否有这个产品ID
@@ -228,6 +269,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             }
         }
     }
+
+
 
     private void updateBlSubsComm(BlUserinfo userInfo, Product product) {
         BlSubsComm aBlSubsComm = new BlSubsComm();

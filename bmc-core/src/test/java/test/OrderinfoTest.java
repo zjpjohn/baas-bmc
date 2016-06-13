@@ -46,7 +46,7 @@ public class OrderinfoTest {
         a.setExtCustId("676767");//外部客户ID       
         a.setServiceId("19926767");
         
-        a.setTradeSeq("9aass1111aaaa31");
+        a.setTradeSeq("9aass1112wer2342343133aaaa31");
 
         a.setUsetype("Test");
         a.setState("Normal");
@@ -67,7 +67,7 @@ public class OrderinfoTest {
                    
             p.setProductId("999666");
             p.setProductType("dr");
-            p.setSubsProductId("6565651");
+            p.setSubsProductId("6777751");
             p.setProductNumber(1);
             p.setResBonusFlag("Y");
             p.setActiveTime("20160406235959");
