@@ -101,7 +101,6 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
 	public void batchResendFee(FeeReBatchParam param) throws IOException, IllegalArgumentException, IllegalAccessException {
 		// TODO Auto-generated method stub
 		FeeReBatchCriteria criteria = param.getCriteria();
-		String tableName = this.buildTableName(criteria);
 		
 		ReBillingParam billParam = new ReBillingParam();
 		billParam.setBusiType(criteria.getServiceType());
@@ -109,43 +108,6 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
 		billParam.setServiceId(criteria.getServiceId());
 		billParam.setTenantId(criteria.getTenantId());
 		Long success = iReBillingBussiness.reBilling(billParam);
-		
-//		Table table = MyHbaseUtil.getTable(this.buildTableName(criteria));
-//		FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
-//		if (criteria.getTenantId() != null && criteria.getTenantId().length() > 0) {
-//            Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "tenant_id".getBytes(),
-//                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getTenantId().getBytes()));
-//            filterList.addFilter(filter);
-//        }
-//        if (criteria.getServiceId() != null && criteria.getServiceId().length() > 0) {
-//            Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "service_id".getBytes(),
-//                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getServiceId().getBytes()));
-//            filterList.addFilter(filter);
-//        }
-//        if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
-//            Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "service_type".getBytes(),
-//                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getServiceType().getBytes()));
-//            filterList.addFilter(filter);
-//        }
-//        if (criteria.getAccountPeriod() != null && criteria.getAccountPeriod().length() > 0) {
-//            Filter filter = new SingleColumnValueFilter("detail_bill".getBytes(), "account_period".getBytes(),
-//                    CompareFilter.CompareOp.EQUAL, new RegexStringComparator(criteria.getAccountPeriod().substring(0, 6)+"*"));
-//            filterList.addFilter(filter);
-//        }
-//        Scan scan = new Scan();
-//        scan.setFilter(filterList);
-//        ResultScanner resultScanner = table.getScanner(scan);
-//        Iterator<Result> resultIterator = resultScanner.iterator();
-//        String dupTableName = this.buildDuplicateBillTableName(criteria);
-//        //逐条发送和删除费用数据
-//        while (resultIterator.hasNext()) {
-//            Result result = resultIterator.next();
-//            FeeParam feeParam = getFeeParam(result);
-//            String message = generateMessage(feeParam);
-//            cleanDuplicateData(dupTableName, feeParam.getBsn());
-//            cleanFeeData(feeParam, tableName);
-//            MDSUtil.sendMessage(BmcConstants.MDSNS.BMC_KAFKA_TOPIC,message);
-//        }
 	}
 	
 	private void cleanDuplicateData(String tabName, String rowKey) throws IOException {
