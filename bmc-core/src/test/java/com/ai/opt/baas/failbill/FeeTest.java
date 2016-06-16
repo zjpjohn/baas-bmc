@@ -64,7 +64,7 @@ public class FeeTest {
 //	    	queryInfo.setErrorCode();
 	    	JSONArray.fromObject(queryInfo);
 	    	FeeParamPagerResponse list = feeReBatchSV.queryFeeReBatch(queryInfo);
-	    	System.out.println("标准资费查询出参:"+JSON.toJSONString(list));
+	    	System.out.println("标准资费查询出参:"+JSON.toJSONString(list));  
 	    }
 	 
 	 @Test
