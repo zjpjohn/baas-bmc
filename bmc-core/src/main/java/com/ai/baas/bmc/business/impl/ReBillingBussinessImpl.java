@@ -32,7 +32,7 @@ public class ReBillingBussinessImpl implements IReBillingBussiness {
 	@Override
     public long reBilling(ReBillingParam param) throws BusinessException, SystemException {
     	
-    	String subsId=param.getSubsId();
+    	String serviceId=param.getServiceId();
     	String tenantId=param.getTenantId();
     	String acct=param.getBillMonth();
     	String serviceType=param.getBusiType();
@@ -42,7 +42,7 @@ public class ReBillingBussinessImpl implements IReBillingBussiness {
         rowKey=getRowKey.getRowKey(param);
     	// 此时需要根据subsId、tenantId 从userinfo表中读取service_id的信息；
     	SplitRowkey getRowKey=new SplitRowkey();
-    	results=getRowKey.getSubsInfo(tenantId, subsId);
+    	results=getRowKey.getSubsInfo(tenantId, serviceId);
     	List<Map<String, String>> rowKeyDatas=new ArrayList<Map<String,String>>();
     	if(null==results||results.isEmpty()){
     		LoggerUtil.log.error("该租户下的用户在缓存中查询不到.......");

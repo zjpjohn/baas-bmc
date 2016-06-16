@@ -18,10 +18,10 @@ public class SplitRowkey {
 	private DshmUtil instance=null;
 	private IDshmClient client;
     private ICacheClient cacheClient; 
-	public List<Map<String,String>> getSubsInfo(String tenantId,String subsId){
+	public List<Map<String,String>> getSubsInfo(String tenantId,String serviceId){
 		cacheClient=instance.getCacheClient();
 		Map<String,String> params = new TreeMap<String,String>();
-		params.put("subs_id", subsId);
+		params.put("service_id", serviceId);
 		params.put("tenant_id", tenantId);
 		List<Map<String, String>> results=client.list("bl_userinfo")
 				.where(params) 

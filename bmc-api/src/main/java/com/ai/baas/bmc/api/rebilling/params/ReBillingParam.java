@@ -23,7 +23,15 @@ public class ReBillingParam extends BaseInfo{
     private String billMonth;
     //5、  回退类型：费用，资源（语音、流量、虚拟币），编码以前台传入的为准，他们都配置到基础数据表中。
     private String reBillingType;
-    public String getTenantId() {
+    //
+    private String serviceId;
+    public String getServiceId() {
+		return serviceId;
+	}
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
+	}
+	public String getTenantId() {
         return tenantId;
     }
     public void setTenantId(String tenantId) {
