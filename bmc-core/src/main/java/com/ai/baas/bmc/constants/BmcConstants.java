@@ -28,10 +28,13 @@ public final class BmcConstants {
             public static final String PRESENT_ID_SEQ = "CP_FULL_PRESENT$PRESENT_ID$SEQ";
             public static final String PRESENT_CODE_SEQ = "CP_FULL_PRESENT$PRESENT_CODE$SEQ";
             public static final String RECORD_FMT_ID_SEQ = "BMC_RECORD_FMT$ID$SEQ";
-
+            public static final  String ROWKEY_SPLIT = new String(new char[] {(char) 1 });
             
             public static final String REDUCE_CODE_SEQ = "CP_FULL_REDUCE$REDUCE_CODE$SEQ";
             public static final String REDUCE_ID_SEQ = "CP_FULL_REDUCE$REDUCE_ID$SEQ";
+            public static final String BMC_INFO_CODE="INFO_CODE:";
+            public static final String BMC_BAK_HTABLE_SPLIT="_";
+            public static final String BMC_BAK_ROUTE_TYPE="REBMC";
 
         }
 

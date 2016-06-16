@@ -2,8 +2,13 @@ package com.ai.baas.bmc.util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
@@ -12,8 +17,18 @@ import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.hbase.filter.BinaryComparator;
+import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.filter.RegexStringComparator;
+import org.apache.hadoop.hbase.filter.RowFilter;
+import org.apache.hadoop.hbase.filter.SubstringComparator;
+import org.apache.hadoop.yarn.webapp.hamlet.Hamlet.STRONG;
+
 
 public class MyHbaseUtil {
     private static Connection connection;
@@ -105,6 +120,70 @@ public class MyHbaseUtil {
         }
         tableName.put(put);
     }
+    
+    /**
+     * 根据rowkey进行模糊查询  TR_VOICE_TEST_201604
+     *
+     */
+    public static Map<String, Object> resGetData(String tableName,String resRowKey){
+    	System.out.println("the rowkey is ............ "+resRowKey);
+    	LoggerUtil.log.debug("     rowKey is       "+resRowKey);
+    	Scan scan = new Scan();
+    	Table table=getTable(tableName);
+    	StringBuilder regRowKey=new StringBuilder();
+    	regRowKey.append("^").append(resRowKey).append(".*");
+    	//Filter filter= new RowFilter(CompareOp.EQUAL, new SubstringComparator(resRowKey));
+    	Filter filter= new RowFilter(CompareOp.EQUAL, new RegexStringComparator(regRowKey.toString()));
+    	scan.setFilter(filter);
+    	ResultScanner resultScan;
+    	Map<String, Object> drMap=new HashMap<String, Object>();
+		try {
+			resultScan = table.getScanner(scan);
+			for(Result result:resultScan){
+				String rowKey=new String(result.getRow());
+				//System.out.println("the real rowkey is "+rowKey);
+				Map<String, String> dataMap=new HashMap<String,String>();
+				for(Cell r:result.rawCells()){
+					dataMap.put(new String(CellUtil.cloneQualifier(r)),new String(CellUtil.cloneValue(r)));
+				}
+				//将map转换成json
+				Object data=JSONObject.fromObject(dataMap);
+				System.out.println("the data is "+data);
+				drMap.put(rowKey, data);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+    	return drMap;
+    }
+
+//   public static void main(String[] args){
+//    	String tableName="VIV-BYD_GPRS_DR_201606";
+//    	String rowkeyString="^iccid1063s10631063GPRS.*";
+//   	//String rowkeyString="iccid1063s10631063GPRS20160601230901iccid106320160601110BYDBILL20160602153703.zip";
+//    	Scan scan = new Scan();
+//   	    Table table=getTable(tableName);
+//    	//Filter filter= new RowFilter(CompareOp.EQUAL, new SubstringComparator(resRowKey));
+//   	Filter filter= new RowFilter(CompareOp.EQUAL, new RegexStringComparator(rowkeyString));
+//   	scan.setFilter(filter);
+//   	ResultScanner resultScan;
+//   	try {
+//			resultScan = table.getScanner(scan);
+//			for(Result result:resultScan){
+//				
+//				String rowKey=new String(result.getRow());
+//				System.out.println("the real rowkey is "+rowKey);
+//				Map<String, String> dataMap=new HashMap<String,String>();
+//				for(Cell r:result.rawCells()){
+//					//dataMap.put(CellUtil.cloneQualifier(r).toString(),CellUtil.cloneValue(r).toString());
+//					System.out.println("qualifier is"+new String(CellUtil.cloneQualifier(r))+"   value is "+new String(CellUtil.cloneValue(r)));
+//				}
+//			}
+//   	}catch(Exception e){
+//				e.printStackTrace();
+//		}
+//   }
 
     public static class CellTemp {
         private byte[] family;
