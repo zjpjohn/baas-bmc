@@ -15,17 +15,13 @@ import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import java.util.Map.Entry;
 
 public class SplitRowkey {
-	private DshmUtil instance=null;
-	private IDshmClient client;
-    private ICacheClient cacheClient; 
 	public List<Map<String,String>> getSubsInfo(String tenantId,String serviceId){
-		cacheClient=instance.getCacheClient();
 		Map<String,String> params = new TreeMap<String,String>();
 		params.put("service_id", serviceId);
 		params.put("tenant_id", tenantId);
-		List<Map<String, String>> results=client.list("bl_userinfo")
+		List<Map<String, String>> results=DshmUtil.getClient().list("bl_userinfo")
 				.where(params) 
-				.executeQuery(cacheClient);
+				.executeQuery(DshmUtil.getCacheClient());
 //		List<Map<String, String>> results=new ArrayList<Map<String,String>>();
 //		Map<String, String> result=new HashMap<String, String>();
 //		result.put("subs_id", "s2681");
