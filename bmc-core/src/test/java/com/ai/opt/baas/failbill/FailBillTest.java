@@ -209,7 +209,7 @@ public class FailBillTest {
 		@Test
 	    public void QueryAll(){  
 	        try {  
-	        	Table table = HBaseProxy.getConnection().getTable(TableName.valueOf("VIV-BYD_VOICE_DR_201605"));
+	        	Table table = HBaseProxy.getConnection().getTable(TableName.valueOf("VIV-BYD_GPRS_DR_201606"));
 	            ResultScanner rs = table.getScanner(new Scan());  
 	            for (Result r : rs) {  
 	                System.out.println("获得到rowkey:" + new String(r.getRow()));  

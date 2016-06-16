@@ -72,9 +72,10 @@ public class FeeTest {
 		  	FeeReBatchParam param = new FeeReBatchParam();
 		    FeeReBatchCriteria queryInfo = new FeeReBatchCriteria();
 	    	queryInfo.setTenantId("VIV-BYD");
-	    	queryInfo.setServiceType("VOICE");
-	    	queryInfo.setAccountPeriod("2016051212");
+	    	queryInfo.setServiceType("GPRS");
+	    	queryInfo.setAccountPeriod("2016061212");
 	    	queryInfo.setReBatchType("test");
+	    	queryInfo.setServiceId("iccid1150");
 	    	param.setCriteria(queryInfo);
 	    	JSONArray.fromObject(param);
 	    	BaseResponse response = feeReBatchSV.batchResendFee(param);
@@ -87,8 +88,8 @@ public class FeeTest {
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append("VIV-BYD").append(FIELD_SPLIT);
-			sb.append("999999BHC123").append(FIELD_SPLIT);
-			sb.append("VOICE").append(FIELD_SPLIT);
+			sb.append("iccid1150").append(FIELD_SPLIT);
+			sb.append("GPRS").append(FIELD_SPLIT);
 			sb.append("1456281622845").append(FIELD_SPLIT);
 			sb.append("1459440000000");
 			String rowkey1=sb.toString();
@@ -107,9 +108,9 @@ public class FeeTest {
 				
 			
 				//添加各个列族里面的数据
-				put.addColumn("detail_bill".getBytes(), "account_period".getBytes(), "2016051212".getBytes());
+				put.addColumn("detail_bill".getBytes(), "account_period".getBytes(), "2016061212".getBytes());
 				put.addColumn("detail_bill".getBytes(), "tenant_id".getBytes(), "VIV-BYD".getBytes());
-				put.addColumn("detail_bill".getBytes(), "service_id".getBytes(), "999999BHC123".getBytes());
+				put.addColumn("detail_bill".getBytes(), "service_id".getBytes(), "iccid1150".getBytes());
 				put.addColumn("detail_bill".getBytes(), "service_type".getBytes(), "VOICE".getBytes());
 				put.addColumn("detail_bill".getBytes(), "bsn".getBytes(), "1459440000000".getBytes());
 				put.addColumn("detail_bill".getBytes(), "duration".getBytes(), "14562816".getBytes());
@@ -121,7 +122,7 @@ public class FeeTest {
 				put.addColumn("detail_bill".getBytes(), "fee".getBytes(), "12333".getBytes());
 				put.addColumn("detail_bill".getBytes(), "product_id".getBytes(), "xxxx".getBytes());
 				put.addColumn("detail_bill".getBytes(), "sn".getBytes(), "1456281622845".getBytes());
-				put.addColumn("detail_bill".getBytes(), "source".getBytes(), "VOICE".getBytes());
+				put.addColumn("detail_bill".getBytes(), "source".getBytes(), "STREAM".getBytes());
 				put.addColumn("detail_bill".getBytes(), "call_type".getBytes(), "被叫".getBytes());
 				put.addColumn("detail_bill".getBytes(), "opp_number".getBytes(), "13523411234".getBytes());
 				put.addColumn("detail_bill".getBytes(), "visit_area".getBytes(), "北京12".getBytes());
