@@ -1,6 +1,5 @@
 package com.ai.baas.bmc.api.BaseInfo.impl;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,6 @@ import com.ai.baas.bmc.business.interfaces.IBaseInfoBussiness;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.alibaba.dubbo.config.annotation.Service;
-import com.alibaba.fastjson.JSON;
 
 @Service(validation="true")
 @Component
