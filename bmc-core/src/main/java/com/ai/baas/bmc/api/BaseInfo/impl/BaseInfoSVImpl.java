@@ -23,7 +23,6 @@ public class BaseInfoSVImpl implements IBaseInfoSV {
 	private IBaseInfoBussiness iBaseInfoBussiness;
 	@Override
 	public BaseCodeInfo getBaseInfo(QueryInfoParams param) {
-		System.out.println("-----msg------");
 		return iBaseInfoBussiness.getBaseInfo(param);
 	}
 	@Override
