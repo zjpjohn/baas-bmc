@@ -1,7 +1,6 @@
 package com.ai.baas.bmc.api.BaseInfo.impl;
 
-import javax.sql.DataSource;
-
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +20,14 @@ import com.alibaba.fastjson.JSON;
 public class BaseInfoSVImpl implements IBaseInfoSV {
 
 	@Autowired
-	private DataSource  ds;
+	private SqlSessionTemplate  st;
 
 	@Autowired
 	private IBaseInfoBussiness iBaseInfoBussiness;
 	@Override
 	public BaseCodeInfo getBaseInfo(QueryInfoParams param) {
-		System.out.println("-----msg------"+JSON.toJSONString(ds));
+		System.out.println("-----msg------"+JSON.toJSONString(st.getConfiguration()));
+		System.out.println("-----msg------"+JSON.toJSONString(st.getConnection()));
 		
 		return iBaseInfoBussiness.getBaseInfo(param);
 	}
