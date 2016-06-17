@@ -20,15 +20,10 @@ import com.alibaba.fastjson.JSON;
 public class BaseInfoSVImpl implements IBaseInfoSV {
 
 	@Autowired
-	private SqlSessionTemplate  st;
-
-	@Autowired
 	private IBaseInfoBussiness iBaseInfoBussiness;
 	@Override
 	public BaseCodeInfo getBaseInfo(QueryInfoParams param) {
-		System.out.println("-----msg------"+JSON.toJSONString(st.getConfiguration()));
-		System.out.println("-----msg------"+JSON.toJSONString(st.getConnection()));
-		
+		System.out.println("-----msg------");
 		return iBaseInfoBussiness.getBaseInfo(param);
 	}
 	@Override
