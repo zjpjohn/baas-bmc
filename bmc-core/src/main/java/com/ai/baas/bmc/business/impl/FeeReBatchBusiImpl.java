@@ -107,19 +107,9 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
 		billParam.setReBillingType(criteria.getReBatchType());
 		billParam.setServiceId(criteria.getServiceId());
 		billParam.setTenantId(criteria.getTenantId());
-		Long success = iReBillingBussiness.reBilling(billParam);
+		billParam.setBillMonth(criteria.getAccountPeriod().substring(0, 6));
+		iReBillingBussiness.reBilling(billParam);
 	}
-	
-	private void cleanDuplicateData(String tabName, String rowKey) throws IOException {
-        Table duplicateionBill = MyHbaseUtil.getTable(tabName);
-        Delete duplicateDelete = new Delete(rowKey.getBytes());
-        duplicateionBill.delete(duplicateDelete);
-    }
-
-    private String buildDuplicateBillTableName(FeeReBatchCriteria criteria) {
-        return criteria.getTenantId() + "_" + criteria.getServiceType() + "_dup_" 
-        		+ criteria.getAccountPeriod().substring(0, 6);
-    }
 	
 	private String buildTableName(FeeReBatchCriteria criteria){
 		return criteria.getTenantId()+"_"+criteria.getServiceType()+
@@ -159,6 +149,17 @@ public class FeeReBatchBusiImpl implements IFeeReBatchBusi {
             return Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
         }
         return null;
+    }
+	
+	private void cleanDuplicateData(String tabName, String rowKey) throws IOException {
+        Table duplicateionBill = MyHbaseUtil.getTable(tabName);
+        Delete duplicateDelete = new Delete(rowKey.getBytes());
+        duplicateionBill.delete(duplicateDelete);
+    }
+
+    private String buildDuplicateBillTableName(FeeReBatchCriteria criteria) {
+        return criteria.getTenantId() + "_" + criteria.getServiceType() + "_dup_" 
+        		+ criteria.getAccountPeriod().substring(0, 6);
     }
 	
 	private void cleanFeeData(FeeParam param, String tableName) throws IOException {
