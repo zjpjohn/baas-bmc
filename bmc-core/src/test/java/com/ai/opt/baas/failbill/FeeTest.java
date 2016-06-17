@@ -73,9 +73,9 @@ public class FeeTest {
 		    FeeReBatchCriteria queryInfo = new FeeReBatchCriteria();
 	    	queryInfo.setTenantId("VIV-BYD");
 	    	queryInfo.setServiceType("GPRS");
-	    	queryInfo.setAccountPeriod("2016061212");
+	    	queryInfo.setAccountPeriod("2016051212");
 	    	queryInfo.setReBatchType("test");
-	    	queryInfo.setServiceId("iccid1150");
+	    	queryInfo.setServiceId("iccid1219");
 	    	param.setCriteria(queryInfo);
 	    	JSONArray.fromObject(param);
 	    	BaseResponse response = feeReBatchSV.batchResendFee(param);
@@ -146,5 +146,81 @@ public class FeeTest {
 			}
 			
 		}
+	 
+	 @Test
+		public void addDRData(){
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append("iccid1219").append(FIELD_SPLIT);
+			sb.append("s1219").append(FIELD_SPLIT);
+			sb.append("1219").append(FIELD_SPLIT);
+			sb.append("GPRS").append(FIELD_SPLIT);
+			sb.append("20160601230901").append(FIELD_SPLIT);
+			String rowkey1=sb.toString();
+			
+			
+			
+			
+			Connection conn = HBaseProxy.getConnection();
+			byte[] rowKey = rowkey1.getBytes();
+			Table table = null;
+			try {
+				table = conn.getTable(TableName
+						.valueOf("VIV-BYD_GPRS_DR_201605"));
+
+				Put put = new Put(rowKey);
+				
+			
+				//添加各个列族里面的数据
+				put.addColumn("detail_bill".getBytes(), "account_period".getBytes(), "2016051212".getBytes());
+				put.addColumn("detail_bill".getBytes(), "tenant_id".getBytes(), "VIV-BYD".getBytes());
+				put.addColumn("detail_bill".getBytes(), "service_id".getBytes(), "iccid1219".getBytes());
+				put.addColumn("detail_bill".getBytes(), "service_type".getBytes(), "GPRS".getBytes());
+				put.addColumn("detail_bill".getBytes(), "bsn".getBytes(), "1459440000000".getBytes());
+				put.addColumn("detail_bill".getBytes(), "duration".getBytes(), "14562816".getBytes());
+				put.addColumn("detail_bill".getBytes(), "cust_id".getBytes(), "1219".getBytes());
+				put.addColumn("detail_bill".getBytes(), "apn_code".getBytes(), "APN1".getBytes());
+				put.addColumn("detail_bill".getBytes(), "gprs_down".getBytes(), "321".getBytes());
+				put.addColumn("detail_bill".getBytes(), "gprs_up".getBytes(), "122".getBytes());
+				put.addColumn("detail_bill".getBytes(), "start_time".getBytes(), "2016051212".getBytes());
+				put.addColumn("detail_bill".getBytes(), "subs_id".getBytes(), "s1219".getBytes());
+				put.addColumn("detail_bill".getBytes(), "acct_id".getBytes(), "1219".getBytes());
+				put.addColumn("detail_bill".getBytes(), "sn".getBytes(), "1456281622845".getBytes());
+				put.addColumn("detail_bill".getBytes(), "source".getBytes(), "GPRS".getBytes());
+				
+//				String data = getData();
+//				put.addColumn("detail".getBytes(), "record".getBytes(), data.getBytes());
+				table.put(put);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (table != null) {
+					try {
+						table.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}
+	 
+	 @Test
+	    public void QueryAll(){  
+	        try {  
+	        	Table table = HBaseProxy.getConnection().getTable(TableName.valueOf("VIV-BYD_GPRS_DR_201605"));
+	            ResultScanner rs = table.getScanner(new Scan());  
+	            for (Result r : rs) {  
+	                System.out.println("获得到rowkey:" + new String(r.getRow()));  
+	                for (KeyValue keyValue : r.raw()) {  
+	                    System.out.println("列：" + new String(keyValue.getFamily()) + "_" +Bytes.toString(keyValue.getQualifier())
+	                            + "====值:" + new String(keyValue.getValue()));  
+	                }  
+	            }  
+	        } catch (IOException e) {  
+	            e.printStackTrace();  
+	        }  
+	    }  
 	 
 }
