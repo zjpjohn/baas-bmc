@@ -18,7 +18,7 @@ import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 
 @Service
-@Transactional
+@Transactional()
 public class InitBaseDataBusiImpl implements IinitBaseDataBusi{
 
 	@Autowired
@@ -45,10 +45,15 @@ public class InitBaseDataBusiImpl implements IinitBaseDataBusi{
 	        	param.setSubsId(sysSequence.terrigerSysSequence("SUBS_ID", 1).get(0));
 	        	param.setAcctId(sysSequence.terrigerSysSequence("ACCT_ID", 1).get(0));
 	        	param.setAcctId(sysSequence.terrigerSysSequence("CUST_ID", 1).get(0));
-	        	userInfo.userInfoInsert(param);
-	        	custInfo.custInfoInsert(param);
-	        	acctInfo.acctInfoInsert(param);
-	        	return 1;
+	        	if(null!=param.getSubsId()&&null!=param.getCustId()&&null!=param.getAcctId()){
+		        	userInfo.userInfoInsert(param);
+		        	custInfo.custInfoInsert(param);
+		        	acctInfo.acctInfoInsert(param);
+		        	return 1;
+	        	}else{
+	        		LoggerUtil.log.error("subs_id"+param.getSubsId()+" cust_id"+param.getCustId()+" acct_id"+param.getAcctId());
+	        		return -1;
+	        	}
 	        }else{
 	        	LoggerUtil.log.debug("客户id"+param.getExtCustId()+"已经初始化完成");
 	        	return 1;

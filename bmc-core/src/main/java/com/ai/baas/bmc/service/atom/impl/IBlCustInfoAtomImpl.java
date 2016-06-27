@@ -77,6 +77,7 @@ public class IBlCustInfoAtomImpl implements IBlCustInfoAtomSV {
 		custInfo.setState("NORMAL");
 		custInfo.setStateChgTime(DateUtil.getSysDate());
 		custInfo.setTenantId(param.getTenantId());
+		custInfo.setCustName("NULL");
 		if(blCustinfoMapper.insert(custInfo)!=0){
 			//开始向缓存中刷新
 			JSONObject json=new JSONObject();
