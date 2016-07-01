@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpPricemakingRuleMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRule" >
+    <id column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <id column="PRICE_PRODUCT_TYPE" property="priceProductType" jdbcType="VARCHAR" />
+    <id column="PRICE_PRODUCT_ID" property="priceProductId" jdbcType="VARCHAR" />
+    <id column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
+    <id column="ACTIVE_TIME" property="activeTime" jdbcType="TIMESTAMP" />
+    <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="RULE_CODE" property="ruleCode" jdbcType="VARCHAR" />
+    <result column="RULE_EXPRESION" property="ruleExpresion" jdbcType="VARCHAR" />
+    <result column="EXT_INFO" property="extInfo" jdbcType="VARCHAR" />
+    <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TENANT_ID, PRICE_PRODUCT_TYPE, PRICE_PRODUCT_ID, PRICE_TYPE, ACTIVE_TIME, ID, RULE_CODE, 
+    RULE_EXPRESION, EXT_INFO, INACTIVE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRuleCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cp_pricemaking_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRuleKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_pricemaking_rule
+    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_ID = #{priceProductId,jdbcType=VARCHAR}
+      and PRICE_TYPE = #{priceType,jdbcType=VARCHAR}
+      and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRuleKey" >
+    delete from cp_pricemaking_rule
+    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_ID = #{priceProductId,jdbcType=VARCHAR}
+      and PRICE_TYPE = #{priceType,jdbcType=VARCHAR}
+      and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRuleCriteria" >
+    delete from cp_pricemaking_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRule" >
+    insert into cp_pricemaking_rule (TENANT_ID, PRICE_PRODUCT_TYPE, PRICE_PRODUCT_ID, 
+      PRICE_TYPE, ACTIVE_TIME, ID, 
+      RULE_CODE, RULE_EXPRESION, EXT_INFO, 
+      INACTIVE_TIME)
+    values (#{tenantId,jdbcType=VARCHAR}, #{priceProductType,jdbcType=VARCHAR}, #{priceProductId,jdbcType=VARCHAR}, 
+      #{priceType,jdbcType=VARCHAR}, #{activeTime,jdbcType=TIMESTAMP}, #{id,jdbcType=BIGINT}, 
+      #{ruleCode,jdbcType=VARCHAR}, #{ruleExpresion,jdbcType=VARCHAR}, #{extInfo,jdbcType=VARCHAR}, 
+      #{inactiveTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRule" >
+    insert into cp_pricemaking_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="priceProductType != null" >
+        PRICE_PRODUCT_TYPE,
+      </if>
+      <if test="priceProductId != null" >
+        PRICE_PRODUCT_ID,
+      </if>
+      <if test="priceType != null" >
+        PRICE_TYPE,
+      </if>
+      <if test="activeTime != null" >
+        ACTIVE_TIME,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE,
+      </if>
+      <if test="ruleExpresion != null" >
+        RULE_EXPRESION,
+      </if>
+      <if test="extInfo != null" >
+        EXT_INFO,
+      </if>
+      <if test="inactiveTime != null" >
+        INACTIVE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="priceProductType != null" >
+        #{priceProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceProductId != null" >
+        #{priceProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="priceType != null" >
+        #{priceType,jdbcType=VARCHAR},
+      </if>
+      <if test="activeTime != null" >
+        #{activeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ruleCode != null" >
+        #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleExpresion != null" >
+        #{ruleExpresion,jdbcType=VARCHAR},
+      </if>
+      <if test="extInfo != null" >
+        #{extInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="inactiveTime != null" >
+        #{inactiveTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRuleCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_pricemaking_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_pricemaking_rule
+    <set >
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceProductType != null" >
+        PRICE_PRODUCT_TYPE = #{record.priceProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceProductId != null" >
+        PRICE_PRODUCT_ID = #{record.priceProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceType != null" >
+        PRICE_TYPE = #{record.priceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activeTime != null" >
+        ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleCode != null" >
+        RULE_CODE = #{record.ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleExpresion != null" >
+        RULE_EXPRESION = #{record.ruleExpresion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extInfo != null" >
+        EXT_INFO = #{record.extInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inactiveTime != null" >
+        INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_pricemaking_rule
+    set TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      PRICE_PRODUCT_TYPE = #{record.priceProductType,jdbcType=VARCHAR},
+      PRICE_PRODUCT_ID = #{record.priceProductId,jdbcType=VARCHAR},
+      PRICE_TYPE = #{record.priceType,jdbcType=VARCHAR},
+      ACTIVE_TIME = #{record.activeTime,jdbcType=TIMESTAMP},
+      ID = #{record.id,jdbcType=BIGINT},
+      RULE_CODE = #{record.ruleCode,jdbcType=VARCHAR},
+      RULE_EXPRESION = #{record.ruleExpresion,jdbcType=VARCHAR},
+      EXT_INFO = #{record.extInfo,jdbcType=VARCHAR},
+      INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRule" >
+    update cp_pricemaking_rule
+    <set >
+      <if test="id != null" >
+        ID = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleExpresion != null" >
+        RULE_EXPRESION = #{ruleExpresion,jdbcType=VARCHAR},
+      </if>
+      <if test="extInfo != null" >
+        EXT_INFO = #{extInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="inactiveTime != null" >
+        INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_ID = #{priceProductId,jdbcType=VARCHAR}
+      and PRICE_TYPE = #{priceType,jdbcType=VARCHAR}
+      and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRule" >
+    update cp_pricemaking_rule
+    set ID = #{id,jdbcType=BIGINT},
+      RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      RULE_EXPRESION = #{ruleExpresion,jdbcType=VARCHAR},
+      EXT_INFO = #{extInfo,jdbcType=VARCHAR},
+      INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP}
+    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_ID = #{priceProductId,jdbcType=VARCHAR}
+      and PRICE_TYPE = #{priceType,jdbcType=VARCHAR}
+      and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}
+  </update>
+</mapper>

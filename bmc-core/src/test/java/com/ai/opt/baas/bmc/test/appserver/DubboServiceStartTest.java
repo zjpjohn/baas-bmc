@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.test.appserver;
+package com.ai.opt.baas.bmc.test.appserver;
 
 import com.ai.opt.sdk.appserver.DubboServiceStart;
 

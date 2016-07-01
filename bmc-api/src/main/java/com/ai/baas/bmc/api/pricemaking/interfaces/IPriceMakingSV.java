@@ -26,5 +26,6 @@ public interface IPriceMakingSV {
      * @author mayt
      * @ApiDocMethod BaaS-0019
      */
-    ResponseMessage queryPriceMaking(PriceElementInfo request);
+    ResponseMessage queryPriceMaking(PriceElementInfo request)throws BusinessException,
+    SystemException;
 }

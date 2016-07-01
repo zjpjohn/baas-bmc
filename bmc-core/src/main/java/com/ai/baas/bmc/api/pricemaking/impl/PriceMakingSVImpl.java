@@ -1,9 +1,15 @@
 package com.ai.baas.bmc.api.pricemaking.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ai.baas.bmc.api.pricemaking.interfaces.IPriceMakingSV;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfoZX;
+import com.ai.baas.bmc.api.pricemaking.params.PriceInfo;
 import com.ai.baas.bmc.api.pricemaking.params.ResponseMessage;
+import com.ai.baas.bmc.business.interfaces.IPriceMakingBusiSV;
 import com.ai.baas.bmc.util.BusinessUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -14,7 +20,8 @@ import com.alibaba.dubbo.config.annotation.Service;
 
 @Service
 public class PriceMakingSVImpl implements IPriceMakingSV {
-
+@Autowired
+private IPriceMakingBusiSV iPriceMakingBusiSV;
     @Override
     public ResponseMessage queryPriceMakingZX(PriceElementInfoZX request) throws BusinessException,
             SystemException {
@@ -36,10 +43,13 @@ public class PriceMakingSVImpl implements IPriceMakingSV {
     }
 
     @Override
-    public ResponseMessage queryPriceMaking(PriceElementInfo request) {
+    public ResponseMessage queryPriceMaking(PriceElementInfo request)throws BusinessException,
+    SystemException {BusinessUtil.checkBaseInfo(request);
         ResponseMessage response = new ResponseMessage();
         response.setResponseHeader(new ResponseHeader(true, ExceptCodeConstants.Special.SUCCESS,
                 "成功"));
+        List<PriceInfo> priceInfoList=iPriceMakingBusiSV.queryPriceMaking(request);
+        response.setPriceInfoList(priceInfoList);
         return response;
     }
 

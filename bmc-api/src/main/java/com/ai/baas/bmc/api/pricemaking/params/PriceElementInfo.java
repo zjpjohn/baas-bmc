@@ -31,12 +31,7 @@ public class PriceElementInfo extends BaseInfo implements Serializable {
     /**
      * 类型列表
      */
-    private List<String> orderTypeList;
-
-    /**
-     * 定价元素列表
-     */
-    private List<ElementInfo> elementInfoList;
+    private List<OrderTypeInfo> orderTypeList;
 
     /**
      * 扩展信息列表
@@ -75,28 +70,20 @@ public class PriceElementInfo extends BaseInfo implements Serializable {
         this.orderTime = orderTime;
     }
 
-    public List<String> getOrderTypeList() {
-        return orderTypeList;
-    }
-
-    public void setOrderTypeList(List<String> orderTypeList) {
-        this.orderTypeList = orderTypeList;
-    }
-
-    public List<ElementInfo> getElementInfoList() {
-        return elementInfoList;
-    }
-
-    public void setElementInfoList(List<ElementInfo> elementInfoList) {
-        this.elementInfoList = elementInfoList;
-    }
-
     public List<ExtInfo> getExtInfoList() {
         return extInfoList;
     }
 
     public void setExtInfoList(List<ExtInfo> extInfoList) {
         this.extInfoList = extInfoList;
+    }
+
+    public List<OrderTypeInfo> getOrderTypeList() {
+        return orderTypeList;
+    }
+
+    public void setOrderTypeList(List<OrderTypeInfo> orderTypeList) {
+        this.orderTypeList = orderTypeList;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.test.api.pricemaking;
+package com.ai.opt.baas.bmc.test.api.pricemaking;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
