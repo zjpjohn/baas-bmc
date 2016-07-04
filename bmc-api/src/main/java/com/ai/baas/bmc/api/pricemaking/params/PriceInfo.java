@@ -1,33 +1,29 @@
 package com.ai.baas.bmc.api.pricemaking.params;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class PriceInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 价格描述
-     */
-    private String priceDesc;
+    private String listId;
 
-    /**
-     * 价格
-     */
-    private long price;
+    private List<FeeInfo> feeInfos;
 
-    public String getPriceDesc() {
-        return priceDesc;
+    public String getListId() {
+        return listId;
     }
 
-    public void setPriceDesc(String priceDesc) {
-        this.priceDesc = priceDesc;
+    public void setListId(String listId) {
+        this.listId = listId;
     }
 
-    public long getPrice() {
-        return price;
+    public List<FeeInfo> getFeeInfos() {
+        return feeInfos;
     }
 
-    public void setPrice(long price) {
-        this.price = price;
+    public void setFeeInfos(List<FeeInfo> feeInfos) {
+        this.feeInfos = feeInfos;
     }
+
 }

@@ -7,22 +7,22 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ai.baas.bmc.api.pricemaking.interfaces.IPriceMakingSV;
+import com.ai.baas.bmc.api.pricemaking.interfaces.IPricemakingSV;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfoZX;
-import com.ai.baas.bmc.api.pricemaking.params.ResponseMessage;
+import com.ai.baas.bmc.api.pricemaking.params.PricemakingResponseZX;
 import com.alibaba.fastjson.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/applicationContextTest/dubbo-consumer-context.xml" })
-public class PriceMakingSVDubboTest {
+public class PricemakingSVDubboTest {
     @Autowired
     protected ApplicationContext ctx;
 
     @Test
     public void queryPriceMakingZX() {
-        IPriceMakingSV sv = (IPriceMakingSV) ctx.getBean("iPriceMakingSV");
+        IPricemakingSV sv = (IPricemakingSV) ctx.getBean("iPriceMakingSV");
         PriceElementInfoZX request = new PriceElementInfoZX();
-        ResponseMessage responseMessage = sv.queryPriceMakingZX(request);
+        PricemakingResponseZX responseMessage = sv.queryPricemakingZX(request);
         System.out.println(JSON.toJSONString(responseMessage));
     }
 }

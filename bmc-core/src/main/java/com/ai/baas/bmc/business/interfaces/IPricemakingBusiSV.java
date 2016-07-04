@@ -5,7 +5,7 @@ import java.util.List;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceInfo;
 
-public interface IPriceMakingBusiSV {
+public interface IPricemakingBusiSV {
 
     /**
      * 定价查询
@@ -14,6 +14,6 @@ public interface IPriceMakingBusiSV {
      * @return
      * @author mayt
      */
-    List<PriceInfo> queryPriceMaking(PriceElementInfo request);
+    List<PriceInfo> queryPricemaking(PriceElementInfo request);
 
 }

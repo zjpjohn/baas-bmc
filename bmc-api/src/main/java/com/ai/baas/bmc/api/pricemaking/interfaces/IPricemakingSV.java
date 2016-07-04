@@ -2,11 +2,12 @@ package com.ai.baas.bmc.api.pricemaking.interfaces;
 
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfoZX;
+import com.ai.baas.bmc.api.pricemaking.params.PricemakingResponseZX;
 import com.ai.baas.bmc.api.pricemaking.params.ResponseMessage;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 
-public interface IPriceMakingSV {
+public interface IPricemakingSV {
     /**
      * 定价查询-中信
      * 
@@ -15,7 +16,7 @@ public interface IPriceMakingSV {
      * @author mayt
      * @ApiDocMethod BaaS-0019
      */
-    ResponseMessage queryPriceMakingZX(PriceElementInfoZX request) throws BusinessException,
+    PricemakingResponseZX queryPricemakingZX(PriceElementInfoZX request) throws BusinessException,
             SystemException;
 
     /**
@@ -26,6 +27,6 @@ public interface IPriceMakingSV {
      * @author mayt
      * @ApiDocMethod BaaS-0019
      */
-    ResponseMessage queryPriceMaking(PriceElementInfo request)throws BusinessException,
+    ResponseMessage queryPricemaking(PriceElementInfo request)throws BusinessException,
     SystemException;
 }
