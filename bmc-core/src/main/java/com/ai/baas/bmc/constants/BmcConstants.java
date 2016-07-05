@@ -18,6 +18,34 @@ public final class BmcConstants {
         public static final String FAIL_CODE = "000001";
     }
 
+    public static final class BlAcctInfo {
+
+        public static final class OwnerType {
+
+            public static final String CUST = "CUST";
+            public static final String USER = "USER";
+        }
+    }
+
+    public static final class CpPriceInfo {
+
+        public static final class ActiveStatus {
+
+            public static final String ACTIVE = "ACTIVE";
+            public static final String INACTIVE = "INACTIVE";
+            public static final String DEL = "DEL";
+        }
+
+        public static final class ChargeType {
+
+            public static final String CUNIT = "CUNIT";
+            public static final String PACKAGE = "PACKAGE";
+            public static final String STEP = "STEP";
+            public static final String UNIT = "UNIT";
+        }
+        
+    }
+
     private BmcConstants() {
 
     }
@@ -41,6 +69,12 @@ public final class BmcConstants {
         public static final String REDUCE_CODE_SEQ = "CP_FULL_REDUCE$REDUCE_CODE$SEQ";
 
         public static final String REDUCE_ID_SEQ = "CP_FULL_REDUCE$REDUCE_ID$SEQ";
+
+        public static final String BL_CUSTINFO$CUST_ID$SEQ = "BL_CUSTINFO$CUST_ID$SEQ";
+
+        public static final String BL_ACCT_INFO$ACCT_ID$SEQ = "BL_ACCT_INFO$ACCT_ID$SEQ";
+
+        public static final String BL_USERINFO$SUBS_ID$SEQ = "BL_USERINFO$SUBS_ID$SEQ";
 
     }
 

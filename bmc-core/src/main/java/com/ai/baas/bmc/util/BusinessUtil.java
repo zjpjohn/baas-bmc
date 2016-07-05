@@ -58,4 +58,12 @@ public final class BusinessUtil {
         }
     }
 
+    public static String getPriceTypeByServiceId(String service_id) {
+        return null;
+    }
+
+    public static String getChargeTypeByPriceType(String serviceId) {
+        return null;
+    }
+
 }

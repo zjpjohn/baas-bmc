@@ -105,7 +105,7 @@ public class PricemakingSVImpl implements IPricemakingSV {
             OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
             orderTypeInfo.setListId(shoppingList.getList_id());
             orderTypeInfo.setElementInfoList(elementInfoList);
-            orderTypeInfo.setPriceType(shoppingList.getService_id());
+            orderTypeInfo.setPriceType(BusinessUtil.getPriceTypeByServiceId(shoppingList.getService_id()));
         }
         priceElementInfo.setOrderTypeList(orderTypeList);
         return priceElementInfo;

@@ -44,8 +44,8 @@ import com.alibaba.fastjson.JSON;
 
 @Component
 @Transactional
-public class PriceMakingBusiSVImpl implements IPricemakingBusiSV {
-    private static final Logger LOGGER = LogManager.getLogger(PriceMakingBusiSVImpl.class);
+public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
+    private static final Logger LOGGER = LogManager.getLogger(PricemakingBusiSVImpl.class);
 
     @Autowired
     private transient CpPricemakingRuleMapper cpPricemakingRuleMapper;
