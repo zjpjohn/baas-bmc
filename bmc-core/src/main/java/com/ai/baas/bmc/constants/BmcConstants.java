@@ -23,6 +23,7 @@ public final class BmcConstants {
         public static final class OwnerType {
 
             public static final String CUST = "CUST";
+
             public static final String USER = "USER";
         }
     }
@@ -32,18 +33,27 @@ public final class BmcConstants {
         public static final class ActiveStatus {
 
             public static final String ACTIVE = "ACTIVE";
+
             public static final String INACTIVE = "INACTIVE";
+
             public static final String DEL = "DEL";
         }
+
+    }
+
+    public static final class CpPriceDetail {
 
         public static final class ChargeType {
 
             public static final String CUNIT = "CUNIT";
+
             public static final String PACKAGE = "PACKAGE";
+
             public static final String STEP = "STEP";
+
             public static final String UNIT = "UNIT";
         }
-        
+
     }
 
     private BmcConstants() {

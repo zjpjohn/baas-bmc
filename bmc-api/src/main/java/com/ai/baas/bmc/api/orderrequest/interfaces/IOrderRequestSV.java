@@ -7,7 +7,7 @@ import com.ai.opt.base.exception.SystemException;
 
 public interface IOrderRequestSV {
     /**
-     * 订购请求接口
+     * 订购请求接口(不使用)
      * 
      * @param request
      * @return

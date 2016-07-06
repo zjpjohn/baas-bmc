@@ -21,6 +21,7 @@ import com.ai.baas.bmc.api.orderinfo.params.Product;
 import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
 import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiness;
 import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
+import com.ai.baas.bmc.constants.BmcCacheConstant;
 import com.ai.baas.bmc.context.Context;
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.baas.bmc.context.TableCon;
@@ -94,15 +95,23 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
     }
 
     @Override
-    public void writeData(OrderInfoParams orderInfoParams, String custId) {
+    public void writeData(OrderInfoParams request, String custId) {
+        //解析参数
+        
+        // 通过共享内存获得内部的custId
+//        Map<String, String> params = new TreeMap<String, String>();
+//        params.put(BmcCacheConstant.Dshm.FieldName.EXT_CUST_ID, request.getExtCustId());
+//        params.put(BmcCacheConstant.Dshm.FieldName.TENANT_ID, request.getTenantId());
+//        List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
+//                .executeQuery(DshmUtil.getCacheClient());
         // 判重
         // 通过共享内存查找subsId
         String subsId = null;
         String acctId = null;
         Map<String, String> params = new TreeMap<String, String>();
         params.put("cust_id", custId);
-        params.put("service_id", orderInfoParams.getServiceId());
-        params.put("tenant_id", orderInfoParams.getTenantId());
+        params.put("service_id", request.getServiceId());
+        params.put("tenant_id", request.getTenantId());
         //params.put("ACTIVE_TIME", DateUtil.getTimestamp(orderInfoParams.getActiveTime(), DateUtil.YYYYMMDDHHMMSS).toString());
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_userinfo")
                 .where(params).executeQuery(DshmUtil.getCacheClient());
@@ -125,11 +134,11 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             System.err.println("找到subs_id为"+subsId);
             
         }
-        BlUserinfo aBlUserinfo = writeBlUserinfo(orderInfoParams, custId, subsId, acctId);
+        BlUserinfo aBlUserinfo = writeBlUserinfo(request, custId, subsId, acctId);
         System.err.println(MyJsonUtil.toJson(aBlUserinfo));
         // 当产品列表不为空时，循环插入产品表
-        if (orderInfoParams.getProductList() != null) {
-            for (Product p : orderInfoParams.getProductList()) {
+        if (request.getProductList() != null) {
+            for (Product p : request.getProductList()) {
                 writeBlSubsComm(aBlUserinfo, p);
             }
         }

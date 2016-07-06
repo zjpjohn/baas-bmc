@@ -3,7 +3,6 @@ package com.ai.baas.bmc.api.orderinfo.params;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -25,9 +24,14 @@ public class Product implements Serializable {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotBlank(message="产品ID不能为空",groups={IOrderInfoSV.OrderInfo.class})
-    @Size(max=32,groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message = "产品ID不能为空", groups = { IOrderInfoSV.OrderInfo.class })
+    @Size(max = 32, groups = { IOrderInfoSV.OrderInfo.class })
     private String productId;
+
+    /**
+     * 产品类型
+     */
+    private String productType;
 
     /**
      * 产品数量<br>
@@ -35,18 +39,33 @@ public class Product implements Serializable {
      * 必填<br>
      * NUMBER(9)
      */
-    @NotBlank(message="产品数量不能为空",groups={IOrderInfoSV.OrderInfo.class})
-    @Size(max=9,groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message = "产品数量不能为空", groups = { IOrderInfoSV.OrderInfo.class })
+    @Size(max = 9, groups = { IOrderInfoSV.OrderInfo.class })
     private Integer productNumber;
+
+    /**
+     * 产品实例ID
+     */
+    private String subsProductId;
+
+    /**
+     * 产品价格,整数，单位分
+     */
+    private long subsProductPrice;
+
+    /**
+     * 是否触发抵扣
+     */
+    private String deductable;
 
     /**
      * 赠送标识<br>
      * 标识该产品是否为一个赠送的产品。取值范围：Y：是赠送；N：不是赠送。<br>
      * VARCHAR(1)
      */
-    @NotBlank(message="赠送标识不能为空",groups={IOrderInfoSV.OrderInfo.class})
-//    @Pattern(regexp="^[Y|N]$",message="取值范围：Y：是赠送；N：不是赠送",groups={IOrderInfoSV.OrderInfo.class})
-    @Size(max=1,groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message = "赠送标识不能为空", groups = { IOrderInfoSV.OrderInfo.class })
+    // @Pattern(regexp="^[Y|N]$",message="取值范围：Y：是赠送；N：不是赠送",groups={IOrderInfoSV.OrderInfo.class})
+    @Size(max = 1, groups = { IOrderInfoSV.OrderInfo.class })
     private String resBonusFlag;
 
     /**
@@ -55,8 +74,8 @@ public class Product implements Serializable {
      * 必填<br>
      * VARCHAR(14)
      */
-    @NotBlank(message="生效日期不能为空",groups={IOrderInfoSV.OrderInfo.class})
-    @Size(min=14,max=14,groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message = "生效日期不能为空", groups = { IOrderInfoSV.OrderInfo.class })
+    @Size(min = 14, max = 14, groups = { IOrderInfoSV.OrderInfo.class })
     private String activeTime;
 
     /**
@@ -65,8 +84,8 @@ public class Product implements Serializable {
      * 必填<br>
      * VARCHAR(14)
      */
-    @NotBlank(message="失效日期不能为空",groups={IOrderInfoSV.OrderInfo.class})
-    @Size(min=14,max=14,groups={IOrderInfoSV.OrderInfo.class})
+    @NotBlank(message = "失效日期不能为空", groups = { IOrderInfoSV.OrderInfo.class })
+    @Size(min = 14, max = 14, groups = { IOrderInfoSV.OrderInfo.class })
     private String inactiveTime;
 
     /**
@@ -121,6 +140,38 @@ public class Product implements Serializable {
 
     public void setProductExtInfoList(List<ProductExt> productExtInfoList) {
         this.productExtInfoList = productExtInfoList;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getSubsProductId() {
+        return subsProductId;
+    }
+
+    public void setSubsProductId(String subsProductId) {
+        this.subsProductId = subsProductId;
+    }
+
+    public long getSubsProductPrice() {
+        return subsProductPrice;
+    }
+
+    public void setSubsProductPrice(long subsProductPrice) {
+        this.subsProductPrice = subsProductPrice;
+    }
+
+    public String getDeductable() {
+        return deductable;
+    }
+
+    public void setDeductable(String deductable) {
+        this.deductable = deductable;
     }
 
 }

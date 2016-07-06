@@ -7,7 +7,8 @@ public class BmcCacheConstant {
             public static final String PRICE_PRODUCT_TYPE = "PRICE_PRODUCT_TYPE";
             public static final String PRICE_PRODUCT_ID = "PRICE_PRODUCT_ID";
             public static final String FACTOR_NAME = "FACTOR_NAME";
-            public static final String FACTOR_VALUE = "factor_value";
+            public static final String FACTOR_VALUE = "FACTOR_VALUE";
+            public static final String EXT_CUST_ID = "EXT_CUST_ID";
         }
 
         public static class TableName {

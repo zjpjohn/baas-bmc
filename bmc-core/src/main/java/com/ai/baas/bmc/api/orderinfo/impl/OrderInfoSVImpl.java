@@ -9,21 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
-import com.ai.baas.bmc.api.orderinfo.params.OrderExt;
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
-import com.ai.baas.bmc.api.orderinfo.params.Product;
-import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
+import com.ai.baas.bmc.business.interfaces.IOrderInfoBusiSV;
 import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiness;
-import com.ai.baas.bmc.context.ErrorCode;
-import com.ai.baas.bmc.util.CheckUtil;
+import com.ai.baas.bmc.util.BusinessUtil;
 import com.ai.baas.bmc.util.DshmUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
-import com.ai.baas.bmc.util.MyJsonUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
-import com.ai.opt.sdk.util.DateUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
@@ -33,21 +28,17 @@ import com.alibaba.fastjson.JSON;
 public class OrderInfoSVImpl implements IOrderInfoSV {
     @Autowired
     private IOrderinfoBusiness business;
-
     @Override
-    public BaseResponse orderInfo(OrderInfoParams record)throws BusinessException, SystemException {
+    public BaseResponse orderInfo(OrderInfoParams request)throws BusinessException, SystemException {
 
         BaseResponse resultCode = new BaseResponse();
         // 入参检验
-        if (record == null) {
-            resultCode.setResponseHeader(new ResponseHeader(false, "000001", "入参不能为空"));
-            return resultCode;
-        }
+        BusinessUtil.checkBaseInfo(request);
    
         // 通过共享内存获得内部的custId
         Map<String, String> params = new TreeMap<String, String>();
-        params.put("ext_cust_id", record.getExtCustId());
-        params.put("tenant_id", record.getTenantId());
+        params.put("ext_cust_id", request.getExtCustId());
+        params.put("tenant_id", request.getTenantId());
         List<Map<String, String>> result = DshmUtil.getClient().list("bl_custinfo").where(params)
                 .executeQuery(DshmUtil.getCacheClient());
         System.err.println(result.size());
@@ -64,8 +55,8 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         }
         
         if(StringUtil.isBlank(custId)){
-            LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + record.getExtCustId());
-            resultCode.setResponseHeader(new ResponseHeader(false, "000001", "客户ID不存在23333, EXT_CUST_ID为" + record.getExtCustId()));
+            LoggerUtil.log.debug("内存查custId未找到，EXT_CUST_ID为" + request.getExtCustId());
+            resultCode.setResponseHeader(new ResponseHeader(false, "000001", "客户ID不存在23333, EXT_CUST_ID为" + request.getExtCustId()));
             return resultCode;
         }
         System.err.println("获得cust_id : "+custId);
@@ -75,7 +66,7 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         
         // 幂等性判断（判重）
         try {
-            if (business.hasSeq(record)) {
+            if (business.hasSeq(request)) {
                 resultCode.setResponseHeader(new ResponseHeader(false, "000001", "tradeSeq已存在"));
                 return resultCode;
             }
@@ -87,15 +78,10 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         
         
         // 写入MySQL表中
-        try {
-            business.writeData(record, custId);
-        } catch (BusinessException e) {
-            resultCode.setResponseHeader(new ResponseHeader(false, "000001", e.getErrorCode() + e.getErrorMessage()));
-            return resultCode;
-        }
-        // catch (Exception e1) {
-        // return "请联系管理员";
-        // }
+            business.writeData(request, custId);
+        
+        
+        
         resultCode.setResponseHeader(new ResponseHeader(true, "000000", "成功"));
         return resultCode;
     }
