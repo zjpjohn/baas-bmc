@@ -27,7 +27,7 @@ public class DshmUtil {
 
     private static DshmUtil getInstance() {
         if (instance == null) {
-            return new DshmUtil();
+            instance = new DshmUtil();
         }
         return instance;
     }
