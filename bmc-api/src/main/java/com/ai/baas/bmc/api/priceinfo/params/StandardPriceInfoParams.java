@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.opt.base.vo.BaseInfo;
 
@@ -20,10 +22,9 @@ public class StandardPriceInfoParams extends BaseInfo {
     /**
      * 交易流水<br>
      * 必填<br>
-     * VARCHAR(32)
      */
-    @NotNull(message = "交易流水不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+    @NotBlank(message = "交易流水不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+    //@Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String tradeSeq;
 
     /**
@@ -33,6 +34,7 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 修改和删除的时候，为必填项<br>
      * VARCHAR(32)
      */
+    //@NotNull(message = "标准资费ID不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
     @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String standardId;
 
@@ -42,7 +44,7 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(64)
      */
-    @NotNull(message = "标准资费名称不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+    @NotBlank(message = "标准资费名称不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
     @Size(max = 64,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String priceName;
 
@@ -51,7 +53,7 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message = "业务类型不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+    @NotBlank(message = "业务类型不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
     @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String serviceType;
 
@@ -67,8 +69,8 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(33)
      */
-    @NotNull(message = "单次/周期类型不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 33,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+//    @NotNull(message = "单次/周期类型不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+//    @Size(max = 33,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String cycleType;
 
     /**
@@ -76,8 +78,8 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 必填<br>
      * NUMBER(32)
      */
-    @NotNull(message = "单次/周期数量不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+//    @NotNull(message = "单次/周期数量不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+//    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private double cycleAmount;
 
     /**
@@ -86,8 +88,8 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message = "单次/周期标识不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+//    @NotNull(message = "单次/周期标识不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+//    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String cycleId;
 
     /**
@@ -96,8 +98,8 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(33)
      */
-    @NotNull(message = "价格类型不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 33,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+//    @NotNull(message = "价格类型不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+//    @Size(max = 33,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String priceType;
 
     /**
@@ -107,7 +109,7 @@ public class StandardPriceInfoParams extends BaseInfo {
      * NUMBER(32)
      */
     @NotNull(message = "价格不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+//    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private double price;
 
     /**
@@ -115,7 +117,7 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 每新建一个标准资费时需要进行描述说明<br>
      * VARCHAR(32)
      */
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+    @Size(max = 1024,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String comments;
 
     /**
@@ -124,8 +126,8 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message = "状态不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+//    @NotNull(message = "状态不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+//    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
     private String status;
 
     /**
@@ -134,8 +136,8 @@ public class StandardPriceInfoParams extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-    @NotNull(message = "更新标识不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
-    @Size(max = 32,groups = { IPriceInfoSV.UpdatePriceInfo.class  })
+    @NotBlank(message = "更新标识不能为空", groups = { IPriceInfoSV.UpdatePriceInfo.class })
+    @Size(max = 32)
     private String updateId;
 
     public String getTradeSeq() {

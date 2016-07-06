@@ -3,9 +3,11 @@ package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedAccountVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.productDelVO;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseResponse;
 
 /**
  * 优惠产品管理
@@ -26,8 +28,8 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00007
 	 */
-	@interface AddProferProduct{}
 	ProductResponse addProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	@interface AddProferProduct{}
 	/**
 	 * 添加优惠产品(满减)
 	 * @return
@@ -37,8 +39,9 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00014
 	 */
-	@interface AddDiscontProduct{}
 	ProductResponse addDiscontProduct(ProferProductVO vo)throws BusinessException, SystemException;
+	@interface AddDiscontProduct{}
+	
 	/**
 	 * 状态管理
 	 * @param vo
@@ -48,8 +51,8 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00009
 	 */
+	BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProferProductStatus{}
-	void updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
 	
 	/**
 	 * 删除优惠产品
@@ -60,8 +63,8 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00010
 	 */
+	BaseResponse delProferProduct(productDelVO vo) throws BusinessException, SystemException;
 	@interface DelProferProduct{}
-	void delProferProduct(productDelVO vo) throws BusinessException, SystemException;
 	/**
 	 * 更新优惠产品
 	 * @throws BusinessException
@@ -70,7 +73,18 @@ public interface IProferProductManageSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00013
 	 */
+	BaseResponse updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProferProduct{}
-	void updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
+	
+	/**
+	 * 关联费用科目
+	 * @param vo
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException;
 	
 }

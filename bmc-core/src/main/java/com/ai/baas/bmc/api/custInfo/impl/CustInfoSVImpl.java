@@ -84,7 +84,7 @@ public class CustInfoSVImpl implements ICustInfoSV {
             return resultCode;
         }
      
-        resultCode = CheckUtil.check(custInfo.getCustGrade(), "custGrade", true, 1,"A","B","C","D");
+        resultCode = CheckUtil.check(custInfo.getCustGrade(), "custGrade", true, 1,"A","B","C","D","E");
         if (!ErrorCode.SUCCESS.equals(resultCode)) {
             return resultCode;
         }
@@ -131,12 +131,11 @@ public class CustInfoSVImpl implements ICustInfoSV {
             
 		
         try {
-        	iCustinfoBusiness.writeData(custInfo);
+        	log.info("--------------------start custInfo operation");
+            iCustinfoBusiness.writeData(custInfo);
         	
         } catch (BusinessException e){
             return e.getErrorCode() + e.getErrorMessage();
-        } catch (Exception e1) {
-            return "writeData发生错误："+e1.getMessage();
         }
 	
 		return ErrorCode.SUCCESS;

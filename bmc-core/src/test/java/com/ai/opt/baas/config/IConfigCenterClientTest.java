@@ -27,40 +27,28 @@ public class IConfigCenterClientTest {
         System.out.println("aaaaaa");
     }
 
-    @Ignore
+    //@Ignore
     @Test
     public void addMcsConfig() {
         // 缓存服务主机
-        String redisClusterA = "redisClusterA";
-        String redisClusterB = "redisClusterB";
+        String bmcRedisHost = "bmcRedisHost";
         // 缓存空间
-        String cachesnsConfig = "{\"com.ai.opt.test.mcs\":\"" + redisClusterA
-                + "\",\"com.ai.runner.center.common.cache.gncfgproperties\":\"" + redisClusterB
-                + "\",\"com.ai.runner.center.common.cache.gnservicerouteconfig\":\"" + redisClusterA
-                + "\",\"com.ai.runner.center.common.cache.gndepart\":\"" + redisClusterA
-                + "\",\"com.ai.runner.center.common.cache.gnsubject\":\"" + redisClusterA
-                + "\",\"com.ai.runner.center.cache.test\":\"" + redisClusterA + "\"}";
+        String cachesnsConfig = "{\"com.ai.baas.bmc.proferentialprocuct\":\"" + bmcRedisHost
+                + "\",\"com.ai.runner.center.dshm.cache.calparam\":\"" + bmcRedisHost
+                
+                 + "\"}";
         
         StringBuilder bu=new StringBuilder();
         bu.append("{																				");
-        bu.append("  \"redisClusterA\":                     ");
+        bu.append("  \"bmcRedisHost\":                     ");
         bu.append("  {                                      ");
-        bu.append("		  \"mcsHost\":\"127.0.0.1:6379\",     ");
+        bu.append("		  \"mcsHost\":\"10.1.130.84:16379\",     ");
         bu.append("	  	\"mcsMaxtotal\":\"200\",            ");
         bu.append("		  \"mcsMaxIdle\":\"10\",              ");
         bu.append("		  \"mcsMinIdle\":\"5\",               ");
         bu.append("		  \"mcsTestOnBorrow\":\"true\",       ");
-        bu.append("		  \"mcsPassword\":\"123456\"          ");
-        bu.append("  },                                     ");
-        bu.append("  \"redisClusterB\":                     ");
-        bu.append("  {                                      ");
-        bu.append("      \"mcsHost\":\"localhost:6379\",    ");
-        bu.append("	  	\"mcsMaxtotal\":\"200\",            ");
-        bu.append("		  \"mcsMaxIdle\":\"10\",              ");
-        bu.append("		  \"mcsMinIdle\":\"5\",               ");
-        bu.append("		  \"mcsTestOnBorrow\":\"true\",       ");
-        bu.append("		  \"mcsPassword\":\"123456\"          ");
-        bu.append("  }                                      ");
+        bu.append("		  \"mcsPassword\":\"\"          ");
+        bu.append("  }                                     ");
         bu.append("}                                        ");
         
         
@@ -132,5 +120,18 @@ public class IConfigCenterClientTest {
 
         System.out.println("DBConf config ... end");
     }
+     
+     
+     @Test
+     public void queryDbConfInfo() {
+         System.out.println("DBConf config ... start");
+         StringBuilder sb = new StringBuilder();
+         String dbconf=client.get(SDKConstants.DB_CONF_PATH);
+         
 
+         System.out.println("DBConf config:"+dbconf);
+     }
+
+    
+     
 }

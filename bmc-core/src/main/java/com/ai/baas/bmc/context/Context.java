@@ -23,4 +23,8 @@ public final class Context {
      * priceinfo中标准资费更新服务接口编号
      */
     public static final String UPDATE_PRICEINFO = "BaaS-00003";
+    /**
+     * 新建产品
+     */
+     public static final String AddProduct = "BaaS-00005";
 }

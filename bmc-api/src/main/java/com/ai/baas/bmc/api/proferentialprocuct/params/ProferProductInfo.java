@@ -29,7 +29,7 @@ public class ProferProductInfo extends BaseResponse {
 	/**
 	 * 优惠产品Id
 	 */
-	private String productId;
+	private Long productId;
 	/**
 	 * 优惠类型
 	 */
@@ -54,10 +54,13 @@ public class ProferProductInfo extends BaseResponse {
 	 * 状态
 	 */
 	private String status;
-	public String getProductId() {
+	
+	private String priceCode;
+	
+	public Long getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 	public String getProferType() {
@@ -107,6 +110,12 @@ public class ProferProductInfo extends BaseResponse {
 	}
 	public void setTenantId(String tenantId) {
 		this.tenantId = tenantId;
+	}
+	public String getPriceCode() {
+		return priceCode;
+	}
+	public void setPriceCode(String priceCode) {
+		this.priceCode = priceCode;
 	}
 	
 	

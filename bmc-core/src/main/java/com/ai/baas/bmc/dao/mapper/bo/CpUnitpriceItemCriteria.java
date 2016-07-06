@@ -695,6 +695,76 @@ public class CpUnitpriceItemCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andActiveStatusIsNull() {
+            addCriterion("ACTIVE_STATUS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusIsNotNull() {
+            addCriterion("ACTIVE_STATUS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusEqualTo(String value) {
+            addCriterion("ACTIVE_STATUS =", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotEqualTo(String value) {
+            addCriterion("ACTIVE_STATUS <>", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusGreaterThan(String value) {
+            addCriterion("ACTIVE_STATUS >", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("ACTIVE_STATUS >=", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLessThan(String value) {
+            addCriterion("ACTIVE_STATUS <", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLessThanOrEqualTo(String value) {
+            addCriterion("ACTIVE_STATUS <=", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusLike(String value) {
+            addCriterion("ACTIVE_STATUS like", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotLike(String value) {
+            addCriterion("ACTIVE_STATUS not like", value, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusIn(List<String> values) {
+            addCriterion("ACTIVE_STATUS in", values, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotIn(List<String> values) {
+            addCriterion("ACTIVE_STATUS not in", values, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusBetween(String value1, String value2) {
+            addCriterion("ACTIVE_STATUS between", value1, value2, "activeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andActiveStatusNotBetween(String value1, String value2) {
+            addCriterion("ACTIVE_STATUS not between", value1, value2, "activeStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andItemExtCodeIsNull() {
             addCriterion("ITEM_EXT_CODE is null");
             return (Criteria) this;

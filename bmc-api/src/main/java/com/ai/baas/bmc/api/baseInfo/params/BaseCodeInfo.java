@@ -31,6 +31,7 @@ public class BaseCodeInfo extends BaseResponse{
 	 */
 	private List<BaseCode> paramList;
 
+	private Long id;
 	public String getTradeSeq() {
 		return tradeSeq;
 	}

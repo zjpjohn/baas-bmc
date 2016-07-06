@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.baas.bmc.dao.interfaces.BmcBasedataCodeMapper" >
   <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BmcBasedataCode" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="tenant_id" property="tenantId" jdbcType="VARCHAR" />
     <result column="param_type" property="paramType" jdbcType="VARCHAR" />
     <result column="param_code" property="paramCode" jdbcType="VARCHAR" />
     <result column="param_name" property="paramName" jdbcType="VARCHAR" />
     <result column="default_value" property="defaultValue" jdbcType="VARCHAR" />
     <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, tenant_id, param_type, param_code, param_name, default_value, comments
+    id, tenant_id, param_type, param_code, param_name, default_value, comments, parent_code
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcBasedataCodeCriteria" >
     select
@@ -89,15 +90,15 @@
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Long" >
     select 
     <include refid="Base_Column_List" />
     from bmc_basedata_code
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="Long" >
     delete from bmc_basedata_code
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcBasedataCodeCriteria" >
     delete from bmc_basedata_code
@@ -108,10 +109,10 @@
   <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcBasedataCode" >
     insert into bmc_basedata_code (id, tenant_id, param_type, 
       param_code, param_name, default_value, 
-      comments)
-    values (#{id,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}, #{paramType,jdbcType=VARCHAR}, 
+      comments, parent_code)
+    values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, #{paramType,jdbcType=VARCHAR}, 
       #{paramCode,jdbcType=VARCHAR}, #{paramName,jdbcType=VARCHAR}, #{defaultValue,jdbcType=VARCHAR}, 
-      #{comments,jdbcType=VARCHAR})
+      #{comments,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcBasedataCode" >
     insert into bmc_basedata_code
@@ -137,10 +138,13 @@
       <if test="comments != null" >
         comments,
       </if>
+      <if test="parentCode != null" >
+        parent_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="tenantId != null" >
         #{tenantId,jdbcType=VARCHAR},
@@ -160,6 +164,9 @@
       <if test="comments != null" >
         #{comments,jdbcType=VARCHAR},
       </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcBasedataCodeCriteria" resultType="java.lang.Integer" >
@@ -172,7 +179,7 @@
     update bmc_basedata_code
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.tenantId != null" >
         tenant_id = #{record.tenantId,jdbcType=VARCHAR},
@@ -192,6 +199,9 @@
       <if test="record.comments != null" >
         comments = #{record.comments,jdbcType=VARCHAR},
       </if>
+      <if test="record.parentCode != null" >
+        parent_code = #{record.parentCode,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -199,13 +209,14 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update bmc_basedata_code
-    set id = #{record.id,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=BIGINT},
       tenant_id = #{record.tenantId,jdbcType=VARCHAR},
       param_type = #{record.paramType,jdbcType=VARCHAR},
       param_code = #{record.paramCode,jdbcType=VARCHAR},
       param_name = #{record.paramName,jdbcType=VARCHAR},
       default_value = #{record.defaultValue,jdbcType=VARCHAR},
-      comments = #{record.comments,jdbcType=VARCHAR}
+      comments = #{record.comments,jdbcType=VARCHAR},
+      parent_code = #{record.parentCode,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -231,8 +242,11 @@
       <if test="comments != null" >
         comments = #{comments,jdbcType=VARCHAR},
       </if>
+      <if test="parentCode != null" >
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcBasedataCode" >
     update bmc_basedata_code
@@ -241,7 +255,8 @@
       param_code = #{paramCode,jdbcType=VARCHAR},
       param_name = #{paramName,jdbcType=VARCHAR},
       default_value = #{defaultValue,jdbcType=VARCHAR},
-      comments = #{comments,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+      comments = #{comments,jdbcType=VARCHAR},
+      parent_code = #{parentCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

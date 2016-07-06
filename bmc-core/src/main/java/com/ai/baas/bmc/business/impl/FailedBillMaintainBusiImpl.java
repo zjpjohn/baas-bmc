@@ -18,6 +18,8 @@ import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,25 +34,39 @@ import java.util.Map;
  */
 @Service
 public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
+    private Logger logger = LogManager.getLogger(FailedBillMaintainBusiImpl.class);
 
+    private final String tableName = "bmc_failure_bill";
     @Autowired
     private BmcRecordFmtMapper bmcRecordFmtMapper;
 
     @Override
     public List<FailedBill> queryFailedBills(FailedBillCriteria criteria) throws IOException {
-        Table table = MyHbaseUtil.getTable("bmc_failure_bill");
-        StringBuilder stringBuilder = new StringBuilder("[.\\n]*");
-        stringBuilder.append(criteria.getTenantId() + "*");
-        stringBuilder.append(criteria.getServiceType() + "*");
-        stringBuilder.append(criteria.getErrorCode() + "*");
+        Table table = MyHbaseUtil.getTable(tableName);
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+        if (criteria.getTenantId() != null && criteria.getTenantId().length() > 0) {
+            Filter filter = new SingleColumnValueFilter("failure_bill".getBytes(), "tenant_id".getBytes(),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getTenantId().getBytes()));
+            filterList.addFilter(filter);
+        }
+        if (criteria.getServiceType() != null && criteria.getServiceType().length() > 0) {
+            Filter filter = new SingleColumnValueFilter("failure_bill".getBytes(), "service_id".getBytes(),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getServiceType().getBytes()));
+            filterList.addFilter(filter);
+        }
+        if (criteria.getErrorCode() != null && criteria.getErrorCode().length() > 0) {
+            Filter filter = new SingleColumnValueFilter("failure_bill".getBytes(), "fail_code".getBytes(),
+                    CompareFilter.CompareOp.EQUAL, new BinaryComparator(criteria.getErrorCode().getBytes()));
+            filterList.addFilter(filter);
+        }
 
         HBasePager<FailedBill> pager = criteria.getPager();
         Scan scan = new Scan();
-        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
-        Filter filter = new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(stringBuilder.toString()));
+
+        //Filter filter = new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(stringBuilder.toString()));
         Filter columnFilter = new SingleColumnValueFilter("failure_bill".getBytes(), "fail_step".getBytes(),
                 CompareFilter.CompareOp.EQUAL, new RegexStringComparator("BMC*"));
-        filterList.addFilter(filter);
+
         filterList.addFilter(columnFilter);
         if (pager != null) {
             //查询第一页
@@ -90,10 +106,18 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         return failedBills;
     }
 
+    public static void main(String[] args) throws IOException {
+        FailedBillMaintainBusiImpl failedBillMaintainBusi = new FailedBillMaintainBusiImpl();
+        FailedBillCriteria criteria = new FailedBillCriteria();
+        criteria.setErrorCode("BMC-B0001");
+        criteria.setServiceType("VOICE");
+        criteria.setTenantId("TR");
+        failedBillMaintainBusi.queryFailedBills(criteria);
+    }
 
     @Override
     public FailedBill queryFailedBillById(String failedBillRowKey) throws IOException {
-        Table table = MyHbaseUtil.getTable("bmc_failure_bill");
+        Table table = MyHbaseUtil.getTable(tableName);
         Get get = new Get(failedBillRowKey.getBytes());
         Result result = table.get(get);
         if (result.rawCells().length == 0) {
@@ -107,14 +131,69 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         FailedBill failedBill = queryFailedBillById(param.buildFailedBillRowKey());
         if (failedBill != null) {
             String message = generateMessage(param);
+            cleanDuplicateData(param);
+            cleanFailedBillData(param);
             MDSUtil.sendMessage(message);
-            Table table = MyHbaseUtil.getTable("bmc_failure_bill");
-            Delete delete = new Delete(param.buildFailedBillRowKey().getBytes());
-            table.delete(delete);
         }
     }
 
+    private void cleanFailedBillData(FailedBillParam param) throws IOException {
+        Table table = MyHbaseUtil.getTable(tableName);
+        Delete delete = new Delete(param.buildFailedBillRowKey().getBytes());
+        table.delete(delete);
+    }
+
+    private void cleanDuplicateData(FailedBillParam param) throws IOException {
+        Table duplicateionBill = MyHbaseUtil.getTable(buildDuplicateBillTableName(param));
+        Delete duplicateDelete = new Delete(param.getBsn().getBytes());
+        duplicateionBill.delete(duplicateDelete);
+    }
+
+    private String buildDuplicateBillTableName(FailedBillParam param) {
+        return param.getTenantId() + "_" + param.getServiceId() + "_" +
+                param.getSource() + "_" + param.getAccountPeriod().substring(0, 5);
+    }
+
+    @Override
+    public void batchResendFailedBill(List<FailedBillParam> params) throws IOException {
+        for (FailedBillParam param : params) {
+            param.validate();
+            FailedBill failedBill = queryFailedBillById(param.buildFailedBillRowKey());
+            String message = generateMessage(failedBill);
+            cleanDuplicateData(param);
+            cleanFailedBillData(param);
+            MDSUtil.sendMessage(message);
+        }
+    }
+
+    private String generateMessage(FailedBill failedBill) {
+        StringBuilder stringBuilder = new StringBuilder();
+        BmcRecordFmtCriteria criteria = new BmcRecordFmtCriteria();
+        criteria.createCriteria().andFormatTypeEqualTo((short) 1);
+        criteria.setOrderByClause(" r.field_serial ");
+        List<BmcRecordFmt> bmcRecordFmts = bmcRecordFmtMapper.selectByExample(criteria);
+
+        stringBuilder.append(failedBill.getTenantId() + "\1");
+        stringBuilder.append(failedBill.getServiceId() + "\1");
+        stringBuilder.append(failedBill.getSource() + "\1");
+        stringBuilder.append(failedBill.getBsn() + "\1");
+        stringBuilder.append(failedBill.getSn() + "\1");
+        stringBuilder.append(failedBill.getArrivalTime() + "\1");
+        stringBuilder.append(failedBill.getAccountPeriod() + "\1");
+
+        for (BmcRecordFmt bmcRecordFmt : bmcRecordFmts) {
+            String value = failedBill.getFailPacket().get(bmcRecordFmt.getFieldName());
+            if (value == null || value.length() == 0)
+                throw new BusinessException("400", bmcRecordFmt.getFieldName() + " 不能被找到或者值为空");
+            stringBuilder.append(failedBill.getAccountPeriod() + "\1");
+        }
+
+        return stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
+    }
+
+
     private String generateMessage(FailedBillParam param) {
+        param.validateRowKeyParam();
         StringBuilder stringBuilder = new StringBuilder();
         BmcRecordFmtCriteria criteria = new BmcRecordFmtCriteria();
         criteria.createCriteria().andFormatTypeEqualTo((short) 1);
@@ -122,18 +201,18 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         List<BmcRecordFmt> bmcRecordFmts = bmcRecordFmtMapper.selectByExample(criteria);
 
         stringBuilder.append(param.getTenantId() + "\1");
-        stringBuilder.append(param.getService_id() + "\1");
+        stringBuilder.append(param.getServiceId() + "\1");
         stringBuilder.append(param.getSource() + "\1");
         stringBuilder.append(param.getBsn() + "\1");
         stringBuilder.append(param.getSn() + "\1");
-        stringBuilder.append(param.getArrival_time() + "\1");
-        stringBuilder.append(param.getAccount_period() + "\1");
+        stringBuilder.append(param.getArrivalTime() + "\1");
+        stringBuilder.append(param.getAccountPeriod() + "\1");
 
         for (BmcRecordFmt bmcRecordFmt : bmcRecordFmts) {
-            String value = param.getFail_packet().get(bmcRecordFmt.getFieldName());
+            String value = param.getFailPacket().get(bmcRecordFmt.getFieldName());
             if (value == null || value.length() == 0)
                 throw new BusinessException("400", bmcRecordFmt.getFieldName() + " 不能被找到或者值为空");
-            stringBuilder.append(param.getAccount_period() + "\1");
+            stringBuilder.append(param.getAccountPeriod() + "\1");
         }
 
         return stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
@@ -143,23 +222,24 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_packet".getBytes());
         if (cell != null) {
+            logger.debug("failedPacket : " + Bytes.toString(cell.getValueArray(),
+                    cell.getValueOffset(),
+                    cell.getValueLength()));
             Map<String, String> failedPacket = new Gson().fromJson(
                     Bytes.toString(cell.getValueArray(),
                             cell.getValueOffset(),
                             cell.getValueLength()),
                     new TypeToken<Map<String, String>>() {
                     }.getType());
-            failedBill.setFail_packet(failedPacket);
+            failedBill.setFailPacket(failedPacket);
         }
     }
 
     private void fillAccountPeriodValue(FailedBill failedBill, Result result) {
         Cell cell = result.getColumnLatestCell("failure_bill".getBytes(), "account_period".getBytes());
         if (cell != null) {
-            failedBill.setAccount_period(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setAccountPeriod(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
-
-
     }
 
     private FailedBill fillFailedBillValue(Result result) {
@@ -183,7 +263,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "tenant_id".getBytes());
         if (cell != null) {
-            failedBill.setTenant_id(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setTenantId(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -207,7 +287,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "service_id".getBytes());
         if (cell != null) {
-            failedBill.setService_id(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setServiceId(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -215,7 +295,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_step".getBytes());
         if (cell != null) {
-            failedBill.setFail_step(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setFailStep(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -223,7 +303,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_reason".getBytes());
         if (cell != null) {
-            failedBill.setFail_reason(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setFailReason(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -231,7 +311,9 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_date".getBytes());
         if (cell != null) {
-            failedBill.setFail_date(Bytes.toLong(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            String arrivalTime = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
+            if (arrivalTime != null && arrivalTime.length() > 0)
+                failedBill.setFailDate(Long.parseLong(arrivalTime));
         }
     }
 
@@ -239,7 +321,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         Cell cell;
         cell = result.getColumnLatestCell("failure_bill".getBytes(), "fail_code".getBytes());
         if (cell != null) {
-            failedBill.setFail_code(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            failedBill.setFailCode(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
         }
     }
 
@@ -252,10 +334,11 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
     }
 
     private void fillArrivalTimeValue(FailedBill failedBill, Result result) {
-        Cell cell;
-        cell = result.getColumnLatestCell("failure_bill".getBytes(), "arrival_time".getBytes());
+        Cell cell = result.getColumnLatestCell("failure_bill".getBytes(), "arrival_time".getBytes());
         if (cell != null) {
-            failedBill.setArrival_time(Bytes.toLong(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
+            String arrivalTime = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
+            if (arrivalTime != null && arrivalTime.length() > 0)
+                failedBill.setArrivalTime(Long.parseLong(arrivalTime));
         }
     }
 }

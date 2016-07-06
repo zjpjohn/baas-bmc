@@ -1,5 +1,5 @@
 dependencies {
-    compile 'org.apache.logging.log4j:log4j-core:2.5';
+    //compile 'org.apache.logging.log4j:log4j-core:2.5';
     compile 'com.zaxxer:HikariCP:2.4.3'
     compile 'org.apache.hbase:hbase-client:1.2.0'
     compile 'mysql:mysql-connector-java:5.1.38'

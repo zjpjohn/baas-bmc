@@ -23,14 +23,14 @@
 <configuration>
 	<property>
 		<name>hbase.zookeeper.property.clientPort</name>
-	    <value>2181</value>
+	    <value>49181</value>
 	</property>
 	<property>
 		<name>hbase.zookeeper.quorum</name>
-	    <value>pkgzkpdev11,pkgzkpdev12,pkgzkpdev13</value>
+	    <value>BIU-DEV-BaaS-app1,BIU-DEV-BaaS-app2,BIU-DEV-BaaS-app3</value>
 	</property>
 	<property>
 		<name>hbase.master</name>
-	    <value>pkgzkpdev11</value>
+	    <value>BIU-DEV-BaaS-app1</value>
 	</property>
 </configuration>

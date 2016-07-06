@@ -1,7 +1,12 @@
 package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductInfo;
+import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductResponse;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedResponse;
+import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
+import com.ai.baas.bmc.api.proferentialprocuct.params.SingleProductInfo;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
@@ -25,6 +30,30 @@ public interface IQueryProferProductSV {
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00008
 	 */
+	ProferProductResponse getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
 	@interface GetProductInfo{}
-	PageInfo<ProferProductInfo> getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
+	/**
+	 * 查询单个产品
+	 * @param param
+	 * @return
+	 * @throws BusinessException
+	 * @throws SystemException
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	SingleProductInfo  getProductById(ProductQueryParam param) throws BusinessException, SystemException;	
+	@interface GetProductById{}
+	/**
+	 * 查询关联费用
+	 * @param vo
+	 * @return
+	 * @author gaogang
+	 * @ApiDocMethod
+	 * @ApiCode
+	 */
+	RelatedResponse getRelatedAccount(RelatedVO vo);
+	@interface GetRelatedAccount{}
+	
+	
 }

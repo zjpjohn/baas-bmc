@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 /**
@@ -26,26 +28,26 @@ public class ProferProductVO extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="消息流水号不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private String tradeSeq;
 	
 	/**
 	 * 产品Id
 	 */
-	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
-	private String productId;
+	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProduct.class})
+	private Long productId;
 	
 	/**
 	 * 优惠产品类型，必填
 	 */
-	@NotNull(message="优惠产品类型不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="优惠产品类型不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private String productType;
 	
 	
 	/**
 	 * 优惠活动名称
 	 */
-	@NotNull(message="优惠活动名称不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="优惠活动名称不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private String programName;
 	
 	/**
@@ -56,7 +58,7 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 规则单位
 	 */
-	@NotNull(message="优惠单位不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
+	@NotBlank(message="优惠单位不能为空",groups={IProferProductManageSV.AddProferProduct.class,IProferProductManageSV.AddDiscontProduct.class})
 	private String ruleUnit;
 	/**
 	 * 满减金额
@@ -82,36 +84,30 @@ public class ProferProductVO extends BaseInfo {
 	/**
 	 * 已选择的产品列表,必填
 	 */
-	private List<Integer> productList;
-	/**
-	 * 赠品类型
-	 */
-	private List<String> giftType;
-	/**
-	 * 赠品数量
-	 */
-	private double gitfAmount;
-	
-	/**
-	 * 赠品生效日期
-	 */
-	private Timestamp giftActiveDate;
-	/**
-	 * 赠品失效日期
-	 */
-	private Timestamp giftInvalidDate;
-	/**
-	 *参与赠品产品列表
-	 */
-	private List<Integer> giftProList;
+	private List<Long> productList;
+
 	/**
 	 * 操作员Id
 	 */
 	private String operatorId;
-	public String getProductId() {
+	
+	/**
+	 * 满赠数据
+	 */
+	private List<FullPresent> presentList;
+	/**
+	 * 资费编码
+	 */
+	private String priceCode;
+	/**
+	 * 满减Id
+	 */
+	private Long reduceId;
+	
+	public Long getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 	public String getProductType() {
@@ -170,49 +166,37 @@ public class ProferProductVO extends BaseInfo {
 	public void setTradeSeq(String tradeSeq) {
 		this.tradeSeq = tradeSeq;
 	}
-	public List<Integer> getProductList() {
+	
+	
+	public List<Long> getProductList() {
 		return productList;
 	}
-	public void setProductList(List<Integer> productList) {
+	public void setProductList(List<Long> productList) {
 		this.productList = productList;
-	}
-	
-	
-	public List<String> getGiftType() {
-		return giftType;
-	}
-	public void setGiftType(List<String> giftType) {
-		this.giftType = giftType;
-	}
-	public double getGitfAmount() {
-		return gitfAmount;
-	}
-	public void setGitfAmount(double gitfAmount) {
-		this.gitfAmount = gitfAmount;
-	}
-	public Timestamp getGiftActiveDate() {
-		return giftActiveDate;
-	}
-	public void setGiftActiveDate(Timestamp giftActiveDate) {
-		this.giftActiveDate = giftActiveDate;
-	}
-	public Timestamp getGiftInvalidDate() {
-		return giftInvalidDate;
-	}
-	public void setGiftInvalidDate(Timestamp giftInvalidDate) {
-		this.giftInvalidDate = giftInvalidDate;
-	}
-	public List<Integer> getGiftProList() {
-		return giftProList;
-	}
-	public void setGiftProList(List<Integer> giftProList) {
-		this.giftProList = giftProList;
 	}
 	public String getOperatorId() {
 		return operatorId;
 	}
 	public void setOperatorId(String operatorId) {
 		this.operatorId = operatorId;
+	}
+	public List<FullPresent> getPresentList() {
+		return presentList;
+	}
+	public void setPresentList(List<FullPresent> presentList) {
+		this.presentList = presentList;
+	}
+	public String getPriceCode() {
+		return priceCode;
+	}
+	public void setPriceCode(String priceCode) {
+		this.priceCode = priceCode;
+	}
+	public Long getReduceId() {
+		return reduceId;
+	}
+	public void setReduceId(Long reduceId) {
+		this.reduceId = reduceId;
 	}
 	
 	

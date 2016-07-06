@@ -10,7 +10,7 @@ public interface BmcBasedataCodeMapper {
 
     int deleteByExample(BmcBasedataCodeCriteria example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(BmcBasedataCode record);
 
@@ -18,7 +18,7 @@ public interface BmcBasedataCodeMapper {
 
     List<BmcBasedataCode> selectByExample(BmcBasedataCodeCriteria example);
 
-    BmcBasedataCode selectByPrimaryKey(Integer id);
+    BmcBasedataCode selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") BmcBasedataCode record, @Param("example") BmcBasedataCodeCriteria example);
 

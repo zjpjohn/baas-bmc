@@ -14,8 +14,6 @@ public class ProductQueryVO extends BaseInfo {
 	 /**
      * 消息流水<br>
      * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
-     * 必填<br>
-     * VARCHAR(32)
      */
 	@NotNull(message="消息流水号不能为空",groups={IQueryProferProductSV.GetProductInfo.class})
 	private String tradeSeq;
@@ -23,7 +21,8 @@ public class ProductQueryVO extends BaseInfo {
 	/**
 	 * 优惠产品Id
 	 */
-	private String productId;
+	
+	private Long productId;
 	
 	/**
 	 * 优惠产品名称
@@ -54,10 +53,11 @@ public class ProductQueryVO extends BaseInfo {
      */
     private Integer pageSize;
 	
-	public String getProductId() {
+	
+	public Long getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 	public String getProductName() {

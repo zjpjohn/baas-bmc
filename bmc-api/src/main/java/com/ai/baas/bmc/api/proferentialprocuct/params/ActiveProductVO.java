@@ -2,6 +2,8 @@ package com.ai.baas.bmc.api.proferentialprocuct.params;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
 import com.ai.opt.base.vo.BaseInfo;
 
@@ -16,23 +18,30 @@ public class ActiveProductVO extends BaseInfo {
      * 必填<br>
      * VARCHAR(32)
      */
-	@NotNull(message="消息流水号不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
+	@NotBlank(message="消息流水号不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
 	private String tradeSeq;
 	
 	/**
 	 * 产品Id
 	 */
-	@NotNull(message="产品Id不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
-	private String productId;
+	@NotNull(message="产品Id不能为空")
+	private Long productId;
 	/**
 	 * 负责状态
 	 */
-	@NotNull(message="状态信息不能为空",groups={IProferProductManageSV.UpdateProferProductStatus.class})
+	@NotBlank(message="状态信息不能为空")
 	private String status;
-	public String getProductId() {
+	
+	public String getTradeSeq() {
+		return tradeSeq;
+	}
+	public void setTradeSeq(String tradeSeq) {
+		this.tradeSeq = tradeSeq;
+	}
+	public Long getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 	public String getStatus() {

@@ -3,31 +3,57 @@ package com.ai.baas.bmc.api.failedbillmaintain.params;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.BaseInfo;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by xin on 16-4-12.
  */
 public class FailedBillParam extends BaseInfo {
-    private String tenantId;
-    private String service_id;
+    /**
+     * 业务类型（不能为空）
+     */
+    private String serviceId;
+    /**
+     * 来源（不能为空）
+     */
     private String source;
+    /**
+     * 批次号（不能为空）
+     */
     private String bsn;
+    /**
+     * 错误编码（不能为空）
+     */
+    private String failedCode;
+    /**
+     * 业务流水（不能为空）
+     */
     private String sn;
-    private String fail_step;
-    private String fail_date;
+    /**
+     * 错误步骤（不能为空）
+     */
+    private String failStep;
+    /**
+     * 错误时间（不能为空）
+     */
+    private String failDate;
+    /**
+     * 账期
+     */
+    private String accountPeriod;
+    /**
+     * 到达时间
+     */
+    private String arrivalTime;
 
-    private String account_period;
-    private String arrival_time;
-    private Map<String, String> fail_packet;
+    private Map<String, String> failPacket;
 
     public void validate() {
-        if (isBlank(tenantId)) {
-            throw new BusinessException("400", "tenantId不能为空");
+        if (isBlank(getTenantId())) {
+            throw new BusinessException("400", "tenant_id不能为空");
         }
-        if (isBlank(service_id)) {
-            throw new BusinessException("400", "ServiceId不能为空");
+        if (isBlank(serviceId)) {
+            throw new BusinessException("400", "service_id不能为空");
         }
         if (isBlank(source)) {
             throw new BusinessException("400", "Source不能为空");
@@ -38,51 +64,35 @@ public class FailedBillParam extends BaseInfo {
         if (isBlank(sn)) {
             throw new BusinessException("400", "sn不能为空");
         }
-        if (isBlank(fail_step)) {
+        if (isBlank(failStep)) {
             throw new BusinessException("400", "fail_step不能为空");
         }
-        if (isBlank(fail_date)) {
+        if (isBlank(failDate)) {
             throw new BusinessException("400", "fail_date不能为空");
+        }
+        if (isBlank(failedCode)) {
+            throw new BusinessException("400", "failedCode不能为空");
         }
     }
 
-    private boolean isBlank(String value){
-        if (value== null || value.length() == 0){
+    private boolean isBlank(String value) {
+        if (value == null || value.length() == 0) {
             return true;
         }
 
         return false;
     }
 
-
-
     public String buildFailedBillRowKey() {
-        StringBuilder stringBuilder = new StringBuilder(tenantId + "\1");
-        stringBuilder.append(service_id + "\1");
+        StringBuilder stringBuilder = new StringBuilder(getTenantId() + "\1");
+        stringBuilder.append(serviceId + "\1");
         stringBuilder.append(source + "\1");
         stringBuilder.append(bsn + "\1");
         stringBuilder.append(sn + "\1");
-        stringBuilder.append(fail_step + "\1");
-        stringBuilder.append(fail_date);
+        stringBuilder.append(failStep + "\1");
+        stringBuilder.append(failedCode + "\1");
+        stringBuilder.append(failDate);
         return stringBuilder.toString();
-    }
-
-    @Override
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    @Override
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public String getService_id() {
-        return service_id;
-    }
-
-    public void setService_id(String service_id) {
-        this.service_id = service_id;
     }
 
     public String getSource() {
@@ -109,52 +119,74 @@ public class FailedBillParam extends BaseInfo {
         this.sn = sn;
     }
 
-    public String getFail_step() {
-        return fail_step;
+    public String getFailStep() {
+        return failStep;
     }
 
-    public void setFail_step(String fail_step) {
-        this.fail_step = fail_step;
+    public void setFailStep(String failStep) {
+        this.failStep = failStep;
     }
 
-    public String getFail_date() {
-        return fail_date;
+    public String getFailDate() {
+        return failDate;
     }
 
-    public void setFail_date(String fail_date) {
-        this.fail_date = fail_date;
+    public void setFailDate(String failDate) {
+        this.failDate = failDate;
     }
 
-    public Map<String, String> getFail_packet() {
-        if (fail_packet == null){
-            throw new BusinessException("400", "fail_packet 不能为空");
+    public Map<String, String> getFailPacket() {
+
+        return failPacket;
+    }
+
+    public void setFailPacket(Map<String, String> failPacket) {
+        this.failPacket = failPacket;
+    }
+
+    public String getAccountPeriod() {
+
+        return accountPeriod;
+    }
+
+    public void setAccountPeriod(String accountPeriod) {
+        this.accountPeriod = accountPeriod;
+    }
+
+    public String getArrivalTime() {
+
+        return arrivalTime;
+    }
+
+    public void validateRowKeyParam() {
+        if (failPacket == null) {
+            throw new BusinessException("400", "failPacket 不能为空");
         }
-        return fail_packet;
-    }
-
-    public void setFail_packet(Map<String, String> fail_packet) {
-        this.fail_packet = fail_packet;
-    }
-
-    public String getAccount_period() {
-        if (isBlank(account_period)){
-            throw new BusinessException("400", "account_period 不能为空");
+        if (isBlank(accountPeriod)) {
+            throw new BusinessException("400", "accountPeriod 不能为空");
         }
-        return account_period;
-    }
-
-    public void setAccount_period(String account_period) {
-        this.account_period = account_period;
-    }
-
-    public String getArrival_time() {
-        if (isBlank(arrival_time)){
-            throw new BusinessException("400", "arrival_time 不能为空");
+        if (isBlank(arrivalTime)) {
+            throw new BusinessException("400", "arrivalTime 不能为空");
         }
-        return arrival_time;
     }
 
-    public void setArrival_time(String arrival_time) {
-        this.arrival_time = arrival_time;
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public String getFailedCode() {
+        return failedCode;
+    }
+
+    public void setFailedCode(String failedCode) {
+        this.failedCode = failedCode;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 }

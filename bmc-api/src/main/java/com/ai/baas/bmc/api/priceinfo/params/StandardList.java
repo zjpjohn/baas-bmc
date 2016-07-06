@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class StandardList  implements Serializable{
+    private static final long serialVersionUID = -49891863493979L;
     private String standardId;
     private String priceName;
     private String serviceType;

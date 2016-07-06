@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.CpPricemakingFactorMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactor" >
+    <id column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <id column="PRICE_PRODUCT_TYPE" property="priceProductType" jdbcType="VARCHAR" />
+    <id column="FACTOR_NAME" property="factorName" jdbcType="VARCHAR" />
+    <id column="PRICE_PRODUCT_ID" property="priceProductId" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="FACTOR_VALUE" property="factorValue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TENANT_ID, PRICE_PRODUCT_TYPE, FACTOR_NAME, PRICE_PRODUCT_ID, ID, FACTOR_VALUE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactorCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cp_pricemaking_factor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactorKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_pricemaking_factor
+    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}
+      and FACTOR_NAME = #{factorName,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_ID = #{priceProductId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactorKey" >
+    delete from cp_pricemaking_factor
+    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}
+      and FACTOR_NAME = #{factorName,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_ID = #{priceProductId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactorCriteria" >
+    delete from cp_pricemaking_factor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactor" >
+    insert into cp_pricemaking_factor (TENANT_ID, PRICE_PRODUCT_TYPE, FACTOR_NAME, 
+      PRICE_PRODUCT_ID, ID, FACTOR_VALUE
+      )
+    values (#{tenantId,jdbcType=VARCHAR}, #{priceProductType,jdbcType=VARCHAR}, #{factorName,jdbcType=VARCHAR}, 
+      #{priceProductId,jdbcType=VARCHAR}, #{id,jdbcType=BIGINT}, #{factorValue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactor" >
+    insert into cp_pricemaking_factor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="priceProductType != null" >
+        PRICE_PRODUCT_TYPE,
+      </if>
+      <if test="factorName != null" >
+        FACTOR_NAME,
+      </if>
+      <if test="priceProductId != null" >
+        PRICE_PRODUCT_ID,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="factorValue != null" >
+        FACTOR_VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="priceProductType != null" >
+        #{priceProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="factorName != null" >
+        #{factorName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceProductId != null" >
+        #{priceProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="factorValue != null" >
+        #{factorValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactorCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_pricemaking_factor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_pricemaking_factor
+    <set >
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceProductType != null" >
+        PRICE_PRODUCT_TYPE = #{record.priceProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factorName != null" >
+        FACTOR_NAME = #{record.factorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceProductId != null" >
+        PRICE_PRODUCT_ID = #{record.priceProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.factorValue != null" >
+        FACTOR_VALUE = #{record.factorValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_pricemaking_factor
+    set TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      PRICE_PRODUCT_TYPE = #{record.priceProductType,jdbcType=VARCHAR},
+      FACTOR_NAME = #{record.factorName,jdbcType=VARCHAR},
+      PRICE_PRODUCT_ID = #{record.priceProductId,jdbcType=VARCHAR},
+      ID = #{record.id,jdbcType=BIGINT},
+      FACTOR_VALUE = #{record.factorValue,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactor" >
+    update cp_pricemaking_factor
+    <set >
+      <if test="id != null" >
+        ID = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="factorValue != null" >
+        FACTOR_VALUE = #{factorValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}
+      and FACTOR_NAME = #{factorName,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_ID = #{priceProductId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingFactor" >
+    update cp_pricemaking_factor
+    set ID = #{id,jdbcType=BIGINT},
+      FACTOR_VALUE = #{factorValue,jdbcType=VARCHAR}
+    where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}
+      and FACTOR_NAME = #{factorName,jdbcType=VARCHAR}
+      and PRICE_PRODUCT_ID = #{priceProductId,jdbcType=VARCHAR}
+  </update>
+</mapper>

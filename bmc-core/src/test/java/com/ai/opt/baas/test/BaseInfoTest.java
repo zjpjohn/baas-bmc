@@ -9,6 +9,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ai.baas.bmc.api.baseInfo.interfaces.IBaseInfoSV;
 import com.ai.baas.bmc.api.baseInfo.params.BaseCodeInfo;
+import com.ai.baas.bmc.api.baseInfo.params.ChildeCodeResponse;
+import com.ai.baas.bmc.api.baseInfo.params.QueryChildCodeRequest;
 import com.ai.baas.bmc.api.baseInfo.params.QueryInfoParams;
 import com.alibaba.fastjson.JSON;
 
@@ -30,12 +32,26 @@ public class BaseInfoTest {
 	    @Test
 	  public  void test(){
 	    	QueryInfoParams query=new QueryInfoParams();
-	    	query.setParamType("UNIT");
-	    	query.setTenantId("BYD");
+	    	query.setParamType("SERVICE_TYPE");
+	    	query.setTenantId("PUB");
 	    	query.setTradeSeq("BYD160323090000130123456789");
 	    	System.out.println(JSON.toJSON(query));
 	    	BaseCodeInfo bi=iBaseInfoSV.getBaseInfo(query);
 	    	System.out.println(JSON.toJSON(bi));
 	    }
+	    
+	    @Test
+		  public  void testChild(){
+	    	 QueryChildCodeRequest query=new QueryChildCodeRequest();
+		    	//query.setTenantId(tenantId);
+		    	query.setTenantId("7BAF6267AE2F421FA8D1E305EE35C4BA");
+		    	query.setTradeSeq("BYD160323090000130123456789");
+		    	query.setParentCode("5");
+		    	System.out.println(JSON.toJSON(query));
+		    	//BaseCodeInfo bi=iBaseInfoSV.getBaseInfo(query);
+		    	//System.out.println(JSON.toJSON(bi));
+		    	ChildeCodeResponse res=iBaseInfoSV.getChildCode(query);
+		    	System.out.println(JSON.toJSONString(res));
+		    }
 	
 }
