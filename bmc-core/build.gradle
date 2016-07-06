@@ -7,6 +7,7 @@ dependencies {
 	compile 'org.jboss.resteasy:resteasy-jackson-provider:3.0.11.Final'
 	compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.21'
 	compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.21'
+	compile 'javax.validation:validation-api:1.1.0.Final'
 
     compile 'org.mybatis:mybatis:3.3.0'
     compile 'org.mybatis:mybatis-spring:1.2.3'
