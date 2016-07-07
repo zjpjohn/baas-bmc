@@ -22,6 +22,20 @@ public class DrQueryInputObject extends BaseInfo implements Serializable{
 	private String pagecountNum;
 	private String beginDate;
 	private String endDate;
+	/**
+	 * 服务通道类型
+	 */
+	private String apnCode;
+	
+	
+
+	public String getApnCode() {
+		return apnCode;
+	}
+
+	public void setApnCode(String apnCode) {
+		this.apnCode = apnCode;
+	}
 
 	public String getSystemId() {
 		return systemId;

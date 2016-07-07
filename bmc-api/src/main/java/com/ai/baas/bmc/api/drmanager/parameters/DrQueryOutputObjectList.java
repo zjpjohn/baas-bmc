@@ -10,6 +10,15 @@ public class DrQueryOutputObjectList implements java.io.Serializable {
 	private String downStream;
 	private String beganTime;
 	private String duration;
+	private String apnCode;
+	
+	
+	public String getApnCode() {
+		return apnCode;
+	}
+	public void setApnCode(String apnCode) {
+		this.apnCode = apnCode;
+	}
 	public String getProductId() {
 		return productId;
 	}

@@ -29,6 +29,7 @@ import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.filter.SubstringComparator;
+import org.apache.hadoop.hbase.filter.ValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -735,6 +736,15 @@ public class DrQueryImpl implements IDrQuery {
 		              CompareFilter.CompareOp.LESS_OR_EQUAL,new BinaryComparator(Bytes.toBytes(queryBean.getEndDate().trim()))));
 			log.debug("过滤条件+EndDate{}={}",queryBean.getEndDate(),JSONObject.fromObject(filterList).toString());
 		}
+		if(!StringUtil.isBlank(queryBean.getApnCode())){
+			
+			if("APN1".equals(queryBean.getApnCode())||"APN2".equals(queryBean.getApnCode())){
+				//filterList.addFilter(new RowFilter(CompareFilter.CompareOp.EQUAL,new SubstringComparator(queryBean.getApnCode())));	
+				filterList.addFilter(new SingleColumnValueFilter( Bytes.toBytes(Constants.DR_QUERY_FAIMLY), Bytes.toBytes("apn_code"),CompareFilter.CompareOp.EQUAL, new SubstringComparator(queryBean.getApnCode())));	
+				log.debug("过滤条件+apnCode{}={}",queryBean.getApnCode(),JSONObject.fromObject(filterList).toString());
+			}
+			
+		}
 		scan.setFilter(filterList);
 		log.debug("过滤条件为{}",JSONObject.fromObject(filterList).toString());
 	}
@@ -782,6 +792,7 @@ public class DrQueryImpl implements IDrQuery {
 			object.setDownStream(getCellValue(res,Constants.DR_QUERY_FAIMLY, "gprs_down"));
 			object.setBeganTime(getCellValue(res,Constants.DR_QUERY_FAIMLY, "start_time"));
 			object.setDuration(getCellValue(res,Constants.DR_QUERY_FAIMLY, "duration"));
+			object.setApnCode(getCellValue(res,Constants.DR_QUERY_FAIMLY,"apn_code"));
 			drres.setServiceNum(getCellValue(res,Constants.DR_QUERY_FAIMLY, "service_num"));
 			log.debug("查询结果拼接："+JSONObject.fromObject(object).toString());
 			drList.add(object);
@@ -808,6 +819,10 @@ public class DrQueryImpl implements IDrQuery {
         CheckUtil.checkLenth(drObject.getServiceType(), "serviceType", 32, "BMC-000001");
         CheckUtil.checkLenth(drObject.getPageNum(), "pageNum", 32, "BMC-000001");
         CheckUtil.checkLenth(drObject.getPagecountNum(), "pagecountNum", 32, "BMC-000001");
+        CheckUtil.checkNull(drObject.getApnCode(), "apnCode", "BMC-000001");
+        if (!"APN1".equals(drObject.getApnCode())&&!"APN2".equals(drObject.getApnCode())&&!"ALL".equals(drObject.getApnCode())) {
+        	throw new BusinessException("BMC-000001",  "apnCode不合法");
+        }
         DrQueryOutputObject drres = new DrQueryOutputObject();
         //1.查询mysql获取对应的表名
         BmcDrqueryRouterule routeRuleReq = new BmcDrqueryRouterule();
