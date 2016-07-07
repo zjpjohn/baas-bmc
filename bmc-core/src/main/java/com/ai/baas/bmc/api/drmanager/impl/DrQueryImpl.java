@@ -819,10 +819,12 @@ public class DrQueryImpl implements IDrQuery {
         CheckUtil.checkLenth(drObject.getServiceType(), "serviceType", 32, "BMC-000001");
         CheckUtil.checkLenth(drObject.getPageNum(), "pageNum", 32, "BMC-000001");
         CheckUtil.checkLenth(drObject.getPagecountNum(), "pagecountNum", 32, "BMC-000001");
-        CheckUtil.checkNull(drObject.getApnCode(), "apnCode", "BMC-000001");
-        if (!"APN1".equals(drObject.getApnCode())&&!"APN2".equals(drObject.getApnCode())&&!"ALL".equals(drObject.getApnCode())) {
-        	throw new BusinessException("BMC-000001",  "apnCode不合法");
+        if(!StringUtil.isBlank(drObject.getApnCode())){
+        	 if (!"APN1".equals(drObject.getApnCode())&&!"APN2".equals(drObject.getApnCode())&&!"ALL".equals(drObject.getApnCode())) {
+             	throw new BusinessException("BMC-000001",  "apnCode不合法");
+             }
         }
+       
         DrQueryOutputObject drres = new DrQueryOutputObject();
         //1.查询mysql获取对应的表名
         BmcDrqueryRouterule routeRuleReq = new BmcDrqueryRouterule();
