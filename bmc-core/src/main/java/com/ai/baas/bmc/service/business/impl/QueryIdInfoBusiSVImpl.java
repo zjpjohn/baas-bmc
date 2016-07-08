@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.baas.bmc.api.queryidinfo.params.BlAcctInfoInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.BlCustinfoInfo;
@@ -14,6 +15,7 @@ import com.ai.baas.bmc.service.business.interfaces.IQueryIdInfoBusiSV;
 import com.ai.opt.sdk.util.CollectionUtil;
 
 @Service
+@Transactional
 public class QueryIdInfoBusiSVImpl implements IQueryIdInfoBusiSV {
 
     @Autowired
