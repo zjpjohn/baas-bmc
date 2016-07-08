@@ -113,4 +113,8 @@ public final class BmcSeqUtil {
         return SeqUtil.getNewId(SEQ.BL_SUBSCOMM_EXT$EXT_ID$SEQ).intValue();
     }
 
+    public static String getSubsProductId() {
+        return SeqUtil.getNewId(SEQ.BL_SUBS_COMM$SUBS_PRODUCT_ID$SEQ, 10);
+    }
+
 }

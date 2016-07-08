@@ -21,7 +21,6 @@ import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
 import com.ai.baas.bmc.api.orderinfo.params.Product;
 import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
 import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiness;
-import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
 import com.ai.baas.bmc.constants.BmcCacheConstant;
 import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.context.Context;
@@ -69,10 +68,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
     @Autowired
     private transient IBlSubsCommAtomSV iBlSubsCommAtomSV;
 
-
     @Autowired
     private BlUserinfoExtMapper aBlUserinfoExtMapper;
-
 
     @Autowired
     private transient BlAcctInfoMapper blAcctInfoMapper;
@@ -88,7 +85,6 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
 
     @Autowired
     private BlSubscommExtMapper blSubscommExtMapper;
-
 
     @Autowired
     private transient IBlCustinfoAtomSV iBlCustinfoAtomSV;
@@ -321,16 +317,18 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             List<ExtInfo> extInfos) {
         System.err.println("BlSubsComm有 " + product.getProductNumber() + " 个相同的产品");
         for (int i = 0; i < product.getProductNumber(); i++) {
+            String subsProductId = StringUtil.isBlank(product.getSubsProductId()) ? BmcSeqUtil
+                    .getSubsProductId() : product.getSubsProductId();
+            String productId = product.getProductId();
+
             BlSubsComm aBlSubsComm = new BlSubsComm();
             aBlSubsComm.setActiveTime(DateUtil.getTimestamp(product.getActiveTime(),
                     DateUtil.YYYYMMDDHHMMSS));
-
             aBlSubsComm.setInactiveTime(DateUtil.getTimestamp(product.getInactiveTime(),
                     DateUtil.YYYYMMDDHHMMSS));
-
             aBlSubsComm.setSubsId(subsId);
-            aBlSubsComm.setSubsProductId(product.getSubsProductId());
-            aBlSubsComm.setProductId(product.getProductId());
+            aBlSubsComm.setSubsProductId(subsProductId);
+            aBlSubsComm.setProductId(productId);
             aBlSubsComm.setResBonusFlag(product.getResBonusFlag());
             aBlSubsComm.setTenantId(tenantId);
             aBlSubsComm.setCustId(custId);
@@ -338,90 +336,89 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
             aBlSubsCommMapper.insertSelective(aBlSubsComm);
             // 刷新产品订购信息的内存表
             iBlSubsCommAtomSV.addDshmData(aBlSubsComm);
-        }
+            // 如果产品订购扩展信息不为空则对产品订购扩展信息表进行操作
+            if (product.getProductExtInfoList() != null) {
+                for (ProductExt productExt : product.getProductExtInfoList()) {
 
-        // 如果产品订购扩展信息不为空则对产品订购扩展信息表进行操作
-        if (product.getProductExtInfoList() != null) {
-            for (ProductExt pe : product.getProductExtInfoList()) {
-                writeBlSubsCommExt(product, pe, tenantId, subsId);
+                    if ("D".equals(productExt.getUpdateFlag())) {
+                        System.err.println("删除 BlSubsCommExt表");
+                        BlSubscommExtCriteria example = new BlSubscommExtCriteria();
+                        example.createCriteria().andProductIdEqualTo(productId)
+                                .andSubsProductIdEqualTo(subsProductId)
+                                .andExtNameEqualTo(productExt.getExtName());
+                        List<BlSubscommExt> blSubscommExts = blSubscommExtMapper
+                                .selectByExample(example);
+                        for (BlSubscommExt blSubscommExt : blSubscommExts) {
+                            JSONObject json = new JSONObject();
+                            json.put("EXT_ID", blSubscommExt.getExtId());
+                            json.put("PRODUCT_ID", blSubscommExt.getProductId());
+                            json.put("EXT_NAME", blSubscommExt.getExtName());
+                            json.put("EXT_VALUE", blSubscommExt.getExtValue());
+                            json.put("TENANT_ID", tenantId);
+                            DshmUtil.getIdshmSV().initdel("bl_subscomm_ext", json.toString());
+                        }
+                        blSubscommExtMapper.deleteByExample(example);
+                    } else if ("U".equals(productExt.getUpdateFlag())) {
+                        System.err.println("更新 BlSubsCommExt表");
+                        System.err.println("productId  " + product + ","
+                                + JSON.toJSONString(productExt));
+                        BlSubscommExtCriteria example = new BlSubscommExtCriteria();
+                        example.createCriteria().andProductIdEqualTo(productId)
+                                .andSubsProductIdEqualTo(subsProductId)
+                                .andExtNameEqualTo(productExt.getExtName());
+                        // 刷新用户扩展信息表的内存表
+                        List<BlSubscommExt> blSubsExtList = blSubscommExtMapper
+                                .selectByExample(example);
+                        if (blSubsExtList.size() == 0) {
+                            System.err.println("BlSubscommExt表中无数据，更新失败");
+                        }
+                        BlSubscommExt temp = blSubsExtList.get(0);
+                        temp.setExtValue(productExt.getExtValue());
+                        blSubscommExtMapper.updateByExampleSelective(temp, example);
+                        JSONObject json = new JSONObject();
+                        json.put("EXT_ID", temp.getExtId());
+                        json.put("PRODUCT_ID", temp.getProductId());
+                        json.put("SUBS_PRODUCT_ID", temp.getSubsProductId());
+                        json.put("EXT_NAME", temp.getExtName());
+                        json.put("EXT_VALUE", temp.getExtValue());
+                        json.put("TENANT_ID", tenantId);
+                        DshmUtil.getIdshmSV().initLoader("bl_subscomm_ext", json.toString(), 0);
+
+                    } else if ("N".equals(productExt.getUpdateFlag())) {
+                        System.err.println("新增 BlSubsCommExt表");
+                        System.err.println("productId  " + product + "," + "ProductExt :"
+                                + JSON.toJSONString(productExt));
+                        BlSubscommExt blSubscommExt = new BlSubscommExt();
+                        blSubscommExt.setExtId(BmcSeqUtil.getSubscommExtId());
+                        blSubscommExt.setProductId(productId);
+                        blSubscommExt.setSubsProductId(subsProductId);
+                        blSubscommExt.setSubsId(subsId);
+                        blSubscommExt.setExtName(productExt.getExtName());
+                        blSubscommExt.setExtValue(productExt.getExtValue());
+                        blSubscommExtMapper.insertSelective(blSubscommExt);
+                        // 刷新用户扩展信息表的内存表
+                        iBlSubscommExtAtomSV.addDshmData(blSubscommExt);
+                    }
+
+                }
+            }
+            if (!CollectionUtil.isEmpty(extInfos)) {
+                for (ExtInfo extInfo : extInfos) {
+
+                    BlSubscommExt blSubscommExt = new BlSubscommExt();
+                    blSubscommExt.setExtId(BmcSeqUtil.getSubscommExtId());
+                    blSubscommExt.setProductId(productId);
+                    blSubscommExt.setSubsProductId(subsProductId);
+                    blSubscommExt.setSubsId(subsId);
+                    blSubscommExt.setExtName(extInfo.getExtType());
+                    blSubscommExt.setExtValue(JSON.toJSONString(extInfo.getInfolist()));
+                    blSubscommExtMapper.insertSelective(blSubscommExt);
+                    // 刷新用户扩展信息表的内存表
+                    iBlSubscommExtAtomSV.addDshmData(blSubscommExt);
+
+                }
             }
         }
-        if (!CollectionUtil.isEmpty(extInfos)) {
-            for (ExtInfo extInfo : extInfos) {
 
-                BlSubscommExt blSubscommExt = new BlSubscommExt();
-                blSubscommExt.setExtId(BmcSeqUtil.getSubscommExtId());
-                blSubscommExt.setProductId(product.getProductId());
-                blSubscommExt.setSubsProductId(product.getSubsProductId());
-                blSubscommExt.setSubsId(subsId);
-                blSubscommExt.setExtName(extInfo.getExtType());
-                blSubscommExt.setExtValue(JSON.toJSONString(extInfo.getInfolist()));
-                blSubscommExtMapper.insertSelective(blSubscommExt);
-                // 刷新用户扩展信息表的内存表
-                iBlSubscommExtAtomSV.addDshmData(blSubscommExt);
-
-            }
-        }
-    }
-
-    // 产品订购扩展信息表操作
-    private void writeBlSubsCommExt(Product product, ProductExt productExt, String tenantId,
-            String subsId) {
-        if ("D".equals(productExt.getUpdateFlag())) {
-            System.err.println("删除 BlSubsCommExt表");
-            BlSubscommExtCriteria example = new BlSubscommExtCriteria();
-            example.createCriteria().andProductIdEqualTo(product.getProductId())
-                    .andSubsProductIdEqualTo(product.getSubsProductId())
-                    .andExtNameEqualTo(productExt.getExtName());
-            BlSubscommExt temp = blSubscommExtMapper.selectByExample(example).get(0);
-            blSubscommExtMapper.deleteByExample(example);
-            // 刷新用户扩展信息表的内存表
-            JSONObject json = new JSONObject();
-            json.put("EXT_ID", temp.getExtId());
-            json.put("PRODUCT_ID", temp.getProductId());
-            json.put("EXT_NAME", temp.getExtName());
-            json.put("EXT_VALUE", temp.getExtValue());
-            json.put("TENANT_ID", tenantId);
-            DshmUtil.getIdshmSV().initdel("bl_subscomm_ext", json.toString());
-
-        } else if ("U".equals(productExt.getUpdateFlag())) {
-            System.err.println("更新 BlSubsCommExt表");
-            System.err.println("productId  " + product + "," + JSON.toJSONString(productExt));
-            BlSubscommExtCriteria example = new BlSubscommExtCriteria();
-            example.createCriteria().andProductIdEqualTo(product.getProductId())
-                    .andSubsProductIdEqualTo(product.getSubsProductId())
-                    .andExtNameEqualTo(productExt.getExtName());
-            // 刷新用户扩展信息表的内存表
-            List<BlSubscommExt> blSubsExtList = blSubscommExtMapper.selectByExample(example);
-            if (blSubsExtList.size() == 0) {
-                System.err.println("BlSubscommExt表中无数据，更新失败");
-            }
-            BlSubscommExt temp = blSubsExtList.get(0);
-            temp.setExtValue(productExt.getExtValue());
-            blSubscommExtMapper.updateByExampleSelective(temp, example);
-            JSONObject json = new JSONObject();
-            json.put("EXT_ID", temp.getExtId());
-            json.put("PRODUCT_ID", temp.getProductId());
-            json.put("SUBS_PRODUCT_ID", temp.getSubsProductId());
-            json.put("EXT_NAME", temp.getExtName());
-            json.put("EXT_VALUE", temp.getExtValue());
-            json.put("TENANT_ID", tenantId);
-            DshmUtil.getIdshmSV().initLoader("bl_subscomm_ext", json.toString(), 0);
-
-        } else if ("N".equals(productExt.getUpdateFlag())) {
-            System.err.println("新增 BlSubsCommExt表");
-            System.err.println("productId  " + product + "," + "ProductExt :"
-                    + JSON.toJSONString(productExt));
-            BlSubscommExt blSubscommExt = new BlSubscommExt();
-            blSubscommExt.setExtId(BmcSeqUtil.getSubscommExtId());
-            blSubscommExt.setProductId(product.getProductId());
-            blSubscommExt.setSubsProductId(product.getSubsProductId());
-            blSubscommExt.setSubsId(subsId);
-            blSubscommExt.setExtName(productExt.getExtName());
-            blSubscommExt.setExtValue(productExt.getExtValue());
-            blSubscommExtMapper.insertSelective(blSubscommExt);
-            // 刷新用户扩展信息表的内存表
-            iBlSubscommExtAtomSV.addDshmData(blSubscommExt);
-        }
     }
 }
