@@ -10,6 +10,7 @@
     <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="TIMESTAMP" />
     <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
     <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,13 +72,14 @@
   </sql>
   <sql id="Base_Column_List" >
     SUBS_ID, SUBS_PRODUCT_ID, ACTIVE_TIME, PRODUCT_ID, RES_BONUS_FLAG, INACTIVE_TIME, 
-    TENANT_ID, CUST_ID
+    TENANT_ID, CUST_ID, PRODUCT_TYPE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlSubsCommCriteria" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'false' as QUERYID,
     <include refid="Base_Column_List" />
     from bl_subs_comm
     <if test="_parameter != null" >
@@ -113,10 +115,12 @@
   <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlSubsComm" >
     insert into bl_subs_comm (SUBS_ID, SUBS_PRODUCT_ID, ACTIVE_TIME, 
       PRODUCT_ID, RES_BONUS_FLAG, INACTIVE_TIME, 
-      TENANT_ID, CUST_ID)
+      TENANT_ID, CUST_ID, PRODUCT_TYPE
+      )
     values (#{subsId,jdbcType=VARCHAR}, #{subsProductId,jdbcType=VARCHAR}, #{activeTime,jdbcType=TIMESTAMP}, 
       #{productId,jdbcType=VARCHAR}, #{resBonusFlag,jdbcType=VARCHAR}, #{inactiveTime,jdbcType=TIMESTAMP}, 
-      #{tenantId,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR})
+      #{tenantId,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{productType,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BlSubsComm" >
     insert into bl_subs_comm
@@ -145,6 +149,9 @@
       <if test="custId != null" >
         CUST_ID,
       </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="subsId != null" >
@@ -170,6 +177,9 @@
       </if>
       <if test="custId != null" >
         #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -206,6 +216,9 @@
       <if test="record.custId != null" >
         CUST_ID = #{record.custId,jdbcType=VARCHAR},
       </if>
+      <if test="record.productType != null" >
+        PRODUCT_TYPE = #{record.productType,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -220,7 +233,8 @@
       RES_BONUS_FLAG = #{record.resBonusFlag,jdbcType=VARCHAR},
       INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
       TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
-      CUST_ID = #{record.custId,jdbcType=VARCHAR}
+      CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      PRODUCT_TYPE = #{record.productType,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -243,6 +257,9 @@
       <if test="custId != null" >
         CUST_ID = #{custId,jdbcType=VARCHAR},
       </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE = #{productType,jdbcType=VARCHAR},
+      </if>
     </set>
     where SUBS_ID = #{subsId,jdbcType=VARCHAR}
       and SUBS_PRODUCT_ID = #{subsProductId,jdbcType=VARCHAR}
@@ -254,7 +271,8 @@
       RES_BONUS_FLAG = #{resBonusFlag,jdbcType=VARCHAR},
       INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
       TENANT_ID = #{tenantId,jdbcType=VARCHAR},
-      CUST_ID = #{custId,jdbcType=VARCHAR}
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      PRODUCT_TYPE = #{productType,jdbcType=VARCHAR}
     where SUBS_ID = #{subsId,jdbcType=VARCHAR}
       and SUBS_PRODUCT_ID = #{subsProductId,jdbcType=VARCHAR}
       and ACTIVE_TIME = #{activeTime,jdbcType=TIMESTAMP}

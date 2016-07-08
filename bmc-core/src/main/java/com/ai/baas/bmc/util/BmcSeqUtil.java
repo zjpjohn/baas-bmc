@@ -109,4 +109,8 @@ public final class BmcSeqUtil {
         return SeqUtil.getNewId(SEQ.BL_USERINFO$SUBS_ID$SEQ, 10);
     }
 
+    public static Integer getSubscommExtId() {
+        return SeqUtil.getNewId(SEQ.BL_SUBSCOMM_EXT$EXT_ID$SEQ).intValue();
+    }
+
 }

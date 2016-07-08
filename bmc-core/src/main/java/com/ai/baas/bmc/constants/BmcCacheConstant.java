@@ -19,6 +19,8 @@ public class BmcCacheConstant {
             public static final String BL_CUSTINFO = "bl_custinfo";
             public static final String BL_USERINFO = "bl_userinfo";
             public static final String BL_ACCT_INFO = "bl_acct_info";
+            public static final String BL_SUBS_COMM = "bl_subs_comm";
+            public static final String BL_SUBSCOMM_EXT = "bl_subscomm_ext";
         }
         public static class OptType {
             public static final int INSERT = 1;

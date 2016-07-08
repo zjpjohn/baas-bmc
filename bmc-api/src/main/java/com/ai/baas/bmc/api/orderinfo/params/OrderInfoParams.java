@@ -153,7 +153,7 @@ public class OrderInfoParams extends BaseInfo {
     /**
      * 扩展信息列表
      */
-    private List<ExtInfo> extInfoList;
+    private List<ExtInfo> sublist;
 
     public String getTradeSeq() {
         return tradeSeq;
@@ -283,13 +283,14 @@ public class OrderInfoParams extends BaseInfo {
         this.scoutPolocyID = scoutPolocyID;
     }
 
-
-    public List<ExtInfo> getExtInfoList() {
-        return extInfoList;
+    public List<ExtInfo> getSublist() {
+        return sublist;
     }
 
-    public void setExtInfoList(List<ExtInfo> extInfoList) {
-        this.extInfoList = extInfoList;
+    public void setSublist(List<ExtInfo> sublist) {
+        this.sublist = sublist;
     }
+
+
 
 }

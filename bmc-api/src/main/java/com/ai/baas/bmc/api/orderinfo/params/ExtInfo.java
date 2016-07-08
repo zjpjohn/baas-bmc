@@ -5,43 +5,30 @@ import java.util.List;
 
 public class ExtInfo implements Serializable {
     private static final long serialVersionUID = 1L;
+    /**
+     * 扩展信息的类型
+     */
+    private String extType;
 
     /**
-     * 名称
+     * 子信息列表
      */
-    private String extName;
+    private List<Info> infolist;
 
-    /**
-     * 值
-     */
-    private String extValue;
-
-    /**
-     * 子列表
-     */
-    private List<SubInfo> sublist;
-
-    public String getExtName() {
-        return extName;
+    public String getExtType() {
+        return extType;
     }
 
-    public void setExtName(String extName) {
-        this.extName = extName;
+    public void setExtType(String extType) {
+        this.extType = extType;
     }
 
-    public String getExtValue() {
-        return extValue;
+    public List<Info> getInfolist() {
+        return infolist;
     }
 
-    public void setExtValue(String extValue) {
-        this.extValue = extValue;
+    public void setInfolist(List<Info> infolist) {
+        this.infolist = infolist;
     }
 
-    public List<SubInfo> getSublist() {
-        return sublist;
-    }
-
-    public void setSublist(List<SubInfo> sublist) {
-        this.sublist = sublist;
-    }
 }

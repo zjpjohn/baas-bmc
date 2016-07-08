@@ -86,6 +86,8 @@ public final class BmcConstants {
 
         public static final String BL_USERINFO$SUBS_ID$SEQ = "BL_USERINFO$SUBS_ID$SEQ";
 
+        public static final String BL_SUBSCOMM_EXT$EXT_ID$SEQ = "BL_SUBSCOMM_EXT$EXT_ID$SEQ";
+
     }
 
     public static final class TenantId {

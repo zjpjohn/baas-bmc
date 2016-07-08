@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.constants.BmcCacheConstant;
 import com.ai.baas.bmc.dao.mapper.bo.BlUserinfo;
-import com.ai.baas.bmc.service.atom.interfacess.IBlUserinfoAtomSV;
+import com.ai.baas.bmc.service.atom.interfaces.IBlUserinfoAtomSV;
 import com.ai.baas.bmc.util.BusinessUtil;
 import com.ai.baas.bmc.util.DshmUtil;
 import com.alibaba.fastjson.JSON;

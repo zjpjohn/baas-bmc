@@ -47,6 +47,11 @@ public class OrderExt implements Serializable {
     @Size(max = 1, groups = { IOrderInfoSV.OrderInfo.class })
     private String updateFlag;
 
+    public static final class UpdateFlag {
+
+        public static final String D = "D";
+    }
+
     public String getExtName() {
         return extName;
     }
