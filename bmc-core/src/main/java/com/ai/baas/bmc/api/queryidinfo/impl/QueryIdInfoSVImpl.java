@@ -48,7 +48,7 @@ public class QueryIdInfoSVImpl implements IQueryIdInfoSV {
         }
         ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
         blAcctInfoResponse.setResponseHeader(responseHeader);
-        return null;
+        return blAcctInfoResponse;
     }
 
 }
