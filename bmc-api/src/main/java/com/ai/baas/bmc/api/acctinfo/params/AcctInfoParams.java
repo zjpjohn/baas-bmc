@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.api.acctInfo.params;
+package com.ai.baas.bmc.api.acctinfo.params;
 
 import java.io.Serializable;
 
