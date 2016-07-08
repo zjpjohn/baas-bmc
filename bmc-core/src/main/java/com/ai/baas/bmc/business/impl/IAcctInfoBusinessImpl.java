@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ai.baas.bmc.api.acctInfo.params.AcctInfoParams;
-import com.ai.baas.bmc.api.acctInfo.params.AcctQueryRequest;
-import com.ai.baas.bmc.api.acctInfo.params.ResponseMessage;
+import com.ai.baas.bmc.api.acctinfo.params.AcctInfoParams;
+import com.ai.baas.bmc.api.acctinfo.params.AcctQueryRequest;
+import com.ai.baas.bmc.api.acctinfo.params.ResponseMessage;
 import com.ai.baas.bmc.business.interfaces.IAcctInfoBusiness;
 import com.ai.baas.bmc.dao.interfaces.BlAcctInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.BlAcctInfo;
@@ -29,7 +29,7 @@ public class IAcctInfoBusinessImpl implements IAcctInfoBusiness{
 	private SqlSessionTemplate sqlSessionTemplate;
 	public ResponseMessage getAcctInfo(AcctQueryRequest acctQueryRequest){
 		ResponseMessage responseMessage=new ResponseMessage();
-        List<AcctInfoParams> acctInfoParamsList = new ArrayList<AcctInfoParams>( );		
+
 		
 		BlAcctInfoMapper blAcctInfoMapper=sqlSessionTemplate.getMapper(BlAcctInfoMapper.class);
 		
@@ -48,9 +48,10 @@ public class IAcctInfoBusinessImpl implements IAcctInfoBusiness{
 				return responseMessage;
 			}
 			log.debug("获得"+acctInfoList.size()+"条账户信息");
-			
-			AcctInfoParams acctInfoParams=new AcctInfoParams();
+	        List<AcctInfoParams> acctInfoParamsList = new ArrayList<AcctInfoParams>( );		
+			AcctInfoParams acctInfoParams = null;
 			for(BlAcctInfo blAcctInfo:acctInfoList){
+				acctInfoParams=new AcctInfoParams();
 				acctInfoParams.setAcctID(blAcctInfo.getAcctId());
 				acctInfoParams.setAcctName(blAcctInfo.getAcctName());
 				acctInfoParams.setCustID(blAcctInfo.getOwnerId());
