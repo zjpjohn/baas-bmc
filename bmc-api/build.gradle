@@ -10,16 +10,14 @@ dependencies {
     jaxDoclet 'com.ai.runner.plugin:apicollector:2.0-SNAPSHOT'
     runnerBaseSource "com.ai.opt:opt-base:1.0.1-SNAPSHOT:sources"
 
-    
-  //  compile "javax.validation:validation-api:1.0.0.GA"
-	compile "org.hibernate:hibernate-validator:4.2.0.Final"      
+
+    //  compile "javax.validation:validation-api:1.0.0.GA"
+    compile "org.hibernate:hibernate-validator:4.2.0.Final"
 }
 
 
 buildscript {
-    repositories {
-        maven { url mavenPublicURL }
-    }
+    repositories { maven { url mavenPublicURL } }
     dependencies {
         classpath group: 'com.ai.runner.plugin', name: 'apicollectorplugin', version: '1.0'
         classpath group: 'com.ai.runner.plugin', name: 'apijarprocessplugin', version: '1.0'
@@ -29,7 +27,7 @@ buildscript {
 
 //打jar包
 def apiJarProcessTask=task("apiJarProcessTask",type:com.ai.runner.gradle.plugin.jar.APIJarProcessTask){
-	jarPaths=configurations.runnerBaseSource.files.asType(List)
+    jarPaths=configurations.runnerBaseSource.files.asType(List)
     destinationDir file("$buildDir/opt-base")
 }
 //遍历目录，给各个参数赋值
@@ -67,9 +65,9 @@ for(Map<String,String> apiMap:apiList){
         }
     }
     apiTaskMap.put(apiName, jarTask);
-	//调用APICollectorTask，开始收集数据
+    //调用APICollectorTask，开始收集数据
     def apidocTask=task("${apiArtifactId}APIDoc",type:com.ai.runner.gradle.plugin.APICollectorTask){
-    	dependsOn apiJarProcessTask
+        dependsOn apiJarProcessTask
         esconfig = "[{ip:10.1.234.160, port:14999}]"
         source = fileTree(dir: 'src/main/java', include: 'com/ai/baas/bmc/api/'+apiName+'/**/*.java')+fileTree(dir:"$buildDir/opt-base", include:"**/*.java")
         docletpath = configurations.jaxDoclet.files.asType(List)
@@ -90,9 +88,9 @@ for(Map<String,String> apiMap:apiList){
 
 
 task api2doc{
-	dependsOn {
-	   tasks.findAll { task -> task.name.endsWith('APIDoc') }
-	}
+    dependsOn {
+        tasks.findAll { task -> task.name.endsWith('APIDoc') }
+    }
 }
 
 publishing {
