@@ -29,6 +29,8 @@ public interface IQueryIdInfoSV {
      * @return
      * @author wangjl9
      * @ApiDocMethod
+     * @ApiCode
+     * @RestRelativeURL queryIdInfo/queryBlCustinfo
      */
     @POST
     @Path("/queryBlCustinfo")
@@ -41,6 +43,8 @@ public interface IQueryIdInfoSV {
      * @return
      * @author wangjl9
      * @ApiDocMethod
+     * @ApiCode
+     * @RestRelativeURL queryIdInfo/queryBlAcctInfo
      */
     @POST
     @Path("/queryBlAcctInfo")
@@ -52,7 +56,9 @@ public interface IQueryIdInfoSV {
      * @param extCustIdInfo
      * @return
      * @author wangjl9
+     * @ApiCode
      * @ApiDocMethod
+     * @RestRelativeURL queryIdInfo/queryAcctIdByExtCustId
      */
     @POST
     @Path("/queryAcctIdByExtCustId")
