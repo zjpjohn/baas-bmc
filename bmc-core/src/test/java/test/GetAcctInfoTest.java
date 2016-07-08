@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ai.baas.bmc.api.acctInfo.interfaces.IAcctInfoSV;
-import com.ai.baas.bmc.api.acctInfo.params.AcctInfoParams;
-import com.ai.baas.bmc.api.acctInfo.params.AcctQueryRequest;
-import com.ai.baas.bmc.api.acctInfo.params.ResponseMessage;
+import com.ai.baas.bmc.api.acctinfo.interfaces.IAcctInfoSV;
+import com.ai.baas.bmc.api.acctinfo.params.AcctInfoParams;
+import com.ai.baas.bmc.api.acctinfo.params.AcctQueryRequest;
+import com.ai.baas.bmc.api.acctinfo.params.ResponseMessage;
 import com.ai.opt.base.vo.PageInfo;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -1,10 +1,17 @@
 package com.ai.baas.bmc.util;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.BaseInfo;
 import com.ai.opt.base.vo.RequestHeader;
 import com.ai.opt.sdk.constants.ExceptCodeConstants;
 import com.ai.opt.sdk.util.StringUtil;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 业务校验工具类<br>
@@ -64,6 +71,44 @@ public final class BusinessUtil {
 
     public static String getChargeTypeByPriceType(String serviceId) {
         return null;
+    }
+
+    /**
+     * 将属性名转换成表的列名 userId -> user_id
+     * 
+     * @param name
+     * @return
+     * @author mayt
+     * @ApiDocMethod
+     */
+    static String switchParam(String name) {
+
+        if (name.matches("[a-z]+[A-Z][a-z]+([A-Z][a-z]+)*")) {
+
+            Pattern pattern = Pattern.compile("[A-Z]");
+
+            Matcher matcher = pattern.matcher(name);
+
+            while (matcher.find()) {
+
+                String old = matcher.group();
+                String ne = matcher.group().toLowerCase();
+
+                name = name.replaceAll(old, "_" + ne);
+
+            }
+
+        }
+        return name;
+    }
+
+    public static Map<String, String> assebleDshmData(Object bo) {
+        Map<String, String> map = (Map<String, String>) JSON.parse(JSON.toJSONString(bo));
+        Map<String, String> maps = new HashMap<String, String>();
+        for (Entry<String, String> s : map.entrySet()) {
+            maps.put(switchParam(s.getKey()), s.getValue());
+        }
+        return maps;
     }
 
 }
