@@ -18,7 +18,7 @@ import com.ai.opt.base.vo.BaseResponse;
  * 
  * @author caoyf
  */
-@Path("/order/service")
+@Path("/orderinfo")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IOrderInfoSV {
@@ -29,9 +29,9 @@ public interface IOrderInfoSV {
      * @return BaaS-000000成功；其他失败
      * @author caoyf
      * @ApiCode BaaS-0002
-     * @RestRelativeURL order/service/sync/orderinfo
+     * @RestRelativeURL orderinfo/orderInfo
      */
-    @Path("/sync/orderinfo")
+    @Path("/orderinfo/orderInfo")
     @POST
     public BaseResponse orderInfo(OrderInfoParams record) throws BusinessException,SystemException;
     @interface OrderInfo{}

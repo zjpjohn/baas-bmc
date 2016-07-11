@@ -56,6 +56,39 @@ public final class BmcConstants {
 
     }
 
+    public static final class BlCustinfo {
+
+        public static final class State {
+
+            /**
+             * 正常
+             */
+            public static final String NORMAL = "Normal";
+
+            /**
+             * 未返档
+             */
+            public static final String NODOC = "NoDoc";
+
+            /**
+             * 注册
+             */
+            public static final String REGISTER = "Register";
+
+            /**
+             * 欠费
+             */
+            public static final String OWEFEE = "OweFee";
+
+            /**
+             * 冻结
+             */
+            public static final String FREEZE = "Freeze";
+
+        }
+
+    }
+
     private BmcConstants() {
 
     }
@@ -97,6 +130,7 @@ public final class BmcConstants {
         }
 
         public static final String PUB = "PUB";
+
         public static final String ZX = "test";
     }
 

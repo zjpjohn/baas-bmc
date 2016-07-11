@@ -136,11 +136,11 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiSV {
                 .executeQuery(DshmUtil.getCacheClient());
 
         // 按生失效时间获取有效记录
-        if (CollectionUtil.isEmpty(result)) {
+        if (!CollectionUtil.isEmpty(result)) {
             for (Map<String, String> r : result) {
                 if (!r.isEmpty()) {
-                    if (DateUtil.getTimestamp(r.get(BmcCacheConstant.Dshm.FieldName.ACTIVE_TIME),
-                            DateUtil.DATETIME_FORMAT).before(sysdate)
+                    if (DateUtil.getTimestamp(r.get(BmcCacheConstant.Dshm.FieldName.ACTIVE_TIME))
+                            .before(sysdate)
                             && DateUtil.getTimestamp(
                                     r.get(BmcCacheConstant.Dshm.FieldName.INACTIVE_TIME),
                                     DateUtil.DATETIME_FORMAT).after(sysdate)) {
@@ -168,6 +168,9 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiSV {
                 blCustinfo.setCustId(custId);
                 blCustinfo.setTenantId(tenantId);
                 blCustinfo.setExtCustId(extCustId);
+                blCustinfo.setCustName(custId);
+                blCustinfo.setState(BmcConstants.BlCustinfo.State.NORMAL);
+                blCustinfo.setStateChgTime(sysdate);
                 blCustinfoMapper.insertSelective(blCustinfo);
                 // 写入缓存
                 iBlCustinfoAtomSV.addDshmData(blCustinfo);
@@ -199,7 +202,8 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiSV {
             BlUserinfo blUserinfo = new BlUserinfo();
             blUserinfo.setTenantId(tenantId);
             blUserinfo.setCustId(custId);
-            blUserinfo.setSubsId(BmcSeqUtil.getSubsId());
+            subsId = BmcSeqUtil.getSubsId();
+            blUserinfo.setSubsId(subsId);
             blUserinfo.setAcctId(acctId);
             blUserinfo.setServiceId(serviceId);
             if (!StringUtil.isBlank(request.getOrderTime())) {
@@ -212,7 +216,6 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiSV {
             blUserinfo.setInactiveTime(DateUtil.getTimestamp(StringUtil.isBlank(request
                     .getInactiveTime()) ? "20990101120000" : request.getInactiveTime(),
                     DateUtil.YYYYMMDDHHMMSS));
-            blUserinfo.setRemark("订购请求创建用户");
             blUserinfo.setProvinceCode(request.getProvinceCode());
             blUserinfo.setCityCode(request.getCityCode());
             blUserinfo.setChlId(request.getChlId());

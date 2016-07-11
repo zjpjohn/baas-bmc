@@ -52,7 +52,7 @@ public class PricemakingSVRestTest {
         // orderTypeList.add(orderTypeInfo);
 
         String s = HttpClientUtil.sendPost(
-                "http://127.0.0.1:10884/baas-bmc/pricemaking/queryPricemakingZX",
+                "http://10.1.130.84:10884/baas-bmc/pricemaking/queryPricemakingZX",
                 JSON.toJSONString(request));
         System.out.println(s);
     }

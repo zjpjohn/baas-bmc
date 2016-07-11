@@ -107,11 +107,11 @@ public final class BusinessUtil {
         return name;
     }
 
-    public static Map<String, String> assebleDshmData(Object bo) {
+    public static Map<String, Object> assebleDshmData(Object bo) {
         @SuppressWarnings("unchecked")
-        Map<String, String> map = (Map<String, String>) JSON.parse(JSON.toJSONString(bo));
-        Map<String, String> maps = new HashMap<String, String>();
-        for (Entry<String, String> s : map.entrySet()) {
+        Map<String, Object> map = (Map<String, Object>) JSON.parse(JSON.toJSONString(bo));
+        Map<String, Object> maps = new HashMap<String, Object>();
+        for (Entry<String, Object> s : map.entrySet()) {
             maps.put(switchParam(s.getKey()), s.getValue());
         }
         return maps;
