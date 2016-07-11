@@ -6,16 +6,16 @@ public class AcctIdInfo extends BaseInfo {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 租户系统中设定的标识(外部客户id) 必填
+     * 账户id 必填
      */
-    private String extCustId;
+    private String acctId;
 
-    public String getExtCustId() {
-        return extCustId;
+    public String getAcctId() {
+        return acctId;
     }
 
-    public void setExtCustId(String extCustId) {
-        this.extCustId = extCustId;
+    public void setAcctId(String acctId) {
+        this.acctId = acctId;
     }
 
 }
