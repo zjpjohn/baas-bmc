@@ -64,4 +64,16 @@ public interface IQueryIdInfoSV {
     @Path("/queryAcctIdByExtCustId")
     BlAcctInfoResponse queryAcctIdByExtCustId(ExtCustIdInfo extCustIdInfo);
 
+    /**
+     * 根据账户id查询外部客户id<br>
+     * 
+     * @param extCustIdInfo
+     * @return
+     * @author wangjl9
+     * @ApiDocMethod
+     */
+    @POST
+    @Path("/queryExtCustIdByAcctId")
+    BlAcctInfoResponse queryExtCustIdByAcctId(ExtCustIdInfo extCustIdInfo);
+
 }
