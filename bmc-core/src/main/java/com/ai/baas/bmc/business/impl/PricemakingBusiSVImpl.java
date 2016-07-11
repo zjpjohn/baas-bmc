@@ -85,11 +85,13 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
                             break;
                         }
                     }
-                    for (ExtInfo extInfo : extInfos) {
-                        if (factorName.equals(extInfo.getExtName())
-                                && factorValue.equals(extInfo.getExtValue())) {
-                            isFactorMatch = true;
-                            break;
+                    if (!CollectionUtil.isEmpty(extInfos)) {
+                        for (ExtInfo extInfo : extInfos) {
+                            if (factorName.equals(extInfo.getExtName())
+                                    && factorValue.equals(extInfo.getExtValue())) {
+                                isFactorMatch = true;
+                                break;
+                            }
                         }
                     }
                     if (!isFactorMatch) {
@@ -106,7 +108,7 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
             }
             // 查询定价价格规则表
             CpPricemakingRuleCriteria criteria = new CpPricemakingRuleCriteria();
-            criteria.createCriteria().andTenantIdEqualTo(tenantId).andPriceTypeEqualTo(priceType)
+            criteria.createCriteria().andTenantIdEqualTo(tenantId).andPriceProductTypeEqualTo(priceType)
                     .andPriceProductIdEqualTo(priceProductId)
                     .andPriceTypeEqualTo(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR)
                     .andActiveTimeLessThan(sysdate).andInactiveTimeGreaterThanOrEqualTo(sysdate);
@@ -129,8 +131,10 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
                 for (ElementInfo elementInfo : elementInfos) {
                     variables.put(elementInfo.getName(), elementInfo.getValue());
                 }
-                for (ExtInfo extInfo : extInfos) {
-                    variables.put(extInfo.getExtName(), extInfo.getExtValue());
+                if (!CollectionUtil.isEmpty(extInfos)) {
+                    for (ExtInfo extInfo : extInfos) {
+                        variables.put(extInfo.getExtName(), extInfo.getExtValue());
+                    }
                 }
                 @SuppressWarnings("unchecked")
                 Map<String, String> extConst = (Map<String, String>) JSON.parse(cpPricemakingRule

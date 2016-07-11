@@ -20,7 +20,7 @@ import com.ai.baas.bmc.api.orderinfo.params.OrderExt;
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
 import com.ai.baas.bmc.api.orderinfo.params.Product;
 import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
-import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiness;
+import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiSV;
 import com.ai.baas.bmc.constants.BmcCacheConstant;
 import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.context.Context;
@@ -59,7 +59,7 @@ import com.alibaba.fastjson.JSON;
 
 @Service
 @Transactional
-public class OrderinfoBusinessImpl implements IOrderinfoBusiness {
+public class OrderinfoBusinessImpl implements IOrderinfoBusiSV {
     private static final Logger LOGGER = LogManager.getLogger(OrderinfoBusinessImpl.class);
 
     @Autowired
