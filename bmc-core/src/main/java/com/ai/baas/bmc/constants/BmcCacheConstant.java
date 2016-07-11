@@ -3,15 +3,15 @@ package com.ai.baas.bmc.constants;
 public class BmcCacheConstant {
     public static class Dshm {
         public static class FieldName {
-            public static final String TENANT_ID = "TENANT_ID";
-            public static final String PRICE_PRODUCT_TYPE = "PRICE_PRODUCT_TYPE";
-            public static final String PRICE_PRODUCT_ID = "PRICE_PRODUCT_ID";
-            public static final String FACTOR_NAME = "FACTOR_NAME";
-            public static final String FACTOR_VALUE = "FACTOR_VALUE";
-            public static final String EXT_CUST_ID = "EXT_CUST_ID";
-            public static final String ACTIVE_TIME = "ACTIVE_TIME";
-            public static final String INACTIVE_TIME = "INACTIVE_TIME";
-            public static final String CUST_ID = "CUST_ID";
+            public static final String TENANT_ID = "tenant_id";
+            public static final String PRICE_PRODUCT_TYPE = "price_product_type";
+            public static final String PRICE_PRODUCT_ID = "price_product_id";
+            public static final String FACTOR_NAME = "factor_name";
+            public static final String FACTOR_VALUE = "factor_value";
+            public static final String EXT_CUST_ID = "ext_cust_id";
+            public static final String ACTIVE_TIME = "active_time";
+            public static final String INACTIVE_TIME = "inactive_time";
+            public static final String CUST_ID = "cust_id";
         }
 
         public static class TableName {

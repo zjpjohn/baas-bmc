@@ -7,20 +7,21 @@ import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
-import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiness;
+import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiSV;
 import com.ai.baas.bmc.util.BusinessUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
 @Component
 public class OrderInfoSVImpl implements IOrderInfoSV {
     @Autowired
-    private IOrderinfoBusiness business;
+    private IOrderinfoBusiSV business;
 
     @Override
     public BaseResponse orderInfo(OrderInfoParams request) throws BusinessException,
@@ -29,6 +30,18 @@ public class OrderInfoSVImpl implements IOrderInfoSV {
         BaseResponse resultCode = new BaseResponse();
         // 入参检验
         BusinessUtil.checkBaseInfo(request);
+        if (StringUtil.isBlank(request.getTradeSeq())) {
+            throw new BusinessException("交易流水为空");
+        }
+        if (StringUtil.isBlank(request.getExtCustId())) {
+
+        }
+        if (StringUtil.isBlank(request.getUsetype())) {
+
+        }
+        if (StringUtil.isBlank(request.getServiceId())) {
+
+        }
 
         // 幂等性判断（判重）
         try {

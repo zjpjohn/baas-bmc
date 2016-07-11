@@ -11,6 +11,7 @@ import com.ai.baas.bmc.api.pricemaking.interfaces.IPricemakingSV;
 import com.ai.baas.bmc.api.pricemaking.params.Cost;
 import com.ai.baas.bmc.api.pricemaking.params.CostInfo;
 import com.ai.baas.bmc.api.pricemaking.params.ElementInfo;
+import com.ai.baas.bmc.api.pricemaking.params.ExtInfo;
 import com.ai.baas.bmc.api.pricemaking.params.FeeInfo;
 import com.ai.baas.bmc.api.pricemaking.params.OrderTypeInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfo;
@@ -105,7 +106,8 @@ public class PricemakingSVImpl implements IPricemakingSV {
             OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
             orderTypeInfo.setListId(shoppingList.getList_id());
             orderTypeInfo.setElementInfoList(elementInfoList);
-            orderTypeInfo.setPriceType(BusinessUtil.getPriceTypeByServiceId(shoppingList.getService_id()));
+            orderTypeInfo.setPriceType(BusinessUtil.getPriceTypeByServiceId(shoppingList
+                    .getService_id()));
         }
         priceElementInfo.setOrderTypeList(orderTypeList);
         return priceElementInfo;
@@ -114,7 +116,44 @@ public class PricemakingSVImpl implements IPricemakingSV {
     @Override
     public ResponseMessage queryPricemaking(PriceElementInfo request) throws BusinessException,
             SystemException {
+        // 参数校验
         BusinessUtil.checkBaseInfo(request);
+        if (StringUtil.isBlank(request.getTradeSeq())) {
+            throw new BusinessException("交易流水为空");
+        }
+        if (CollectionUtil.isEmpty(request.getOrderTypeList())) {
+            throw new BusinessException("类型列表为空");
+        }
+        for (OrderTypeInfo orderTypeInfo : request.getOrderTypeList()) {
+            if (StringUtil.isBlank(orderTypeInfo.getListId())) {
+                throw new BusinessException("list_id为空");
+            }
+            if (StringUtil.isBlank(orderTypeInfo.getPriceType())) {
+                throw new BusinessException("定价类型为空");
+            }
+            if (CollectionUtil.isEmpty(orderTypeInfo.getElementInfoList())) {
+                throw new BusinessException("定价元素列表列表为空");
+            }
+            for (ElementInfo elementInfo : orderTypeInfo.getElementInfoList()) {
+                if (StringUtil.isBlank(elementInfo.getName())) {
+                    throw new BusinessException("元素名称为空");
+                }
+                if (StringUtil.isBlank(elementInfo.getValue())) {
+                    throw new BusinessException("元素值为空");
+                }
+            }
+        }
+        if (!CollectionUtil.isEmpty(request.getExtInfoList())) {
+            for (ExtInfo extInfo : request.getExtInfoList()) {
+                if (StringUtil.isBlank(extInfo.getExtName())) {
+                    throw new BusinessException("扩展信息名称为空");
+                }
+                if (StringUtil.isBlank(extInfo.getExtValue())) {
+                    throw new BusinessException("扩展信息值为空");
+                }
+            }
+        }
+
         ResponseMessage response = new ResponseMessage();
         response.setResponseHeader(new ResponseHeader(true, ExceptCodeConstants.Special.SUCCESS,
                 "成功"));
