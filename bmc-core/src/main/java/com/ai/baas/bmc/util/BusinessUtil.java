@@ -66,6 +66,11 @@ public final class BusinessUtil {
     }
 
     public static String getPriceTypeByServiceId(String service_id) {
+        if ("test1".equals(service_id)) {
+            return "ECS-INSTANCE";
+        } else if ("test2".equals(service_id)) {
+            return "ECS-DISK";
+        }
         return null;
     }
 
@@ -103,6 +108,7 @@ public final class BusinessUtil {
     }
 
     public static Map<String, String> assebleDshmData(Object bo) {
+        @SuppressWarnings("unchecked")
         Map<String, String> map = (Map<String, String>) JSON.parse(JSON.toJSONString(bo));
         Map<String, String> maps = new HashMap<String, String>();
         for (Entry<String, String> s : map.entrySet()) {

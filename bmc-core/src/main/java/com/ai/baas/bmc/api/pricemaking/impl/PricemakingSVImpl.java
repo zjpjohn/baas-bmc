@@ -20,6 +20,7 @@ import com.ai.baas.bmc.api.pricemaking.params.PriceInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PricemakingResponseZX;
 import com.ai.baas.bmc.api.pricemaking.params.ResponseMessage;
 import com.ai.baas.bmc.api.pricemaking.params.ShoppingList;
+import com.ai.baas.bmc.constants.BmcConstants;
 import com.ai.baas.bmc.service.business.interfaces.IPricemakingBusiSV;
 import com.ai.baas.bmc.util.BusinessUtil;
 import com.ai.opt.base.exception.BusinessException;
@@ -90,7 +91,7 @@ public class PricemakingSVImpl implements IPricemakingSV {
 
     private PriceElementInfo assembleRequest(PriceElementInfoZX request) {
         PriceElementInfo priceElementInfo = new PriceElementInfo();
-        priceElementInfo.setTenantId("");
+        priceElementInfo.setTenantId(BmcConstants.TenantId.ZX);
         List<OrderTypeInfo> orderTypeList = new ArrayList<OrderTypeInfo>();
         for (ShoppingList shoppingList : request.getShopping_lists()) {
             List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
@@ -108,6 +109,7 @@ public class PricemakingSVImpl implements IPricemakingSV {
             orderTypeInfo.setElementInfoList(elementInfoList);
             orderTypeInfo.setPriceType(BusinessUtil.getPriceTypeByServiceId(shoppingList
                     .getService_id()));
+            orderTypeList.add(orderTypeInfo);
         }
         priceElementInfo.setOrderTypeList(orderTypeList);
         return priceElementInfo;

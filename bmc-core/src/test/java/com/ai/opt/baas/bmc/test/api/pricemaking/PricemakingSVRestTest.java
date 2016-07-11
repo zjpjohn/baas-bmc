@@ -10,13 +10,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ai.baas.bmc.api.pricemaking.params.ElementInfo;
-import com.ai.baas.bmc.api.pricemaking.params.OrderTypeInfo;
-import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfoZX;
-import com.ai.baas.bmc.api.pricemaking.params.PriceInfo;
 import com.ai.baas.bmc.api.pricemaking.params.ShoppingList;
-import com.ai.baas.bmc.service.business.interfaces.IPricemakingBusiSV;
 import com.ai.opt.sdk.dubbo.util.HttpClientUtil;
 import com.alibaba.fastjson.JSON;
 
@@ -31,7 +26,7 @@ public class PricemakingSVRestTest {
         String parameters = "{\"AERA_ID\":\"HuaBei1\",\"CPU_MEM\":\"2C4G\",\"IO_OPTI\":\"YES\",\"OS\":\"win\",\"SERIAL_ID\":\"1\"}";
         ShoppingList shoppingList = new ShoppingList();
         shoppingList.setList_id("1");
-        shoppingList.setService_id("1231241wqweqwe");
+        shoppingList.setService_id("test1");
         shoppingList.setParameters(parameters);
         PriceElementInfoZX request = new PriceElementInfoZX();
         List<ShoppingList> shopping_lists = new ArrayList<ShoppingList>();
