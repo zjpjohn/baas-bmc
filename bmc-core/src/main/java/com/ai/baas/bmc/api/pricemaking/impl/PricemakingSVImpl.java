@@ -20,7 +20,7 @@ import com.ai.baas.bmc.api.pricemaking.params.PriceInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PricemakingResponseZX;
 import com.ai.baas.bmc.api.pricemaking.params.ResponseMessage;
 import com.ai.baas.bmc.api.pricemaking.params.ShoppingList;
-import com.ai.baas.bmc.business.interfaces.IPricemakingBusiSV;
+import com.ai.baas.bmc.service.business.interfaces.IPricemakingBusiSV;
 import com.ai.baas.bmc.util.BusinessUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;

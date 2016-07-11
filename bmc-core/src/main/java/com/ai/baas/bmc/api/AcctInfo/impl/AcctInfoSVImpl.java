@@ -9,7 +9,7 @@ import com.ai.baas.bmc.api.acctinfo.interfaces.IAcctInfoSV;
 import com.ai.baas.bmc.api.acctinfo.params.AcctInfoParams;
 import com.ai.baas.bmc.api.acctinfo.params.AcctQueryRequest;
 import com.ai.baas.bmc.api.acctinfo.params.ResponseMessage;
-import com.ai.baas.bmc.business.interfaces.IAcctInfoBusiness;
+import com.ai.baas.bmc.service.business.interfaces.IAcctInfoBusiness;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;

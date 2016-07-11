@@ -11,7 +11,7 @@ import com.ai.baas.bmc.api.marktableproduct.interfaces.IQueryProductSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
-import com.ai.baas.bmc.business.interfaces.IQueryProductBusi;
+import com.ai.baas.bmc.service.business.interfaces.IQueryProductBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;

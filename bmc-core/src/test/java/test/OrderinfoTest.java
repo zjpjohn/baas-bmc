@@ -15,7 +15,7 @@ import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
 import com.ai.baas.bmc.api.orderinfo.params.Product;
 import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
 import com.ai.baas.bmc.api.priceinfo.params.StandardPriceInfoParams;
-import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
+import com.ai.baas.bmc.service.business.interfaces.ISysSequenceSvc;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
-import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiSV;
+import com.ai.baas.bmc.service.business.interfaces.IOrderinfoBusiSV;
 import com.ai.baas.bmc.util.BusinessUtil;
 import com.ai.baas.bmc.util.LoggerUtil;
 import com.ai.opt.base.exception.BusinessException;

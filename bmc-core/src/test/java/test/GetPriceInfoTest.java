@@ -9,12 +9,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
+
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
 import com.ai.baas.bmc.api.priceinfo.params.ResponseMessage;
 import com.ai.baas.bmc.api.priceinfo.params.StandardList;
 import com.ai.baas.bmc.api.priceinfo.params.UsageList;
-import com.ai.baas.bmc.business.interfaces.ISysSequenceSvc;
+import com.ai.baas.bmc.service.business.interfaces.ISysSequenceSvc;
 import com.ai.opt.base.vo.PageInfo;
 import com.alibaba.dubbo.common.json.JSON;
 import com.alibaba.fastjson.JSONObject;

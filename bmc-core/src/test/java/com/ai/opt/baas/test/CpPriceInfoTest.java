@@ -7,8 +7,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ai.baas.bmc.business.interfaces.ICpPriceInfoBusi;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
+import com.ai.baas.bmc.service.business.interfaces.ICpPriceInfoBusi;
 import com.ai.baas.bmc.util.BmcSeqUtil;
 import com.ai.opt.sdk.util.DateUtil;
 

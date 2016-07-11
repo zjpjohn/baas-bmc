@@ -8,7 +8,7 @@ import com.ai.baas.bmc.api.baseInfo.params.BaseCodeInfo;
 import com.ai.baas.bmc.api.baseInfo.params.ChildeCodeResponse;
 import com.ai.baas.bmc.api.baseInfo.params.QueryChildCodeRequest;
 import com.ai.baas.bmc.api.baseInfo.params.QueryInfoParams;
-import com.ai.baas.bmc.business.interfaces.IBaseInfoBussiness;
+import com.ai.baas.bmc.service.business.interfaces.IBaseInfoBussiness;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.alibaba.dubbo.config.annotation.Service;

@@ -16,7 +16,7 @@ import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfoZX;
 import com.ai.baas.bmc.api.pricemaking.params.PriceInfo;
 import com.ai.baas.bmc.api.pricemaking.params.ShoppingList;
-import com.ai.baas.bmc.business.interfaces.IPricemakingBusiSV;
+import com.ai.baas.bmc.service.business.interfaces.IPricemakingBusiSV;
 import com.ai.opt.sdk.dubbo.util.HttpClientUtil;
 import com.alibaba.fastjson.JSON;
 

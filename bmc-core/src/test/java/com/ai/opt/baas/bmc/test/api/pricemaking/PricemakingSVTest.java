@@ -14,7 +14,7 @@ import com.ai.baas.bmc.api.pricemaking.params.ElementInfo;
 import com.ai.baas.bmc.api.pricemaking.params.OrderTypeInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceInfo;
-import com.ai.baas.bmc.business.interfaces.IPricemakingBusiSV;
+import com.ai.baas.bmc.service.business.interfaces.IPricemakingBusiSV;
 import com.alibaba.fastjson.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
-import com.ai.baas.bmc.business.interfaces.IOrderinfoBusiSV;
+import com.ai.baas.bmc.service.business.interfaces.IOrderinfoBusiSV;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/context/core-context.xml" })

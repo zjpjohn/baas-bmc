@@ -2,13 +2,14 @@ package com.ai.baas.bmc.api.failedbillmaintain.iml;
 
 import com.ai.baas.bmc.api.failedbillmaintain.interfaces.IFailedBillMaintainSV;
 import com.ai.baas.bmc.api.failedbillmaintain.params.*;
-import com.ai.baas.bmc.business.interfaces.IFailedBillMaintainBusi;
+import com.ai.baas.bmc.service.business.interfaces.IFailedBillMaintainBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.HBasePager;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.alibaba.dubbo.config.annotation.Service;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
