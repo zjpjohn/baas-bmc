@@ -1,5 +1,10 @@
 package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductVO;
@@ -16,6 +21,9 @@ import com.ai.opt.base.vo.BaseResponse;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
+@Path("/proferentialproduct")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IProferProductManageSV {
 
 	/**

@@ -1,7 +1,5 @@
 package com.ai.baas.bmc.api.marktableproduct.impl;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +13,14 @@ import com.ai.baas.bmc.service.business.interfaces.IQueryProductBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
-import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
 @Component
-public class IQueryProductSVImpl implements IQueryProductSV{
+public class QueryProductSVImpl implements IQueryProductSV{
 	private static final Logger log = LogManager
-			.getLogger(IQueryProductSVImpl.class);
+			.getLogger(QueryProductSVImpl.class);
 	@Autowired
 	private IQueryProductBusi iQueryProductBusiImpl;
 	

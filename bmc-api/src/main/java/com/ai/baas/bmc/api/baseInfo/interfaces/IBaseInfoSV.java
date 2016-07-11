@@ -1,5 +1,10 @@
 package com.ai.baas.bmc.api.baseInfo.interfaces;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import com.ai.baas.bmc.api.baseInfo.params.BaseCodeInfo;
 import com.ai.baas.bmc.api.baseInfo.params.ChildeCodeResponse;
 import com.ai.baas.bmc.api.baseInfo.params.QueryChildCodeRequest;
@@ -13,6 +18,9 @@ import com.ai.opt.base.exception.SystemException;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
+@Path("/baseinfo")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IBaseInfoSV {
 
 	/**

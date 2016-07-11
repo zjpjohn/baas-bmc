@@ -1,5 +1,10 @@
 package com.ai.baas.bmc.api.marktableproduct.interfaces;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryByIdListVO;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductQueryVO;
@@ -14,6 +19,9 @@ import com.ai.opt.base.vo.PageInfo;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author zhangzd
  */
+@Path("/marktableproduct")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IQueryProductSV {
 
 	

@@ -1,10 +1,17 @@
 package com.ai.baas.bmc.api.rebilling.interfaces;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import com.ai.baas.bmc.api.rebilling.params.ReBillingParam;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
-
+@Path("/rebilling")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IReBillingSV {
     /**
      * 重批价服务
