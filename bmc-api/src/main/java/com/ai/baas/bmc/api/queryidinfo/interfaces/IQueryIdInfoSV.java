@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.ai.baas.bmc.api.queryidinfo.params.AcctIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.BlAcctInfoResponse;
 import com.ai.baas.bmc.api.queryidinfo.params.BlCustinfoResponse;
 import com.ai.baas.bmc.api.queryidinfo.params.ExtCustIdInfo;
@@ -67,13 +68,13 @@ public interface IQueryIdInfoSV {
     /**
      * 根据账户id查询外部客户id<br>
      * 
-     * @param extCustIdInfo
+     * @param acctIdInfo
      * @return
      * @author wangjl9
      * @ApiDocMethod
      */
     @POST
     @Path("/queryExtCustIdByAcctId")
-    BlAcctInfoResponse queryExtCustIdByAcctId(ExtCustIdInfo extCustIdInfo);
+    BlCustinfoResponse queryExtCustIdByAcctId(AcctIdInfo acctIdInfo);
 
 }

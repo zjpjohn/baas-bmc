@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ai.baas.bmc.api.queryidinfo.interfaces.IQueryIdInfoSV;
+import com.ai.baas.bmc.api.queryidinfo.params.AcctIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.BlAcctInfoInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.BlAcctInfoResponse;
 import com.ai.baas.bmc.api.queryidinfo.params.BlCustinfoInfo;
@@ -74,8 +75,18 @@ public class QueryIdInfoSVImpl implements IQueryIdInfoSV {
     }
 
     @Override
-    public BlAcctInfoResponse queryExtCustIdByAcctId(ExtCustIdInfo extCustIdInfo) {
-        return null;
+    public BlCustinfoResponse queryExtCustIdByAcctId(AcctIdInfo acctIdInfo) {
+        BlCustinfoResponse blCustinfoResponse = new BlCustinfoResponse();
+        BusinessUtil.checkBaseInfo(acctIdInfo);
+        if (StringUtil.isBlank(acctIdInfo.getAcctId())) {
+            throw new BusinessException("AcctId不可为空");
+        }
+        List<BlCustinfoInfo> blCustinfoInfos = iQueryIdInfoBusiSV
+                .queryExtCustIdByAcctId(acctIdInfo);
+        ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
+        blCustinfoResponse.setResponseHeader(responseHeader);
+        blCustinfoResponse.setBlCustinfoInfos(blCustinfoInfos);
+        return blCustinfoResponse;
     }
 
 }
