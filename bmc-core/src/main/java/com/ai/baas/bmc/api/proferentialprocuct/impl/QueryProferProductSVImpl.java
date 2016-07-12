@@ -33,7 +33,6 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 
 @Service(validation = "true")
-@Component
 public class QueryProferProductSVImpl implements IQueryProferProductSV {
 
 	@Autowired

@@ -7,14 +7,12 @@ import javax.ws.rs.core.MediaType;
 
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryParam;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProductQueryVO;
-import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductInfo;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ProferProductResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedResponse;
 import com.ai.baas.bmc.api.proferentialprocuct.params.RelatedVO;
 import com.ai.baas.bmc.api.proferentialprocuct.params.SingleProductInfo;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
-import com.ai.opt.base.vo.PageInfo;
 
 /**
  * 优惠产品查询
@@ -23,7 +21,7 @@ import com.ai.opt.base.vo.PageInfo;
  * Copyright (c) 2016 asiainfo.com <br>
  * @author gaogang
  */
-@Path("/proferentialproduct")
+@Path("/QueryProferProduct")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IQueryProferProductSV {
