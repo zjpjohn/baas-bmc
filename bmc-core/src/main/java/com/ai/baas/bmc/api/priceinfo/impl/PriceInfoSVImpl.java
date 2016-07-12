@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.priceinfo.interfaces.IPriceInfoSV;
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
@@ -22,7 +21,6 @@ import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
-@Component
 public class PriceInfoSVImpl implements IPriceInfoSV {
 
     @Autowired
