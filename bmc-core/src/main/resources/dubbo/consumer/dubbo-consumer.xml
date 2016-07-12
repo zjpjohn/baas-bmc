@@ -16,11 +16,14 @@
 	</bean>
 
 	<dubbo:application name="consumer-of-${dubbo.appname}" />
-	
+
 	<dubbo:registry protocol="${dubbo.registry.protocol}"
 		address="${dubbo.registry.address}" file="${dubbo.registry.file}" />
-		
-	<dubbo:reference id="IdshmSV" 
-		interface="com.ai.baas.dshm.api.dshmprocess.interfaces.IdshmSV" check="false"/>
-	<dubbo:reference id="iOrderInfoSV" interface="com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV" />
+
+	<dubbo:reference id="IdshmSV"
+		interface="com.ai.baas.dshm.api.dshmprocess.interfaces.IdshmSV" check="false" />
+	<dubbo:reference id="iOrderInfoSV"
+		interface="com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV" />
+	<dubbo:reference id="iPricemakingSV"
+		interface="com.ai.baas.bmc.api.pricemaking.interfaces.IPricemakingSV" check="false"></dubbo:reference>
 </beans>
