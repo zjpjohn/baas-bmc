@@ -22,9 +22,10 @@ import com.ai.opt.base.vo.BaseResponse;
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IOrderInfoSV {
-    
+
     /**
-     * 订购信息接口 
+     * 订购信息接口
+     * 
      * @param OrderInfoParams
      * @return BaaS-000000成功；其他失败
      * @author caoyf
@@ -33,6 +34,9 @@ public interface IOrderInfoSV {
      */
     @Path("/orderinfo/orderInfo")
     @POST
-    public BaseResponse orderInfo(OrderInfoParams record) throws BusinessException,SystemException;
-    @interface OrderInfo{}
+    public BaseResponse orderInfo(OrderInfoParams request) throws BusinessException,
+            SystemException;
+
+    @interface OrderInfo {
+    }
 }

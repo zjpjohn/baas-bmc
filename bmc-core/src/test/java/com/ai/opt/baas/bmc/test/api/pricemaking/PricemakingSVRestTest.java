@@ -55,6 +55,7 @@ public class PricemakingSVRestTest {
                 "http://10.1.130.84:10884/baas-bmc/pricemaking/queryPricemakingZX",
                 JSON.toJSONString(request));
         System.out.println(s);
+        System.out.println("success");
     }
 
 }

@@ -22,5 +22,5 @@
 		
 	<dubbo:reference id="IdshmSV" 
 		interface="com.ai.baas.dshm.api.dshmprocess.interfaces.IdshmSV" check="false"/>
-
+	<dubbo:reference id="iOrderInfoSV" interface="com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV" />
 </beans>

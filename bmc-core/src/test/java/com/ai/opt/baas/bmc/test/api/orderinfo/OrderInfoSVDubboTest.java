@@ -10,18 +10,20 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
 import com.ai.baas.bmc.api.orderinfo.params.ExtInfo;
 import com.ai.baas.bmc.api.orderinfo.params.Info;
 import com.ai.baas.bmc.api.orderinfo.params.OrderExt;
 import com.ai.baas.bmc.api.orderinfo.params.OrderInfoParams;
 import com.ai.baas.bmc.api.orderinfo.params.Product;
 import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
-import com.ai.opt.sdk.dubbo.util.HttpClientUtil;
-import com.alibaba.fastjson.JSON;
+import com.ai.baas.bmc.service.business.interfaces.IOrderinfoBusiSV;
+import com.ai.opt.base.vo.BaseResponse;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/context/core-context.xml" })
-public class OrderInfoSVRestTest {
+public class OrderInfoSVDubboTest {
     @Autowired
     protected ApplicationContext ctx;
 
@@ -79,8 +81,9 @@ public class OrderInfoSVRestTest {
         request.setOrderExtInfo(orderExtInfo);
         request.setSublist(sublist);
 
-        String result = HttpClientUtil.sendPost("http://10.1.130.84:10884/baas-bmc/orderinfo/orderInfo", JSON.toJSONString(request));
-        System.out.println(result);
+        IOrderInfoSV sv = DubboConsumerFactory.getService(IOrderInfoSV.class);
+        BaseResponse baseResponse = sv.orderInfo(request);
+        System.out.println(baseResponse);
         System.out.println("success");
     }
 }
