@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.orderrequest.interfaces;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -22,7 +23,10 @@ public interface IOrderRequestSV {
      * @throws BusinessException
      * @author mayt
      * @ApiDocMethod BaaS-0020
+     * @RestRelativeURL orderrequest/orderRequest
      */
+    @POST
+    @Path("/orderRequest")
     ResponseMessage orderRequest(OrderRequestInfo request) throws SystemException,
             BusinessException;
 }

@@ -38,7 +38,7 @@ public interface IAcctInfoSV {
      * @RestRelativeURL acctinfo/getAcctInfo
      */
     @POST
-    @Path("/acctinfo/getAcctInfo")
+    @Path("/getAcctInfo")
     ResponseMessage getAcctInfo(AcctQueryRequest acctQueryRequest) throws BusinessException,
             SystemException;
 

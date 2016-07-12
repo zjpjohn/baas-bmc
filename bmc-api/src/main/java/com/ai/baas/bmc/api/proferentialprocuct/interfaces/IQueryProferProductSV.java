@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -35,7 +36,10 @@ public interface IQueryProferProductSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00008
+	 * @RestRelativeURL QueryProferProduct/getProductInfo
 	 */
+    @POST
+    @Path("/getProductInfo")
 	ProferProductResponse getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
 	@interface GetProductInfo{}
 	/**
@@ -47,7 +51,10 @@ public interface IQueryProferProductSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode
+	 * @RestRelativeURL QueryProferProduct/getProductById
 	 */
+	@POST
+    @Path("/getProductById")
 	SingleProductInfo  getProductById(ProductQueryParam param) throws BusinessException, SystemException;	
 	@interface GetProductById{}
 	/**
@@ -57,7 +64,10 @@ public interface IQueryProferProductSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode
+	 * @RestRelativeURL QueryProferProduct/getRelatedAccount
 	 */
+	@POST
+    @Path("/getRelatedAccount")
 	RelatedResponse getRelatedAccount(RelatedVO vo);
 	@interface GetRelatedAccount{}
 	

@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.marktableproduct.interfaces;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -34,7 +35,10 @@ public interface IQueryProductSV {
 	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode
+	 * @RestRelativeURL marktableproduct/getProductInfo
 	 */
+    @POST
+    @Path("/getProductInfo")
 	PageInfo<ProductInfo> getProductInfo(ProductQueryVO vo) throws BusinessException, SystemException;
 	@interface GetProductInfo{}
 	/**
@@ -46,7 +50,10 @@ public interface IQueryProductSV {
 	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode
+	 * @RestRelativeURL marktableproduct/getProductInfoByProductIdList
 	 */
+	@POST
+    @Path("/getProductInfoByProductIdList")
 	PageInfo<ProductInfo> getProductInfoByProductIdList(ProductQueryByIdListVO vo) throws BusinessException, SystemException;
 	@interface getProductInfoByProductIdList{}
 }

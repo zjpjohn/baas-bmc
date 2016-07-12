@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.priceinfo.interfaces;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -26,7 +27,10 @@ public interface IPriceInfoSV {
       * @throws SystemException
       * @author wangkai16
       * @ApiCode BaaS-00002
+      * @RestRelativeURL priceinfo/getPriceInfo
       */
+    @POST
+    @Path("/getPriceInfo")
      public ResponseMessage getPriceInfo(QueryInfoParams record)throws BusinessException,SystemException;
      @interface GetPriceInfo{}
      
@@ -38,7 +42,10 @@ public interface IPriceInfoSV {
       * @throws SystemException
       * @author caoyf
       * @ApiCode BaaS-00003
+      * @RestRelativeURL priceinfo/updatePriceInfo
       */
+     @POST
+     @Path("/updatePriceInfo")
      public BaseResponse updatePriceInfo(StandardPriceInfoParams record)throws BusinessException,SystemException;
      @interface UpdatePriceInfo{}
      /**
@@ -49,7 +56,10 @@ public interface IPriceInfoSV {
       * @throws SystemException
       * @author caoyf
       * @ApiCode BaaS-00003
+      * @RestRelativeURL priceinfo/deletePriceInfo
       */
+     @POST
+     @Path("/deletePriceInfo")
      public BaseResponse deletePriceInfo(StandardPriceInfoParams record)throws BusinessException,SystemException;
      @interface DeletePriceInfo{}
 }

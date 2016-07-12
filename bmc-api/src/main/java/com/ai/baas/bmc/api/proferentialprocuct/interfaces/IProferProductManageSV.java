@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.proferentialprocuct.interfaces;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -35,7 +36,10 @@ public interface IProferProductManageSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00007
+	 * @RestRelativeURL proferentialproduct/addProferProduct
 	 */
+    @POST
+    @Path("/addProferProduct")
 	ProductResponse addProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
 	@interface AddProferProduct{}
 	/**
@@ -46,7 +50,10 @@ public interface IProferProductManageSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00014
+	 * @RestRelativeURL proferentialproduct/addDiscontProduct
 	 */
+	@POST
+    @Path("/addDiscontProduct")
 	ProductResponse addDiscontProduct(ProferProductVO vo)throws BusinessException, SystemException;
 	@interface AddDiscontProduct{}
 	
@@ -58,7 +65,10 @@ public interface IProferProductManageSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00009
+	 * @RestRelativeURL proferentialproduct/updateProferProductStatus
 	 */
+	@POST
+    @Path("/updateProferProductStatus")
 	BaseResponse updateProferProductStatus(ActiveProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProferProductStatus{}
 	
@@ -70,7 +80,10 @@ public interface IProferProductManageSV {
 	 * @throws SystemException
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00010
+	 * @RestRelativeURL proferentialproduct/delProferProduct
 	 */
+	@POST
+    @Path("/delProferProduct")
 	BaseResponse delProferProduct(productDelVO vo) throws BusinessException, SystemException;
 	@interface DelProferProduct{}
 	/**
@@ -80,7 +93,10 @@ public interface IProferProductManageSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00013
+	 * @RestRelativeURL proferentialproduct/updateProferProduct
 	 */
+	@POST
+    @Path("/updateProferProduct")
 	BaseResponse updateProferProduct(ProferProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProferProduct{}
 	
@@ -92,7 +108,10 @@ public interface IProferProductManageSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode
+	 * @RestRelativeURL proferentialproduct/relatedAccout
 	 */
+	@POST
+    @Path("/relatedAccout")
 	BaseResponse relatedAccout(RelatedAccountVO vo) throws BusinessException, SystemException;
 	
 }

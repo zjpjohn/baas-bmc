@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.rebilling.interfaces;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -22,6 +23,9 @@ public interface IReBillingSV {
      * @author LiangMeng
      * @ApiDocMethod
      * @ApiCode BMC_0028
+     * @RestRelativeURL rebilling/reBilling
      */
+    @POST
+    @Path("/reBilling")
     public BaseResponse reBilling (ReBillingParam param) throws BusinessException,SystemException;
 }

@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.marktableproduct.interfaces;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -34,8 +35,10 @@ public interface IProductManageSV {
 	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00005
+	 * @RestRelativeURL marktableproduct/addProduct
 	 */
-	
+    @POST
+    @Path("/addProduct")
 	BaseResponse addProduct(ProductVO vo) throws BusinessException, SystemException;
 	@interface AddProduct{}
 	/**
@@ -46,8 +49,10 @@ public interface IProductManageSV {
 	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00006
+	 * @RestRelativeURL marktableproduct/updateProductStatus
 	 */
-	
+	@POST
+    @Path("/updateProductStatus")
 	BaseResponse updateProductStatus(ProductActiveVO vo) throws BusinessException, SystemException;
 	@interface UpdateProductStatus{}
 	
@@ -59,8 +64,10 @@ public interface IProductManageSV {
 	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00011
+	 * @RestRelativeURL marktableproduct/delProduct
 	 */
-	
+	@POST
+    @Path("/delProduct")
 	void delProduct(ProductDelVO vo) throws BusinessException, SystemException;
 	@interface DelProduct{}
 
@@ -73,8 +80,10 @@ public interface IProductManageSV {
 	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00012
+	 * @RestRelativeURL marktableproduct/updateProduct
 	 */
-	
+	@POST
+    @Path("/updateProduct")
 	void updateProduct(ProductVO vo) throws BusinessException, SystemException;
 	@interface UpdateProduct{}
 	/**
@@ -86,7 +95,10 @@ public interface IProductManageSV {
 	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode
+	 * @RestRelativeURL marktableproduct/editProduct
 	 */
+	@POST
+    @Path("/editProduct")
 	ProductVO editProduct(ProductParamKeyVo vo) throws BusinessException, SystemException;
 	@interface EditProduct{}
 }

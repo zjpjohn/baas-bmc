@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.baseInfo.interfaces;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -32,8 +33,10 @@ public interface IBaseInfoSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode bmc-00001
+	 * @RestRelativeURL baseinfo/getBaseInfo
 	 */
-	
+    @POST
+    @Path("/getBaseInfo")
 	BaseCodeInfo getBaseInfo(QueryInfoParams param) throws BusinessException,SystemException;
 	@interface GetBaseInfo{}
 	/**
@@ -44,7 +47,10 @@ public interface IBaseInfoSV {
 	 * @author gaogang
 	 * @ApiDocMethod
 	 * @ApiCode
+	 * @RestRelativeURL baseinfo/getChildCode
 	 */
+	@POST
+    @Path("/getChildCode")
 	ChildeCodeResponse getChildCode(QueryChildCodeRequest request) throws BusinessException,SystemException;
 	@interface GetChildCode{}
 	
