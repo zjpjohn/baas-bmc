@@ -1,7 +1,15 @@
 package com.ai.baas.bmc.api.failedbillmaintain.iml;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ai.baas.bmc.api.failedbillmaintain.interfaces.IFailedBillMaintainSV;
-import com.ai.baas.bmc.api.failedbillmaintain.params.*;
+import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBill;
+import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillCriteria;
+import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillPagerResponse;
+import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillParam;
+import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillResponse;
 import com.ai.baas.bmc.service.business.interfaces.IFailedBillMaintainBusi;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
@@ -10,16 +18,10 @@ import com.ai.opt.base.vo.HBasePager;
 import com.ai.opt.base.vo.ResponseHeader;
 import com.alibaba.dubbo.config.annotation.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-
 /**
  * Created by xin on 16-4-11.
  */
 @Service
-@Component
 public class FailedBillMaintainSVImpl implements IFailedBillMaintainSV {
 
     @Autowired

@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.marktableproduct.interfaces.IProductManageSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductActiveVO;
@@ -31,7 +30,6 @@ import com.alibaba.dubbo.config.annotation.Service;
  * @author wangzhi
  */
 @Service(validation = "true")
-@Component
 public class IProductManageSVImpl implements IProductManageSV {
 	private static final Logger log = LogManager
 			.getLogger(IProductManageSVImpl.class);

@@ -3,7 +3,6 @@ package com.ai.baas.bmc.api.orderinfo.impl;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV;
 import com.ai.baas.bmc.api.orderinfo.params.OrderExt;
@@ -21,7 +20,6 @@ import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
-@Component
 public class OrderInfoSVImpl implements IOrderInfoSV {
     @Autowired
     private IOrderinfoBusiSV business;

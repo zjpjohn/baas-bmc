@@ -3,7 +3,6 @@ package com.ai.baas.bmc.api.marktableproduct.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.marktableproduct.interfaces.IQueryProductSV;
 import com.ai.baas.bmc.api.marktableproduct.params.ProductInfo;
@@ -17,7 +16,6 @@ import com.ai.paas.ipaas.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation = "true")
-@Component
 public class QueryProductSVImpl implements IQueryProductSV{
 	private static final Logger log = LogManager
 			.getLogger(QueryProductSVImpl.class);
