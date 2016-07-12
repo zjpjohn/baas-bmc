@@ -1,4 +1,4 @@
-package com.ai.baas.bmc.api.AcctInfo.impl;
+package com.ai.baas.bmc.api.acctinfo.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
