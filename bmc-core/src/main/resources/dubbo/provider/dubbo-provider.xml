@@ -24,7 +24,7 @@
 	<dubbo:registry protocol="${dubbo.registry.protocol}"
 		address="${dubbo.registry.address}" file="${dubbo.registry.file}" />
 
-	<dubbo:protocol name="${dubbo.protocol}" port="${baas.bmc.dubbo.port}"
+	<dubbo:protocol name="${dubbo.protocol}" port="${dubbo.protocol.port}"
 		server="${dubbo.protocol.server}" contextpath="${dubbo.protocol.contextpath}"
 		threads="500" accepts="500" />
 	<dubbo:provider timeout="${dubbo.provider.timeout}"

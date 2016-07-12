@@ -84,7 +84,7 @@ public class PricemakingSVDubboTest {
         request.setTenantId("test");
         request.setOrderTypeList(orderTypeList);
 
-        IPricemakingSV sv = DubboConsumerFactory.getService(IPricemakingSV.class);
+        IPricemakingSV sv = DubboConsumerFactory.getService("iPricemakingSV");
         ResponseMessage responseMessage = sv.queryPricemaking(request);
         System.out.println(JSON.toJSONString(responseMessage));
     }

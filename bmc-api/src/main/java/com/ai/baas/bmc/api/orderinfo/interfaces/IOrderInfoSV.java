@@ -11,13 +11,6 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 
-/**
- * 订购信息接口<br>
- * Date: 2016年3月22日 <br>
- * Copyright (c) 2016 asiainfo.com <br>
- * 
- * @author caoyf
- */
 @Path("/orderinfo")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
@@ -32,8 +25,8 @@ public interface IOrderInfoSV {
      * @ApiCode BaaS-0002
      * @RestRelativeURL orderinfo/orderInfo
      */
-    @Path("/orderinfo/orderInfo")
     @POST
+    @Path("/orderInfo")
     public BaseResponse orderInfo(OrderInfoParams request) throws BusinessException,
             SystemException;
 
