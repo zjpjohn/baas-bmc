@@ -38,7 +38,10 @@ public interface IPricemakingSV {
      * @return
      * @author mayt
      * @ApiDocMethod BaaS-0019
+     * @RestRelativeURL pricemaking/queryPricemaking
      */
+    @POST
+    @Path("/queryPricemaking")
     ResponseMessage queryPricemaking(PriceElementInfo request) throws BusinessException,
             SystemException;
 }

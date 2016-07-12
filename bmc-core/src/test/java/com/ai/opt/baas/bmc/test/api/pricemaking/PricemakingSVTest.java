@@ -81,6 +81,7 @@ public class PricemakingSVTest {
         request.setTenantId("test");
         request.setOrderTypeList(orderTypeList);
 
+        System.out.println(JSON.toJSONString(request));
         IPricemakingBusiSV sv = ctx.getBean(IPricemakingBusiSV.class);
         List<PriceInfo> infos = sv.queryPricemaking(request);
 
