@@ -19,7 +19,7 @@ import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
 
-@Service(validation = "true")
+@Service
 public class OrderInfoSVImpl implements IOrderInfoSV {
     @Autowired
     private IOrderinfoBusiSV business;
