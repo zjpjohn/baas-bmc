@@ -72,6 +72,7 @@ public interface IQueryIdInfoSV {
      * @return
      * @author wangjl9
      * @ApiDocMethod
+     * @RestRelativeURL queryIdInfo/queryExtCustIdByAcctId
      */
     @POST
     @Path("/queryExtCustIdByAcctId")
