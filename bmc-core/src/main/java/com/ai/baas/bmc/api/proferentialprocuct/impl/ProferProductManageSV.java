@@ -3,7 +3,6 @@ package com.ai.baas.bmc.api.proferentialprocuct.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.proferentialprocuct.interfaces.IProferProductManageSV;
 import com.ai.baas.bmc.api.proferentialprocuct.params.ActiveProductVO;
@@ -33,7 +32,6 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 
 @Service(validation = "true")
-@Component
 public class ProferProductManageSV implements IProferProductManageSV {
 
 	@Autowired
