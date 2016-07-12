@@ -21,7 +21,7 @@ public class GetAcctInfoTest {
     public void test(){
 		PageInfo<AcctInfoParams> resultPage=new PageInfo<AcctInfoParams>();
 		AcctQueryRequest acctQueryRequest=new AcctQueryRequest();
-		acctQueryRequest.setCustID("");
+		acctQueryRequest.setCustID("39");
 		acctQueryRequest.setPageNo(1);
 		acctQueryRequest.setPageSize(20);
 		acctQueryRequest.setTenantId("VIV-BYD");

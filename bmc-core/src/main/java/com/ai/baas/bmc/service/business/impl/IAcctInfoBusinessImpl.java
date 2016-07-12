@@ -16,6 +16,7 @@ import com.ai.baas.bmc.api.acctinfo.params.ResponseMessage;
 import com.ai.baas.bmc.dao.interfaces.BlAcctInfoMapper;
 import com.ai.baas.bmc.dao.mapper.bo.BlAcctInfo;
 import com.ai.baas.bmc.dao.mapper.bo.BlAcctInfoCriteria;
+import com.ai.baas.bmc.service.atom.interfaces.IBlAcctInfoAtomSV;
 import com.ai.baas.bmc.service.business.interfaces.IAcctInfoBusiness;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
@@ -27,22 +28,20 @@ public class IAcctInfoBusinessImpl implements IAcctInfoBusiness{
 	private static final Logger log = LogManager.getLogger(IAcctInfoBusinessImpl.class);
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	@Autowired
+	IBlAcctInfoAtomSV iBlAcctInfoAtomSV;
+	@Override
 	public ResponseMessage getAcctInfo(AcctQueryRequest acctQueryRequest){
 		ResponseMessage responseMessage=new ResponseMessage();
 
-		
-		BlAcctInfoMapper blAcctInfoMapper=sqlSessionTemplate.getMapper(BlAcctInfoMapper.class);
 		
 
 			if(StringUtil.isBlank(acctQueryRequest.getTenantId())){
 				responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "租户ID为空，查询失败"));
 				return responseMessage;
 			}
-			BlAcctInfoCriteria blAcctInfoCriteria=new BlAcctInfoCriteria();
-			BlAcctInfoCriteria.Criteria criteria=blAcctInfoCriteria.createCriteria();
-			criteria.andTenantIdEqualTo(acctQueryRequest.getTenantId());
 
-			List<BlAcctInfo>  acctInfoList=blAcctInfoMapper.selectByExample(blAcctInfoCriteria);
+			List<BlAcctInfo>  acctInfoList=iBlAcctInfoAtomSV.queryBlAcctinfo(acctQueryRequest);
 			if(acctInfoList.size()==0){
 				responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "bl_acct_info表中未找到数据"));
 				return responseMessage;
