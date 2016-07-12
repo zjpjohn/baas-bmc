@@ -139,11 +139,13 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiSV {
         if (!CollectionUtil.isEmpty(result)) {
             for (Map<String, String> r : result) {
                 if (!r.isEmpty()) {
-                    if (DateUtil.getTimestamp(r.get(BmcCacheConstant.Dshm.FieldName.ACTIVE_TIME))
+                    if (DateUtil.getTimestamp(
+                            Long.parseLong(r.get(BmcCacheConstant.Dshm.FieldName.ACTIVE_TIME)))
                             .before(sysdate)
                             && DateUtil.getTimestamp(
-                                    r.get(BmcCacheConstant.Dshm.FieldName.INACTIVE_TIME),
-                                    DateUtil.DATETIME_FORMAT).after(sysdate)) {
+                                    Long.parseLong(r
+                                            .get(BmcCacheConstant.Dshm.FieldName.INACTIVE_TIME)))
+                                    .after(sysdate)) {
                         subsId = r.get("subs_id");
                         acctId = r.get("acct_id");
                         break;
