@@ -68,7 +68,7 @@ for(Map<String,String> apiMap:apiList){
     //调用APICollectorTask，开始收集数据
     def apidocTask=task("${apiArtifactId}APIDoc",type:com.ai.runner.gradle.plugin.APICollectorTask){
         dependsOn apiJarProcessTask
-        esconfig = "[{ip:10.1.234.160, port:14999}]"
+        esconfig = "{\"clusterName\":\"elasticsearch_for_sol\",\"ip\":\"10.1.234.160\", \"port\":14999}"
         source = fileTree(dir: 'src/main/java', include: 'com/ai/baas/bmc/api/'+apiName+'/**/*.java')+fileTree(dir:"$buildDir/opt-base", include:"**/*.java")
         docletpath = configurations.jaxDoclet.files.asType(List)
         //指定-doclet 的生成你格式
