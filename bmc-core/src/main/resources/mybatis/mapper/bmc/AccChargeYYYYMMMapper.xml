@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.AccChargeYYYYMMMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.AccChargeYYYYMM" >
+    <result column="CHARGE_SEQ" property="chargeSeq" jdbcType="VARCHAR" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="VARCHAR" />
+    <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <result column="BUSI_OPER_CODE" property="busiOperCode" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="ACCT_ID" property="acctId" jdbcType="VARCHAR" />
+    <result column="SUBS_ID" property="subsId" jdbcType="VARCHAR" />
+    <result column="SVC_TYPE" property="svcType" jdbcType="VARCHAR" />
+    <result column="SERVICE_NUM" property="serviceNum" jdbcType="VARCHAR" />
+    <result column="SUBJECT_ID" property="subjectId" jdbcType="VARCHAR" />
+    <result column="TOTAL" property="total" jdbcType="DECIMAL" />
+    <result column="DISC" property="disc" jdbcType="DECIMAL" />
+    <result column="ADJUST" property="adjust" jdbcType="DECIMAL" />
+    <result column="BALANCE" property="balance" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="LAST_STATUS_DATE" property="lastStatusDate" jdbcType="TIMESTAMP" />
+    <result column="PAY_STATUS" property="payStatus" jdbcType="VARCHAR" />
+    <result column="LAST_PAY_DATE" property="lastPayDate" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="accChargeYYYYMMCriteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CHARGE_SEQ, SYSTEM_ID, TENANT_ID, BUSI_OPER_CODE, CUST_ID, ACCT_ID, SUBS_ID, SVC_TYPE, 
+    SERVICE_NUM, SUBJECT_ID, TOTAL, DISC, ADJUST, BALANCE, STATUS, LAST_STATUS_DATE, 
+    PAY_STATUS, LAST_PAY_DATE, PRODUCT_ID, PROVINCE_CODE, AREA_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
+    select
+<!--     <if test="distinct" > -->
+<!--       distinct -->
+<!--     </if> -->
+    <include refid="Base_Column_List" />
+    from acc_charge_${currentMonth}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+<!--     <if test="orderByClause != null" > -->
+<!--       order by ${orderByClause} -->
+<!--     </if> -->
+    <if test="accChargeYYYYMMCriteria.limitStart != null and accChargeYYYYMMCriteria.limitStart>=0" >
+      limit #{accChargeYYYYMMCriteria.limitStart} , #{accChargeYYYYMMCriteria.limitEnd}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.AccChargeYYYYMMCriteria" >
+    delete from acc_charge_YYYYMM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.AccChargeYYYYMM" >
+    insert into acc_charge_YYYYMM (CHARGE_SEQ, SYSTEM_ID, TENANT_ID, 
+      BUSI_OPER_CODE, CUST_ID, ACCT_ID, 
+      SUBS_ID, SVC_TYPE, SERVICE_NUM, 
+      SUBJECT_ID, TOTAL, DISC, 
+      ADJUST, BALANCE, STATUS, 
+      LAST_STATUS_DATE, PAY_STATUS, LAST_PAY_DATE, 
+      PRODUCT_ID, PROVINCE_CODE, AREA_CODE
+      )
+    values (#{chargeSeq,jdbcType=VARCHAR}, #{systemId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, 
+      #{busiOperCode,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, #{acctId,jdbcType=VARCHAR}, 
+      #{subsId,jdbcType=VARCHAR}, #{svcType,jdbcType=VARCHAR}, #{serviceNum,jdbcType=VARCHAR}, 
+      #{subjectId,jdbcType=VARCHAR}, #{total,jdbcType=DECIMAL}, #{disc,jdbcType=DECIMAL}, 
+      #{adjust,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, 
+      #{lastStatusDate,jdbcType=TIMESTAMP}, #{payStatus,jdbcType=VARCHAR}, #{lastPayDate,jdbcType=TIMESTAMP}, 
+      #{productId,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.AccChargeYYYYMM" >
+    insert into acc_charge_YYYYMM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="chargeSeq != null" >
+        CHARGE_SEQ,
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="busiOperCode != null" >
+        BUSI_OPER_CODE,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="acctId != null" >
+        ACCT_ID,
+      </if>
+      <if test="subsId != null" >
+        SUBS_ID,
+      </if>
+      <if test="svcType != null" >
+        SVC_TYPE,
+      </if>
+      <if test="serviceNum != null" >
+        SERVICE_NUM,
+      </if>
+      <if test="subjectId != null" >
+        SUBJECT_ID,
+      </if>
+      <if test="total != null" >
+        TOTAL,
+      </if>
+      <if test="disc != null" >
+        DISC,
+      </if>
+      <if test="adjust != null" >
+        ADJUST,
+      </if>
+      <if test="balance != null" >
+        BALANCE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="lastStatusDate != null" >
+        LAST_STATUS_DATE,
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS,
+      </if>
+      <if test="lastPayDate != null" >
+        LAST_PAY_DATE,
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="chargeSeq != null" >
+        #{chargeSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiOperCode != null" >
+        #{busiOperCode,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="acctId != null" >
+        #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="subsId != null" >
+        #{subsId,jdbcType=VARCHAR},
+      </if>
+      <if test="svcType != null" >
+        #{svcType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceNum != null" >
+        #{serviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="disc != null" >
+        #{disc,jdbcType=DECIMAL},
+      </if>
+      <if test="adjust != null" >
+        #{adjust,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="lastStatusDate != null" >
+        #{lastStatusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPayDate != null" >
+        #{lastPayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
+    select count(*) from acc_charge_${currentMonth}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update acc_charge_YYYYMM
+    <set >
+      <if test="record.chargeSeq != null" >
+        CHARGE_SEQ = #{record.chargeSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemId != null" >
+        SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.busiOperCode != null" >
+        BUSI_OPER_CODE = #{record.busiOperCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acctId != null" >
+        ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subsId != null" >
+        SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.svcType != null" >
+        SVC_TYPE = #{record.svcType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceNum != null" >
+        SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectId != null" >
+        SUBJECT_ID = #{record.subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.total != null" >
+        TOTAL = #{record.total,jdbcType=DECIMAL},
+      </if>
+      <if test="record.disc != null" >
+        DISC = #{record.disc,jdbcType=DECIMAL},
+      </if>
+      <if test="record.adjust != null" >
+        ADJUST = #{record.adjust,jdbcType=DECIMAL},
+      </if>
+      <if test="record.balance != null" >
+        BALANCE = #{record.balance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastStatusDate != null" >
+        LAST_STATUS_DATE = #{record.lastStatusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payStatus != null" >
+        PAY_STATUS = #{record.payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastPayDate != null" >
+        LAST_PAY_DATE = #{record.lastPayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.productId != null" >
+        PRODUCT_ID = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null" >
+        PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null" >
+        AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update acc_charge_YYYYMM
+    set CHARGE_SEQ = #{record.chargeSeq,jdbcType=VARCHAR},
+      SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      BUSI_OPER_CODE = #{record.busiOperCode,jdbcType=VARCHAR},
+      CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
+      SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
+      SVC_TYPE = #{record.svcType,jdbcType=VARCHAR},
+      SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
+      SUBJECT_ID = #{record.subjectId,jdbcType=VARCHAR},
+      TOTAL = #{record.total,jdbcType=DECIMAL},
+      DISC = #{record.disc,jdbcType=DECIMAL},
+      ADJUST = #{record.adjust,jdbcType=DECIMAL},
+      BALANCE = #{record.balance,jdbcType=DECIMAL},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      LAST_STATUS_DATE = #{record.lastStatusDate,jdbcType=TIMESTAMP},
+      PAY_STATUS = #{record.payStatus,jdbcType=VARCHAR},
+      LAST_PAY_DATE = #{record.lastPayDate,jdbcType=TIMESTAMP},
+      PRODUCT_ID = #{record.productId,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+      AREA_CODE = #{record.areaCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

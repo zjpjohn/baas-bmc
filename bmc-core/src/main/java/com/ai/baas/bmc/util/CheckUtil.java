@@ -3,6 +3,8 @@ package com.ai.baas.bmc.util;
 import java.text.SimpleDateFormat;
 
 import com.ai.baas.bmc.context.ErrorCode;
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.sdk.util.StringUtil;
 
 public class CheckUtil {
     /**
@@ -48,6 +50,22 @@ public class CheckUtil {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+    
+    public static void checkNull(String item, String name, String code) throws BusinessException {
+        if (StringUtil.isBlank(item)) {
+            throw new BusinessException(code, name + "不能为空");
+        }
+    }
+
+    public static void checkLenth(String item, String name, int lenth, String code)
+            throws BusinessException {
+        if(StringUtil.isBlank(item)){
+            return;
+        }
+        if (item.length() > lenth) {
+            throw new BusinessException(code, name + "不能超过" + lenth + "位");
         }
     }
 }

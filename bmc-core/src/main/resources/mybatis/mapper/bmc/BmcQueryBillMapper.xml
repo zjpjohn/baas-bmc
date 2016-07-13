@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.BmcQueryBillMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.BmcQueryBill" >
+    <id column="UNIQUE_ID" property="uniqueId" jdbcType="INTEGER" />
+    <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="VARCHAR" />
+    <result column="CUST_ID" property="custId" jdbcType="INTEGER" />
+    <result column="SUBS_ID" property="subsId" jdbcType="INTEGER" />
+    <result column="DIS_FEE" property="disFee" jdbcType="BIGINT" />
+    <result column="ADJUST_FEE" property="adjustFee" jdbcType="BIGINT" />
+    <result column="TOTAL_FEE" property="totalFee" jdbcType="BIGINT" />
+    <result column="SUBJECT_ID" property="subjectId" jdbcType="BIGINT" />
+    <result column="SUBJECT_AIS_FEE" property="subjectAisFee" jdbcType="BIGINT" />
+    <result column="SUBJECT_ADJUST_FEE" property="subjectAdjustFee" jdbcType="BIGINT" />
+    <result column="SUBJECT_FEE" property="subjectFee" jdbcType="BIGINT" />
+    <result column="PAGE_NUM" property="pageNum" jdbcType="INTEGER" />
+    <result column="QUERY_MON" property="queryMon" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UNIQUE_ID, TENANT_ID, SYSTEM_ID, CUST_ID, SUBS_ID, DIS_FEE, ADJUST_FEE, TOTAL_FEE, 
+    SUBJECT_ID, SUBJECT_AIS_FEE, SUBJECT_ADJUST_FEE, SUBJECT_FEE, PAGE_NUM, QUERY_MON
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcQueryBillCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bmc_query_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bmc_query_bill
+    where UNIQUE_ID = #{uniqueId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer" >
+    delete from bmc_query_bill
+    where UNIQUE_ID = #{uniqueId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcQueryBillCriteria" >
+    delete from bmc_query_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcQueryBill" >
+    insert into bmc_query_bill (UNIQUE_ID, TENANT_ID, SYSTEM_ID, 
+      CUST_ID, SUBS_ID, DIS_FEE, 
+      ADJUST_FEE, TOTAL_FEE, SUBJECT_ID, 
+      SUBJECT_AIS_FEE, SUBJECT_ADJUST_FEE, SUBJECT_FEE, 
+      PAGE_NUM, QUERY_MON)
+    values (#{uniqueId,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}, #{systemId,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=INTEGER}, #{subsId,jdbcType=INTEGER}, #{disFee,jdbcType=BIGINT}, 
+      #{adjustFee,jdbcType=BIGINT}, #{totalFee,jdbcType=BIGINT}, #{subjectId,jdbcType=BIGINT}, 
+      #{subjectAisFee,jdbcType=BIGINT}, #{subjectAdjustFee,jdbcType=BIGINT}, #{subjectFee,jdbcType=BIGINT}, 
+      #{pageNum,jdbcType=INTEGER}, #{queryMon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcQueryBill" >
+    insert into bmc_query_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uniqueId != null" >
+        UNIQUE_ID,
+      </if>
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="subsId != null" >
+        SUBS_ID,
+      </if>
+      <if test="disFee != null" >
+        DIS_FEE,
+      </if>
+      <if test="adjustFee != null" >
+        ADJUST_FEE,
+      </if>
+      <if test="totalFee != null" >
+        TOTAL_FEE,
+      </if>
+      <if test="subjectId != null" >
+        SUBJECT_ID,
+      </if>
+      <if test="subjectAisFee != null" >
+        SUBJECT_AIS_FEE,
+      </if>
+      <if test="subjectAdjustFee != null" >
+        SUBJECT_ADJUST_FEE,
+      </if>
+      <if test="subjectFee != null" >
+        SUBJECT_FEE,
+      </if>
+      <if test="pageNum != null" >
+        PAGE_NUM,
+      </if>
+      <if test="queryMon != null" >
+        QUERY_MON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uniqueId != null" >
+        #{uniqueId,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="subsId != null" >
+        #{subsId,jdbcType=INTEGER},
+      </if>
+      <if test="disFee != null" >
+        #{disFee,jdbcType=BIGINT},
+      </if>
+      <if test="adjustFee != null" >
+        #{adjustFee,jdbcType=BIGINT},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="subjectAisFee != null" >
+        #{subjectAisFee,jdbcType=BIGINT},
+      </if>
+      <if test="subjectAdjustFee != null" >
+        #{subjectAdjustFee,jdbcType=BIGINT},
+      </if>
+      <if test="subjectFee != null" >
+        #{subjectFee,jdbcType=BIGINT},
+      </if>
+      <if test="pageNum != null" >
+        #{pageNum,jdbcType=INTEGER},
+      </if>
+      <if test="queryMon != null" >
+        #{queryMon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcQueryBillCriteria" resultType="java.lang.Integer" >
+    select count(*) from bmc_query_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bmc_query_bill
+    <set >
+      <if test="record.uniqueId != null" >
+        UNIQUE_ID = #{record.uniqueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tenantId != null" >
+        TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemId != null" >
+        SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=INTEGER},
+      </if>
+      <if test="record.subsId != null" >
+        SUBS_ID = #{record.subsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.disFee != null" >
+        DIS_FEE = #{record.disFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.adjustFee != null" >
+        ADJUST_FEE = #{record.adjustFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalFee != null" >
+        TOTAL_FEE = #{record.totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.subjectId != null" >
+        SUBJECT_ID = #{record.subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.subjectAisFee != null" >
+        SUBJECT_AIS_FEE = #{record.subjectAisFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.subjectAdjustFee != null" >
+        SUBJECT_ADJUST_FEE = #{record.subjectAdjustFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.subjectFee != null" >
+        SUBJECT_FEE = #{record.subjectFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.pageNum != null" >
+        PAGE_NUM = #{record.pageNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.queryMon != null" >
+        QUERY_MON = #{record.queryMon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bmc_query_bill
+    set UNIQUE_ID = #{record.uniqueId,jdbcType=INTEGER},
+      TENANT_ID = #{record.tenantId,jdbcType=VARCHAR},
+      SYSTEM_ID = #{record.systemId,jdbcType=VARCHAR},
+      CUST_ID = #{record.custId,jdbcType=INTEGER},
+      SUBS_ID = #{record.subsId,jdbcType=INTEGER},
+      DIS_FEE = #{record.disFee,jdbcType=BIGINT},
+      ADJUST_FEE = #{record.adjustFee,jdbcType=BIGINT},
+      TOTAL_FEE = #{record.totalFee,jdbcType=BIGINT},
+      SUBJECT_ID = #{record.subjectId,jdbcType=BIGINT},
+      SUBJECT_AIS_FEE = #{record.subjectAisFee,jdbcType=BIGINT},
+      SUBJECT_ADJUST_FEE = #{record.subjectAdjustFee,jdbcType=BIGINT},
+      SUBJECT_FEE = #{record.subjectFee,jdbcType=BIGINT},
+      PAGE_NUM = #{record.pageNum,jdbcType=INTEGER},
+      QUERY_MON = #{record.queryMon,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcQueryBill" >
+    update bmc_query_bill
+    <set >
+      <if test="tenantId != null" >
+        TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID = #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="subsId != null" >
+        SUBS_ID = #{subsId,jdbcType=INTEGER},
+      </if>
+      <if test="disFee != null" >
+        DIS_FEE = #{disFee,jdbcType=BIGINT},
+      </if>
+      <if test="adjustFee != null" >
+        ADJUST_FEE = #{adjustFee,jdbcType=BIGINT},
+      </if>
+      <if test="totalFee != null" >
+        TOTAL_FEE = #{totalFee,jdbcType=BIGINT},
+      </if>
+      <if test="subjectId != null" >
+        SUBJECT_ID = #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="subjectAisFee != null" >
+        SUBJECT_AIS_FEE = #{subjectAisFee,jdbcType=BIGINT},
+      </if>
+      <if test="subjectAdjustFee != null" >
+        SUBJECT_ADJUST_FEE = #{subjectAdjustFee,jdbcType=BIGINT},
+      </if>
+      <if test="subjectFee != null" >
+        SUBJECT_FEE = #{subjectFee,jdbcType=BIGINT},
+      </if>
+      <if test="pageNum != null" >
+        PAGE_NUM = #{pageNum,jdbcType=INTEGER},
+      </if>
+      <if test="queryMon != null" >
+        QUERY_MON = #{queryMon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UNIQUE_ID = #{uniqueId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.BmcQueryBill" >
+    update bmc_query_bill
+    set TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      SYSTEM_ID = #{systemId,jdbcType=VARCHAR},
+      CUST_ID = #{custId,jdbcType=INTEGER},
+      SUBS_ID = #{subsId,jdbcType=INTEGER},
+      DIS_FEE = #{disFee,jdbcType=BIGINT},
+      ADJUST_FEE = #{adjustFee,jdbcType=BIGINT},
+      TOTAL_FEE = #{totalFee,jdbcType=BIGINT},
+      SUBJECT_ID = #{subjectId,jdbcType=BIGINT},
+      SUBJECT_AIS_FEE = #{subjectAisFee,jdbcType=BIGINT},
+      SUBJECT_ADJUST_FEE = #{subjectAdjustFee,jdbcType=BIGINT},
+      SUBJECT_FEE = #{subjectFee,jdbcType=BIGINT},
+      PAGE_NUM = #{pageNum,jdbcType=INTEGER},
+      QUERY_MON = #{queryMon,jdbcType=VARCHAR}
+    where UNIQUE_ID = #{uniqueId,jdbcType=INTEGER}
+  </update>
+</mapper>
