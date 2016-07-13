@@ -1,5 +1,31 @@
 package com.ai.baas.bmc.service.business.impl;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.client.Delete;
+import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.filter.BinaryComparator;
+import org.apache.hadoop.hbase.filter.CompareFilter;
+import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.filter.FilterList;
+import org.apache.hadoop.hbase.filter.PageFilter;
+import org.apache.hadoop.hbase.filter.RegexStringComparator;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBill;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillCriteria;
 import com.ai.baas.bmc.api.failedbillmaintain.params.FailedBillParam;
@@ -12,23 +38,9 @@ import com.ai.baas.bmc.util.MyHbaseUtil;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.vo.HBasePager;
 import com.ai.opt.sdk.util.StringUtil;
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.apache.hadoop.hbase.Cell;
-import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.hbase.filter.*;
-import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by xin on 16-4-11.
@@ -113,7 +125,8 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         criteria.setErrorCode("BMC-B0001");
         criteria.setServiceType("VOICE");
         criteria.setTenantId("TR");
-        failedBillMaintainBusi.queryFailedBills(criteria);
+        List<FailedBill> list=failedBillMaintainBusi.queryFailedBills(criteria);
+        System.out.println("【list】="+JSON.toJSONString(list));
     }
 
     @Override
