@@ -1,5 +1,11 @@
 package com.ai.baas.bmc.api.drmanager.interfaces;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import com.ai.baas.bmc.api.drmanager.parameters.BillQueryInputObject;
 import com.ai.baas.bmc.api.drmanager.parameters.BillQueryOutputObject;
 import com.ai.baas.bmc.api.drmanager.parameters.DrQueryInputObject;
@@ -24,6 +30,9 @@ import com.ai.opt.base.exception.SystemException;
  *  
  * @author zhanghy6
  */
+@Path("/drQuery")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
 public interface IDrQuery
 {
     /**
@@ -113,6 +122,8 @@ public interface IDrQuery
      * @ApiDocMethod
      * @ApiCode BMC-0001
      */
+	 @POST
+	 @Path("/drQuery")
 	public String drQuery(String param) throws BusinessException,SystemException;
 	
     /**
@@ -126,6 +137,8 @@ public interface IDrQuery
      * @ApiDocMethod
      * @ApiCode BMC-0002
      */
+	 @POST
+	 @Path("/drQueryObj")
 	public DrQueryOutputObject drQueryObj(DrQueryInputObject drObject) throws BusinessException,SystemException;
 	
     /**
@@ -169,6 +182,8 @@ public interface IDrQuery
      * @ApiDocMethod
      * @ApiCode BMC-0003
      */
+	 @POST
+	 @Path("/billQuery")
 	public String billQuery(String param) throws BusinessException,SystemException;
 
 	/**
@@ -181,6 +196,8 @@ public interface IDrQuery
      * @ApiDocMethod
      * @ApiCode BMC-0004
      */
+	 @POST
+	 @Path("/billQueryObj")
 	public BillQueryOutputObject billQueryObj(BillQueryInputObject billObject) throws BusinessException,SystemException;
 	
     /**
@@ -220,6 +237,8 @@ public interface IDrQuery
      * @ApiDocMethod
      * @ApiCode BMC-0005
      */
+	 @POST
+	 @Path("/useQuantityQuery")
 	public String useQuantityQuery(String param) throws BusinessException,SystemException;
 
 	/**
@@ -232,6 +251,8 @@ public interface IDrQuery
      * @ApiDocMethod
      * @ApiCode BMC-0006
      */
+	 @POST
+	 @Path("/useQuantityQueryObj")
 	public UseQueryOutputObject useQuantityQueryObj(UseQueryInputObject useObject) throws BusinessException,SystemException;
 	
     /**
@@ -259,6 +280,8 @@ public interface IDrQuery
      * @ApiDocMethod
      * @ApiCode BMC-0007
      */
+	 @POST
+	 @Path("/operatorFlowQuery")
 	public String operatorFlowQuery(String param) throws BusinessException,SystemException;	
 	
 
@@ -272,6 +295,8 @@ public interface IDrQuery
      * @ApiDocMethod
      * @ApiCode BMC-0008
      */
+	 @POST
+	 @Path("/operatorFlowQueryObj")
 	public OperatorFlowQueryOutputObject operatorFlowQueryObj(OperatorFlowQueryInputObject operatorFlowObject) throws BusinessException,SystemException;
 	
 }
