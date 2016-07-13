@@ -2,11 +2,11 @@ dependencies {
     compile project(":bmc-api")
     compile 'net.sourceforge.jeval:jeval:0.9.4'
     //restful jars
-	compile 'org.jboss.resteasy:resteasy-jaxrs:3.0.11.Final'
-	compile 'org.jboss.resteasy:resteasy-client:3.0.11.Final'
-	compile 'org.jboss.resteasy:resteasy-jackson-provider:3.0.11.Final'
-	compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.21'
-	compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.21'
+	//compile 'org.jboss.resteasy:resteasy-jaxrs:3.0.11.Final'
+	//compile 'org.jboss.resteasy:resteasy-client:3.0.11.Final'
+	//compile 'org.jboss.resteasy:resteasy-jackson-provider:3.0.11.Final'
+	//compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.21'
+	//compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.21'
 	compile 'javax.validation:validation-api:1.1.0.Final'
 
     compile 'org.mybatis:mybatis:3.3.0'
@@ -15,16 +15,21 @@ dependencies {
     compile 'org.springframework:spring-tx:4.1.7.RELEASE'
     compile 'org.springframework:spring-jdbc:4.1.7.RELEASE'
     
- 	compile 'org.jboss.resteasy:resteasy-jaxrs:3.0.11.Final'
-    compile 'org.jboss.resteasy:resteasy-client:3.0.11.Final'
-    compile 'org.jboss.resteasy:resteasy-jackson-provider:3.0.11.Final'
-    compile 'org.mortbay.jetty:jetty:6.1.26'
+ 	//compile 'org.jboss.resteasy:resteasy-jaxrs:3.0.11.Final'
+    //compile 'org.jboss.resteasy:resteasy-client:3.0.11.Final'
+    //compile 'org.jboss.resteasy:resteasy-jackson-provider:3.0.11.Final'
+    //compile 'org.mortbay.jetty:jetty:6.1.26'
     compile 'javax.validation:validation-api:1.1.0.Final'
     compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
     
     //compile 'org.apache.hadoop:hadoop-common:2.7.1'
     //compile 'org.apache.hbase:hbase-common:1.0.1.1'
-    compile 'org.apache.hbase:hbase-client:1.1.1'
+    //compile 'org.apache.hbase:hbase-client:1.1.1'
+    compile ("org.apache.hbase:hbase-client:1.1.1") {
+        exclude group: 'com.sun.jersey', module: 'jersey-core'
+        exclude group: 'com.sun.jersey', module: 'jersey-json'
+        exclude group: 'com.sun.jersey', module: 'jersey-server'
+    }
     
     compile 'com.ai.baas:baas-dshm-sdk:1.0.8-SNAPSHOT'
     compile 'com.ai.opt.sdk:opt-sdk:2.1-SNAPSHOT'
