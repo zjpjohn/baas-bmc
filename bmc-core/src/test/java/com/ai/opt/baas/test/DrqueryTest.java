@@ -31,7 +31,7 @@ public class DrqueryTest {
 	   public void test(){
 		  
 		   DrQueryInputObject drObject=new DrQueryInputObject();
-		   drObject.setApnCode("APN2");
+		   drObject.setApnCode("APN1");
 		   drObject.setBeginDate("20160601000000");
 		   drObject.setCustId("10007");
 		   drObject.setEndDate("20160621235959");
