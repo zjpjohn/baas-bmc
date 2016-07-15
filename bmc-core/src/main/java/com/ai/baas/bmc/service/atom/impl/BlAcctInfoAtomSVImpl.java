@@ -33,8 +33,8 @@ public class BlAcctInfoAtomSVImpl implements IBlAcctInfoAtomSV {
     	BlAcctInfoCriteria blAcctInfoCriteria=new BlAcctInfoCriteria();
 		BlAcctInfoCriteria.Criteria criteria=blAcctInfoCriteria.createCriteria();
 		criteria.andTenantIdEqualTo(acctQueryRequest.getTenantId());
-		if(!StringUtil.isBlank(acctQueryRequest.getCustID())){
-			criteria.andOwnerIdEqualTo(acctQueryRequest.getCustID());
+		if(!CollectionUtil.isEmpty(acctQueryRequest.getCustIDs())){
+			criteria.andOwnerIdIn(acctQueryRequest.getCustIDs());
 		}
 		List<BlAcctInfo>  acctInfoList=blAcctInfoMapper.selectByExample(blAcctInfoCriteria);
 		 if (CollectionUtil.isEmpty(acctInfoList)) {

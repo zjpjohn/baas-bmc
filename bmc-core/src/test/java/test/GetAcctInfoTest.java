@@ -1,5 +1,8 @@
 package test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,12 @@ public class GetAcctInfoTest {
     public void test(){
 		PageInfo<AcctInfoParams> resultPage=new PageInfo<AcctInfoParams>();
 		AcctQueryRequest acctQueryRequest=new AcctQueryRequest();
-		acctQueryRequest.setCustID("39");
+		List a=new ArrayList();
+		String b="39";
+		String c="11";
+		a.add(b);
+		a.add(c);
+		acctQueryRequest.setCustIDs(a);
 		acctQueryRequest.setPageNo(1);
 		acctQueryRequest.setPageSize(20);
 		acctQueryRequest.setTenantId("VIV-BYD");

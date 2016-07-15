@@ -28,7 +28,7 @@ public interface IAcctInfoSV {
     /**
      * 分页查询账户信息
      * 
-     * @param vo
+     * @param acctQueryRequest
      * @return
      * @throws BusinessException
      * @throws SystemException

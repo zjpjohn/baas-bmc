@@ -1,5 +1,7 @@
 package com.ai.baas.bmc.api.acctinfo.params;
 
+import java.util.List;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -15,21 +17,12 @@ import com.ai.opt.base.vo.BaseInfo;
  */
 public class AcctQueryRequest extends BaseInfo{
 	private static final long serialVersionUID = 8822616585208049757L;
-	/**
-     * 消息流水<br>
-     * 组成：租户ID + YYMMDDHH24MISS + SSS(毫秒) + 9位序列号<br>
-     * 必填<br>
-     */
-    @NotBlank(message="消息流水不能为空")
-   //@Size(max=32)
-    private String tradeSeq;
 
     /**
      * 账户ID
      * VARCHAR(32)
      */
-    @Size(max=32)
-	private String custID;
+	private List<String> custIDs;
 	 /**
      * 请求查询的页码
      */
@@ -42,17 +35,12 @@ public class AcctQueryRequest extends BaseInfo{
     //@Size(max=32)
     private Integer pageSize;
     
-	public String getCustID() {
-		return custID;
+
+	public List<String> getCustIDs() {
+		return custIDs;
 	}
-	public void setCustID(String custID) {
-		this.custID = custID;
-	}
-	public String getTradeSeq() {
-		return tradeSeq;
-	}
-	public void setTradeSeq(String tradeSeq) {
-		this.tradeSeq = tradeSeq;
+	public void setCustIDs(List<String> custIDs) {
+		this.custIDs = custIDs;
 	}
 	public Integer getPageNo() {
 		return pageNo;
