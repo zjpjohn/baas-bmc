@@ -23,38 +23,33 @@ public class PricemakingSVRestTest {
 
     @Test
     public void queryPricemakingZX() {
-        String parameters = "{\"AERA_ID\":\"HuaBei1\",\"CPU_MEM\":\"2C4G\",\"IO_OPTI\":\"YES\",\"OS\":\"win\",\"SERIAL_ID\":\"1\"}";
-        ShoppingList shoppingList = new ShoppingList();
-        shoppingList.setList_id("1");
-        shoppingList.setService_id("test1");
-        shoppingList.setParameters(parameters);
-        PriceElementInfoZX request = new PriceElementInfoZX();
-        List<ShoppingList> shopping_lists = new ArrayList<ShoppingList>();
-        shopping_lists.add(shoppingList);
-        request.setShopping_lists(shopping_lists);
+        // ECS-INSTANCE
+        String parameters1 = "{\"AERA_ID\":\"HuaBei1\",\"CPU_MEM\":\"2C4G\",\"IO_OPTI\":\"YES\",\"OS\":\"win\",\"SERIAL_ID\":\"1\"}";
 
-        // elementInfo2.setName("AERA_ID");
-        // elementInfo2.setValue("HuaNan1");
-        // elementInfoList2.add(elementInfo2);
-        // elementInfo2=new ElementInfo();
-        // elementInfo2.setName("DISK_TYPE");
-        // elementInfo2.setValue("SSD");
-        // elementInfoList2.add(elementInfo2);
-        // elementInfo2=new ElementInfo();
-        // elementInfo2.setName("USE_TYPE");
-        // elementInfo2.setValue("SYSTEM");
-        // elementInfoList2.add(elementInfo2);
-        // elementInfo2=new ElementInfo();
-        // elementInfo2.setName("AMOUNT");
-        // elementInfo2.setValue("50");
-        // elementInfoList2.add(elementInfo2);
-        // orderTypeInfo.setElementInfoList(elementInfoList2);
-        // orderTypeList.add(orderTypeInfo);
+        ShoppingList shoppingList1 = new ShoppingList();
+        shoppingList1.setList_id("1");
+        shoppingList1.setService_id("test1");
+        shoppingList1.setParameters(parameters1);
+
+        // ECS-DISK
+        String parameters2 = "{\"AERA_ID\":\"HuaNan1\", \"DISK_TYPE\":\"SSD\", \"USE_TYPE\":\"SYSTEM\", \"AMOUNT\":\"50\"}";
+
+        ShoppingList shoppingList2 = new ShoppingList();
+        shoppingList2.setList_id("2");
+        shoppingList2.setService_id("test2");
+        shoppingList2.setParameters(parameters2);
+
+        List<ShoppingList> shopping_lists = new ArrayList<ShoppingList>();
+        shopping_lists.add(shoppingList1);
+        shopping_lists.add(shoppingList2);
+
+        PriceElementInfoZX request = new PriceElementInfoZX();
+        request.setShopping_lists(shopping_lists);
 
         String s = HttpClientUtil.sendPost(
                 "http://10.1.130.84:10884/baas-bmc/pricemaking/queryPricemakingZX",
                 JSON.toJSONString(request));
-        System.out.println(s);
+        System.out.println("定价查询接口返回结果: " + s);
         System.out.println("success");
     }
 
