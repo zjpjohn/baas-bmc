@@ -32,6 +32,8 @@ public class BlAcctInfoAtomSVImpl implements IBlAcctInfoAtomSV {
     public List<BlAcctInfo> queryBlAcctinfo(AcctQueryRequest acctQueryRequest){
     	BlAcctInfoCriteria blAcctInfoCriteria=new BlAcctInfoCriteria();
 		BlAcctInfoCriteria.Criteria criteria=blAcctInfoCriteria.createCriteria();
+		blAcctInfoCriteria.setLimitStart((acctQueryRequest.getPageNo()-1)*acctQueryRequest.getPageSize());
+		blAcctInfoCriteria.setLimitEnd(acctQueryRequest.getPageSize());
 		criteria.andTenantIdEqualTo(acctQueryRequest.getTenantId());
 		if(!CollectionUtil.isEmpty(acctQueryRequest.getCustIDs())){
 			criteria.andOwnerIdIn(acctQueryRequest.getCustIDs());

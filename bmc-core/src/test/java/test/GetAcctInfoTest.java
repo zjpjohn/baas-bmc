@@ -24,13 +24,13 @@ public class GetAcctInfoTest {
     public void test(){
 		PageInfo<AcctInfoParams> resultPage=new PageInfo<AcctInfoParams>();
 		AcctQueryRequest acctQueryRequest=new AcctQueryRequest();
-		List a=new ArrayList();
-		String b="39";
-		String c="11";
-		a.add(b);
-		a.add(c);
-		acctQueryRequest.setCustIDs(a);
-		acctQueryRequest.setPageNo(1);
+//		List a=new ArrayList();
+//		String b="39";
+//		String c="11";
+//		a.add(b);
+//		a.add(c);
+//		acctQueryRequest.setCustIDs(a);
+		acctQueryRequest.setPageNo(2);
 		acctQueryRequest.setPageSize(20);
 		acctQueryRequest.setTenantId("VIV-BYD");
 		ResponseMessage responseMessage=iAcctInfoSV.getAcctInfo(acctQueryRequest);
