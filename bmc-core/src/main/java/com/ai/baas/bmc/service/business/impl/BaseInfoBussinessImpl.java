@@ -41,7 +41,6 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 		String dataPub = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
 				BaseInfoCache.generateBaseInfoKey(TenantId.PUB, param.getParamType()));
 		if(dataPub!=null){
-			System.out.println("缓存取得的数据－－"+dataPub);
 			List<BmcBasedataCode> pubList = (List<BmcBasedataCode>) JSONObject.parseArray(dataPub, BmcBasedataCode.class);
 			if(pubList!=null && pubList.size()>0){
 				for (BmcBasedataCode bmcBaseCode : pubList) { 
@@ -51,15 +50,17 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 				}
 			}
 		}
-		String data = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
-				BaseInfoCache.generateBaseInfoKey(param.getTenantId(), param.getParamType()));
-		if(data!=null){
-			List<BmcBasedataCode> list = (List<BmcBasedataCode>) JSONObject.parseArray(dataPub, BmcBasedataCode.class);
-			if(list!=null && list.size()>0){
-				for (BmcBasedataCode bmcBaseCode : list) {
-					BaseCode baseCode = new BaseCode();
-					BeanUtils.copyProperties(baseCode, bmcBaseCode);
-					baseCodeList.add(baseCode);
+		if(!(TenantId.PUB).equals(param.getTenantId())){
+			String data = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
+					BaseInfoCache.generateBaseInfoKey(param.getTenantId(), param.getParamType()));
+			if(data!=null){
+				List<BmcBasedataCode> list = (List<BmcBasedataCode>) JSONObject.parseArray(dataPub, BmcBasedataCode.class);
+				if(list!=null && list.size()>0){
+					for (BmcBasedataCode bmcBaseCode : list) {
+						BaseCode baseCode = new BaseCode();
+						BeanUtils.copyProperties(baseCode, bmcBaseCode);
+						baseCodeList.add(baseCode);
+					}
 				}
 			}
 		}
