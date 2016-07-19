@@ -41,6 +41,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 		String dataPub = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
 				BaseInfoCache.generateBaseInfoKey(TenantId.PUB, param.getParamType()));
 		if(dataPub!=null){
+			System.out.println("缓存取得的数据－－"+dataPub);
 			List<BmcBasedataCode> pubList = (List<BmcBasedataCode>) JSONObject.parseObject(dataPub);
 			if(pubList!=null && pubList.size()>0){
 				for (BmcBasedataCode bmcBaseCode : pubList) {
