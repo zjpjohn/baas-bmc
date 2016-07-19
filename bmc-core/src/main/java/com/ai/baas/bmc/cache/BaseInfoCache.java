@@ -42,13 +42,17 @@ public class BaseInfoCache implements InitializingBean{
 			return;
 		}
 		ICacheClient cacheClient = MCSClientFactory.getCacheClient(CacheRSMapper.CACHE_BASEINFO);
+		
+		//清空上次缓存的数据
+		cacheClient.del(CacheRSMapper.CACHE_BASEINFO);
+		
 		for(BmcBasedataCode vo:list){
-			LOG.debug("缓存BaseInfo信息:", vo.getTenantId(), vo.getParamType(), vo.getParamCode());
+			LOG.debug("缓存BaseInfo信息:租户{}paramType{}paramCode{}", vo.getTenantId(), vo.getParamType(), vo.getParamCode());
 			List<BmcBasedataCode> rsList = new ArrayList<>();
 			String data = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
 					generateBaseInfoKey(vo.getTenantId(), vo.getParamType()));
 			if(data!=null){
-				rsList = (List<BmcBasedataCode>) JSONObject.parseObject(data);
+				rsList = (List<BmcBasedataCode>) JSONObject.parseArray(data, BmcBasedataCode.class);
 			}
 			rsList.add(vo);
 			cacheClient.hset(CacheRSMapper.CACHE_BASEINFO, generateBaseInfoKey(vo.getTenantId(), vo.getParamType()), JSON.toJSONString(rsList));

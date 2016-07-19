@@ -37,34 +37,34 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 
 		List<BaseCode> baseCodeList = new ArrayList<BaseCode>();
 
-//		ICacheClient cacheClient = MCSClientFactory.getCacheClient(CacheRSMapper.CACHE_BASEINFO);
-//		String dataPub = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
-//				BaseInfoCache.generateBaseInfoKey(TenantId.PUB, param.getParamType()));
-//		if(dataPub!=null){
-//			System.out.println("缓存取得的数据－－"+dataPub);
-//			List<BmcBasedataCode> pubList = (List<BmcBasedataCode>) JSONObject.parseObject(dataPub);
-//			if(pubList!=null && pubList.size()>0){
-//				for (BmcBasedataCode bmcBaseCode : pubList) { 
-//					BaseCode baseCode = new BaseCode();
-//					BeanUtils.copyProperties(baseCode, bmcBaseCode);
-//					baseCodeList.add(baseCode);
-//				}
-//			}
-//		}
-//		String data = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
-//				BaseInfoCache.generateBaseInfoKey(param.getTenantId(), param.getParamType()));
-//		if(data!=null){
-//			List<BmcBasedataCode> list = (List<BmcBasedataCode>) JSONObject.parseObject(data);
-//			if(list!=null && list.size()>0){
-//				for (BmcBasedataCode bmcBaseCode : list) {
-//					BaseCode baseCode = new BaseCode();
-//					BeanUtils.copyProperties(baseCode, bmcBaseCode);
-//					baseCodeList.add(baseCode);
-//				}
-//			}
-//		}
-//		//如果缓存未查询到数据，查询数据库并保存如缓存
-//		if(baseCodeList.size()==0){
+		ICacheClient cacheClient = MCSClientFactory.getCacheClient(CacheRSMapper.CACHE_BASEINFO);
+		String dataPub = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
+				BaseInfoCache.generateBaseInfoKey(TenantId.PUB, param.getParamType()));
+		if(dataPub!=null){
+			System.out.println("缓存取得的数据－－"+dataPub);
+			List<BmcBasedataCode> pubList = (List<BmcBasedataCode>) JSONObject.parseArray(dataPub, BmcBasedataCode.class);
+			if(pubList!=null && pubList.size()>0){
+				for (BmcBasedataCode bmcBaseCode : pubList) { 
+					BaseCode baseCode = new BaseCode();
+					BeanUtils.copyProperties(baseCode, bmcBaseCode);
+					baseCodeList.add(baseCode);
+				}
+			}
+		}
+		String data = cacheClient.hget(CacheRSMapper.CACHE_BASEINFO,
+				BaseInfoCache.generateBaseInfoKey(param.getTenantId(), param.getParamType()));
+		if(data!=null){
+			List<BmcBasedataCode> list = (List<BmcBasedataCode>) JSONObject.parseArray(dataPub, BmcBasedataCode.class);
+			if(list!=null && list.size()>0){
+				for (BmcBasedataCode bmcBaseCode : list) {
+					BaseCode baseCode = new BaseCode();
+					BeanUtils.copyProperties(baseCode, bmcBaseCode);
+					baseCodeList.add(baseCode);
+				}
+			}
+		}
+		//如果缓存未查询到数据，查询数据库并保存如缓存
+		if(baseCodeList.size()==0){
 			BmcBasedataCodeCriteria pubsql = new BmcBasedataCodeCriteria();
 			BmcBasedataCodeCriteria.Criteria pubCriteria = pubsql.or();
 			pubCriteria.andTenantIdEqualTo(TenantId.PUB).andParamTypeEqualTo(param.getParamType());
@@ -75,7 +75,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 					BeanUtils.copyProperties(baseCode, bmcBaseCode);
 					baseCodeList.add(baseCode);
 				}
-//				cacheClient.hset(CacheRSMapper.CACHE_BASEINFO, BaseInfoCache.generateBaseInfoKey(TenantId.PUB, param.getParamType()), JSON.toJSONString(pubList));
+				cacheClient.hset(CacheRSMapper.CACHE_BASEINFO, BaseInfoCache.generateBaseInfoKey(TenantId.PUB, param.getParamType()), JSON.toJSONString(pubList));
 			}
 			if(!(TenantId.PUB).equals(param.getTenantId())){
 				BmcBasedataCodeCriteria sql = new BmcBasedataCodeCriteria();
@@ -89,10 +89,10 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 						BeanUtils.copyProperties(baseCode, bmcBaseCode);
 						baseCodeList.add(baseCode);
 					}
-//					cacheClient.hset(CacheRSMapper.CACHE_BASEINFO, BaseInfoCache.generateBaseInfoKey(param.getTenantId(), param.getParamType()), JSON.toJSONString(pubList));
+					cacheClient.hset(CacheRSMapper.CACHE_BASEINFO, BaseInfoCache.generateBaseInfoKey(param.getTenantId(), param.getParamType()), JSON.toJSONString(pubList));
 				}
 			}
-//		}
+		}
 
 		BaseCodeInfo baseCodeInfo = new BaseCodeInfo();
 		baseCodeInfo.setTradeSeq(param.getTradeSeq());
