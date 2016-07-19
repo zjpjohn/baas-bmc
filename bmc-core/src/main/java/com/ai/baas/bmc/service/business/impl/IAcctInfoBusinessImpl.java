@@ -20,6 +20,7 @@ import com.ai.baas.bmc.service.atom.interfaces.IBlAcctInfoAtomSV;
 import com.ai.baas.bmc.service.business.interfaces.IAcctInfoBusiness;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.base.vo.ResponseHeader;
+import com.ai.opt.sdk.util.BeanUtils;
 import com.ai.opt.sdk.util.StringUtil;
 
 @Service
@@ -41,64 +42,40 @@ public class IAcctInfoBusinessImpl implements IAcctInfoBusiness{
 				return responseMessage;
 			}
 
-			List<BlAcctInfo>  acctInfoList=iBlAcctInfoAtomSV.queryBlAcctinfo(acctQueryRequest);
-			if(acctInfoList.size()==0){
-				responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "bl_acct_info表中未找到数据"));
-				return responseMessage;
+			PageInfo<BlAcctInfo>  acctInfoList=iBlAcctInfoAtomSV.queryBlAcctinfoPageInfo(acctQueryRequest);
+//			if(acctInfoList.size()==0){
+//				responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "bl_acct_info表中未找到数据"));
+//				return responseMessage;
+//			}
+			if(acctInfoList!=null){
+				PageInfo<AcctInfoParams> acctInfoParamsPageInfo = new PageInfo<AcctInfoParams>();
+				List<AcctInfoParams> acctInfoParamsList= new ArrayList<AcctInfoParams>();
+				for(BlAcctInfo blAcctInfo:acctInfoList.getResult()){
+					AcctInfoParams acctInfoParams = new AcctInfoParams();
+					acctInfoParams.setAcctID(blAcctInfo.getAcctId());
+					acctInfoParams.setAcctName(blAcctInfo.getAcctName());
+					acctInfoParams.setAcctType(blAcctInfo.getAcctName());
+					acctInfoParams.setComments(blAcctInfo.getComments());
+					acctInfoParams.setCreatTime(StringUtil.toString(blAcctInfo.getCreateTime()));
+					acctInfoParams.setCustID(blAcctInfo.getOwnerId());
+					acctInfoParams.setOwnerType(blAcctInfo.getOwnerType());
+					acctInfoParams.setTenantId(blAcctInfo.getTenantId());
+					
+					acctInfoParamsList.add(acctInfoParams);
+				}
+				acctInfoParamsPageInfo.setResult(acctInfoParamsList);
+				acctInfoParamsPageInfo.setCount(acctInfoList.getCount());
+				acctInfoParamsPageInfo.setPageCount(acctInfoList.getPageCount());
+				acctInfoParamsPageInfo.setPageNo(acctInfoList.getPageNo());
+				acctInfoParamsPageInfo.setPageSize(acctInfoList.getPageSize());
+				responseMessage.setAcctInfoParamsList(acctInfoParamsPageInfo);	
 			}
-			log.debug("获得"+acctInfoList.size()+"条账户信息");
-	        List<AcctInfoParams> acctInfoParamsList = new ArrayList<AcctInfoParams>( );		
-			AcctInfoParams acctInfoParams = null;
-			for(BlAcctInfo blAcctInfo:acctInfoList){
-				acctInfoParams=new AcctInfoParams();
-				acctInfoParams.setAcctID(blAcctInfo.getAcctId());
-				acctInfoParams.setAcctName(blAcctInfo.getAcctName());
-				acctInfoParams.setCustID(blAcctInfo.getOwnerId());
-				acctInfoParams.setTenantId(blAcctInfo.getTenantId());
-				acctInfoParams.setAcctType(blAcctInfo.getAcctType());
-				acctInfoParams.setComments(blAcctInfo.getComments());
-				acctInfoParams.setCreatTime(StringUtil.toString(blAcctInfo.getCreateTime()));
-				acctInfoParams.setOwnerType(blAcctInfo.getOwnerType());
-				acctInfoParamsList.add(acctInfoParams);
-			}
-		PageInfo<AcctInfoParams> resultPage=new PageInfo<AcctInfoParams>();
-		
-		List<AcctInfoParams> acctInfoParamsSubList = new ArrayList<AcctInfoParams>();
-		int sum = acctInfoParamsList.size();
-		
-        //内存分页
-        if(acctQueryRequest.getPageSize()!=null&&acctQueryRequest.getPageNo()!=null){
-
-            int pageSize=acctQueryRequest.getPageSize();
-            int pageNo=acctQueryRequest.getPageNo(); 
-            int fromIndex = (pageNo-1)*pageSize;
-            int toIndex = pageNo*pageSize;
-            if(acctInfoParamsList.size()<toIndex){
-            	acctInfoParamsSubList = acctInfoParamsList.subList(fromIndex,acctInfoParamsList.size());
-            }else{
-            	acctInfoParamsSubList = acctInfoParamsList.subList(fromIndex,toIndex);
-            } 
-        }else {
-            //不分页
-            acctInfoParamsSubList = acctInfoParamsList;
-        }    
-		
-		//分页信息
-		resultPage.setCount(sum);
-		if(acctQueryRequest.getPageSize()!=null&&acctQueryRequest.getPageNo()!=null){
-            resultPage.setPageSize(acctQueryRequest.getPageSize());
-            resultPage.setPageNo(acctQueryRequest.getPageNo());
-        }
-        else{
-        	//不分页
-            resultPage.setPageSize(sum);
-            resultPage.setPageNo(1);
-        }
-		
-		resultPage.setResult(acctInfoParamsSubList);
-		responseMessage.setTenantId(acctQueryRequest.getTenantId());
-		responseMessage.setAcctInfoParamsList(resultPage);
-		responseMessage.setReturnCode("BMC-000000");	
+			
+			ResponseHeader header = new ResponseHeader();
+			header.setIsSuccess(true);
+			header.setResultCode("000000");
+			responseMessage.setResponseHeader(header);
+			
 		return responseMessage;
 	}
 }

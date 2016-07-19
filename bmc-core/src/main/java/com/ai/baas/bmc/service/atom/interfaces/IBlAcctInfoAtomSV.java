@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ai.baas.bmc.api.acctinfo.params.AcctQueryRequest;
 import com.ai.baas.bmc.dao.mapper.bo.BlAcctInfo;
+import com.ai.opt.base.vo.PageInfo;
 
 public interface IBlAcctInfoAtomSV {
 
@@ -23,5 +24,14 @@ public interface IBlAcctInfoAtomSV {
      * @ApiDocMethod
      */
     List<BlAcctInfo> queryBlAcctinfo(AcctQueryRequest acctQueryRequest);
+    /**
+     * 分页查询 BlAcctInfo<br>
+     * 
+     * @param acctQueryRequest
+     * @return
+     * @author luoxuan
+     * @ApiDocMethod
+     */
+    PageInfo<BlAcctInfo> queryBlAcctinfoPageInfo(AcctQueryRequest acctQueryRequest);
 
 }
