@@ -44,7 +44,7 @@ public class BaseInfoBussinessImpl implements IBaseInfoBussiness {
 			System.out.println("缓存取得的数据－－"+dataPub);
 			List<BmcBasedataCode> pubList = (List<BmcBasedataCode>) JSONObject.parseObject(dataPub);
 			if(pubList!=null && pubList.size()>0){
-				for (BmcBasedataCode bmcBaseCode : pubList) {
+				for (BmcBasedataCode bmcBaseCode : pubList) { 
 					BaseCode baseCode = new BaseCode();
 					BeanUtils.copyProperties(baseCode, bmcBaseCode);
 					baseCodeList.add(baseCode);
