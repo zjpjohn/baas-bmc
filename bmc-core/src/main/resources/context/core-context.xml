@@ -42,7 +42,7 @@
 		<property name="ds" ref="dataSource" />
 	</bean> 
     
-    <bean id="baseInfoCache" class="com.ai.baas.bmc.cache.BaseInfoCache"></bean>
+    <!-- <bean id="baseInfoCache" class="com.ai.baas.bmc.cache.BaseInfoCache"></bean> -->
     
 	<!-- 配置myBatis的sqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
