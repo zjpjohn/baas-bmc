@@ -24,8 +24,8 @@
 	<dubbo:registry protocol="${dubbo.registry.protocol}"
 		address="${dubbo.registry.address}" file="${dubbo.registry.file}" />
 
-	<dubbo:reference id="iPriceMakingSV"
-		interface="com.ai.baas.bmc.api.pricemaking.interfaces.IPriceMakingSV" />
+	<dubbo:reference id="iPricemakingSV"
+		interface="com.ai.baas.bmc.api.pricemaking.interfaces.IPricemakingSV" />
 	<dubbo:reference id="IAcctInfoSV"
 		interface="com.ai.baas.bmc.api.acctinfo.interfaces.IAcctInfoSV" />
 
