@@ -15,7 +15,7 @@ CLASSPATH="${CONF_PATH}:${CLASSPATH}"
 echo $CLASSPATH
 
 JAVA_OPTIONS=" -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dsun.net.inetaddr.ttl=10"
-MEM_ARGS="-Xms256m -Xmx512m -XX:PermSize=64M -XX:MaxPermSize=128M"
+MEM_ARGS="-Xms256m -Xmx512m  "
 
 START_CMD=" ${MEM_ARGS} -Ddubbo.registry.address=${REST_REGISTRY_ADDR} -Ddubbo.protocol.port=${REST_PORT} -Ddubbo.protocol.contextpath=${CONTEXT_PATH} -Ddubbo.protocol=${PROTOCOL}  ${JAVA_OPTIONS} com.ai.opt.sdk.appserver.DubboServiceStart >> $LOG_PATH & 2>&1&"
 
