@@ -20,6 +20,7 @@ import com.ai.baas.bmc.api.orderinfo.params.ProductExt;
 import com.ai.baas.bmc.service.business.interfaces.IOrderinfoBusiSV;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.alibaba.fastjson.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/context/core-context.xml" })
@@ -83,7 +84,7 @@ public class OrderInfoSVDubboTest {
 
         IOrderInfoSV sv = DubboConsumerFactory.getService(IOrderInfoSV.class);
         BaseResponse baseResponse = sv.orderInfo(request);
-        System.out.println(baseResponse);
+        System.out.println(JSON.toJSONString(baseResponse));
         System.out.println("success");
     }
 }

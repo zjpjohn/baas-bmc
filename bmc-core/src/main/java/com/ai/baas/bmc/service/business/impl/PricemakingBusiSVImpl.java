@@ -108,8 +108,8 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
             }
             // 查询定价价格规则表
             CpPricemakingRuleCriteria criteria = new CpPricemakingRuleCriteria();
-            criteria.createCriteria().andTenantIdEqualTo(tenantId).andPriceProductTypeEqualTo(priceType)
-                    .andPriceProductIdEqualTo(priceProductId)
+            criteria.createCriteria().andTenantIdEqualTo(tenantId)
+                    .andPriceProductTypeEqualTo(priceType).andPriceProductIdEqualTo(priceProductId)
                     .andPriceTypeEqualTo(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR)
                     .andActiveTimeLessThan(sysdate).andInactiveTimeGreaterThanOrEqualTo(sysdate);
             List<CpPricemakingRule> cpPricemakingRules = cpPricemakingRuleMapper
@@ -136,11 +136,15 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
                         variables.put(extInfo.getExtName(), extInfo.getExtValue());
                     }
                 }
-                @SuppressWarnings("unchecked")
-                Map<String, String> extConst = (Map<String, String>) JSON.parse(cpPricemakingRule
-                        .getExtInfo());
-                for (Entry<String, String> entry : extConst.entrySet()) {
-                    variables.put(entry.getKey(), entry.getValue());
+                if (!StringUtil.isBlank(cpPricemakingRule.getExtInfo())) {
+                    @SuppressWarnings("unchecked")
+                    Map<String, String> extConst = (Map<String, String>) JSON
+                            .parse(cpPricemakingRule.getExtInfo());
+                    if (extConst != null) {
+                        for (Entry<String, String> entry : extConst.entrySet()) {
+                            variables.put(entry.getKey(), entry.getValue());
+                        }
+                    }
                 }
                 // 表达式
                 String expression = cpPricemakingRule.getRuleExpresion();
@@ -157,7 +161,7 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
             }
 
             FeeInfo feeInfo = new FeeInfo();
-            feeInfo.setPrice(price);
+            feeInfo.setPrice(String.valueOf(Double.parseDouble(price) / 1000));
             List<FeeInfo> feeInfos = new ArrayList<FeeInfo>();
             feeInfos.add(feeInfo);
             PriceInfo priceInfo = new PriceInfo();

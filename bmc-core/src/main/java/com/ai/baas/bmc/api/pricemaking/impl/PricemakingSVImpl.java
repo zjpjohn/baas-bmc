@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.pricemaking.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -72,14 +73,38 @@ public class PricemakingSVImpl implements IPricemakingSV {
 
     private List<CostInfo> assembleResponse(List<PriceInfo> priceInfoList) {
         List<CostInfo> costInfos = new ArrayList<CostInfo>();
+        Map<String, List<FeeInfo>> map = new HashMap<String, List<FeeInfo>>();
         for (PriceInfo priceInfo : priceInfoList) {
+            String listId = priceInfo.getListId();
+            if (map.containsKey(listId)) {
+                map.get(listId).addAll(priceInfo.getFeeInfos());
+            } else {
+                map.put(listId, priceInfo.getFeeInfos());
+            }
+        }
+        for (Entry<String, List<FeeInfo>> entry : map.entrySet()) {
+            FeeInfo feeInfo = new FeeInfo();
+            for (FeeInfo feeInfoTmp : entry.getValue()) {
+                if (StringUtil.isBlank(feeInfo.getPrice())) {
+                    feeInfo.setPrice(feeInfoTmp.getPrice());
+                } else {
+                    feeInfo.setPrice(String.valueOf(Double.parseDouble(feeInfo.getPrice())
+                            + Double.parseDouble(feeInfoTmp.getPrice())));
+                }
+            }
+
+            List<FeeInfo> list = new ArrayList<FeeInfo>();
+            list.add(feeInfo);
+            entry.setValue(list);
+        }
+        for (Entry<String, List<FeeInfo>> entry : map.entrySet()) {
             CostInfo costInfo = new CostInfo();
-            costInfo.setList_id(priceInfo.getListId());
+            costInfo.setList_id(entry.getKey());
             List<Cost> cost = new ArrayList<Cost>();
-            for (FeeInfo feeInfo : priceInfo.getFeeInfos()) {
+            for (FeeInfo feeInfo : entry.getValue()) {
                 Cost cost1 = new Cost();
                 cost1.setCost_name(feeInfo.getPriceDesc());
-                cost1.setCost_unit(feeInfo.getPriceUnit());
+                cost1.setCost_unit("元");
                 cost1.setCost_value(feeInfo.getPrice());
                 cost.add(cost1);
             }
@@ -90,29 +115,155 @@ public class PricemakingSVImpl implements IPricemakingSV {
     }
 
     private PriceElementInfo assembleRequest(PriceElementInfoZX request) {
-        PriceElementInfo priceElementInfo = new PriceElementInfo();
-        priceElementInfo.setTenantId(BmcConstants.TenantId.ZX);
         List<OrderTypeInfo> orderTypeList = new ArrayList<OrderTypeInfo>();
         for (ShoppingList shoppingList : request.getShopping_lists()) {
-            List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
-            @SuppressWarnings("unchecked")
-            Map<String, String> map = (Map<String, String>) JSON
-                    .parse(shoppingList.getParameters());
-            for (Entry<String, String> entry : map.entrySet()) {
+            String service_id = shoppingList.getService_id();
+            if (BmcConstants.ZxServiceId.ECS.equals(service_id)) {
+                assembleEcsPriceElementInfo(orderTypeList, shoppingList);
+            } else if (BmcConstants.ZxServiceId.RDS.equals(service_id)) {
+                List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
+                @SuppressWarnings("unchecked")
+                Map<String, String> map = (Map<String, String>) JSON.parse(shoppingList
+                        .getParameters());
+                for (Entry<String, String> entry : map.entrySet()) {
+                    ElementInfo elementInfo = new ElementInfo();
+                    elementInfo.setName(entry.getKey());
+                    elementInfo.setValue(entry.getValue());
+                    elementInfoList.add(elementInfo);
+                }
+                OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
+                orderTypeInfo.setElementInfoList(elementInfoList);
+                orderTypeInfo
+                        .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.ECS_INSTANCE);
+                orderTypeList.add(orderTypeInfo);
+            } else if (BmcConstants.ZxServiceId.CS.equals(service_id)) {
+            } else if (BmcConstants.ZxServiceId.OSS.equals(service_id)) {
+            } else if (BmcConstants.ZxServiceId.ONS.equals(service_id)) {
+            } else if (BmcConstants.ZxServiceId.KVS.equals(service_id)) {
+            } else {
+                throw new BusinessException("暂不支持此类定价:[" + service_id + "]");
+            }
+        }
+
+        PriceElementInfo priceElementInfo = new PriceElementInfo();
+        priceElementInfo.setTenantId(BmcConstants.TenantId.ZX);
+        priceElementInfo.setOrderTypeList(orderTypeList);
+        return priceElementInfo;
+    }
+
+    private void assembleEcsPriceElementInfo(List<OrderTypeInfo> orderTypeList,
+            ShoppingList shoppingList) {
+        String listId = shoppingList.getList_id();
+        // 实例（一个）
+        List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
+        @SuppressWarnings("unchecked")
+        Map<String, String> map = (Map<String, String>) JSON.parse(shoppingList.getParameters());
+        for (Entry<String, String> entry : map.entrySet()) {
+            if (BmcConstants.CpPricemakingFactor.FactorName.REGION_ID.equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.INSTANCE_TYPE.equals(entry
+                            .getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.INSTANCE_CHARGE_TYPE
+                            .equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.PERIOD.equals(entry.getKey())) {
                 ElementInfo elementInfo = new ElementInfo();
                 elementInfo.setName(entry.getKey());
                 elementInfo.setValue(entry.getValue());
                 elementInfoList.add(elementInfo);
             }
-            OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
-            orderTypeInfo.setListId(shoppingList.getList_id());
-            orderTypeInfo.setElementInfoList(elementInfoList);
-            orderTypeInfo.setPriceType(BusinessUtil.getPriceTypeByServiceId(shoppingList
-                    .getService_id()));
-            orderTypeList.add(orderTypeInfo);
         }
-        priceElementInfo.setOrderTypeList(orderTypeList);
-        return priceElementInfo;
+        OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
+        orderTypeInfo.setListId(listId);
+        orderTypeInfo.setElementInfoList(elementInfoList);
+        orderTypeInfo.setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.ECS_INSTANCE);
+        orderTypeList.add(orderTypeInfo);
+        // 系统盘一个
+        elementInfoList = new ArrayList<ElementInfo>();
+        for (Entry<String, String> entry : map.entrySet()) {
+            if (BmcConstants.CpPricemakingFactor.FactorName.REGION_ID.equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.SYSTEM_DISK_CATEGORY
+                            .equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.SYSTEM_DISK_SIZE.equals(entry
+                            .getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.INSTANCE_CHARGE_TYPE
+                            .equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.PERIOD.equals(entry.getKey())) {
+                ElementInfo elementInfo = new ElementInfo();
+                elementInfo.setName(entry.getKey());
+                elementInfo.setValue(entry.getValue());
+                elementInfoList.add(elementInfo);
+            }
+        }
+        orderTypeInfo = new OrderTypeInfo();
+        orderTypeInfo.setListId(listId);
+        orderTypeInfo.setElementInfoList(elementInfoList);
+        orderTypeInfo
+                .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.ECS_SYSTEM_DISK);
+        orderTypeList.add(orderTypeInfo);
+        // 数据盘多个
+        Map<String, Map<String, String>> dataDickMap = new HashMap<String, Map<String, String>>();
+        for (Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().startsWith("DataDisk")) {
+                String seq = entry.getKey().split("\\.")[1];
+                if (dataDickMap.containsKey(seq)) {
+                    dataDickMap.get(seq).put(entry.getKey().replace(seq, "n"), entry.getValue());
+                } else {
+                    Map<String, String> mapTmp = new HashMap<String, String>();
+                    mapTmp.put(entry.getKey().replace(seq, "n"), entry.getValue());
+                    dataDickMap.put(seq, mapTmp);
+                }
+            }
+        }
+        if (!dataDickMap.isEmpty()) {
+            for (Entry<String, Map<String, String>> entry : dataDickMap.entrySet()) {
+                for (Entry<String, String> entry1 : map.entrySet()) {
+                    if (BmcConstants.CpPricemakingFactor.FactorName.REGION_ID.equals(entry1
+                            .getKey())
+                            || BmcConstants.CpPricemakingFactor.FactorName.INSTANCE_CHARGE_TYPE
+                                    .equals(entry1.getKey())
+                            || BmcConstants.CpPricemakingFactor.FactorName.PERIOD.equals(entry1
+                                    .getKey())) {
+                        entry.getValue().put(entry1.getKey(), entry1.getValue());
+                    }
+                }
+            }
+            elementInfoList = new ArrayList<ElementInfo>();
+            for (Entry<String, Map<String, String>> entry : dataDickMap.entrySet()) {
+                for (Entry<String, String> entry2 : entry.getValue().entrySet()) {
+                    ElementInfo elementInfo = new ElementInfo();
+                    elementInfo.setName(entry2.getKey());
+                    elementInfo.setValue(entry2.getValue());
+                    elementInfoList.add(elementInfo);
+                }
+                orderTypeInfo = new OrderTypeInfo();
+                orderTypeInfo.setListId(listId);
+                orderTypeInfo.setElementInfoList(elementInfoList);
+                orderTypeInfo
+                        .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.ECS_DATA_DISK);
+                orderTypeList.add(orderTypeInfo);
+            }
+        }
+        // 网络一个
+        elementInfoList = new ArrayList<ElementInfo>();
+        for (Entry<String, String> entry : map.entrySet()) {
+            if (BmcConstants.CpPricemakingFactor.FactorName.REGION_ID.equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.INTERNET_CHARGE_TYPE
+                            .equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.INTERNET_MAX_BANDWIDTH_OUT
+                            .equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.INSTANCE_CHARGE_TYPE
+                            .equals(entry.getKey())
+                    || BmcConstants.CpPricemakingFactor.FactorName.PERIOD.equals(entry.getKey())) {
+                ElementInfo elementInfo = new ElementInfo();
+                elementInfo.setName(entry.getKey());
+                elementInfo.setValue(entry.getValue());
+                elementInfoList.add(elementInfo);
+            }
+        }
+        orderTypeInfo = new OrderTypeInfo();
+        orderTypeInfo.setListId(listId);
+        orderTypeInfo.setElementInfoList(elementInfoList);
+        orderTypeInfo.setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.ECS_BANDWITH);
+        orderTypeList.add(orderTypeInfo);
     }
 
     @Override

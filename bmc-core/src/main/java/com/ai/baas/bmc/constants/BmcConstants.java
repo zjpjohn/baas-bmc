@@ -89,6 +89,58 @@ public final class BmcConstants {
 
     }
 
+    public static final class ZxServiceId {
+
+        public static final String ECS = "576206bb6ae6ca04e145958d";
+
+        public static final String RDS = "5762107c6ae6ca04e14595b8";
+
+        public static final String CS = "57721abd2fa45f06e1c013d2";
+
+        public static final String KVS = "5785e232b9aa1e3769039c19";
+
+        public static final String ONS = "57721e052fa45f06e1c013da";
+
+        public static final String OSS = "57721cb62fa45f06e1c013d6";
+
+    }
+
+    public static final class CpPricemakingFactor {
+
+        public static final class FactorName {
+
+            public static final String REGION_ID = "RegionId";
+
+            public static final String INSTANCE_TYPE = "InstanceType";
+
+            public static final String INSTANCE_CHARGE_TYPE = "InstanceChargeType";
+
+            public static final String PERIOD = "Period";
+
+            public static final String SYSTEM_DISK_CATEGORY = "SystemDisk.Category";
+
+            public static final String SYSTEM_DISK_SIZE = "SystemDisk.Size";
+
+            public static final String INTERNET_CHARGE_TYPE = "InternetChargeType";
+
+            public static final String INTERNET_MAX_BANDWIDTH_OUT = "InternetMaxBandwidthOut";
+
+        }
+
+        public static final class PriceProductType {
+
+            public static final String ECS_INSTANCE = "ECS-INSTANCE";
+
+            public static final String ECS_SYSTEM_DISK = "ECS-SYSTEM-DISK";
+
+            public static final String ECS_DATA_DISK = "ECS-DATA-DISK";
+
+            public static final String ECS_BANDWITH = "ECS-BANDWITH";
+
+        }
+
+    }
+
     private BmcConstants() {
 
     }
