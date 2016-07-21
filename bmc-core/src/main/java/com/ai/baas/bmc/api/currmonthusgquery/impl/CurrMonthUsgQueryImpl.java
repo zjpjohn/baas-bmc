@@ -52,9 +52,9 @@ public class CurrMonthUsgQueryImpl implements ICurrMonthUsgQuery{
 		if(StringUtil.isBlank(req.getSubsId())){
 			throw new BusinessException(ExceptCodeConstant.PARAM_IS_NULL,"[用户ID参数不能为空]");
 		}
-		if(StringUtil.isBlank(req.getApnCode())){
+		/*if(StringUtil.isBlank(req.getApnCode())){
 			throw new BusinessException(ExceptCodeConstant.PARAM_IS_NULL,"[ApnCode参数不能为空]");
-		}
+		}*/
 		LOGGER.info("query param:"+JSON.toJSONString(req));
 		return currMonthUsgQuerySV.currMonthUsgQuery(req);
 	}

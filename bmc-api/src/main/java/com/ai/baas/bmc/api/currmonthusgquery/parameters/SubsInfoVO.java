@@ -65,5 +65,11 @@ public class SubsInfoVO implements Serializable{
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
+
+	@Override
+	public String toString() {
+		return "SubsInfoVO [subsId=" + subsId + ", serviceType=" + serviceType + ", serviceNum=" + serviceNum
+				+ ", productList=" + productList + ", amount=" + amount + "]";
+	}
 	
 }

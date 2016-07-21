@@ -65,6 +65,12 @@ public class ProductVO implements Serializable{
 	public void setProductAmount(String productAmount) {
 		this.productAmount = productAmount;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductVO [productId=" + productId + ", visitArea=" + visitArea + ", resType=" + resType + ", amount="
+				+ amount + ", productAmount=" + productAmount + "]";
+	}
 	
 	
 }

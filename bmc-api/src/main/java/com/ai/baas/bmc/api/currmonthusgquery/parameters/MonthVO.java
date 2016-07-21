@@ -44,6 +44,11 @@ public class MonthVO implements Serializable {
 	public void setSubList(List<SubsInfoVO> subList) {
 		this.subList = subList;
 	}
+
+	@Override
+	public String toString() {
+		return "MonthVO [beginMonth=" + beginMonth + ", custId=" + custId + ", subList=" + subList + "]";
+	}
 	
 	
 }

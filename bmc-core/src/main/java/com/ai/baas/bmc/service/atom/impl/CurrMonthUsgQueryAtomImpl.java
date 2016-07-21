@@ -47,16 +47,21 @@ public class CurrMonthUsgQueryAtomImpl implements ICurrMonthUsgQueryAtom {
 	@Override
 	public CurrMonthUsgQueryResp currMonthUsgQuery(CurrMonthUsgQueryReq req) {
 		CurrMonthUsgQueryResp resp = new CurrMonthUsgQueryResp();
-		
+		//租户ID
 		resp.setTenantId(req.getTenantId());
+		//消息流水
 		resp.setMsgSeq(req.getMsgSeq());
 		//resp.setSystemId(req.getSystemId());
 
 		String tenantId = req.getTenantId();
 		//String systemId = req.getSystemId();
+		//客户ID
 		String custId = req.getCustId();
+		//用户订购标识
 		String subsId = req.getSubsId();
+		//服务号码
 		String serviceNum = req.getServiceNum();
+		//通道类型
 		String apnCode = req.getApnCode();
 		Map<String,List<StatYyyymm>> statMap = new HashMap<String,List<StatYyyymm>>();
 		List<String> tbSufixs = getTbSufixs(req.getBeginMonth(),req.getEndMonth());
@@ -76,7 +81,7 @@ public class CurrMonthUsgQueryAtomImpl implements ICurrMonthUsgQueryAtom {
 			if(!StringUtil.isBlank(serviceNum)){
 				criteria.andServiceNumEqualTo(serviceNum);
 			}
-			if(!StringUtil.isBlank(apnCode)){
+			if(!StringUtil.isBlank(apnCode)&&apnCode!="ALL"){
 				criteria.andSourceEqualTo(apnCode);
 			}
 			
