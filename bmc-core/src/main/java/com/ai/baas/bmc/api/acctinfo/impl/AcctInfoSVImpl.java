@@ -20,20 +20,12 @@ public class AcctInfoSVImpl implements IAcctInfoSV{
 			.getLogger(AcctInfoSVImpl.class);
 	@Autowired
 	private IAcctInfoBusiness iAcctInfoBusiness;
+	@Override
 	public ResponseMessage getAcctInfo(AcctQueryRequest acctQueryRequest) 
 			throws BusinessException, SystemException{
-		if (null == acctQueryRequest) {
-			log.debug("addProduct() vo = [null]");
-			return null;
-		} else {
-			log.debug("addProduct() vo = " + acctQueryRequest.toString() + "]");
+		if(StringUtil.isBlank(acctQueryRequest.getTenantId())){
+			throw new BusinessException("TenantId不可为空");
 		}
-		if(null == acctQueryRequest.getTenantId() || StringUtil.isBlank(acctQueryRequest.getTenantId())){
-			throw new BusinessException("tenantId is not null", "租户id不能为空");
-		}
-//		if(null == acctQueryRequest.getCustID() || StringUtil.isBlank(acctQueryRequest.getCustID())){
-//			throw new BusinessException("custID is not null", "客户id不能为空");
-//		}
 		return iAcctInfoBusiness.getAcctInfo(acctQueryRequest);
 	}
 

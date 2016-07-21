@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.BaseInfo.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.ai.baas.bmc.api.baseInfo.interfaces.IBaseInfoSV;
 import com.ai.baas.bmc.api.baseInfo.params.BaseCodeInfo;
@@ -13,6 +14,7 @@ import com.ai.opt.base.exception.SystemException;
 import com.alibaba.dubbo.config.annotation.Service;
 
 @Service(validation="true")
+@Component
 public class BaseInfoSVImpl implements IBaseInfoSV {
 
 	@Autowired

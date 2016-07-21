@@ -17,16 +17,7 @@ import com.alibaba.fastjson.JSON;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/context/core-context.xml"})
 public class BaseInfoTest {
-	    @Autowired
-	    protected ApplicationContext ctx;
-
-	    public <T> T getBean(Class<T> type) {
-	        return ctx.getBean(type);
-	    }
-
-	    public Object getBean(String beanName) {
-	        return ctx.getBean(beanName);
-	    }
+	
 	    @Autowired
 	    IBaseInfoSV iBaseInfoSV;
 	    @Test

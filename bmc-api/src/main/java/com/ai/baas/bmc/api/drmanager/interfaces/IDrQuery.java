@@ -121,6 +121,7 @@ public interface IDrQuery
      * @author zhanghy6
      * @ApiDocMethod
      * @ApiCode BMC-0001
+     * @RestRelativeURL drQuery/drQuery
      */
 	 @POST
 	 @Path("/drQuery")
@@ -136,6 +137,7 @@ public interface IDrQuery
      * @author zhangzd
      * @ApiDocMethod
      * @ApiCode BMC-0002
+     * @RestRelativeURL drQuery/drQueryObj
      */
 	 @POST
 	 @Path("/drQueryObj")
@@ -181,6 +183,7 @@ public interface IDrQuery
      * @author zhanghy6
      * @ApiDocMethod
      * @ApiCode BMC-0003
+     * @RestRelativeURL drQuery/drQueryObj
      */
 	 @POST
 	 @Path("/billQuery")
@@ -195,6 +198,7 @@ public interface IDrQuery
      * @author zhanghy6
      * @ApiDocMethod
      * @ApiCode BMC-0004
+     * @RestRelativeURL drQuery/drQueryObj
      */
 	 @POST
 	 @Path("/billQueryObj")
@@ -236,6 +240,7 @@ public interface IDrQuery
      * @author zhanghy6
      * @ApiDocMethod
      * @ApiCode BMC-0005
+     * @RestRelativeURL drQuery/useQuantityQuery
      */
 	 @POST
 	 @Path("/useQuantityQuery")
@@ -250,6 +255,7 @@ public interface IDrQuery
      * @author zhanghy6
      * @ApiDocMethod
      * @ApiCode BMC-0006
+     * @RestRelativeURL drQuery/useQuantityQueryObj
      */
 	 @POST
 	 @Path("/useQuantityQueryObj")
@@ -279,6 +285,7 @@ public interface IDrQuery
      * @author zhanghy6
      * @ApiDocMethod
      * @ApiCode BMC-0007
+     * @RestRelativeURL drQuery/operatorFlowQuery
      */
 	 @POST
 	 @Path("/operatorFlowQuery")
@@ -294,6 +301,7 @@ public interface IDrQuery
      * @author zhanghy6
      * @ApiDocMethod
      * @ApiCode BMC-0008
+     * @RestRelativeURL drQuery/operatorFlowQueryObj
      */
 	 @POST
 	 @Path("/operatorFlowQueryObj")
