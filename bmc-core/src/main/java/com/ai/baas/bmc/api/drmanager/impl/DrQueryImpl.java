@@ -1293,7 +1293,7 @@ public class DrQueryImpl implements IDrQuery {
 			//获取数据库配置信息
 			Properties properties = new Properties();
 			//加载配置文件
-			properties.load(DrQueryImpl.class.getClassLoader().getResourceAsStream("./context/jdbc.properties"));
+//			properties.load(DrQueryImpl.class.getClassLoader().getResourceAsStream("./context/jdbc.properties"));
 			//获取配置文件里的配置信息
 			drqdriver = properties.getProperty("jdbc.driverClassName");
 			drqurl = properties.getProperty("jdbc.url");
@@ -1305,9 +1305,6 @@ public class DrQueryImpl implements IDrQuery {
 			//加载驱动
 			Class.forName(drqdriver);
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("context", e);
-			//e.printStackTrace();
-		} catch (IOException e) {
 			throw new RuntimeException("context", e);
 			//e.printStackTrace();
 		}
