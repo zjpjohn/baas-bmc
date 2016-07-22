@@ -83,8 +83,9 @@ public class CurrMonthUsgQueryAtomImpl implements ICurrMonthUsgQueryAtom {
 			}
 			if(!StringUtil.isBlank(apnCode)&&apnCode!="ALL"){
 				criteria.andSourceEqualTo(apnCode);
+				System.out.println(apnCode);
 			}
-			
+			System.out.println("========="+apnCode);
 			List<StatYyyymm> list = statYyyymmMapper.selectByExample(tbPre, tbSufix, example);
 			statMap.put(tbSufix, list);
 			
