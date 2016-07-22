@@ -1286,16 +1286,29 @@ public class DrQueryImpl implements IDrQuery {
     private static String drqZookeeperUrl = null;
 
     static {
-        //获取数据库配置信息
-        Properties properties = new Properties();
-        //加载配置文件
-//			properties.load(DrQueryImpl.class.getClassLoader().getResourceAsStream("./context/jdbc.properties"));
-        //获取配置文件里的配置信息
-        drqdriver = properties.getProperty("jdbc.driverClassName");
-        drqurl = properties.getProperty("jdbc.url");
-        drquser = properties.getProperty("jdbc.username");
-        drqpassword = properties.getProperty("jdbc.password");
-        
-        drqZookeeperUrl = properties.getProperty("jdbc.drqZookeeperUrl");
+        //可以保证只加载一次，而且调用的时候肯定已经加载完成
+    	//context =new ClassPathXmlApplicationContext("./context/core-context.xml");
+		//可以保证只加载一次，而且调用的时候肯定已经加载完成
+		try {
+			//获取数据库配置信息
+			Properties properties = new Properties();
+			//加载配置文件
+			properties.load(DrQueryImpl.class.getClassLoader().getResourceAsStream("./context/jdbc.properties"));
+			//获取配置文件里的配置信息
+			drqdriver = properties.getProperty("jdbc.driverClassName");
+			drqurl = properties.getProperty("jdbc.url");
+			drquser = properties.getProperty("jdbc.username");
+			drqpassword = properties.getProperty("jdbc.password");
+			
+			drqZookeeperUrl = properties.getProperty("jdbc.drqZookeeperUrl");
+			
+			//加载驱动
+			Class.forName(drqdriver);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("context", e);
+			//e.printStackTrace();
+		} catch (IOException e) {
+		    throw new RuntimeException("context", e);
+        }
     }   
 }
