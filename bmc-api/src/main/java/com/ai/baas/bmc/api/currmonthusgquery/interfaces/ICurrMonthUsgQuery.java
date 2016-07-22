@@ -32,6 +32,7 @@ public interface ICurrMonthUsgQuery {
 	 * @author zhangzd
 	 * @ApiDocMethod
 	 * @ApiCode BMC-10001
+	 * @RestRelativeURL currmonthusgquery/currMonthUsgQuery
 	 */
 	@POST
     @Path("/currMonthUsgQuery")
