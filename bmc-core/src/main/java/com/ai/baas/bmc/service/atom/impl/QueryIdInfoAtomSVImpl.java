@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ai.baas.bmc.api.queryidinfo.params.BlAcctInfoInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.BlCustinfoInfo;
+import com.ai.baas.bmc.api.queryidinfo.params.CustIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.ExtCustIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.OwnerIDInfo;
 import com.ai.baas.bmc.dao.interfaces.BlAcctInfoMapper;
@@ -67,6 +68,26 @@ public class QueryIdInfoAtomSVImpl implements IQueryIdInfoAtomSV {
             }
         }
         return blAcctInfoInfos;
+    }
+
+    @Override
+    public List<BlCustinfoInfo> queryBlCustinfoByCustId(CustIdInfo custIdInfo) {
+        List<BlCustinfoInfo> blCustinfoInfos = new ArrayList<BlCustinfoInfo>();
+        BlCustinfoCriteria blCustinfoCriteria = new BlCustinfoCriteria();
+        BlCustinfoCriteria.Criteria criteria = blCustinfoCriteria.createCriteria();
+        criteria.andTenantIdEqualTo(custIdInfo.getTenantId());
+        criteria.andCustIdEqualTo(custIdInfo.getCustId());
+        List<BlCustinfo> blCustinfos = blCustinfoMapper.selectByExample(blCustinfoCriteria);
+        if (CollectionUtil.isEmpty(blCustinfos)) {
+            return null;
+        } else {
+            for (int i = 0; i < blCustinfos.size(); i++) {
+                BlCustinfoInfo blCustinfoInfo = new BlCustinfoInfo();
+                BeanUtils.copyVO(blCustinfoInfo, blCustinfos.get(i));
+                blCustinfoInfos.add(blCustinfoInfo);
+            }
+        }
+        return blCustinfoInfos;
     }
 
 }
