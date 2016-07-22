@@ -17,7 +17,9 @@ import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfo;
 import com.ai.baas.bmc.api.pricemaking.params.PriceElementInfoZX;
 import com.ai.baas.bmc.api.pricemaking.params.PricemakingResponseZX;
 import com.ai.baas.bmc.api.pricemaking.params.ResponseMessage;
+import com.ai.baas.bmc.api.pricemaking.params.ShoppingList;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.dubbo.util.HttpClientUtil;
 import com.alibaba.fastjson.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,6 +27,36 @@ import com.alibaba.fastjson.JSON;
 public class PricemakingSVDubboTest {
     @Autowired
     protected ApplicationContext ctx;
+
+    @Test
+    public void queryPricemakingZX() {
+
+        List<ShoppingList> shopping_lists = new ArrayList<ShoppingList>();
+        // ECS-INSTANCE
+        String parameters1 = "{\"InstanceChargeType\":\"PostPaid\",\"InstanceType\":\"ecs.n1.tiny\",\"RegionId\":\"cn-hangzhou\",\"DataDisk.1.Category\":\"cloud\",\"SystemDisk.Category\":\"cloud\", \"InternetMaxBandwidthOut\":\"12\", \"InternetChargeType\":\"PayByTraffic\", \"DataDisk.1.Size\":\"13\", \"SystemDisk.Size\":\"14\"}";
+
+        ShoppingList shoppingList1 = new ShoppingList();
+        shoppingList1.setList_id("1");
+        shoppingList1.setService_id("576206bb6ae6ca04e145958d");
+        shoppingList1.setParameters(parameters1);
+
+        shopping_lists.add(shoppingList1);
+        // RDS
+        String parameters2 = "{\"RegionId\":\"cn-hangzhou\", \"Engine\":\"SQLServer\", \"DBInstanceClass\":\"rds.mysql.t1.small\", \"DBInstanceStorage\":\"50\", \"DBInstanceNetType\":\"Internet\", \"PayType\":\"Postpaid\", \"UsedTime\":\"2\"}";
+
+        ShoppingList shoppingList2 = new ShoppingList();
+        shoppingList2.setList_id("2");
+        shoppingList2.setService_id("5762107c6ae6ca04e14595b8");
+        shoppingList2.setParameters(parameters2);
+
+        shopping_lists.add(shoppingList2);
+
+        PriceElementInfoZX request = new PriceElementInfoZX();
+        request.setShopping_lists(shopping_lists);
+        System.out.println(JSON.toJSONString(request));
+        System.out.println("success");
+
+    }
 
     @Test
     public void queryPriceMaking() {
