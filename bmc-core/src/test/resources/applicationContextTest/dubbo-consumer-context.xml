@@ -23,7 +23,7 @@
 	<dubbo:application name="consumer-of-baas-bmc-test" />
 	<dubbo:registry protocol="${dubbo.registry.protocol}"
 		address="${dubbo.registry.address}" file="${dubbo.registry.file}" />
-
+	<dubbo:consumer check="false" />
 	<dubbo:reference id="iPricemakingSV"
 		interface="com.ai.baas.bmc.api.pricemaking.interfaces.IPricemakingSV" />
 	<dubbo:reference id="IAcctInfoSV"
