@@ -76,7 +76,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 @Service
-@Component
 public class DrQueryImpl implements IDrQuery {
     private static final Logger log = LogManager.getLogger(DrQueryImpl.class);
     
