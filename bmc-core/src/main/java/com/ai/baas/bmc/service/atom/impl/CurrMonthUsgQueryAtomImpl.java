@@ -81,7 +81,8 @@ public class CurrMonthUsgQueryAtomImpl implements ICurrMonthUsgQueryAtom {
 			if(!StringUtil.isBlank(serviceNum)){
 				criteria.andServiceNumEqualTo(serviceNum);
 			}
-			if(!StringUtil.isBlank(apnCode)&&apnCode!="ALL"){
+//			if(!StringUtil.isBlank(apnCode)&&apnCode!="ALL")
+			if ((!StringUtil.isBlank(apnCode)) && (!apnCode.equals("ALL")))			{
 				criteria.andSourceEqualTo(apnCode);
 				System.out.println(apnCode);
 			}
