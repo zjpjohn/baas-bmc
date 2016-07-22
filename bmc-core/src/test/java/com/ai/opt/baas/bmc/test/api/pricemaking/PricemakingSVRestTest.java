@@ -47,7 +47,7 @@ public class PricemakingSVRestTest {
         request.setShopping_lists(shopping_lists);
 
         String s = HttpClientUtil.sendPost(
-                "http://172.18.0.13:10884/baas-bmc/pricemaking/queryPricemakingZX",
+                "http://127.0.0.1:10884/baas-bmc/pricemaking/queryPricemakingZX",
                 JSON.toJSONString(request));
         System.out.println("定价查询接口返回结果: " + s);
         System.out.println("success");

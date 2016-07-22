@@ -57,12 +57,16 @@ public class PricemakingSVImpl implements IPricemakingSV {
                         "parameters不能为空");
             }
         }
-        // 参数转换
-        PriceElementInfo priceElementInfo = assembleRequest(request);
-        // 业务层实现
-        List<PriceInfo> priceInfoList = iPricemakingBusiSV.queryPricemaking(priceElementInfo);
-        // 参数转换
-        List<CostInfo> detail_costs = assembleResponse(priceInfoList);
+        List<CostInfo> detail_costs = new ArrayList<CostInfo>();
+        for (ShoppingList shoppingList : request.getShopping_lists()) {
+            // 参数转换
+            PriceElementInfo priceElementInfo = assembleRequest(shoppingList);
+            // 业务层实现
+            List<PriceInfo> priceInfoList = iPricemakingBusiSV.queryPricemaking(priceElementInfo);
+            // 参数转换
+            List<CostInfo> detail_costs1 = assembleResponse(priceInfoList);
+            detail_costs.addAll(detail_costs1);
+        }
 
         PricemakingResponseZX response = new PricemakingResponseZX();
         response.setResponseHeader(new ResponseHeader(true, ExceptCodeConstants.Special.SUCCESS,
@@ -72,77 +76,62 @@ public class PricemakingSVImpl implements IPricemakingSV {
     }
 
     private List<CostInfo> assembleResponse(List<PriceInfo> priceInfoList) {
-        List<CostInfo> costInfos = new ArrayList<CostInfo>();
-        Map<String, List<FeeInfo>> map = new HashMap<String, List<FeeInfo>>();
-        for (PriceInfo priceInfo : priceInfoList) {
-            String listId = priceInfo.getListId();
-            if (map.containsKey(listId)) {
-                map.get(listId).addAll(priceInfo.getFeeInfos());
-            } else {
-                map.put(listId, priceInfo.getFeeInfos());
-            }
-        }
-        for (Entry<String, List<FeeInfo>> entry : map.entrySet()) {
-            FeeInfo feeInfo = new FeeInfo();
-            for (FeeInfo feeInfoTmp : entry.getValue()) {
-                if (StringUtil.isBlank(feeInfo.getPrice())) {
-                    feeInfo.setPrice(feeInfoTmp.getPrice());
-                } else {
-                    feeInfo.setPrice(String.valueOf(Double.parseDouble(feeInfo.getPrice())
-                            + Double.parseDouble(feeInfoTmp.getPrice())));
-                }
-            }
+        PriceInfo priceInfo = priceInfoList.get(0);
 
-            List<FeeInfo> list = new ArrayList<FeeInfo>();
-            list.add(feeInfo);
-            entry.setValue(list);
-        }
-        for (Entry<String, List<FeeInfo>> entry : map.entrySet()) {
-            CostInfo costInfo = new CostInfo();
-            costInfo.setList_id(entry.getKey());
-            List<Cost> cost = new ArrayList<Cost>();
-            for (FeeInfo feeInfo : entry.getValue()) {
-                Cost cost1 = new Cost();
-                cost1.setCost_name(feeInfo.getPriceDesc());
-                cost1.setCost_unit("元");
+        Cost cost1 = new Cost();
+        for (FeeInfo feeInfo : priceInfo.getFeeInfos()) {
+            if (StringUtil.isBlank(cost1.getCost_value())) {
                 cost1.setCost_value(feeInfo.getPrice());
-                cost.add(cost1);
+            } else {
+                cost1.setCost_value(String.valueOf(Double.parseDouble(cost1.getCost_value())
+                        + Double.parseDouble(feeInfo.getPrice())));
             }
-            costInfo.setCost(cost);
-            costInfos.add(costInfo);
+            cost1.setCost_name(feeInfo.getPriceDesc());
+            cost1.setCost_unit("元");
         }
+
+        List<Cost> cost = new ArrayList<Cost>();
+        cost.add(cost1);
+
+        CostInfo costInfo = new CostInfo();
+        costInfo.setList_id(priceInfo.getListId());
+        costInfo.setCost(cost);
+
+        List<CostInfo> costInfos = new ArrayList<CostInfo>();
+        costInfos.add(costInfo);
+
         return costInfos;
     }
 
-    private PriceElementInfo assembleRequest(PriceElementInfoZX request) {
+    private PriceElementInfo assembleRequest(ShoppingList shoppingList) {
         List<OrderTypeInfo> orderTypeList = new ArrayList<OrderTypeInfo>();
-        for (ShoppingList shoppingList : request.getShopping_lists()) {
-            String service_id = shoppingList.getService_id();
-            if (BmcConstants.ZxServiceId.ECS.equals(service_id)) {
-                assembleEcsPriceElementInfo(orderTypeList, shoppingList);
-            } else if (BmcConstants.ZxServiceId.RDS.equals(service_id)) {
-                List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
-                @SuppressWarnings("unchecked")
-                Map<String, String> map = (Map<String, String>) JSON.parse(shoppingList
-                        .getParameters());
-                for (Entry<String, String> entry : map.entrySet()) {
-                    ElementInfo elementInfo = new ElementInfo();
-                    elementInfo.setName(entry.getKey());
-                    elementInfo.setValue(entry.getValue());
-                    elementInfoList.add(elementInfo);
-                }
-                OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
-                orderTypeInfo.setElementInfoList(elementInfoList);
-                orderTypeInfo
-                        .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.ECS_INSTANCE);
-                orderTypeList.add(orderTypeInfo);
-            } else if (BmcConstants.ZxServiceId.CS.equals(service_id)) {
-            } else if (BmcConstants.ZxServiceId.OSS.equals(service_id)) {
-            } else if (BmcConstants.ZxServiceId.ONS.equals(service_id)) {
-            } else if (BmcConstants.ZxServiceId.KVS.equals(service_id)) {
-            } else {
-                throw new BusinessException("暂不支持此类定价:[" + service_id + "]");
+        String service_id = shoppingList.getService_id();
+        if (BmcConstants.ZxServiceId.ECS.equals(service_id)) {
+            assembleEcsPriceElementInfo(orderTypeList, shoppingList);
+        } else if (BmcConstants.ZxServiceId.RDS.equals(service_id)) {
+            List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
+            @SuppressWarnings("unchecked")
+            Map<String, String> map = (Map<String, String>) JSON
+                    .parse(shoppingList.getParameters());
+            for (Entry<String, String> entry : map.entrySet()) {
+                ElementInfo elementInfo = new ElementInfo();
+                elementInfo.setName(entry.getKey());
+                elementInfo.setValue(entry.getValue());
+                elementInfoList.add(elementInfo);
             }
+            OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
+            String listId = shoppingList.getList_id();
+            orderTypeInfo.setListId(listId);
+            orderTypeInfo.setElementInfoList(elementInfoList);
+            orderTypeInfo
+                    .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.ECS_INSTANCE);
+            orderTypeList.add(orderTypeInfo);
+        } else if (BmcConstants.ZxServiceId.CS.equals(service_id)) {
+        } else if (BmcConstants.ZxServiceId.OSS.equals(service_id)) {
+        } else if (BmcConstants.ZxServiceId.ONS.equals(service_id)) {
+        } else if (BmcConstants.ZxServiceId.KVS.equals(service_id)) {
+        } else {
+            throw new BusinessException("暂不支持此类定价:[" + service_id + "]");
         }
 
         PriceElementInfo priceElementInfo = new PriceElementInfo();
