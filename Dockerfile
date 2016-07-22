@@ -17,6 +17,8 @@ RUN mkdir baas-bmc-service/logs
 
 EXPOSE 10774
 
+ENV APP_HOME /baas-bmc-service
+
 CMD ["./baas-bmc-service/baas-bmc-service.sh"]
 
 
