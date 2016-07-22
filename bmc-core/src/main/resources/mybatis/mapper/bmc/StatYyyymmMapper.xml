@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.baas.bmc.dao.interfaces.StatYyyymmMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.baas.bmc.dao.mapper.bo.StatYyyymm" >
+    <id column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <id column="SUBS_ID" property="subsId" jdbcType="VARCHAR" />
+    <id column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="SERVICE_NUM" property="serviceNum" jdbcType="VARCHAR" />
+    <result column="SERVICE_TYPE" property="serviceType" jdbcType="VARCHAR" />
+    <result column="GPRS_UP" property="gprsUp" jdbcType="DOUBLE" />
+    <result column="GPRS_DOWN" property="gprsDown" jdbcType="DOUBLE" />
+    <result column="DURATION" property="duration" jdbcType="DOUBLE" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="statYyyymmCriteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CUST_ID, SUBS_ID, SOURCE, SERVICE_NUM, SERVICE_TYPE, GPRS_UP, GPRS_DOWN, DURATION, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="map" >
+    select
+    
+    <include refid="Base_Column_List" />
+    from ${tbPrefix}_stat_${currentMonth}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    
+    <if test="statYyyymmCriteria.limitStart != null and statYyyymmCriteria.limitStart>=0" >
+      limit #{statYyyymmCriteria.limitStart} , #{statYyyymmCriteria.limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.StatYyyymmKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_yyyymm
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+      and SUBS_ID = #{subsId,jdbcType=VARCHAR}
+      and SOURCE = #{source,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.StatYyyymmKey" >
+    delete from stat_yyyymm
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+      and SUBS_ID = #{subsId,jdbcType=VARCHAR}
+      and SOURCE = #{source,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.baas.bmc.dao.mapper.bo.StatYyyymmCriteria" >
+    delete from stat_yyyymm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.baas.bmc.dao.mapper.bo.StatYyyymm" >
+    insert into stat_yyyymm (CUST_ID, SUBS_ID, SOURCE, 
+      SERVICE_NUM, SERVICE_TYPE, GPRS_UP, 
+      GPRS_DOWN, DURATION, UPDATE_TIME
+      )
+    values (#{custId,jdbcType=VARCHAR}, #{subsId,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{serviceNum,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}, #{gprsUp,jdbcType=DOUBLE}, 
+      #{gprsDown,jdbcType=DOUBLE}, #{duration,jdbcType=DOUBLE}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.StatYyyymm" >
+    insert into stat_yyyymm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="subsId != null" >
+        SUBS_ID,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="serviceNum != null" >
+        SERVICE_NUM,
+      </if>
+      <if test="serviceType != null" >
+        SERVICE_TYPE,
+      </if>
+      <if test="gprsUp != null" >
+        GPRS_UP,
+      </if>
+      <if test="gprsDown != null" >
+        GPRS_DOWN,
+      </if>
+      <if test="duration != null" >
+        DURATION,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="subsId != null" >
+        #{subsId,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceNum != null" >
+        #{serviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="gprsUp != null" >
+        #{gprsUp,jdbcType=DOUBLE},
+      </if>
+      <if test="gprsDown != null" >
+        #{gprsDown,jdbcType=DOUBLE},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="map" resultType="java.lang.Integer" >
+    select count(*) ${tbPrefix}_stat_${currentMonth}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update stat_yyyymm
+    <set >
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subsId != null" >
+        SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        SOURCE = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceNum != null" >
+        SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceType != null" >
+        SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gprsUp != null" >
+        GPRS_UP = #{record.gprsUp,jdbcType=DOUBLE},
+      </if>
+      <if test="record.gprsDown != null" >
+        GPRS_DOWN = #{record.gprsDown,jdbcType=DOUBLE},
+      </if>
+      <if test="record.duration != null" >
+        DURATION = #{record.duration,jdbcType=DOUBLE},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update stat_yyyymm
+    set CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      SUBS_ID = #{record.subsId,jdbcType=VARCHAR},
+      SOURCE = #{record.source,jdbcType=VARCHAR},
+      SERVICE_NUM = #{record.serviceNum,jdbcType=VARCHAR},
+      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      GPRS_UP = #{record.gprsUp,jdbcType=DOUBLE},
+      GPRS_DOWN = #{record.gprsDown,jdbcType=DOUBLE},
+      DURATION = #{record.duration,jdbcType=DOUBLE},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.StatYyyymm" >
+    update stat_yyyymm
+    <set >
+      <if test="serviceNum != null" >
+        SERVICE_NUM = #{serviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="gprsUp != null" >
+        GPRS_UP = #{gprsUp,jdbcType=DOUBLE},
+      </if>
+      <if test="gprsDown != null" >
+        GPRS_DOWN = #{gprsDown,jdbcType=DOUBLE},
+      </if>
+      <if test="duration != null" >
+        DURATION = #{duration,jdbcType=DOUBLE},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+      and SUBS_ID = #{subsId,jdbcType=VARCHAR}
+      and SOURCE = #{source,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.baas.bmc.dao.mapper.bo.StatYyyymm" >
+    update stat_yyyymm
+    set SERVICE_NUM = #{serviceNum,jdbcType=VARCHAR},
+      SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      GPRS_UP = #{gprsUp,jdbcType=DOUBLE},
+      GPRS_DOWN = #{gprsDown,jdbcType=DOUBLE},
+      DURATION = #{duration,jdbcType=DOUBLE},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CUST_ID = #{custId,jdbcType=VARCHAR}
+      and SUBS_ID = #{subsId,jdbcType=VARCHAR}
+      and SOURCE = #{source,jdbcType=VARCHAR}
+  </update>
+</mapper>

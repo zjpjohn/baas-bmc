@@ -10,6 +10,7 @@ import com.ai.baas.bmc.api.queryidinfo.params.BlAcctInfoInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.BlAcctInfoResponse;
 import com.ai.baas.bmc.api.queryidinfo.params.BlCustinfoInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.BlCustinfoResponse;
+import com.ai.baas.bmc.api.queryidinfo.params.CustIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.ExtCustIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.OwnerIDInfo;
 import com.ai.baas.bmc.constants.ExceptCodeConstant;
@@ -83,6 +84,20 @@ public class QueryIdInfoSVImpl implements IQueryIdInfoSV {
         }
         List<BlCustinfoInfo> blCustinfoInfos = iQueryIdInfoBusiSV
                 .queryExtCustIdByAcctId(acctIdInfo);
+        ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
+        blCustinfoResponse.setResponseHeader(responseHeader);
+        blCustinfoResponse.setBlCustinfoInfos(blCustinfoInfos);
+        return blCustinfoResponse;
+    }
+
+    @Override
+    public BlCustinfoResponse queryBlCustinfoByCustId(CustIdInfo custIdInfo) {
+        BlCustinfoResponse blCustinfoResponse = new BlCustinfoResponse();
+        BusinessUtil.checkBaseInfo(custIdInfo);
+        if (StringUtil.isBlank(custIdInfo.getCustId())) {
+            throw new BusinessException("CustId不可为空");
+        }
+        List<BlCustinfoInfo> blCustinfoInfos = iQueryIdInfoAtomSV.queryBlCustinfoByCustId(custIdInfo);
         ResponseHeader responseHeader = new ResponseHeader(true, ExceptCodeConstant.SUCCESS, "成功");
         blCustinfoResponse.setResponseHeader(responseHeader);
         blCustinfoResponse.setBlCustinfoInfos(blCustinfoInfos);
