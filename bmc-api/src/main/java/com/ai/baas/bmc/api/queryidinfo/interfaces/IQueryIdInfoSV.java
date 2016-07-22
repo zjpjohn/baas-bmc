@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import com.ai.baas.bmc.api.queryidinfo.params.AcctIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.BlAcctInfoResponse;
 import com.ai.baas.bmc.api.queryidinfo.params.BlCustinfoResponse;
+import com.ai.baas.bmc.api.queryidinfo.params.CustIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.ExtCustIdInfo;
 import com.ai.baas.bmc.api.queryidinfo.params.OwnerIDInfo;
 
@@ -77,5 +78,19 @@ public interface IQueryIdInfoSV {
     @POST
     @Path("/queryExtCustIdByAcctId")
     BlCustinfoResponse queryExtCustIdByAcctId(AcctIdInfo acctIdInfo);
+
+    /**
+     * 根据外部客户id(ExtCustId)查询BlCustinfo<br>
+     * 
+     * @param extCustIdInfo
+     * @return
+     * @author wangjl9
+     * @ApiDocMethod
+     * @ApiCode
+     * @RestRelativeURL queryIdInfo/queryBlCustinfo
+     */
+    @POST
+    @Path("/queryBlCustinfo")
+    BlCustinfoResponse queryBlCustinfoByCustId(CustIdInfo extCustIdInfo);
 
 }
