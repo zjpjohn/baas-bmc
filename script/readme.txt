@@ -2,8 +2,8 @@
 1.编译打包
 gradle build -x test
 # 生成image
-docker build -t baas-bmc:1.0 ./script
-docker build -t 10.1.234.164:5000/baas-bmc:1.0 .script
+docker build -t baas-bmc:1.0 .
+docker build -t 10.1.234.164:5000/baas-bmc:1.0 .
 docker push 10.1.234.164:5000/baas-bmc:1.0
 
 3. 运行镜像
