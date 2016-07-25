@@ -103,6 +103,7 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
                     priceProductId = entry.getKey();
                 }
             }
+            LOGGER.info("定价类型[" + priceType + "]匹配出的定价产品ID为[" + priceProductId + "]");
             if (StringUtil.isBlank(priceProductId)) {
                 throw new BusinessException("未匹配出定价产品ID");
             }
