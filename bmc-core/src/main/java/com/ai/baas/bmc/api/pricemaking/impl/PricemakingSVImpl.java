@@ -125,12 +125,29 @@ public class PricemakingSVImpl implements IPricemakingSV {
             orderTypeInfo.setListId(listId);
             orderTypeInfo.setElementInfoList(elementInfoList);
             orderTypeInfo
-                    .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.ECS_INSTANCE);
+                    .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.RDS);
             orderTypeList.add(orderTypeInfo);
         } else if (BmcConstants.ZxServiceId.CS.equals(service_id)) {
         } else if (BmcConstants.ZxServiceId.OSS.equals(service_id)) {
         } else if (BmcConstants.ZxServiceId.ONS.equals(service_id)) {
         } else if (BmcConstants.ZxServiceId.KVS.equals(service_id)) {
+            List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
+            @SuppressWarnings("unchecked")
+            Map<String, String> map = (Map<String, String>) JSON
+                    .parse(shoppingList.getParameters());
+            for (Entry<String, String> entry : map.entrySet()) {
+                ElementInfo elementInfo = new ElementInfo();
+                elementInfo.setName(entry.getKey());
+                elementInfo.setValue(entry.getValue());
+                elementInfoList.add(elementInfo);
+            }
+            OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
+            String listId = shoppingList.getList_id();
+            orderTypeInfo.setListId(listId);
+            orderTypeInfo.setElementInfoList(elementInfoList);
+            orderTypeInfo
+                    .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.KVS);
+            orderTypeList.add(orderTypeInfo);
         } else {
             throw new BusinessException("暂不支持此类定价:[" + service_id + "]");
         }

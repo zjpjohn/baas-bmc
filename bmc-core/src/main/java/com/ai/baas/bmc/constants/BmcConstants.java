@@ -137,6 +137,10 @@ public final class BmcConstants {
 
             public static final String ECS_BANDWITH = "ECS-BANDWITH";
 
+            public static final String KVS = "KVS";
+
+            public static final String RDS = "RDS";
+
         }
 
     }
