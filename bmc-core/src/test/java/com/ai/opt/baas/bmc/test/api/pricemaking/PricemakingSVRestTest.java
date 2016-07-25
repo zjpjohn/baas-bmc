@@ -25,7 +25,7 @@ public class PricemakingSVRestTest {
     public void queryPricemakingZX() {
         List<ShoppingList> shopping_lists = new ArrayList<ShoppingList>();
         // ECS-INSTANCE
-        String parameters1 = "{\"InstanceChargeType\":\"PostPaid\",\"InstanceType\":\"ecs.t1.small\",\"RegionId\":\"cn-beijing\",\"DataDisk.1.Category\":\"cloud\",\"SystemDisk.Category\":\"cloud\", \"InternetMaxBandwidthOut\":\"1\", \"InternetChargeType\":\"PayByTraffic\", \"DataDisk.1.Size\":\"13\", \"SystemDisk.Size\":\"40\"}";
+        String parameters1 = "{\"InstanceChargeType\":\"PostPaid\",\"InstanceType\":\"ecs.n1.tiny\",\"RegionId\":\"cn-hangzhou\",\"DataDisk.1.Category\":\"cloud\",\"SystemDisk.Category\":\"cloud\", \"InternetMaxBandwidthOut\":\"15\", \"InternetChargeType\":\"PayByBandwidth\", \"DataDisk.1.Size\":\"13\", \"SystemDisk.Size\":\"40\"}";
         ShoppingList shoppingList1 = new ShoppingList();
         shoppingList1.setList_id("1");
         shoppingList1.setService_id("576206bb6ae6ca04e145958d");

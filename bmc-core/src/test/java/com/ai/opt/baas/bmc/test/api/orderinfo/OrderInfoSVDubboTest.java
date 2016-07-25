@@ -23,7 +23,7 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.alibaba.fastjson.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/context/core-context.xml" })
+@ContextConfiguration({ "/applicationContextTest/dubbo-consumer-context.xml" })
 public class OrderInfoSVDubboTest {
     @Autowired
     protected ApplicationContext ctx;
@@ -82,7 +82,7 @@ public class OrderInfoSVDubboTest {
         request.setOrderExtInfo(orderExtInfo);
         request.setSublist(sublist);
 
-        IOrderInfoSV sv = DubboConsumerFactory.getService(IOrderInfoSV.class);
+        IOrderInfoSV sv = ctx.getBean(IOrderInfoSV.class);
         BaseResponse baseResponse = sv.orderInfo(request);
         System.out.println(JSON.toJSONString(baseResponse));
         System.out.println("success");

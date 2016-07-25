@@ -211,6 +211,8 @@ public final class BmcConstants {
             public static final String CONST = "CONST";
 
             public static final String EXPR = "EXPR";
+
+            public static final String STEP = "STEP";
         }
     }
 }

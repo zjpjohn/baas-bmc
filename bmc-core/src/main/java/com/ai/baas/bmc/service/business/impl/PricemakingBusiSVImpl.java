@@ -30,6 +30,7 @@ import com.ai.baas.bmc.dao.interfaces.CpPricemakingRuleMapper;
 import com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRule;
 import com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRuleCriteria;
 import com.ai.baas.bmc.service.business.interfaces.IPricemakingBusiSV;
+import com.ai.baas.bmc.vo.StepInfo;
 import com.ai.baas.dshm.client.CacheFactoryUtil;
 import com.ai.baas.dshm.client.impl.CacheBLMapper;
 import com.ai.baas.dshm.client.impl.DshmClient;
@@ -158,6 +159,45 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
                     LOGGER.error("费用计算错误", e);
                     throw new SystemException("费用计算错误", e);
                 }
+            } else if (BmcConstants.CpPricemakingRule.RuleCode.STEP.equals(cpPricemakingRule
+                    .getRuleCode())) {
+                // 阶梯
+                if (StringUtil.isBlank(cpPricemakingRule.getRuleExpresion())) {
+                    throw new BusinessException("定价产品ID[" + priceProductId + "]阶梯规则为空");
+                }
+                String baseValue = "0";
+                for (ElementInfo elementInfo : elementInfos) {
+                    if (elementInfo.getName().equals(cpPricemakingRule.getExtInfo())) {
+                        baseValue = elementInfo.getValue();
+                        break;
+                    }
+                }
+                if (StringUtil.isBlank(baseValue) && !CollectionUtil.isEmpty(extInfos)) {
+                    for (ExtInfo extInfo : extInfos) {
+                        if (extInfo.getExtName().equals(cpPricemakingRule.getExtInfo())) {
+                            baseValue = extInfo.getExtValue();
+                            break;
+                        }
+                    }
+                }
+
+                double baseValueDouble = Double.parseDouble(baseValue);
+                double priceDouble = 0;
+                List<StepInfo> stepInfos = JSON.parseArray(cpPricemakingRule.getRuleExpresion(),
+                        StepInfo.class);
+                for (StepInfo stepInfo : stepInfos) {
+                    double start = Double.parseDouble(stepInfo.getStart());
+                    double end = Double.parseDouble(stepInfo.getEnd());
+                    double value = Double.parseDouble(stepInfo.getValue());
+                    if (baseValueDouble < start) {
+                        continue;
+                    } else if (start <= baseValueDouble && baseValueDouble <= end) {
+                        priceDouble += (baseValueDouble - start) * value;
+                    } else if (end < baseValueDouble) {
+                        priceDouble += end * value;
+                    }
+                }
+                price = String.valueOf(priceDouble);
             } else {
                 throw new SystemException("不支持此计算规则[" + cpPricemakingRule.getRuleCode() + "]");
             }
