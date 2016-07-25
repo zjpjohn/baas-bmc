@@ -76,25 +76,26 @@ public class PricemakingSVImpl implements IPricemakingSV {
     }
 
     private List<CostInfo> assembleResponse(List<PriceInfo> priceInfoList) {
-        PriceInfo priceInfo = priceInfoList.get(0);
-
         Cost cost1 = new Cost();
-        for (FeeInfo feeInfo : priceInfo.getFeeInfos()) {
-            if (StringUtil.isBlank(cost1.getCost_value())) {
-                cost1.setCost_value(feeInfo.getPrice());
-            } else {
-                cost1.setCost_value(String.valueOf(Double.parseDouble(cost1.getCost_value())
-                        + Double.parseDouble(feeInfo.getPrice())));
+        for (PriceInfo priceInfo : priceInfoList) {
+            for (FeeInfo feeInfo : priceInfo.getFeeInfos()) {
+                if (StringUtil.isBlank(cost1.getCost_value())) {
+                    cost1.setCost_value(feeInfo.getPrice());
+                } else {
+                    cost1.setCost_value(String.valueOf(Double.parseDouble(cost1.getCost_value())
+                            + Double.parseDouble(feeInfo.getPrice())));
+                }
+                cost1.setCost_name(feeInfo.getPriceDesc());
+                cost1.setCost_unit("元");
             }
-            cost1.setCost_name(feeInfo.getPriceDesc());
-            cost1.setCost_unit("元");
+
         }
 
         List<Cost> cost = new ArrayList<Cost>();
         cost.add(cost1);
 
         CostInfo costInfo = new CostInfo();
-        costInfo.setList_id(priceInfo.getListId());
+        costInfo.setList_id(priceInfoList.get(0).getListId());
         costInfo.setCost(cost);
 
         List<CostInfo> costInfos = new ArrayList<CostInfo>();
