@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.service.business.impl;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -162,7 +163,8 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
             }
 
             FeeInfo feeInfo = new FeeInfo();
-            feeInfo.setPrice(String.valueOf(Double.parseDouble(price) / 1000));
+            feeInfo.setPrice(String.valueOf(new DecimalFormat("#.##").format(Double
+                    .parseDouble(price) / 1000)));
             List<FeeInfo> feeInfos = new ArrayList<FeeInfo>();
             feeInfos.add(feeInfo);
             PriceInfo priceInfo = new PriceInfo();
