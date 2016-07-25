@@ -28,6 +28,7 @@
 		interface="com.ai.baas.bmc.api.pricemaking.interfaces.IPricemakingSV" />
 	<dubbo:reference id="IAcctInfoSV"
 		interface="com.ai.baas.bmc.api.acctinfo.interfaces.IAcctInfoSV" />
-
+	<dubbo:reference id="iOrderInfoSV"
+		interface="com.ai.baas.bmc.api.orderinfo.interfaces.IOrderInfoSV"></dubbo:reference>
 
 </beans>
