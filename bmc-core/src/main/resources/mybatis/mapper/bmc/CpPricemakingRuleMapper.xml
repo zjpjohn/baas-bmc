@@ -11,6 +11,7 @@
     <result column="RULE_CODE" property="ruleCode" jdbcType="VARCHAR" />
     <result column="RULE_EXPRESION" property="ruleExpresion" jdbcType="VARCHAR" />
     <result column="EXT_INFO" property="extInfo" jdbcType="VARCHAR" />
+    <result column="PRICE_UNIT" property="priceUnit" jdbcType="VARCHAR" />
     <result column="INACTIVE_TIME" property="inactiveTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -73,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List" >
     TENANT_ID, PRICE_PRODUCT_TYPE, PRICE_PRODUCT_ID, PRICE_TYPE, ACTIVE_TIME, ID, RULE_CODE, 
-    RULE_EXPRESION, EXT_INFO, INACTIVE_TIME
+    RULE_EXPRESION, EXT_INFO, PRICE_UNIT, INACTIVE_TIME
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRuleCriteria" >
     select
@@ -121,11 +122,11 @@
     insert into cp_pricemaking_rule (TENANT_ID, PRICE_PRODUCT_TYPE, PRICE_PRODUCT_ID, 
       PRICE_TYPE, ACTIVE_TIME, ID, 
       RULE_CODE, RULE_EXPRESION, EXT_INFO, 
-      INACTIVE_TIME)
+      PRICE_UNIT, INACTIVE_TIME)
     values (#{tenantId,jdbcType=VARCHAR}, #{priceProductType,jdbcType=VARCHAR}, #{priceProductId,jdbcType=VARCHAR}, 
       #{priceType,jdbcType=VARCHAR}, #{activeTime,jdbcType=TIMESTAMP}, #{id,jdbcType=BIGINT}, 
       #{ruleCode,jdbcType=VARCHAR}, #{ruleExpresion,jdbcType=VARCHAR}, #{extInfo,jdbcType=VARCHAR}, 
-      #{inactiveTime,jdbcType=TIMESTAMP})
+      #{priceUnit,jdbcType=VARCHAR}, #{inactiveTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.baas.bmc.dao.mapper.bo.CpPricemakingRule" >
     insert into cp_pricemaking_rule
@@ -156,6 +157,9 @@
       </if>
       <if test="extInfo != null" >
         EXT_INFO,
+      </if>
+      <if test="priceUnit != null" >
+        PRICE_UNIT,
       </if>
       <if test="inactiveTime != null" >
         INACTIVE_TIME,
@@ -188,6 +192,9 @@
       </if>
       <if test="extInfo != null" >
         #{extInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="priceUnit != null" >
+        #{priceUnit,jdbcType=VARCHAR},
       </if>
       <if test="inactiveTime != null" >
         #{inactiveTime,jdbcType=TIMESTAMP},
@@ -230,6 +237,9 @@
       <if test="record.extInfo != null" >
         EXT_INFO = #{record.extInfo,jdbcType=VARCHAR},
       </if>
+      <if test="record.priceUnit != null" >
+        PRICE_UNIT = #{record.priceUnit,jdbcType=VARCHAR},
+      </if>
       <if test="record.inactiveTime != null" >
         INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP},
       </if>
@@ -249,6 +259,7 @@
       RULE_CODE = #{record.ruleCode,jdbcType=VARCHAR},
       RULE_EXPRESION = #{record.ruleExpresion,jdbcType=VARCHAR},
       EXT_INFO = #{record.extInfo,jdbcType=VARCHAR},
+      PRICE_UNIT = #{record.priceUnit,jdbcType=VARCHAR},
       INACTIVE_TIME = #{record.inactiveTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -269,6 +280,9 @@
       <if test="extInfo != null" >
         EXT_INFO = #{extInfo,jdbcType=VARCHAR},
       </if>
+      <if test="priceUnit != null" >
+        PRICE_UNIT = #{priceUnit,jdbcType=VARCHAR},
+      </if>
       <if test="inactiveTime != null" >
         INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP},
       </if>
@@ -285,6 +299,7 @@
       RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
       RULE_EXPRESION = #{ruleExpresion,jdbcType=VARCHAR},
       EXT_INFO = #{extInfo,jdbcType=VARCHAR},
+      PRICE_UNIT = #{priceUnit,jdbcType=VARCHAR},
       INACTIVE_TIME = #{inactiveTime,jdbcType=TIMESTAMP}
     where TENANT_ID = #{tenantId,jdbcType=VARCHAR}
       and PRICE_PRODUCT_TYPE = #{priceProductType,jdbcType=VARCHAR}

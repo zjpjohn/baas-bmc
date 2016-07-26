@@ -110,11 +110,15 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
                 throw new BusinessException("未匹配出定价产品ID");
             }
             // 查询定价价格规则表
+            String innerPriceType = getInnerPriceType(extInfos, elementInfos);
+            if (StringUtil.isBlank(innerPriceType)) {
+                throw new BusinessException("获取价格类型失败[定价类型:" + priceType + "]");
+            }
             CpPricemakingRuleCriteria criteria = new CpPricemakingRuleCriteria();
             criteria.createCriteria().andTenantIdEqualTo(tenantId)
                     .andPriceProductTypeEqualTo(priceType).andPriceProductIdEqualTo(priceProductId)
-                    .andPriceTypeEqualTo(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR)
-                    .andActiveTimeLessThan(sysdate).andInactiveTimeGreaterThanOrEqualTo(sysdate);
+                    .andPriceTypeEqualTo(innerPriceType).andActiveTimeLessThan(sysdate)
+                    .andInactiveTimeGreaterThanOrEqualTo(sysdate);
             List<CpPricemakingRule> cpPricemakingRules = cpPricemakingRuleMapper
                     .selectByExample(criteria);
             if (CollectionUtil.isEmpty(cpPricemakingRules)) {
@@ -205,6 +209,7 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
             FeeInfo feeInfo = new FeeInfo();
             feeInfo.setPrice(String.valueOf(new DecimalFormat("#.##").format(Double
                     .parseDouble(price) / 1000)));
+            feeInfo.setPriceUnit(cpPricemakingRule.getPriceUnit());
             List<FeeInfo> feeInfos = new ArrayList<FeeInfo>();
             feeInfos.add(feeInfo);
             PriceInfo priceInfo = new PriceInfo();
@@ -213,6 +218,25 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
             priceInfos.add(priceInfo);
         }
         return priceInfos;
+    }
+
+    private String getInnerPriceType(List<ExtInfo> extInfos, List<ElementInfo> elementInfos) {
+        String innerPriceType = "";
+        for (ElementInfo elementInfo : elementInfos) {
+            if (BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE.equals(elementInfo.getName())) {
+                innerPriceType = elementInfo.getValue();
+                break;
+            }
+        }
+        if (StringUtil.isBlank(innerPriceType) && !CollectionUtil.isEmpty(extInfos)) {
+            for (ExtInfo extInfo : extInfos) {
+                if (BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE.equals(extInfo.getExtName())) {
+                    innerPriceType = extInfo.getExtValue();
+                    break;
+                }
+            }
+        }
+        return innerPriceType;
     }
 
     private Map<String, List<Map<String, String>>> aseembleDataMap(List<Map<String, String>> results) {

@@ -735,6 +735,76 @@ public class CpPricemakingRuleCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andPriceUnitIsNull() {
+            addCriterion("PRICE_UNIT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitIsNotNull() {
+            addCriterion("PRICE_UNIT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitEqualTo(String value) {
+            addCriterion("PRICE_UNIT =", value, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitNotEqualTo(String value) {
+            addCriterion("PRICE_UNIT <>", value, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitGreaterThan(String value) {
+            addCriterion("PRICE_UNIT >", value, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitGreaterThanOrEqualTo(String value) {
+            addCriterion("PRICE_UNIT >=", value, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitLessThan(String value) {
+            addCriterion("PRICE_UNIT <", value, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitLessThanOrEqualTo(String value) {
+            addCriterion("PRICE_UNIT <=", value, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitLike(String value) {
+            addCriterion("PRICE_UNIT like", value, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitNotLike(String value) {
+            addCriterion("PRICE_UNIT not like", value, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitIn(List<String> values) {
+            addCriterion("PRICE_UNIT in", values, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitNotIn(List<String> values) {
+            addCriterion("PRICE_UNIT not in", values, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitBetween(String value1, String value2) {
+            addCriterion("PRICE_UNIT between", value1, value2, "priceUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceUnitNotBetween(String value1, String value2) {
+            addCriterion("PRICE_UNIT not between", value1, value2, "priceUnit");
+            return (Criteria) this;
+        }
+
         public Criteria andInactiveTimeIsNull() {
             addCriterion("INACTIVE_TIME is null");
             return (Criteria) this;

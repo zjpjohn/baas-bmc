@@ -76,23 +76,25 @@ public class PricemakingSVImpl implements IPricemakingSV {
     }
 
     private List<CostInfo> assembleResponse(List<PriceInfo> priceInfoList) {
-        Cost cost1 = new Cost();
+        Map<String, Double> map = new HashMap<String, Double>();
         for (PriceInfo priceInfo : priceInfoList) {
             for (FeeInfo feeInfo : priceInfo.getFeeInfos()) {
-                if (StringUtil.isBlank(cost1.getCost_value())) {
-                    cost1.setCost_value(feeInfo.getPrice());
+                String priceUnit = StringUtil.isBlank(feeInfo.getPriceUnit()) ? "元" : feeInfo
+                        .getPriceUnit();
+                if (map.containsKey(priceUnit)) {
+                    map.put(priceUnit, map.get(priceUnit) + Double.parseDouble(feeInfo.getPrice()));
                 } else {
-                    cost1.setCost_value(String.valueOf(Double.parseDouble(cost1.getCost_value())
-                            + Double.parseDouble(feeInfo.getPrice())));
+                    map.put(priceUnit, Double.parseDouble(feeInfo.getPrice()));
                 }
-                cost1.setCost_name(feeInfo.getPriceDesc());
-                cost1.setCost_unit("元");
             }
-
         }
-
         List<Cost> cost = new ArrayList<Cost>();
-        cost.add(cost1);
+        for (Entry<String, Double> entry : map.entrySet()) {
+            Cost cost1 = new Cost();
+            cost1.setCost_value(String.valueOf(entry.getValue()));
+            cost1.setCost_unit(entry.getKey());
+            cost.add(cost1);
+        }
 
         CostInfo costInfo = new CostInfo();
         costInfo.setList_id(priceInfoList.get(0).getListId());
@@ -110,44 +112,12 @@ public class PricemakingSVImpl implements IPricemakingSV {
         if (BmcConstants.ZxServiceId.ECS.equals(service_id)) {
             assembleEcsPriceElementInfo(orderTypeList, shoppingList);
         } else if (BmcConstants.ZxServiceId.RDS.equals(service_id)) {
-            List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
-            @SuppressWarnings("unchecked")
-            Map<String, String> map = (Map<String, String>) JSON
-                    .parse(shoppingList.getParameters());
-            for (Entry<String, String> entry : map.entrySet()) {
-                ElementInfo elementInfo = new ElementInfo();
-                elementInfo.setName(entry.getKey());
-                elementInfo.setValue(entry.getValue());
-                elementInfoList.add(elementInfo);
-            }
-            OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
-            String listId = shoppingList.getList_id();
-            orderTypeInfo.setListId(listId);
-            orderTypeInfo.setElementInfoList(elementInfoList);
-            orderTypeInfo
-                    .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.RDS);
-            orderTypeList.add(orderTypeInfo);
+            assembleRdsElementInfo(shoppingList, orderTypeList);
         } else if (BmcConstants.ZxServiceId.CS.equals(service_id)) {
         } else if (BmcConstants.ZxServiceId.OSS.equals(service_id)) {
         } else if (BmcConstants.ZxServiceId.ONS.equals(service_id)) {
         } else if (BmcConstants.ZxServiceId.KVS.equals(service_id)) {
-            List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
-            @SuppressWarnings("unchecked")
-            Map<String, String> map = (Map<String, String>) JSON
-                    .parse(shoppingList.getParameters());
-            for (Entry<String, String> entry : map.entrySet()) {
-                ElementInfo elementInfo = new ElementInfo();
-                elementInfo.setName(entry.getKey());
-                elementInfo.setValue(entry.getValue());
-                elementInfoList.add(elementInfo);
-            }
-            OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
-            String listId = shoppingList.getList_id();
-            orderTypeInfo.setListId(listId);
-            orderTypeInfo.setElementInfoList(elementInfoList);
-            orderTypeInfo
-                    .setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.KVS);
-            orderTypeList.add(orderTypeInfo);
+            assembleKvsElementInfo(shoppingList, orderTypeList);
         } else {
             throw new BusinessException("暂不支持此类定价:[" + service_id + "]");
         }
@@ -156,6 +126,52 @@ public class PricemakingSVImpl implements IPricemakingSV {
         priceElementInfo.setTenantId(BmcConstants.TenantId.ZX);
         priceElementInfo.setOrderTypeList(orderTypeList);
         return priceElementInfo;
+    }
+
+    private void assembleKvsElementInfo(ShoppingList shoppingList, List<OrderTypeInfo> orderTypeList) {
+        List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
+        @SuppressWarnings("unchecked")
+        Map<String, String> map = (Map<String, String>) JSON.parse(shoppingList.getParameters());
+        for (Entry<String, String> entry : map.entrySet()) {
+            ElementInfo elementInfo = new ElementInfo();
+            elementInfo.setName(entry.getKey());
+            elementInfo.setValue(entry.getValue());
+            elementInfoList.add(elementInfo);
+        }
+        ElementInfo elementInfo2 = new ElementInfo();
+        elementInfo2.setName(BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE);
+        elementInfo2.setValue(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR);
+        elementInfoList.add(elementInfo2);
+
+        OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
+        String listId = shoppingList.getList_id();
+        orderTypeInfo.setListId(listId);
+        orderTypeInfo.setElementInfoList(elementInfoList);
+        orderTypeInfo.setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.KVS);
+        orderTypeList.add(orderTypeInfo);
+    }
+
+    private void assembleRdsElementInfo(ShoppingList shoppingList, List<OrderTypeInfo> orderTypeList) {
+        List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
+        @SuppressWarnings("unchecked")
+        Map<String, String> map = (Map<String, String>) JSON.parse(shoppingList.getParameters());
+        for (Entry<String, String> entry : map.entrySet()) {
+            ElementInfo elementInfo = new ElementInfo();
+            elementInfo.setName(entry.getKey());
+            elementInfo.setValue(entry.getValue());
+            elementInfoList.add(elementInfo);
+        }
+        ElementInfo elementInfo2 = new ElementInfo();
+        elementInfo2.setName(BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE);
+        elementInfo2.setValue(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR);
+        elementInfoList.add(elementInfo2);
+
+        OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
+        String listId = shoppingList.getList_id();
+        orderTypeInfo.setListId(listId);
+        orderTypeInfo.setElementInfoList(elementInfoList);
+        orderTypeInfo.setPriceType(BmcConstants.CpPricemakingFactor.PriceProductType.RDS);
+        orderTypeList.add(orderTypeInfo);
     }
 
     private void assembleEcsPriceElementInfo(List<OrderTypeInfo> orderTypeList,
@@ -178,6 +194,11 @@ public class PricemakingSVImpl implements IPricemakingSV {
                 elementInfoList.add(elementInfo);
             }
         }
+        ElementInfo elementInfo2 = new ElementInfo();
+        elementInfo2.setName(BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE);
+        elementInfo2.setValue(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR);
+        elementInfoList.add(elementInfo2);
+
         OrderTypeInfo orderTypeInfo = new OrderTypeInfo();
         orderTypeInfo.setListId(listId);
         orderTypeInfo.setElementInfoList(elementInfoList);
@@ -200,6 +221,11 @@ public class PricemakingSVImpl implements IPricemakingSV {
                 elementInfoList.add(elementInfo);
             }
         }
+        ElementInfo elementInfo21 = new ElementInfo();
+        elementInfo21.setName(BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE);
+        elementInfo21.setValue(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR);
+        elementInfoList.add(elementInfo21);
+
         orderTypeInfo = new OrderTypeInfo();
         orderTypeInfo.setListId(listId);
         orderTypeInfo.setElementInfoList(elementInfoList);
@@ -241,6 +267,11 @@ public class PricemakingSVImpl implements IPricemakingSV {
                     elementInfo.setValue(entry2.getValue());
                     elementInfoList.add(elementInfo);
                 }
+                ElementInfo elementInfo211 = new ElementInfo();
+                elementInfo211.setName(BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE);
+                elementInfo211.setValue(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR);
+                elementInfoList.add(elementInfo211);
+
                 orderTypeInfo = new OrderTypeInfo();
                 orderTypeInfo.setListId(listId);
                 orderTypeInfo.setElementInfoList(elementInfoList);
@@ -250,6 +281,7 @@ public class PricemakingSVImpl implements IPricemakingSV {
             }
         }
         // 网络一个
+        String internetChargeType = null;
         elementInfoList = new ArrayList<ElementInfo>();
         for (Entry<String, String> entry : map.entrySet()) {
             if (BmcConstants.CpPricemakingFactor.FactorName.REGION_ID.equals(entry.getKey())
@@ -264,7 +296,23 @@ public class PricemakingSVImpl implements IPricemakingSV {
                 elementInfo.setName(entry.getKey());
                 elementInfo.setValue(entry.getValue());
                 elementInfoList.add(elementInfo);
+                // 获取网络计费类型
+                if (BmcConstants.CpPricemakingFactor.FactorName.INTERNET_CHARGE_TYPE.equals(entry
+                        .getKey())) {
+                    internetChargeType = entry.getValue();
+                }
             }
+        }
+        if (BmcConstants.CpPricemakingFactor.FactorValue.PAY_BY_TRAFFIC.equals(internetChargeType)) {
+            ElementInfo elementInfo211 = new ElementInfo();
+            elementInfo211.setName(BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE);
+            elementInfo211.setValue(BmcConstants.CpPricemakingRule.PriceType.PER_UNIT1G);
+            elementInfoList.add(elementInfo211);
+        } else {
+            ElementInfo elementInfo211 = new ElementInfo();
+            elementInfo211.setName(BmcConstants.CpPricemakingRule.INNER_PRICE_TYPE);
+            elementInfo211.setValue(BmcConstants.CpPricemakingRule.PriceType.PER_HOUR);
+            elementInfoList.add(elementInfo211);
         }
         orderTypeInfo = new OrderTypeInfo();
         orderTypeInfo.setListId(listId);

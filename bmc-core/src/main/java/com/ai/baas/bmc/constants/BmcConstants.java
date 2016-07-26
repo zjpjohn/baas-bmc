@@ -143,6 +143,12 @@ public final class BmcConstants {
 
         }
 
+        public static final class FactorValue {
+
+            public static final String PAY_BY_TRAFFIC = "PayByTraffic";
+            
+        }
+
     }
 
     private BmcConstants() {
@@ -214,5 +220,7 @@ public final class BmcConstants {
 
             public static final String STEP = "STEP";
         }
+
+        public static final String INNER_PRICE_TYPE = "INNER_PRICE_TYPE";
     }
 }

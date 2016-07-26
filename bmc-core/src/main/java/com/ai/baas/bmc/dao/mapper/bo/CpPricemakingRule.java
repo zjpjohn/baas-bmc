@@ -11,6 +11,8 @@ public class CpPricemakingRule extends CpPricemakingRuleKey {
 
     private String extInfo;
 
+    private String priceUnit;
+
     private Timestamp inactiveTime;
 
     public Long getId() {
@@ -43,6 +45,14 @@ public class CpPricemakingRule extends CpPricemakingRuleKey {
 
     public void setExtInfo(String extInfo) {
         this.extInfo = extInfo == null ? null : extInfo.trim();
+    }
+
+    public String getPriceUnit() {
+        return priceUnit;
+    }
+
+    public void setPriceUnit(String priceUnit) {
+        this.priceUnit = priceUnit == null ? null : priceUnit.trim();
     }
 
     public Timestamp getInactiveTime() {
