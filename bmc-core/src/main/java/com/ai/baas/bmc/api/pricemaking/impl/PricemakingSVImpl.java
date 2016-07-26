@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.api.pricemaking.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +92,8 @@ public class PricemakingSVImpl implements IPricemakingSV {
         List<Cost> cost = new ArrayList<Cost>();
         for (Entry<String, Double> entry : map.entrySet()) {
             Cost cost1 = new Cost();
-            cost1.setCost_value(String.valueOf(entry.getValue()));
+            cost1.setCost_value(new BigDecimal(entry.getValue()).setScale(2,
+                    BigDecimal.ROUND_HALF_UP).toString());
             cost1.setCost_unit(entry.getKey());
             cost.add(cost1);
         }

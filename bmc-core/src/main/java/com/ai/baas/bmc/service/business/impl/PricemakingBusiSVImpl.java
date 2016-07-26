@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.service.business.impl;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -196,7 +197,7 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
                     if (baseValueDouble < start) {
                         continue;
                     } else if (start <= baseValueDouble && baseValueDouble <= end) {
-                        priceDouble += (baseValueDouble - start) * value;
+                        priceDouble += (baseValueDouble - start + 1) * value;
                     } else if (end < baseValueDouble) {
                         priceDouble += end * value;
                     }
@@ -207,8 +208,8 @@ public class PricemakingBusiSVImpl implements IPricemakingBusiSV {
             }
 
             FeeInfo feeInfo = new FeeInfo();
-            feeInfo.setPrice(String.valueOf(new DecimalFormat("#.##").format(Double
-                    .parseDouble(price) / 1000)));
+            feeInfo.setPrice(new BigDecimal(Double.parseDouble(price) / 1000).setScale(2,
+                    BigDecimal.ROUND_HALF_UP).toString());
             feeInfo.setPriceUnit(cpPricemakingRule.getPriceUnit());
             List<FeeInfo> feeInfos = new ArrayList<FeeInfo>();
             feeInfos.add(feeInfo);
