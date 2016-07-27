@@ -26,6 +26,11 @@ public class OrderInfoSVTest {
 
     @Test
     public void orderInfo() {
+        String extCustId="52dbb3e5-ec31-4989-be82-705123c45eef";
+        String productId="2741";
+       String serviceId= "fd634834-59a1-416d-a124-f74fb99069d9";
+      String tenantId= "ECITIC";
+      
         ProductExt productExt = new ProductExt();
         productExt.setExtName("pe1");
         productExt.setExtValue("pe1");
@@ -69,11 +74,11 @@ public class OrderInfoSVTest {
         sublist.add(extInfo);
 
         OrderInfoParams request = new OrderInfoParams();
-        request.setTenantId("test");
+        request.setTenantId(tenantId);
         request.setTradeSeq("1");
-        request.setExtCustId("1");
+        request.setExtCustId(extCustId);
         request.setUsetype("Normal");
-        request.setServiceId("zx1");
+        request.setServiceId(serviceId);
         request.setProductList(productList);
         request.setOrderExtInfo(orderExtInfo);
         request.setSublist(sublist);

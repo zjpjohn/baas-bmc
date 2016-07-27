@@ -27,6 +27,11 @@ public class BmcCacheConstant {
 
             public static final int UPDATE = 0;
         }
+        public static final class InitLoaderReault {
+
+            public static final int SUCCESS = 1;
+            
+        }
     }
 
 }

@@ -139,13 +139,11 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiSV {
         if (!CollectionUtil.isEmpty(result)) {
             for (Map<String, String> r : result) {
                 if (!r.isEmpty()) {
-                    if (DateUtil.getTimestamp(
-                            Long.parseLong(r.get(BmcCacheConstant.Dshm.FieldName.ACTIVE_TIME)))
-                            .before(sysdate)
+                    if (DateUtil.getTimestamp(r.get(BmcCacheConstant.Dshm.FieldName.ACTIVE_TIME),
+                            DateUtil.DATETIME_FORMAT).before(sysdate)
                             && DateUtil.getTimestamp(
-                                    Long.parseLong(r
-                                            .get(BmcCacheConstant.Dshm.FieldName.INACTIVE_TIME)))
-                                    .after(sysdate)) {
+                                    r.get(BmcCacheConstant.Dshm.FieldName.INACTIVE_TIME),
+                                    DateUtil.DATETIME_FORMAT).after(sysdate)) {
                         subsId = r.get("subs_id");
                         acctId = r.get("acct_id");
                         break;
@@ -311,9 +309,12 @@ public class OrderinfoBusinessImpl implements IOrderinfoBusiSV {
             json.put("EXT_NAME", temp.getExtName());
             json.put("EXT_VALUE", temp.getExtValue());
             json.put("TENANT_ID", tenantId);
-            DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", json.toString(), 1); // redis 0更新
-                                                                                     // 1插入
-
+            int result = DshmUtil.getIdshmSV().initLoader("bl_userinfo_ext", json.toString(), 1); // redis
+                                                                                                  // 0更新
+            // 1插入
+            if (BmcCacheConstant.Dshm.InitLoaderReault.SUCCESS != result) {
+                throw new BusinessException("用户订购扩展信息写入缓存失败");
+            }
         }
     }
 

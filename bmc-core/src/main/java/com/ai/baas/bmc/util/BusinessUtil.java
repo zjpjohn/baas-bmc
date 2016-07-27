@@ -1,5 +1,6 @@
 package com.ai.baas.bmc.util;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -7,11 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseInfo;
 import com.ai.opt.base.vo.RequestHeader;
 import com.ai.opt.sdk.constants.ExceptCodeConstants;
 import com.ai.opt.sdk.util.StringUtil;
-import com.alibaba.fastjson.JSON;
 
 /**
  * 业务校验工具类<br>
@@ -107,11 +108,25 @@ public final class BusinessUtil {
         return name;
     }
 
-    public static Map<String, Object> assebleDshmData(Object bo) {
-        @SuppressWarnings("unchecked")
-        Map<String, Object> map = (Map<String, Object>) JSON.parse(JSON.toJSONString(bo));
-        Map<String, Object> maps = new HashMap<String, Object>();
-        for (Entry<String, Object> s : map.entrySet()) {
+    public static Map<String, String> assebleDshmData(Object bo) {
+        Map<String, String> map = new HashMap<String, String>();
+        Field[] fields = bo.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            String key = field.getName();
+            // Type type = field.getGenericType();
+            Object value;
+            try {
+                value = field.get(bo);
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                throw new SystemException(e);
+            }
+            String valueStr = String.valueOf(value);
+            map.put(key, valueStr);
+        }
+
+        Map<String, String> maps = new HashMap<String, String>();
+        for (Entry<String, String> s : map.entrySet()) {
             maps.put(switchParam(s.getKey()), s.getValue());
         }
         return maps;

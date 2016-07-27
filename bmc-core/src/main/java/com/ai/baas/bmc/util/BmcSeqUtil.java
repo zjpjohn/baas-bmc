@@ -26,7 +26,7 @@ public final class BmcSeqUtil {
      * @ApiCode
      */
     public static String getPriceCode() {
-        return SeqUtil.getNewId(SEQ.PRICE_CODE_SEQ, 10);
+        return String.valueOf(SeqUtil.getNewId(SEQ.PRICE_CODE_SEQ));
     }
 
     /**
@@ -50,7 +50,7 @@ public final class BmcSeqUtil {
      * @ApiCode
      */
     public static String getDetailCode() {
-        return SeqUtil.getNewId(SEQ.DETAIL_CODE_SEQ, 10);
+        return String.valueOf(SeqUtil.getNewId(SEQ.DETAIL_CODE_SEQ));
     }
 
     /**
@@ -98,15 +98,15 @@ public final class BmcSeqUtil {
     }
 
     public static String getCustId() {
-        return SeqUtil.getNewId(SEQ.BL_CUSTINFO$CUST_ID$SEQ, 10);
+        return String.valueOf(SeqUtil.getNewId(SEQ.BL_CUSTINFO$CUST_ID$SEQ));
     }
 
     public static String getAcctId() {
-        return SeqUtil.getNewId(SEQ.BL_ACCT_INFO$ACCT_ID$SEQ, 10);
+        return String.valueOf(SeqUtil.getNewId(SEQ.BL_ACCT_INFO$ACCT_ID$SEQ));
     }
 
     public static String getSubsId() {
-        return SeqUtil.getNewId(SEQ.BL_USERINFO$SUBS_ID$SEQ, 10);
+        return String.valueOf(SeqUtil.getNewId(SEQ.BL_USERINFO$SUBS_ID$SEQ));
     }
 
     public static Integer getSubscommExtId() {
@@ -114,7 +114,7 @@ public final class BmcSeqUtil {
     }
 
     public static String getSubsProductId() {
-        return SeqUtil.getNewId(SEQ.BL_SUBS_COMM$SUBS_PRODUCT_ID$SEQ, 10);
+        return String.valueOf(SeqUtil.getNewId(SEQ.BL_SUBS_COMM$SUBS_PRODUCT_ID$SEQ));
     }
 
 }
