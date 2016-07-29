@@ -116,8 +116,11 @@ public class PricemakingSVImpl implements IPricemakingSV {
         } else if (BmcConstants.ZxServiceId.RDS.equals(service_id)) {
             assembleRdsElementInfo(shoppingList, orderTypeList);
         } else if (BmcConstants.ZxServiceId.CS.equals(service_id)) {
+            throw new BusinessException("暂不支持此类定价:[" + service_id + "]");
         } else if (BmcConstants.ZxServiceId.OSS.equals(service_id)) {
+            throw new BusinessException("暂不支持此类定价:[" + service_id + "]");
         } else if (BmcConstants.ZxServiceId.ONS.equals(service_id)) {
+            throw new BusinessException("暂不支持此类定价:[" + service_id + "]");
         } else if (BmcConstants.ZxServiceId.KVS.equals(service_id)) {
             assembleKvsElementInfo(shoppingList, orderTypeList);
         } else {
