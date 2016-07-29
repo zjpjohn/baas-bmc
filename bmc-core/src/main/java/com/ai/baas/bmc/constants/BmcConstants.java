@@ -193,7 +193,7 @@ public final class BmcConstants {
 
         public static final String PUB = "PUB";
 
-        public static final String ZX = "test";
+        public static final String ZX = "ECITIC";
     }
 
     public static final class CacheNS {
