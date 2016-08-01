@@ -2,11 +2,15 @@ package com.ai.baas.bmc.util;
 
 import java.text.SimpleDateFormat;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ai.baas.bmc.context.ErrorCode;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.sdk.util.StringUtil;
 
 public class CheckUtil {
+    private static final Logger LOGGER = LogManager.getLogger(CheckUtil.class);
     /**
      * String和Integer类型的校验
      * canBeNull为true是可以为空，lenth是最大长度，enums是取值范围，不填是没有取值范围
@@ -46,7 +50,7 @@ public class CheckUtil {
         }
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         try {
-            System.out.println(sdf.parse(time));
+            LOGGER.info(sdf.parse(time));
             return true;
         } catch (Exception e) {
             return false;

@@ -28,7 +28,6 @@ public class UseQuantityQuerySvcImpl implements IUseQuantityQuerySvc{
 	
 	@Override
 	public List<BmcUseQuery> selectUseQuery(UseQueryInputObject userQuery) {
-		System.out.println("进入selectUseQuery方法,打印入参json:" + userQuery);
 		logger.info("进入selectUseQuery方法,打印入参json:" + userQuery);
 		List<BmcUseQuery> useQueryList = new ArrayList<BmcUseQuery>();
 		try {

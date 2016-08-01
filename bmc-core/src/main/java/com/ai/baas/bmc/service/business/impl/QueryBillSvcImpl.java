@@ -173,7 +173,7 @@ public class QueryBillSvcImpl implements IQueryBillSvc {
 							"accInvoiceYYYYMMMapper.selectByExample Exception []",
 							e);
 				}
-				System.out.println("accInvoiceYYYYMMList size:"+accInvoiceYYYYMMList.size()+"   "+accInvoiceYYYYMMList.toString());
+				logger.info("accInvoiceYYYYMMList size:"+accInvoiceYYYYMMList.size()+"   "+accInvoiceYYYYMMList.toString());
 				if (CollectionUtils.isEmpty(accInvoiceYYYYMMList)) {
 					// 如果当前月份的账单汇总信息没有，则继续获取下个月份的
 					continue;

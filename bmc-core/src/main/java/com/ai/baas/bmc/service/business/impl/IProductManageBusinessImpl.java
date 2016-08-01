@@ -5,6 +5,8 @@ import java.io.IOException;
 import net.sf.json.JSONObject;
 
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,7 @@ import com.ai.opt.sdk.util.DateUtil;
 @Service
 @Transactional
 public class IProductManageBusinessImpl implements IProductManageBusiness {
+    private static final Logger LOGGER=LogManager.getLogger(IProductManageBusinessImpl.class);
 	@Autowired
 	private CpPriceInfoMapper cpPriceInfoMapper;
 	@Autowired
@@ -51,7 +54,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		String rowkey = vo.getTenantId() + Context.SPLIT
 				+ Context.AddProduct + Context.SPLIT + vo.getTradeSeq();
 		Table table = MyHbaseUtil.getTable(TableCon.TRADE_SEQ_LOG);
-		System.out.println("-------hasSeq:"+table+"--->"+rowkey);
+		LOGGER.info("-------hasSeq:"+table+"--->"+rowkey);
 		if (MyHbaseUtil.hasExists(table, rowkey)) {
 			flag="exit";
 			return flag;
@@ -125,7 +128,7 @@ public class IProductManageBusinessImpl implements IProductManageBusiness {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		System.out.println("---------------添加成功！！！！");
+		LOGGER.info("---------------添加成功！！！！");
 	}
 //CpPriceDetail
 	private void CpPriceDetail(String priceCode, ProductVO vo,

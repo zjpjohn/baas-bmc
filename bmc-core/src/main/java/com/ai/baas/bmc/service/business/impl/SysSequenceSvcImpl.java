@@ -3,6 +3,8 @@ package com.ai.baas.bmc.service.business.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import com.ai.opt.base.exception.BusinessException;
 @Service
 @Transactional
 public class SysSequenceSvcImpl implements ISysSequenceSvc {
+    private static final Logger LOGGER=LogManager.getLogger(SysSequenceSvcImpl.class);
     @Autowired
     private SysSequenceSrcMapper aSysSequenceSrcMapper;
 
@@ -46,7 +49,7 @@ public class SysSequenceSvcImpl implements ISysSequenceSvc {
         } else {
             for (int i = 0; i < record; i++) {
                 String seq = getSysSequence(sequenceName);
-                // System.out.println("&&&&&&&&&&&&&&seq:"+seq);
+                // LOGGER.info("&&&&&&&&&&&&&&seq:"+seq);
                 strArray.add(seq);
             }
         }
@@ -75,7 +78,7 @@ public class SysSequenceSvcImpl implements ISysSequenceSvc {
             if ((sysSequenceSrc_.getCurrentValue()) + 1 < (sysSequenceSrc_.getMaxValue())) {
                 LoggerUtil.log.info("存在" + sequenceName + "的信息,当前值未超过最大值");
                 long current = sysSequenceSrc_.getCurrentValue() + 1;
-//                System.out.println(current);
+//                LOGGER.info(current);
                 sysSequenceSrc.setCurrentValue(current);
                 aSysSequenceSrcMapper.updateByExample(sysSequenceSrc, sysSequenceSrcCriteria);
                 return String.valueOf(current);

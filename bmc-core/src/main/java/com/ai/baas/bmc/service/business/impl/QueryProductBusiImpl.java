@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,7 @@ import com.esotericsoftware.minlog.Log;
 @Service
 @Transactional
 public class QueryProductBusiImpl implements IQueryProductBusi {
+    private static final Logger LOGGER=LogManager.getLogger(QueryProductBusiImpl.class);
 	@Autowired
 	private CpPriceInfoMapper cpPriceInfoMapper;
 	@Autowired
@@ -115,7 +118,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 List<CpPriceDetail> cpPriceDetail = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
 				 CpPriceDetail cpPriceDetailNew = new CpPriceDetail();
 				 if(!CollectionUtil.isEmpty(cpPriceDetail)){
-					 System.out.println("打印信息 cpPriceDetail.size()："+cpPriceDetail.size());
+					 LOGGER.info("打印信息 cpPriceDetail.size()："+cpPriceDetail.size());
 					 cpPriceDetailNew = cpPriceDetail.get(0);
 				 }
 				 //
@@ -222,7 +225,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 		 }
 		 
 		 List<CpPackageInfo> packageInfo = cpPackageInfoMapper.selectByExample(cpPackageInfoCriteria);
-		 System.out.println("packageInfoList.Size:"+packageInfo.size());
+		 LOGGER.info("packageInfoList.Size:"+packageInfo.size());
 		 for(CpPackageInfo p : packageInfo){
 			 serv = new ServiceVO();
 			 serv.setAmountStart(0);
@@ -283,7 +286,7 @@ public class QueryProductBusiImpl implements IQueryProductBusi {
 				 List<CpPriceDetail> cpPriceDetail = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
 				 CpPriceDetail cpPriceDetailNew = new CpPriceDetail();
 				 if(!CollectionUtil.isEmpty(cpPriceDetail)){
-					 System.out.println("打印信息 cpPriceDetail.size()："+cpPriceDetail.size());
+					 LOGGER.info("打印信息 cpPriceDetail.size()："+cpPriceDetail.size());
 					 cpPriceDetailNew = cpPriceDetail.get(0);
 				 }
 				 //

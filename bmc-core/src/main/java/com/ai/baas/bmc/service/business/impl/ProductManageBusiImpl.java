@@ -267,7 +267,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 		try {
 			String rowkey = vo.getTenantId() + Context.SPLIT + Context.AddProduct + Context.SPLIT + vo.getTradeSeq();
 			Table table = MyHbaseUtil.getTable(TableCon.TRADE_SEQ_LOG);
-			System.out.println("-------hasSeq:" + table + "--->" + rowkey);
+			log.info("-------hasSeq:" + table + "--->" + rowkey);
 			if (MyHbaseUtil.hasExists(table, rowkey)) {
 				flag = "exit";
 				return flag;
@@ -278,7 +278,7 @@ public class ProductManageBusiImpl implements IProductManageBusi {
 					CellTemp.inst(ConTradeSeqLog.RECEIVE_TIME, DateUtil.getDateString(DateUtil.YYYYMMDDHHMMSS)),
 					CellTemp.inst(ConTradeSeqLog.MSG_CONTENT, MyJsonUtil.toJson(vo)));
 		} catch (Exception e) {
-			e.printStackTrace();
+		    log.error(e);
 		}
 		return flag;
 

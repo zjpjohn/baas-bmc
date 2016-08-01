@@ -70,14 +70,13 @@ public class IProductManageSVImpl implements IProductManageSV {
 		try {
 			String returnFlag = this.iProductManageBusi.hasSeq(vo);
 			if (returnFlag.equals("exit")) {
-				System.out.println("-----init-----");
+				log.info("-----init-----");
 				ResponseHeader responseHeader = new ResponseHeader(false,
 						ErrorCode.EXIST, "tradeSeq已使用");
 				response.setResponseHeader(responseHeader);
 				return response;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
 			LoggerUtil.log.error(e.getStackTrace());
 			throw new SystemException(e.getMessage());
 		}

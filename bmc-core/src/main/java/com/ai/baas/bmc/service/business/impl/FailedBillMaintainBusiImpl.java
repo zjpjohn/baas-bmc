@@ -47,7 +47,7 @@ import com.google.gson.reflect.TypeToken;
  */
 @Service
 public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
-    private Logger logger = LogManager.getLogger(FailedBillMaintainBusiImpl.class);
+    private static Logger logger = LogManager.getLogger(FailedBillMaintainBusiImpl.class);
 
     private final String tableName = "bmc_failure_bill";
     @Autowired
@@ -126,7 +126,7 @@ public class FailedBillMaintainBusiImpl implements IFailedBillMaintainBusi {
         criteria.setServiceType("VOICE");
         criteria.setTenantId("TR");
         List<FailedBill> list=failedBillMaintainBusi.queryFailedBills(criteria);
-        System.out.println("【list】="+JSON.toJSONString(list));
+        logger.info("【list】="+JSON.toJSONString(list));
     }
 
     @Override

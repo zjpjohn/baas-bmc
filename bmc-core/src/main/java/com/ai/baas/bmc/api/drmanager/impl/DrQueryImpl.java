@@ -134,11 +134,11 @@ public class DrQueryImpl implements IDrQuery {
         strOutParent = DrQueryOutputObject.strOutParent;
 
         Gson gson=new Gson();
-        //System.out.println("drQuery " + param);
+        //log.info("drQuery " + param);
         
         m_params = new HashMap<String, String>();
         m_paramsDrQuery = gson.fromJson(param, new TypeToken<Map<String, DrQueryInputObject>>() {}.getType()); //new HashMap<String, DrQueryField>();
-        //System.out.println("parse parameters " + m_paramsDrQuery.get(strInParent));
+        //log.info("parse parameters " + m_paramsDrQuery.get(strInParent));
         DrQueryInputObject dri = m_paramsDrQuery.get(strInParent);
         m_mapFields = new ArrayList<BMC_drQuery_fieldrule>();
         m_liRecordSet = new ArrayList<DrQueryOutputObject>();
@@ -146,7 +146,7 @@ public class DrQueryImpl implements IDrQuery {
         String str = dri.getTenantId();
         if (str == null)
         {
-            System.out.println("parse parameters error !");
+            log.info("parse parameters error !");
             return null;
         }
         m_params.put("tenantId", dri.getTenantId());
@@ -164,20 +164,20 @@ public class DrQueryImpl implements IDrQuery {
         //2. 获取需要查询的字段配置
         if (m_params.size() == 0)
         {
-            System.out.println("parse parameters error !");
+            log.info("parse parameters error !");
             return null;
         }
         int ires = GetConfigFields();
         if (0 >= ires)
         {
-            System.out.println("GetConfig error is " + ires);
+            log.info("GetConfig error is " + ires);
             return null;
         }
         //3. 获取查询数据的具体限制条件 并形成sql条件
         String strQuery=validateParamsAndGetQueryWhereString(m_params, 1);
         if (strQuery == null)
         {
-            System.out.println("validateParamsAndGetQueryWhereString error");
+            log.info("validateParamsAndGetQueryWhereString error");
             return null;
         }
         //4. 查询并返回字符串 需要考虑分页问题
@@ -324,7 +324,7 @@ public class DrQueryImpl implements IDrQuery {
                     + " BMC_drQuery_routerule a, BMC_drQuery_fieldrule b ";
             
             String strQuery=validateParamsAndGetQueryWhereString(m_params, 0);
-            //System.out.println("获取需要配置的字段信息-GetConfigFields");
+            //log.info("获取需要配置的字段信息-GetConfigFields");
             log.debug("获取需要配置的字段信息-GetConfigFields");
            // System.err.println("strQuery:"+strQuery);
             log.debug("strQuery:"+strQuery);
@@ -362,8 +362,8 @@ public class DrQueryImpl implements IDrQuery {
                 m_mapFields.add(obj);
                 icn ++;
             }
-           System.out.println("ResultSet"+JSON.toJSONString(m_mapFields));
-            System.out.println("row count is " + icn);
+           log.info("ResultSet"+JSON.toJSONString(m_mapFields));
+            log.info("row count is " + icn);
             if (icn == 0)
                 return 0;
         }catch(SQLException ex) {
@@ -433,8 +433,8 @@ public class DrQueryImpl implements IDrQuery {
                 sql = sql + sqlWhere;
             }
             sql = sql + " group by " + sqlfields;
-            System.out.println("strTableName   :   "+strTableName);
-            System.out.println("GetResult   ：   " + sql);
+            log.info("strTableName   :   "+strTableName);
+            log.info("GetResult   ：   " + sql);
             //此处最好加返回条数限制
             ResultSet rs = statement.executeQuery(sql);
 
@@ -448,18 +448,18 @@ public class DrQueryImpl implements IDrQuery {
                 {
                     int irescount = GetObjectFromDataRow(m_liRecordSet.get(iloop), conn, strTableName, sqlWhere);
                     if (irescount == 0)
-                        System.out.println(m_liRecordSet.get(iloop).toString() + " record count==" + irescount);
+                        log.info(m_liRecordSet.get(iloop).toString() + " record count==" + irescount);
                     else
-                        System.out.println(" m_liRecordSet record count==" + irescount);
+                        log.info(" m_liRecordSet record count==" + irescount);
                 }
 
                 if (m_liRecordSet.size() == 0)
                 {
-                    System.out.println("m_liRecordSet.size ==0");
+                    log.info("m_liRecordSet.size ==0");
                     return "0";
                 }
                 
-                //System.out.println(" m_liRecordSet record count==" + m_liRecordSet.size());
+                //log.info(" m_liRecordSet record count==" + m_liRecordSet.size());
                 //for test!!!
                 m_liRecordSet.get(0).setReturnCode("BMC-000000");
                 m_liRecordSet.get(0).setPageNum(Integer.toString(m_nDrQuerypageNum));
@@ -467,7 +467,7 @@ public class DrQueryImpl implements IDrQuery {
                 Gson gson = new Gson();
                 String gs = gson.toJson(m_liRecordSet);
                 
-                //System.out.println("gson.toJson(m_liRecordSet)" + gs);
+                //log.info("gson.toJson(m_liRecordSet)" + gs);
                 
             }catch (Exception e)
             {
@@ -520,14 +520,12 @@ public class DrQueryImpl implements IDrQuery {
                                 org.apache.commons.beanutils.BeanUtils.copyProperty(newInstance,f.getName(),value);
                             }catch (Exception ex)
                             {
-                                System.out.println(f.getName());
-                                ex.printStackTrace();
+                                log.error(f.getName());
                             }
                         } 
                     } 
                 }catch (Exception e) { 
                     // TODO: handle exception 
-                    e.printStackTrace(); 
                 } 
             } 
             //Fill into 
@@ -597,7 +595,7 @@ public class DrQueryImpl implements IDrQuery {
                 Class clazz = Class.forName("com.ai.baas.bmc.api.drmanager.parameters.DrQueryOutputObjectList");
                 //全部数据集
                 m_drAllOutputList = populate(rs, clazz);
-                //System.out.println("m_drAllOutputList:" + m_drAllOutputList);
+                //log.info("m_drAllOutputList:" + m_drAllOutputList);
                 //给分页的部分
                 int nMinRecordNum = (m_nDrQuerypageNum - 1) * m_nDrQuerypagecountNum;
                 int nMaxRecordNum = m_nDrQuerypageNum * m_nDrQuerypagecountNum;
@@ -933,7 +931,7 @@ public class DrQueryImpl implements IDrQuery {
 //        int ires = GetConfigFields();
 //        log.debug("ires : "+ires);
 //        if (0 >= ires) {
-//            System.out.println("GetConfigFields error is " + ires);
+//            log.info("GetConfigFields error is " + ires);
 //            drres.setReturnCode("BMC-000003" + " not found Config parameters error is " + ires);
 //            drres.setTenantId(drObject.getTenantId());
 //            drres.setSystemId(drObject.getSystemId());
@@ -949,7 +947,7 @@ public class DrQueryImpl implements IDrQuery {
 //        log.debug("BBBB");
 //        if (strQuery == null)
 //        {
-//            System.out.println("validateParamsAndGetQueryWhereString error");
+//            log.info("validateParamsAndGetQueryWhereString error");
 //            drres.setReturnCode("BMC-000004 validate Params and get query where string error");
 //            drres.setTenantId(drObject.getTenantId());
 //            drres.setSystemId(drObject.getSystemId());
@@ -983,7 +981,7 @@ public class DrQueryImpl implements IDrQuery {
 //        	m_liRecordSet.get(0).setServiceType(drObject.getServiceType());
 //        }
 //    
-//        System.out.println("return DrQueryOutputObject");
+//        log.info("return DrQueryOutputObject");
 //        return (DrQueryOutputObject)m_liRecordSet.get(0);
     }
 
@@ -1053,7 +1051,7 @@ public class DrQueryImpl implements IDrQuery {
 ////            for(BillQueryOutputObjectList s : output.getSublist()){
 ////                if(b.getSubsId().toString().equals(s.getSubsId())){
 ////                    subs = s;
-////                    //System.out.println(111);
+////                    //log.info(111);
 ////                    bool = false;
 ////                    break;
 ////                }
@@ -1239,7 +1237,7 @@ public class DrQueryImpl implements IDrQuery {
          int Count;
          String totalcount;      
          Count = bmcSv.operatorAccuQueryCount(operatorFlowObject);
-         System.out.println("----------- record count==" + Count);
+         log.info("----------- record count==" + Count);
          totalcount = Integer.toString(Count);
          
          //查询记录

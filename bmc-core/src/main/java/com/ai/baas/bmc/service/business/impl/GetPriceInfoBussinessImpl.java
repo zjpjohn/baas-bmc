@@ -3,13 +3,12 @@ package com.ai.baas.bmc.service.business.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.hadoop.mapred.RecordReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 
 import com.ai.baas.bmc.api.priceinfo.params.QueryInfoParams;
 import com.ai.baas.bmc.api.priceinfo.params.ResponseMessage;
@@ -17,7 +16,6 @@ import com.ai.baas.bmc.api.priceinfo.params.StandardList;
 import com.ai.baas.bmc.api.priceinfo.params.UsageList;
 import com.ai.baas.bmc.dao.interfaces.CpFactorInfoMapper;
 import com.ai.baas.bmc.dao.interfaces.CpPriceDetailMapper;
-import com.ai.baas.bmc.dao.interfaces.CpPriceInfo2Mapper;
 import com.ai.baas.bmc.dao.interfaces.CpPriceInfoMapper;
 import com.ai.baas.bmc.dao.interfaces.CpUnitpriceInfoMapper;
 import com.ai.baas.bmc.dao.interfaces.CpUnitpriceItemMapper;
@@ -27,7 +25,6 @@ import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetail;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceDetailCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria;
-import com.ai.baas.bmc.dao.mapper.bo.CpPriceInfoCriteria.Criteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfo;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceInfoCriteria;
 import com.ai.baas.bmc.dao.mapper.bo.CpUnitpriceItem;
@@ -39,7 +36,7 @@ import com.ai.opt.sdk.util.StringUtil;
 @Service
 @Transactional
 public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
-
+private static final Logger LOGGER=LogManager.getLogger(GetPriceInfoBussinessImpl.class);
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
     
@@ -115,7 +112,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
 //            resultPage.setPageNo(1);
 //        }
         
-        System.out.println("获得"+cpPriceInfoList.size()+"条资费信息");
+        LOGGER.info("获得"+cpPriceInfoList.size()+"条资费信息");
         if(cpPriceInfoList.size() == 0){
             responseMessage.setResponseHeader(new ResponseHeader(false, "000001", "cp_price_info表中未找到数据"));
             return responseMessage;
@@ -125,7 +122,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
             List<UsageList> usageList = new ArrayList<UsageList>();
            //查询CpPriceDetail
            price_code = cpPriceInfo.getPriceCode();
-           System.out.println("price_code"+price_code);
+           LOGGER.info("price_code"+price_code);
            CpPriceDetailCriteria cpPriceDetailCriteria = new CpPriceDetailCriteria();
            
            CpPriceDetailCriteria.Criteria cpPriceDetailC=cpPriceDetailCriteria.or();
@@ -139,7 +136,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            List<CpPriceDetail> cpPriceDetailList = cpPriceDetailMapper.selectByExample(cpPriceDetailCriteria);
            //CpPriceDetail判空
            if(cpPriceDetailList.size()==0){
-               System.out.println("price_code:"+price_code+"在CpPriceDetail表中没有对应的数据");
+               LOGGER.info("price_code:"+price_code+"在CpPriceDetail表中没有对应的数据");
                continue;
            }
 
@@ -153,7 +150,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            //判空
            List<CpUnitpriceInfo> cpUnitpriceInfoList = cpUnitpriceInfoMapper.selectByExample(cpUnitpriceInfoCriteria);
            if(cpUnitpriceInfoList.size()==0){
-               System.out.println("detail_code:"+detail_code+"在CpUnitpriceInfo表中没有对应的数据");
+               LOGGER.info("detail_code:"+detail_code+"在CpUnitpriceInfo表中没有对应的数据");
                continue;
            }
            CpUnitpriceInfo cpUnitpriceInfo = cpUnitpriceInfoList.get(0);
@@ -168,7 +165,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            cpUnitpriceItemC.andFeeItemCodeEqualTo(fee_item_code);
            List<CpUnitpriceItem> cpUnitpriceItemList =  cpUnitpriceItemMapper.selectByExample(cpUnitpriceItemCriteria);
            if(cpUnitpriceItemList.size()==0){
-               System.out.println("fee_item_code:"+fee_item_code+"在CpUnitpriceItem表中没有对应的数据");
+               LOGGER.info("fee_item_code:"+fee_item_code+"在CpUnitpriceItem表中没有对应的数据");
                continue;
            }
            CpUnitpriceItem cpUnitpriceItem = cpUnitpriceItemList.get(0);
@@ -181,13 +178,13 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
            
            List<CpFactorInfo>cpFactorInfoList = cpFactorInfoMapper.selectByExample(cpFactorInfoCriteria) ;
            if(cpFactorInfoList.size()==0){
-               System.out.println("factor_code:"+factor_code+"在CpFactorInfo表中没有对应的数据");
+               LOGGER.info("factor_code:"+factor_code+"在CpFactorInfo表中没有对应的数据");
                continue;
            }
            
            CpFactorInfo cpFactorInfo = cpFactorInfoList.get(0);
            if(!StringUtil.isBlank(record.getSubServiceType())&&!cpFactorInfo.getFactorValue().equals(record.getSubServiceType())){
-               System.out.println("业务类型细分不匹配");
+               LOGGER.info("业务类型细分不匹配");
                continue;
            }
            responseMessage.setTradeSeq(record.getTradeSeq());//TradeSeq 交易流水
@@ -228,7 +225,7 @@ public class GetPriceInfoBussinessImpl  implements IGetPriceInfoBussiness{
                 standardSubList = standardList.subList(fromIndex,toIndex);
             } 
         }else {
-            System.out.println("不分页");
+            LOGGER.info("不分页");
             standardSubList = standardList;
         }
         //分页信息
