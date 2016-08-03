@@ -12,7 +12,7 @@ public class Test {
 
     public static void main(String[] args) {
         String ss = "DataDisk.1.Size";
-        System.out.println(JSON.toJSONString(ss.split(".")));
+        System.out.println((65960697666560L/1024/1024/1024-((50*1024)-9.132)*0.153+(50*1024-9.132)*1024*0.158));
     }
 
 }

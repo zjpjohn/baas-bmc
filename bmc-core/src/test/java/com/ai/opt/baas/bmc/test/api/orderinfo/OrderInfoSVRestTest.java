@@ -79,7 +79,10 @@ public class OrderInfoSVRestTest {
         request.setOrderExtInfo(orderExtInfo);
         request.setSublist(sublist);
 
-        String result = HttpClientUtil.sendPost("http://10.1.130.84:10884/baas-bmc/orderinfo/orderInfo", JSON.toJSONString(request));
+        System.out.println(JSON.toJSONString(request));
+        String result = HttpClientUtil
+                .sendPost("http://10.1.130.84:10884/baas-bmc/orderinfo/orderInfo",
+                        JSON.toJSONString(request));
         System.out.println(result);
         System.out.println("success");
     }

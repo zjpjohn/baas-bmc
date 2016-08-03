@@ -1,6 +1,7 @@
 package com.ai.baas.bmc.api.pricemaking.params;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class ShoppingList implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -18,7 +19,7 @@ public class ShoppingList implements Serializable {
     /**
      * 中信云平台会根据服务目录中获取的config_options提供创建一个服务实例所需的配置项值的列表，计费平台要负责验证
      */
-    private String parameters;
+    private Map<String, String> parameters;
 
     public String getList_id() {
         return list_id;
@@ -36,11 +37,12 @@ public class ShoppingList implements Serializable {
         this.service_id = service_id;
     }
 
-    public String getParameters() {
+    public Map<String, String> getParameters() {
         return parameters;
     }
 
-    public void setParameters(String parameters) {
+    public void setParameters(Map<String, String> parameters) {
         this.parameters = parameters;
     }
+
 }

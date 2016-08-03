@@ -38,7 +38,7 @@ public class PricemakingSVDubboTest {
         ShoppingList shoppingList1 = new ShoppingList();
         shoppingList1.setList_id("1");
         shoppingList1.setService_id("576206bb6ae6ca04e145958d");
-        shoppingList1.setParameters(parameters1);
+//        shoppingList1.setParameters(parameters1);
 
         shopping_lists.add(shoppingList1);
         // RDS
@@ -47,7 +47,7 @@ public class PricemakingSVDubboTest {
         ShoppingList shoppingList2 = new ShoppingList();
         shoppingList2.setList_id("2");
         shoppingList2.setService_id("5762107c6ae6ca04e14595b8");
-        shoppingList2.setParameters(parameters2);
+//        shoppingList2.setParameters(parameters2);
 
         shopping_lists.add(shoppingList2);
 

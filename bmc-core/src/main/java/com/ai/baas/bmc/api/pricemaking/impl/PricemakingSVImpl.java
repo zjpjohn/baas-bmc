@@ -32,7 +32,6 @@ import com.ai.opt.sdk.constants.ExceptCodeConstants;
 import com.ai.opt.sdk.util.CollectionUtil;
 import com.ai.opt.sdk.util.StringUtil;
 import com.alibaba.dubbo.config.annotation.Service;
-import com.alibaba.fastjson.JSON;
 
 @Service
 public class PricemakingSVImpl implements IPricemakingSV {
@@ -53,7 +52,7 @@ public class PricemakingSVImpl implements IPricemakingSV {
                 throw new BusinessException(ExceptCodeConstants.Special.PARAM_IS_NULL,
                         "service_id不能为空");
             }
-            if (StringUtil.isBlank(shoppingList.getParameters())) {
+            if (null == (shoppingList.getParameters())) {
                 throw new BusinessException(ExceptCodeConstants.Special.PARAM_IS_NULL,
                         "parameters不能为空");
             }
@@ -135,8 +134,7 @@ public class PricemakingSVImpl implements IPricemakingSV {
 
     private void assembleKvsElementInfo(ShoppingList shoppingList, List<OrderTypeInfo> orderTypeList) {
         List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
-        @SuppressWarnings("unchecked")
-        Map<String, String> map = (Map<String, String>) JSON.parse(shoppingList.getParameters());
+        Map<String, String> map = (shoppingList.getParameters());
         for (Entry<String, String> entry : map.entrySet()) {
             ElementInfo elementInfo = new ElementInfo();
             elementInfo.setName(entry.getKey());
@@ -158,8 +156,7 @@ public class PricemakingSVImpl implements IPricemakingSV {
 
     private void assembleRdsElementInfo(ShoppingList shoppingList, List<OrderTypeInfo> orderTypeList) {
         List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
-        @SuppressWarnings("unchecked")
-        Map<String, String> map = (Map<String, String>) JSON.parse(shoppingList.getParameters());
+        Map<String, String> map = (shoppingList.getParameters());
         for (Entry<String, String> entry : map.entrySet()) {
             ElementInfo elementInfo = new ElementInfo();
             elementInfo.setName(entry.getKey());
@@ -184,8 +181,7 @@ public class PricemakingSVImpl implements IPricemakingSV {
         String listId = shoppingList.getList_id();
         // 实例（一个）
         List<ElementInfo> elementInfoList = new ArrayList<ElementInfo>();
-        @SuppressWarnings("unchecked")
-        Map<String, String> map = (Map<String, String>) JSON.parse(shoppingList.getParameters());
+        Map<String, String> map = (shoppingList.getParameters());
         for (Entry<String, String> entry : map.entrySet()) {
             if (BmcConstants.CpPricemakingFactor.FactorName.REGION_ID.equals(entry.getKey())
                     || BmcConstants.CpPricemakingFactor.FactorName.INSTANCE_TYPE.equals(entry

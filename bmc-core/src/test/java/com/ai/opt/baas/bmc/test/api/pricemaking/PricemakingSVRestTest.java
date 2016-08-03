@@ -1,7 +1,9 @@
 package com.ai.opt.baas.bmc.test.api.pricemaking;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,30 +27,40 @@ public class PricemakingSVRestTest {
     public void queryPricemakingZX() {
         List<ShoppingList> shopping_lists = new ArrayList<ShoppingList>();
         // ECS-INSTANCE
-        String parameters1 = "{\"InstanceChargeType\":\"PostPaid\",\"InstanceType\":\"ecs.n1.tiny\",\"RegionId\":\"cn-hangzhou\",\"DataDisk.1.Category\":\"cloud\",\"SystemDisk.Category\":\"cloud\", \"InternetMaxBandwidthOut\":\"15\", \"InternetChargeType\":\"PayByTraffic\", \"DataDisk.1.Size\":\"13\", \"SystemDisk.Size\":\"40\"}";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("InstanceChargeType", "PostPaid");
+        map.put("InstanceType", "ecs.s2.large");
+        map.put("RegionId", "cn-beijing");
+        map.put("DataDisk.1.Category", "cloud");
+        map.put("SystemDisk.Category", "cloud");
+        map.put("InternetMaxBandwidthOut", "15");
+        map.put("InternetChargeType", "PayByTraffic");
+        map.put("DataDisk.1.Size", "13");
+        map.put("SystemDisk.Size", "40");
         ShoppingList shoppingList1 = new ShoppingList();
         shoppingList1.setList_id("1");
         shoppingList1.setService_id("576206bb6ae6ca04e145958d");
-        shoppingList1.setParameters(parameters1);
-         shopping_lists.add(shoppingList1);
+        shoppingList1.setParameters(map);
+        shopping_lists.add(shoppingList1);
         // RDS
         String parameters2 = "{\"RegionId\":\"cn-hangzhou\", \"Engine\":\"SQLServer\", \"DBInstanceClass\":\"rds.mysql.t1.small\", \"DBInstanceStorage\":\"50\", \"DBInstanceNetType\":\"Internet\", \"PayType\":\"Postpaid\", \"UsedTime\":\"2\"}";
         ShoppingList shoppingList2 = new ShoppingList();
         shoppingList2.setList_id("2");
         shoppingList2.setService_id("5762107c6ae6ca04e14595b8");
-        shoppingList2.setParameters(parameters2);
+        // shoppingList2.setParameters(parameters2);
         // shopping_lists.add(shoppingList2);
         // KVS
         String parameters3 = "{\"RegionId\":\"cn-hangzhou\", \"Capacity\":\"2\"}";
         ShoppingList shoppingList3 = new ShoppingList();
         shoppingList3.setList_id("3");
         shoppingList3.setService_id("5785e232b9aa1e3769039c19");
-        shoppingList3.setParameters(parameters3);
-//        shopping_lists.add(shoppingList3);
+        // shoppingList3.setParameters(parameters3);
+        // shopping_lists.add(shoppingList3);
 
         PriceElementInfoZX request = new PriceElementInfoZX();
         request.setShopping_lists(shopping_lists);
 
+        System.out.println(JSON.toJSONString(request));
         String s = HttpClientUtil.sendPost(
                 "http://127.0.0.1:10884/baas-bmc/pricemaking/queryPricemakingZX",
                 JSON.toJSONString(request));
